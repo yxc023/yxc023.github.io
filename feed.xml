@@ -6,9 +6,87 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期二, 5 九月 2017 00:48:39 +0800</pubDate>
-    <lastBuildDate>星期二, 5 九月 2017 00:48:39 +0800</lastBuildDate>
+    <pubDate>星期二, 5 九月 2017 19:04:17 +0800</pubDate>
+    <lastBuildDate>星期二, 5 九月 2017 19:04:17 +0800</lastBuildDate>
 
+    <item>
+      <title>spring boot mvc 文件上传错误</title>
+      <link>http://blog.yangxiaochen.com/blog/java/spring-mvc-multipart-error.html</link>
+      <pubDate>星期二, 5 九月 2017 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/java/spring-mvc-multipart-error.html</guid>
+      	<description>
+	&lt;h2&gt;现象&lt;/h2&gt;
+&lt;p&gt;今天有一个项目，是从 tomcat 迁移到 spring boot 的。&lt;/p&gt;
+&lt;p&gt;实测中发现，文件上传不进来&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public JsonResult createBpmn(@RequestParam Long businessId, @RequestParam(value = &amp;quot;file&amp;quot;, required = false) MultipartsFile bpnmFile) {
+  // 此时 bpmnFile == null 
+  
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;排查&lt;/h2&gt;
+&lt;p&gt;文件上传的处理逻辑是在 &lt;code&gt;DispatherServlet.checkMultipart()&lt;/code&gt; 方法&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;protected HttpServletRequest checkMultipart(HttpServletRequest request) throws MultipartException {
+		if (this.multipartResolver != null &amp;amp;&amp;amp; this.multipartResolver.isMultipart(request)) {
+			if (WebUtils.getNativeRequest(request, MultipartHttpServletRequest.class) != null) {
+				logger.debug(&amp;quot;Request is already a MultipartHttpServletRequest - if not in a forward, &amp;quot; +
+						&amp;quot;this typically results from an additional MultipartFilter in web.xml&amp;quot;);
+			}
+			else if (hasMultipartException(request) ) {
+				logger.debug(&amp;quot;Multipart resolution failed for current request before - &amp;quot; +
+						&amp;quot;skipping re-resolution for undisturbed error rendering&amp;quot;);
+			}
+			else {
+				try {
+					return this.multipartResolver.resolveMultipart(request);
+				}
+				catch (MultipartException ex) {
+					if (request.getAttribute(WebUtils.ERROR_EXCEPTION_ATTRIBUTE) != null) {
+						logger.debug(&amp;quot;Multipart resolution failed for error dispatch&amp;quot;, ex);
+						// Keep processing error dispatch with regular request handle below
+					}
+					else {
+						throw ex;
+					}
+				}
+			}
+		}
+		// If not returned before: return original request.
+		return request;
+	}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;debug 可以看到当前项目中使用的用来支持上传的组件 &lt;code&gt;multipartResolver&lt;/code&gt;  是 &lt;code&gt;CommonsMultipartResolver&lt;/code&gt; 类型&lt;/p&gt;
+&lt;p&gt;简单看了下这个类型的 resolver 逻辑是从 request 的 inputStream 中读取上传文件。&lt;/p&gt;
+&lt;p&gt;但是发现这里 request 的 inputStream 是空的。&lt;/p&gt;
+&lt;p&gt;在 &lt;code&gt;DispatherServlet.doDispatch()&lt;/code&gt; 方法开头，也就是所有请求要进行 contoller 分发时，request 的 inputStream 也就已经空了&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpServletRequest processedRequest = request;
+		HandlerExecutionChain mappedHandler = null;
+		boolean multipartRequestParsed = false;
+
+// 此时有断点，使用 IDEA 的 debug 工具 执行 IOUtil.toString(request.getInputStream)
+// 发现输出为空
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这说明 inputStream 被读过了&lt;/p&gt;
+&lt;p&gt;然后就在 Request 对象的 getInputStream 方法上打了断点。&lt;/p&gt;
+&lt;p&gt;发现是在一个 filter 的逻辑里，最终调用了 getInputStream 方法，从调用栈的方法名字们看，也有 uploadFile 字眼&lt;/p&gt;
+&lt;p&gt;这个 filter 是 &lt;code&gt;HiddenHttpMethodFilter&lt;/code&gt; , 看了 doc 和代码。这个 filter 的作用大概是：因为现在浏览器只支持 get 和post，为了能支持更多的方法诸如 put ，delete 等，就约定了一个参数名叫 _method 来指定这些不支持的方法，比如 _mothod=put , 就是这次请求在之后的处理中会被当做 put 来处理。&lt;/p&gt;
+&lt;p&gt;这个 filter 读取了 inputStream，并把文件加入到了 request 的属性 parts 中。这里的 request 是 tomcat 的实现的，因为内置容器是 tomcat。&lt;/p&gt;
+&lt;p&gt;这就有问题了，这个 filter 把 inputStream 给读了，后面的 multipartResolver 就读不到了。&lt;/p&gt;
+&lt;p&gt;这个 filter 的 doc 中有一段&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;NOTE: This filter needs to run after multipart processing in case of a multipart POST request, due to its inherent need for checking a POST body parameter. So typically, put a Spring org.springframework.web.multipart.support.MultipartFilter before this HiddenHttpMethodFilter in your web.xml filter chain.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;说我们要把 &lt;code&gt;MultipartFilter&lt;/code&gt; 写在前面，前置执行。&lt;/p&gt;
+&lt;p&gt;但是，看了一眼 &lt;code&gt;HiddenHttpMethodFilter&lt;/code&gt; 可是 &lt;code&gt;WebMvcAutoConfiguration&lt;/code&gt; 中定义的，按道理说，这个是个标准化的，不应该由我们在做什么处理才能用拿到 upload 的 file。&lt;/p&gt;
+&lt;p&gt;其实，如果 multipartResolver 如果直接从 request 的 parts 属性中拿 file 不就行了，不从 inputSream 中读。spring boot 一套应该是把这些都搞定得了。&lt;/p&gt;
+&lt;p&gt;后来看 &lt;code&gt;MultipartAutoConfiguration&lt;/code&gt; ，里面注册了个 multipartResolver，但类型是 &lt;code&gt;StandardServletMultipartResolver&lt;/code&gt; .&lt;/p&gt;
+&lt;p&gt;看了 &lt;code&gt;StandardServletMultipartResolver&lt;/code&gt; 的实现，果然是从 request 的 parts 属性中取。&lt;/p&gt;
+&lt;p&gt;所以，原因出来了：&lt;/p&gt;
+&lt;p&gt;是在项目迁移的过程中遗留了 mvc 的 xml 配置，里面配置了 multipartResolver，类型指定为 &lt;code&gt;CommonsMultipartResolver&lt;/code&gt; , 去掉后就ok了。&lt;/p&gt;
+&lt;h2&gt;结论&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;HttpServletRequest.getParts()&lt;/code&gt; 方法是 servlet 3.0 之后获取  &lt;code&gt;multipart/form-data&lt;/code&gt; 类型数据的一个标准方法，凡是实现了 servlet 3.0 的服务器都支持，可以尽量使用 StandardServletMultipartResolver&lt;/p&gt;
+
+	</description>
+    </item>
     <item>
       <title>gradle简明教程</title>
       <link>http://blog.yangxiaochen.com/blog/java/gradle简明教程.html</link>
@@ -1262,25 +1340,6 @@ Summary of actions:
 	</description>
     </item>
     <item>
-      <title>homebrew安装旧版本软件</title>
-      <link>http://blog.yangxiaochen.com/blog/mac/homebrew-install-old-version-soft.html</link>
-      <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/mac/homebrew-install-old-version-soft.html</guid>
-      	<description>
-	&lt;h4&gt;原创, 转载请注明出处&lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/h4&gt;
-&lt;p&gt;不需要用brew versions ,这个已经过时了.&lt;/p&gt;
-&lt;p&gt;很多有重要版本的软件都已经区分版本的设定formulae了
-参见项目地址 https://github.com/Homebrew/homebrew-versions&lt;/p&gt;
-&lt;p&gt;比如nodejs   有重要的0.10.*版本&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;yangxiaochen:/usr/local$ brew search node
-leafnode node node010 node04 node06 node08 nodebrew nodenv
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;node010就是&lt;/p&gt;
-&lt;p&gt;同理php也是这样分php56 php55 php54 ….&lt;/p&gt;
-
-	</description>
-    </item>
-    <item>
       <title>python入门</title>
       <link>http://blog.yangxiaochen.com/blog/develop/python-starter.html</link>
       <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
@@ -1302,6 +1361,25 @@ leafnode node node010 node04 node06 node08 nodebrew nodenv
 &lt;li&gt;python 2.*须另外安装&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Virtualenv 文档地址&lt;a href=&quot;https://virtualenv.pypa.io/en/latest/&quot;&gt;Virtualenv文档&lt;/a&gt;&lt;/p&gt;
+
+	</description>
+    </item>
+    <item>
+      <title>homebrew安装旧版本软件</title>
+      <link>http://blog.yangxiaochen.com/blog/mac/homebrew-install-old-version-soft.html</link>
+      <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/mac/homebrew-install-old-version-soft.html</guid>
+      	<description>
+	&lt;h4&gt;原创, 转载请注明出处&lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;不需要用brew versions ,这个已经过时了.&lt;/p&gt;
+&lt;p&gt;很多有重要版本的软件都已经区分版本的设定formulae了
+参见项目地址 https://github.com/Homebrew/homebrew-versions&lt;/p&gt;
+&lt;p&gt;比如nodejs   有重要的0.10.*版本&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;yangxiaochen:/usr/local$ brew search node
+leafnode node node010 node04 node06 node08 nodebrew nodenv
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;node010就是&lt;/p&gt;
+&lt;p&gt;同理php也是这样分php56 php55 php54 ….&lt;/p&gt;
 
 	</description>
     </item>
