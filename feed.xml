@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期二, 5 九月 2017 21:41:19 +0800</pubDate>
-    <lastBuildDate>星期二, 5 九月 2017 21:41:19 +0800</lastBuildDate>
+    <pubDate>星期二, 5 九月 2017 21:44:25 +0800</pubDate>
+    <lastBuildDate>星期二, 5 九月 2017 21:44:25 +0800</lastBuildDate>
 
     <item>
       <title>spring boot mvc 文件上传错误</title>
@@ -90,7 +90,7 @@
 &lt;/ol&gt;
 &lt;p&gt;spring boot 使用的是 &lt;code&gt;StandardServletMultipartResolver&lt;/code&gt; 。&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;&lt;code&gt;tpServletRequest.getParts()&lt;/code&gt; 方法是 servlet 3.0 之后获取  &lt;code&gt;multipart/form-data&lt;/code&gt; 类型的请求数据的一个标准方法，凡是实现了 servlet 3.0 的服务器都支持，可以尽量使用 StandardServletMultipartResolver&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;HttpServletRequest.getParts()&lt;/code&gt; 方法是 servlet 3.0 之后获取  &lt;code&gt;multipart/form-data&lt;/code&gt; 类型的请求数据的一个标准方法，凡是实现了 servlet 3.0 的服务器都支持，可以尽量使用 StandardServletMultipartResolver&lt;/p&gt;
 &lt;/blockquote&gt;
 
 	</description>
