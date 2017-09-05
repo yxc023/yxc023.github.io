@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期二, 5 九月 2017 19:04:17 +0800</pubDate>
-    <lastBuildDate>星期二, 5 九月 2017 19:04:17 +0800</lastBuildDate>
+    <pubDate>星期二, 5 九月 2017 21:41:19 +0800</pubDate>
+    <lastBuildDate>星期二, 5 九月 2017 21:41:19 +0800</lastBuildDate>
 
     <item>
       <title>spring boot mvc 文件上传错误</title>
@@ -83,7 +83,15 @@
 &lt;p&gt;所以，原因出来了：&lt;/p&gt;
 &lt;p&gt;是在项目迁移的过程中遗留了 mvc 的 xml 配置，里面配置了 multipartResolver，类型指定为 &lt;code&gt;CommonsMultipartResolver&lt;/code&gt; , 去掉后就ok了。&lt;/p&gt;
 &lt;h2&gt;结论&lt;/h2&gt;
-&lt;p&gt;&lt;code&gt;HttpServletRequest.getParts()&lt;/code&gt; 方法是 servlet 3.0 之后获取  &lt;code&gt;multipart/form-data&lt;/code&gt; 类型数据的一个标准方法，凡是实现了 servlet 3.0 的服务器都支持，可以尽量使用 StandardServletMultipartResolver&lt;/p&gt;
+&lt;p&gt;spring mvc 提供了两种 multipartResolver：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;CommonsMultipartResolver&lt;/code&gt;：从 request 的 inputStream 中读取文件&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;StandardServletMultipartResolver&lt;/code&gt;：使用 &lt;code&gt;ttpServletRequest.getParts()&lt;/code&gt; 方法来获取文件&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;spring boot 使用的是 &lt;code&gt;StandardServletMultipartResolver&lt;/code&gt; 。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;code&gt;tpServletRequest.getParts()&lt;/code&gt; 方法是 servlet 3.0 之后获取  &lt;code&gt;multipart/form-data&lt;/code&gt; 类型的请求数据的一个标准方法，凡是实现了 servlet 3.0 的服务器都支持，可以尽量使用 StandardServletMultipartResolver&lt;/p&gt;
+&lt;/blockquote&gt;
 
 	</description>
     </item>

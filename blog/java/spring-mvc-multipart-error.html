@@ -134,7 +134,15 @@
 <p>所以，原因出来了：</p>
 <p>是在项目迁移的过程中遗留了 mvc 的 xml 配置，里面配置了 multipartResolver，类型指定为 <code>CommonsMultipartResolver</code> , 去掉后就ok了。</p>
 <h2>结论</h2>
-<p><code>HttpServletRequest.getParts()</code> 方法是 servlet 3.0 之后获取  <code>multipart/form-data</code> 类型数据的一个标准方法，凡是实现了 servlet 3.0 的服务器都支持，可以尽量使用 StandardServletMultipartResolver</p>
+<p>spring mvc 提供了两种 multipartResolver：</p>
+<ol>
+<li><code>CommonsMultipartResolver</code>：从 request 的 inputStream 中读取文件</li>
+<li><code>StandardServletMultipartResolver</code>：使用 <code>ttpServletRequest.getParts()</code> 方法来获取文件</li>
+</ol>
+<p>spring boot 使用的是 <code>StandardServletMultipartResolver</code> 。</p>
+<blockquote>
+<p><code>tpServletRequest.getParts()</code> 方法是 servlet 3.0 之后获取  <code>multipart/form-data</code> 类型的请求数据的一个标准方法，凡是实现了 servlet 3.0 的服务器都支持，可以尽量使用 StandardServletMultipartResolver</p>
+</blockquote>
 </p>
 
 	<hr />
