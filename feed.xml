@@ -6,9 +6,51 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期二, 5 九月 2017 21:53:32 +0800</pubDate>
-    <lastBuildDate>星期二, 5 九月 2017 21:53:32 +0800</lastBuildDate>
+    <pubDate>星期日, 5 十一月 2017 23:54:16 +0800</pubDate>
+    <lastBuildDate>星期日, 5 十一月 2017 23:54:16 +0800</lastBuildDate>
 
+    <item>
+      <title>方法论总结</title>
+      <link>http://blog.yangxiaochen.com/blog/设计思想/方法论.html</link>
+      <pubDate>星期日, 5 十一月 2017 23:50:44 +0800</pubDate>
+      <guid isPermaLink="false">blog/设计思想/方法论.html</guid>
+      	<description>
+	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
+&lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
+&lt;ul class=&quot;sectlevel1&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_api_接口设计&quot;&gt;api 接口设计&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_模型设计&quot;&gt;模型设计&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_api_接口设计&quot;&gt;api 接口设计&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;写 api 接口要从调用方角度考虑, 模拟使用者.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;rpc 调用的 api 接口不要用枚举, 转成 bean. 避免小升级造成的序列化错误.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_模型设计&quot;&gt;模型设计&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;从业务总结模型, 而不是数据库表定义模型~&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+	</description>
+    </item>
     <item>
       <title>spring boot mvc 文件上传错误</title>
       <link>http://blog.yangxiaochen.com/blog/java/spring-mvc-multipart-error.html</link>
