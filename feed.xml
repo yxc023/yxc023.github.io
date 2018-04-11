@@ -6,13 +6,13 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期四, 12 四月 2018 00:05:57 +0800</pubDate>
-    <lastBuildDate>星期四, 12 四月 2018 00:05:57 +0800</lastBuildDate>
+    <pubDate>星期四, 12 四月 2018 00:12:12 +0800</pubDate>
+    <lastBuildDate>星期四, 12 四月 2018 00:12:12 +0800</lastBuildDate>
 
     <item>
       <title>jooq 介绍</title>
       <link>http://blog.yangxiaochen.com/blog/db/jooq-intro.html</link>
-      <pubDate>星期四, 12 四月 2018 00:05:23 +0800</pubDate>
+      <pubDate>星期三, 4 四月 2018 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/db/jooq-intro.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt; 
@@ -201,7 +201,7 @@ $price = DB::table(&apos;orders&apos;)
     <item>
       <title>方法论总结</title>
       <link>http://blog.yangxiaochen.com/blog/设计思想/方法论.html</link>
-      <pubDate>星期三, 11 四月 2018 22:06:42 +0800</pubDate>
+      <pubDate>星期日, 5 十一月 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/设计思想/方法论.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt; 
