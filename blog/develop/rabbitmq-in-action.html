@@ -66,117 +66,85 @@
 
 	<p><em>08 二月 2016</em></p>
 
-	<p><h4>原创, 转载请注明出处<a href="https://blog.yangxiaochen.com">https://blog.yangxiaochen.com</a></h4>
-<!-- more -->
-<h1>MQ数据源</h1>
-<ol>
-<li>
-<p><code>datasource -&gt; topic exchange</code>, 数据源已固定格式发入exchange, exchange类型为topic,既可以使用路由route_key, 又可以进行通配. 不要将生产者, 消费者用在同一队列上, 这样耦合度高, 消息无法复用.</p>
-</li>
-<li>
-<p>数据源只关心输入exchange, 对后续消费者无需关心</p>
-</li>
-<li>
-<p>新加,修改数据源需要备案记录.</p>
-</li>
-<li>
-<p>消费者一般情况下使用临时队列, 必要情况下使用持久队列. 队列从数据源的exchange中订阅数据.</p>
-</li>
-<li>
-<p>程序中不要生成持久的exchange, queue. 而是在管理界面生成. 防止程序改动造成的废弃的exchange, queue仍然存在在rabbitmq中.</p>
-</li>
-<li>
-<p>命名统一.</p>
-<pre><code> exchangeName: datasource:[sth.sth]
- queueName: [消费者程序名称]:[exchangeName].[subject]
- route_key: [exchangeName].[subject]
+	<p><h4>原创, 转载请注明出处<a href="https://blog.yangxiaochen.com">https://blog.yangxiaochen.com</a></h4> 
+<!-- more --> 
+<p># MQ数据源</p> 
+<ol> 
+ <li> <p><code>datasource -&gt; topic exchange</code>, 数据源已固定格式发入exchange, exchange类型为topic,既可以使用路由route_key, 又可以进行通配. 不要将生产者, 消费者用在同一队列上, 这样耦合度高, 消息无法复用.</p> </li> 
+ <li> <p>数据源只关心输入exchange, 对后续消费者无需关心</p> </li> 
+ <li> <p>新加,修改数据源需要备案记录.</p> </li> 
+ <li> <p>消费者一般情况下使用临时队列, 必要情况下使用持久队列. 队列从数据源的exchange中订阅数据.</p> </li> 
+ <li> <p>程序中不要生成持久的exchange, queue. 而是在管理界面生成. 防止程序改动造成的废弃的exchange, queue仍然存在在rabbitmq中.</p> </li> 
+ <li> <p>命名统一.</p> <pre><code>exchangeName: datasource:[sth.sth]
+queueName: [消费者程序名称]:[exchangeName].[subject]
+route_key: [exchangeName].[subject]
 
- 例:
- exchangeName: datasource:dispatch.event
- queueName: autoDispatch:dispatch.event.orderCreate
- route_key: dispatch.event.orderCreate
-</code></pre>
-</li>
-</ol>
-<h3>poi</h3>
+例:
+exchangeName: datasource:dispatch.event
+queueName: autoDispatch:dispatch.event.orderCreate
+route_key: dispatch.event.orderCreate
+</code></pre> </li> 
+</ol> 
+<h3>poi</h3> 
 <pre><code>exchangeName: datasource:poi
-</code></pre>
-<h3>业务事件流</h3>
+</code></pre> 
+<h3>业务事件流</h3> 
 <pre><code>exchangeName: datasource:dispatch.event
-</code></pre>
-<h3>日志流</h3>
-<h3>其他</h3>
-<h1>rabbitmq 规范</h1>
-<h2>使用规范</h2>
-<h3>0. 使用原则</h3>
-<ol>
-<li>数据源已固定格式发入exchange, exchange类型为topic.数据源只关心输入exchange.</li>
-<li>修改数据源, 持久队列, 持久内部exchange需要备案记录.</li>
-<li>消费者一般非必要情况下使用临时队列. 队列从数据源的exchange中订阅数据.</li>
-<li>程序中不要生成持久的exchange, queue. 而是在管理界面生成.</li>
-</ol>
-<h3>1. datasourceExchanges</h3>
-<ol>
-<li>
-<p>命名</p>
-<pre><code> datasource:[datasourceName]
+</code></pre> 
+<h3>日志流</h3> 
+<h3>其他</h3> 
+<h1>rabbitmq 规范</h1> 
+<h2>使用规范</h2> 
+<h3>0. 使用原则</h3> 
+<ol> 
+ <li>数据源已固定格式发入exchange, exchange类型为topic.数据源只关心输入exchange.</li> 
+ <li>修改数据源, 持久队列, 持久内部exchange需要备案记录.</li> 
+ <li>消费者一般非必要情况下使用临时队列. 队列从数据源的exchange中订阅数据.</li> 
+ <li>程序中不要生成持久的exchange, queue. 而是在管理界面生成.</li> 
+</ol> 
+<h3>1. datasourceExchanges</h3> 
+<ol> 
+ <li> <p>命名</p> <pre><code>datasource:[datasourceName]
 
- 例:
- datasource:poi
- datasource:dispatch.event
-</code></pre>
-</li>
-<li>
-<p>记录备案</p>
-<pre><code> git@gitlab.supaide.cn:sys/rabbitmq.git
- datasources.txt
+例:
+datasource:poi
+datasource:dispatch.event
+</code></pre> </li> 
+ <li> <p>记录备案</p> <pre><code>git@gitlab.supaide.cn:sys/rabbitmq.git
+datasources.txt
 
- 备案说明详见文件内部格式.
-</code></pre>
-</li>
-</ol>
-<h3>2. durable queues, exchanges</h3>
-<ol>
-<li>
-<p>命名</p>
-<pre><code> queueName
- [appName]:[routingKey]
+备案说明详见文件内部格式.
+</code></pre> </li> 
+</ol> 
+<h3>2. durable queues, exchanges</h3> 
+<ol> 
+ <li> <p>命名</p> <pre><code>queueName
+[appName]:[routingKey]
 
- exchangeName
- x:[appName]:[routingKey]
+exchangeName
+x:[appName]:[routingKey]
 
- 例:
- autoDispatch:dispatch.event.orderCreate
- x:autoDispatch:dispatch.event.*
-</code></pre>
-</li>
-<li>
-<p>记录备案</p>
-<pre><code> git@gitlab.supaide.cn:sys/rabbitmq.git
- durableQueues.txt
+例:
+autoDispatch:dispatch.event.orderCreate
+x:autoDispatch:dispatch.event.*
+</code></pre> </li> 
+ <li> <p>记录备案</p> <pre><code>git@gitlab.supaide.cn:sys/rabbitmq.git
+durableQueues.txt
 
- 备案说明详见文件内部格式.
-</code></pre>
-</li>
-</ol>
-<h3>3. temp queues, exchagnes</h3>
-<ol>
-<li>
-<p>命名</p>
-<pre><code> gen.[appName]:[routingKey]
+备案说明详见文件内部格式.
+</code></pre> </li> 
+</ol> 
+<h3>3. temp queues, exchagnes</h3> 
+<ol> 
+ <li> <p>命名</p> <pre><code>gen.[appName]:[routingKey]
 
- or
+or
 
- 默认随机名称
-</code></pre>
-</li>
-<li>
-<p>记录备案</p>
-<pre><code> 无需备案
-</code></pre>
-</li>
-</ol>
-</p>
+默认随机名称
+</code></pre> </li> 
+ <li> <p>记录备案</p> <pre><code>无需备案
+</code></pre> </li> 
+</ol></p>
 
 	<hr />
 	

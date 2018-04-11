@@ -66,38 +66,38 @@
 
 	<p><em>24 七月 2017</em></p>
 
-	<p><h2>概要</h2>
-<h3>前置基本知识</h3>
-<p>数据结构: 哈希表(散列表), 二叉查找树, 红黑树(optional)</p>
-<!-- more -->
-<h3>名词</h3>
-<ol>
-<li>桶, 槽: 散列位置.</li>
-<li>Entry, Node, TreeNode: Entry为一个键值对, Node和TreeNode都是Entry的一种特别类型.</li>
-</ol>
-<h3>结构</h3>
-<h4>基本结构</h4>
-<ol>
-<li>联列表结构, 内部维护一个<code>Node&lt;Key, Value&gt;</code>数组, 数组长度为2的幂. 数组长度为hash桶数量, 也称为容量(capacity), != size.</li>
-<li>Node对象除了含有key, value值, 还有next值, 指向下一个被散列在同一个桶中的Entry对象. 所以每个桶中可以看做一个链表.</li>
-<li>当一个桶中的Node数量太多, 那么链表会转化为Tree, 这个桶中的Node会变为TreeNode, 提高了冲撞后的查询效率.</li>
-</ol>
-<h3>主要方法</h3>
-<ol>
-<li>get()</li>
-<li>put()</li>
-<li>remove()</li>
-<li>keySet()</li>
-<li>values()</li>
-</ol>
-<h3>进阶</h3>
-<ol>
-<li>树化</li>
-<li>容量策略</li>
-<li>hash策略</li>
-<li>resize策略</li>
-</ol>
-<h2>源码注解</h2>
+	<p><h2>概要</h2> 
+<h3>前置基本知识</h3> 
+<p>数据结构: 哈希表(散列表), 二叉查找树, 红黑树(optional)</p> 
+<!-- more --> 
+<h3>名词</h3> 
+<ol> 
+ <li>桶, 槽: 散列位置.</li> 
+ <li>Entry, Node, TreeNode: Entry为一个键值对, Node和TreeNode都是Entry的一种特别类型.</li> 
+</ol> 
+<h3>结构</h3> 
+<h4>基本结构</h4> 
+<ol> 
+ <li>联列表结构, 内部维护一个<code>Node&lt;Key, Value&gt;</code>数组, 数组长度为2的幂. 数组长度为hash桶数量, 也称为容量(capacity), != size.</li> 
+ <li>Node对象除了含有key, value值, 还有next值, 指向下一个被散列在同一个桶中的Entry对象. 所以每个桶中可以看做一个链表.</li> 
+ <li>当一个桶中的Node数量太多, 那么链表会转化为Tree, 这个桶中的Node会变为TreeNode, 提高了冲撞后的查询效率.</li> 
+</ol> 
+<h3>主要方法</h3> 
+<ol> 
+ <li>get()</li> 
+ <li>put()</li> 
+ <li>remove()</li> 
+ <li>keySet()</li> 
+ <li>values()</li> 
+</ol> 
+<h3>进阶</h3> 
+<ol> 
+ <li>树化</li> 
+ <li>容量策略</li> 
+ <li>hash策略</li> 
+ <li>resize策略</li> 
+</ol> 
+<h2>源码注解</h2> 
 <pre><code>package java.util;
 
 import java.io.IOException;
@@ -124,7 +124,7 @@ import java.util.function.Function;
  * &lt;p&gt;This implementation provides constant-time performance for the basic
  * operations (&lt;tt&gt;get&lt;/tt&gt; and &lt;tt&gt;put&lt;/tt&gt;), assuming the hash function
  * disperses the elements properly among the buckets.  Iteration over
- * collection views requires time proportional to the &quot;capacity&quot; of the
+ * collection views requires time proportional to the "capacity" of the
  * &lt;tt&gt;HashMap&lt;/tt&gt; instance (the number of buckets) plus its size (the number
  * of key-value mappings).  Thus, it's very important not to set the initial
  * capacity too high (or the load factor too low) if iteration performance is
@@ -184,7 +184,7 @@ import java.util.function.Function;
  * structural modification.)  This is typically accomplished by
  * synchronizing on some object that naturally encapsulates the map.
  *
- * If no such object exists, the map should be &quot;wrapped&quot; using the
+ * If no such object exists, the map should be "wrapped" using the
  * {@link Collections#synchronizedMap Collections.synchronizedMap}
  * method.  This is best done at creation time, to prevent accidental
  * unsynchronized access to the map:&lt;pre&gt;
@@ -193,7 +193,7 @@ import java.util.function.Function;
  * 非线程安全, 添加与删除要注意. 但是改变已有的value倒是没问题.
  * 如果想保证线程安全除了手动处理以外: Map m = Collections.synchronizedMap(new HashMap(...));
  *
- * &lt;p&gt;The iterators returned by all of this class's &quot;collection view methods&quot;
+ * &lt;p&gt;The iterators returned by all of this class's "collection view methods"
  * are &lt;i&gt;fail-fast&lt;/i&gt;: if the map is structurally modified at any time after
  * the iterator is created, in any way except through the iterator's own
  * &lt;tt&gt;remove&lt;/tt&gt; method, the iterator will throw a
@@ -215,7 +215,7 @@ import java.util.function.Function;
  * 迭代修改异常不能保证异步修改. 只是用来检测你代码的bug.
  *
  * &lt;p&gt;This class is a member of the
- * &lt;a href=&quot;{@docRoot}/../technotes/guides/collections/index.html&quot;&gt;
+ * &lt;a href="{@docRoot}/../technotes/guides/collections/index.html"&gt;
  * Java Collections Framework&lt;/a&gt;.
  *
  * @param &lt;K&gt; the type of keys maintained by this map
@@ -256,7 +256,7 @@ public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;
      *
      * Tree bins (i.e., bins whose elements are all TreeNodes) are
      * ordered primarily by hashCode, but in the case of ties, if two
-     * elements are of the same &quot;class C implements Comparable&lt;C&gt;&quot;,
+     * elements are of the same "class C implements Comparable&lt;C&gt;",
      * type then their compareTo method is used for ordering. (We
      * conservatively check generic types via reflection to validate
      * this -- see method comparableClassFor).  The added complexity
@@ -314,7 +314,7 @@ public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;
      * All applicable internal methods accept a hash code as an
      * argument (as normally supplied from a public method), allowing
      * them to call each other without recomputing user hashCodes.
-     * Most internal methods also accept a &quot;tab&quot; argument, that is
+     * Most internal methods also accept a "tab" argument, that is
      * normally the current table, but may be a new or old one when
      * resizing or converting.
      *
@@ -417,7 +417,7 @@ public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;
 
         public final K getKey()        { return key; }
         public final V getValue()      { return value; }
-        public final String toString() { return key + &quot;=&quot; + value; }
+        public final String toString() { return key + "=" + value; }
 
         public final int hashCode() {
             return Objects.hashCode(key) ^ Objects.hashCode(value);
@@ -469,8 +469,8 @@ public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;
     }
 
     /**
-     * Returns x's Class if it is of the form &quot;class C implements
-     * Comparable&lt;C&gt;&quot;, else null.
+     * Returns x's Class if it is of the form "class C implements
+     * Comparable&lt;C&gt;", else null.
      *
      * 如果有比较器就返回, 因为String是常用key类型, 所以做了特殊判断
      */
@@ -499,7 +499,7 @@ public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;
      *
      * 返回比较结果
      */
-    @SuppressWarnings({&quot;rawtypes&quot;,&quot;unchecked&quot;}) // for cast to Comparable
+    @SuppressWarnings({"rawtypes","unchecked"}) // for cast to Comparable
     static int compareComparables(Class&lt;?&gt; kc, Object k, Object x) {
         return (x == null || x.getClass() != kc ? 0 :
                 ((Comparable)k).compareTo(x));
@@ -588,12 +588,12 @@ public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;
      */
     public HashMap(int initialCapacity, float loadFactor) {
         if (initialCapacity &lt; 0)
-            throw new IllegalArgumentException(&quot;Illegal initial capacity: &quot; +
+            throw new IllegalArgumentException("Illegal initial capacity: " +
                                                initialCapacity);
         if (initialCapacity &gt; MAXIMUM_CAPACITY)
             initialCapacity = MAXIMUM_CAPACITY;
         if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))
-            throw new IllegalArgumentException(&quot;Illegal load factor: &quot; +
+            throw new IllegalArgumentException("Illegal load factor: " +
                                                loadFactor);
         this.loadFactor = loadFactor;
         this.threshold = tableSizeFor(initialCapacity);
@@ -869,7 +869,7 @@ public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;
                       (int)ft : Integer.MAX_VALUE);
         }
         threshold = newThr;
-        @SuppressWarnings({&quot;rawtypes&quot;,&quot;unchecked&quot;})
+        @SuppressWarnings({"rawtypes","unchecked"})
             Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])new Node[newCap];
         table = newTab;
         if (oldTab != null) {
@@ -1496,7 +1496,7 @@ public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;
      *
      * @return a shallow copy of this map
      */
-    @SuppressWarnings(&quot;unchecked&quot;)
+    @SuppressWarnings("unchecked")
     @Override
     public Object clone() {
         HashMap&lt;K,V&gt; result;
@@ -1550,12 +1550,12 @@ public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;
         s.defaultReadObject();
         reinitialize();
         if (loadFactor &lt;= 0 || Float.isNaN(loadFactor))
-            throw new InvalidObjectException(&quot;Illegal load factor: &quot; +
+            throw new InvalidObjectException("Illegal load factor: " +
                                              loadFactor);
         s.readInt();                // Read and ignore number of buckets
         int mappings = s.readInt(); // Read number of mappings (size)
         if (mappings &lt; 0)
-            throw new InvalidObjectException(&quot;Illegal mappings count: &quot; +
+            throw new InvalidObjectException("Illegal mappings count: " +
                                              mappings);
         else if (mappings &gt; 0) { // (if zero, use defaults)
             // Size the table using given load factor only if within
@@ -1570,15 +1570,15 @@ public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;
             float ft = (float)cap * lf;
             threshold = ((cap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; MAXIMUM_CAPACITY) ?
                          (int)ft : Integer.MAX_VALUE);
-            @SuppressWarnings({&quot;rawtypes&quot;,&quot;unchecked&quot;})
+            @SuppressWarnings({"rawtypes","unchecked"})
                 Node&lt;K,V&gt;[] tab = (Node&lt;K,V&gt;[])new Node[cap];
             table = tab;
 
             // Read the keys and values, and put the mappings in the HashMap
             for (int i = 0; i &lt; mappings; i++) {
-                @SuppressWarnings(&quot;unchecked&quot;)
+                @SuppressWarnings("unchecked")
                     K key = (K) s.readObject();
-                @SuppressWarnings(&quot;unchecked&quot;)
+                @SuppressWarnings("unchecked")
                     V value = (V) s.readObject();
                 putVal(hash(key), key, value, false, false);
             }
@@ -2192,7 +2192,7 @@ public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;
          * Removes the given node, that must be present before this call.
          * This is messier than typical red-black deletion code because we
          * cannot swap the contents of an interior node with a leaf
-         * successor that is pinned by &quot;next&quot; pointers that are accessible
+         * successor that is pinned by "next" pointers that are accessible
          * independently during traversal. So instead we swap the tree
          * linkages. If the current tree appears to have too few nodes,
          * the bin is converted back to a plain bin. (The test triggers
@@ -2563,8 +2563,7 @@ public class HashMap&lt;K,V&gt; extends AbstractMap&lt;K,V&gt;
     }
 
 }
-</code></pre>
-</p>
+</code></pre></p>
 
 	<hr />
 	
