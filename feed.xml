@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期四, 12 四月 2018 00:12:12 +0800</pubDate>
-    <lastBuildDate>星期四, 12 四月 2018 00:12:12 +0800</lastBuildDate>
+    <pubDate>星期五, 13 四月 2018 22:06:14 +0800</pubDate>
+    <lastBuildDate>星期五, 13 四月 2018 22:06:14 +0800</lastBuildDate>
 
     <item>
       <title>jooq 介绍</title>
@@ -20,7 +20,8 @@
   Table of Contents
  &lt;/div&gt; 
  &lt;ul class=&quot;sectlevel1&quot;&gt; 
-  &lt;li&gt;&lt;a href=&quot;#_前言&quot;&gt;前言&lt;/a&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_前言&quot;&gt;前言&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_对比&quot;&gt;对比&lt;/a&gt; 
    &lt;ul class=&quot;sectlevel2&quot;&gt; 
     &lt;li&gt;&lt;a href=&quot;#_jpa_hibernate&quot;&gt;jpa, hibernate&lt;/a&gt;&lt;/li&gt; 
     &lt;li&gt;&lt;a href=&quot;#_mybatis&quot;&gt;mybatis&lt;/a&gt;&lt;/li&gt; 
@@ -49,15 +50,32 @@
    &lt;p&gt;而 jdbc 本身比较底层, 写起来比较繁琐, 于是产生了很多数据库抽象层的框架或者工具. 比如 JPA, Hibernate, Mybatis 等等.&lt;/p&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;paragraph&quot;&gt; 
-   &lt;p&gt;今天介绍的 JOOQ 也是这样一个框架&lt;/p&gt; 
+   &lt;p&gt;今天介绍的 JOOQ 也是这样一个框架.&lt;/p&gt; 
   &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_对比&quot;&gt;对比&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
    &lt;h3 id=&quot;_jpa_hibernate&quot;&gt;jpa, hibernate&lt;/h3&gt; 
    &lt;div class=&quot;ulist&quot;&gt; 
     &lt;ul&gt; 
-     &lt;li&gt; &lt;p&gt;复杂, 不灵活&lt;/p&gt; &lt;/li&gt; 
-     &lt;li&gt; &lt;p&gt;隐藏了 sql&lt;/p&gt; &lt;/li&gt; 
-     &lt;li&gt; &lt;p&gt;jSQL, HQL&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;ORM 依赖重&lt;/p&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;对于复杂查询, 关联查询, 配置复杂, 依靠对象 mapping 不灵活&lt;/p&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;隐藏了 sql&lt;/p&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;sql是大家都很熟悉的, 通过 sql 我们能够很直观的评估语句的性能.&lt;/p&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;而这个框架隐藏了 sql, 不能直观知道我们对数据库切实执行了什么操作.&lt;/p&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;jSQL, HQL&lt;/p&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;这两个&lt;/p&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
     &lt;/ul&gt; 
    &lt;/div&gt; 
   &lt;/div&gt; 

@@ -71,7 +71,8 @@
   Table of Contents
  </div> 
  <ul class="sectlevel1"> 
-  <li><a href="#_前言">前言</a> 
+  <li><a href="#_前言">前言</a></li> 
+  <li><a href="#_对比">对比</a> 
    <ul class="sectlevel2"> 
     <li><a href="#_jpa_hibernate">jpa, hibernate</a></li> 
     <li><a href="#_mybatis">mybatis</a></li> 
@@ -100,15 +101,32 @@
    <p>而 jdbc 本身比较底层, 写起来比较繁琐, 于是产生了很多数据库抽象层的框架或者工具. 比如 JPA, Hibernate, Mybatis 等等.</p> 
   </div> 
   <div class="paragraph"> 
-   <p>今天介绍的 JOOQ 也是这样一个框架</p> 
+   <p>今天介绍的 JOOQ 也是这样一个框架.</p> 
   </div> 
+ </div> 
+</div> 
+<div class="sect1"> 
+ <h2 id="_对比">对比</h2> 
+ <div class="sectionbody"> 
   <div class="sect2"> 
    <h3 id="_jpa_hibernate">jpa, hibernate</h3> 
    <div class="ulist"> 
     <ul> 
-     <li> <p>复杂, 不灵活</p> </li> 
-     <li> <p>隐藏了 sql</p> </li> 
-     <li> <p>jSQL, HQL</p> </li> 
+     <li> <p>ORM 依赖重</p> 
+      <div class="paragraph"> 
+       <p>对于复杂查询, 关联查询, 配置复杂, 依靠对象 mapping 不灵活</p> 
+      </div> </li> 
+     <li> <p>隐藏了 sql</p> 
+      <div class="paragraph"> 
+       <p>sql是大家都很熟悉的, 通过 sql 我们能够很直观的评估语句的性能.</p> 
+      </div> 
+      <div class="paragraph"> 
+       <p>而这个框架隐藏了 sql, 不能直观知道我们对数据库切实执行了什么操作.</p> 
+      </div> </li> 
+     <li> <p>jSQL, HQL</p> 
+      <div class="paragraph"> 
+       <p>这两个</p> 
+      </div> </li> 
     </ul> 
    </div> 
   </div> 
