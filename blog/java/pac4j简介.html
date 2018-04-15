@@ -74,16 +74,16 @@
   <li><a href="#_什么是_pac4j">什么是 pac4j</a></li> 
   <li><a href="#_重要组件和概念">重要组件和概念</a> 
    <ul class="sectlevel2"> 
-    <li><a href="#_client">client</a></li> 
-    <li><a href="#_authenticator">authenticator</a></li> 
-    <li><a href="#_authorizer">authorizer</a></li> 
-    <li><a href="#_matcher">matcher</a></li> 
-    <li><a href="#_config">config</a></li> 
-    <li><a href="#_user_profile">user profile</a></li> 
-    <li><a href="#_web_context">web context</a></li> 
-    <li><a href="#_security_filter">security filter</a></li> 
-    <li><a href="#_callback_controller">callback controller</a></li> 
-    <li><a href="#_logout_controller">logout controller</a></li> 
+    <li><a href="#_strong_client_strong"><strong>client</strong></a></li> 
+    <li><a href="#_strong_authenticator_strong"><strong>authenticator</strong></a></li> 
+    <li><a href="#_strong_authorizer_strong"><strong>authorizer</strong></a></li> 
+    <li><a href="#_strong_matcher_strong"><strong>matcher</strong></a></li> 
+    <li><a href="#_strong_config_strong"><strong>config</strong></a></li> 
+    <li><a href="#_strong_user_profile_strong"><strong>user profile</strong></a></li> 
+    <li><a href="#_strong_web_context_strong"><strong>web context</strong></a></li> 
+    <li><a href="#_strong_security_filter_strong"><strong>security filter</strong></a></li> 
+    <li><a href="#_strong_callback_controller_strong"><strong>callback controller</strong></a></li> 
+    <li><a href="#_strong_logout_controller_strong"><strong>logout controller</strong></a></li> 
    </ul> </li> 
   <li><a href="#_流程">流程</a></li> 
   <li><a href="#_例子">例子</a> 
@@ -118,7 +118,7 @@
  <h2 id="_重要组件和概念">重要组件和概念</h2> 
  <div class="sectionbody"> 
   <div class="sect2"> 
-   <h3 id="_client">client</h3> 
+   <h3 id="_strong_client_strong"><strong>client</strong></h3> 
    <div class="paragraph"> 
     <p>引入不同的认证包会包含不同的 Client 类, 每一种 Client 类就代表一种登录和认证方式. 比如:</p> 
    </div> 
@@ -127,13 +127,13 @@
    </div> 
   </div> 
   <div class="sect2"> 
-   <h3 id="_authenticator">authenticator</h3> 
+   <h3 id="_strong_authenticator_strong"><strong>authenticator</strong></h3> 
    <div class="paragraph"> 
     <p>Authenticator 是 client 的一个组件, 用来 validate credentials, 并且用来创建 user profile.</p> 
    </div> 
   </div> 
   <div class="sect2"> 
-   <h3 id="_authorizer">authorizer</h3> 
+   <h3 id="_strong_authorizer_strong"><strong>authorizer</strong></h3> 
    <div class="paragraph"> 
     <p>是用来检测 user profiles 是否能够通过授权. pac4j 内置了很多 authorizer:</p> 
    </div> 
@@ -158,7 +158,7 @@ IsRememberedAuthorizer</pre>
    </div> 
   </div> 
   <div class="sect2"> 
-   <h3 id="_matcher">matcher</h3> 
+   <h3 id="_strong_matcher_strong"><strong>matcher</strong></h3> 
    <div class="paragraph"> 
     <p>matcher 通常用来判断一个请求, 是否要经过登录或认证.</p> 
    </div> 
@@ -173,25 +173,25 @@ IsRememberedAuthorizer</pre>
    </div> 
   </div> 
   <div class="sect2"> 
-   <h3 id="_config">config</h3> 
+   <h3 id="_strong_config_strong"><strong>config</strong></h3> 
    <div class="paragraph"> 
     <p>config 配置了要用到的 clients, authorizers, matchers</p> 
    </div> 
   </div> 
   <div class="sect2"> 
-   <h3 id="_user_profile">user profile</h3> 
+   <h3 id="_strong_user_profile_strong"><strong>user profile</strong></h3> 
    <div class="paragraph"> 
     <p>代表一个认证后的用户, 包括 id, 属性, 角色, 权限等.</p> 
    </div> 
   </div> 
   <div class="sect2"> 
-   <h3 id="_web_context">web context</h3> 
+   <h3 id="_strong_web_context_strong"><strong>web context</strong></h3> 
    <div class="paragraph"> 
     <p>是对一个请求的抽象, 包含了 request, response, session, 还有 pac4j 提供的其他的来辅助描述这次请求的数据.</p> 
    </div> 
   </div> 
   <div class="sect2"> 
-   <h3 id="_security_filter">security filter</h3> 
+   <h3 id="_strong_security_filter_strong"><strong>security filter</strong></h3> 
    <div class="paragraph"> 
     <p>security filter 或者其他拦截 http 请求的机制. 根据 client 的不同来进行认证检查, 授权检查, 从而保护一个 url 地址.</p> 
    </div> 
@@ -200,7 +200,7 @@ IsRememberedAuthorizer</pre>
    </div> 
   </div> 
   <div class="sect2"> 
-   <h3 id="_callback_controller">callback controller</h3> 
+   <h3 id="_strong_callback_controller_strong"><strong>callback controller</strong></h3> 
    <div class="paragraph"> 
     <p>对与 "间接 client" indirect client, 比如需要在一个特殊页面进行登录, 而不是每个请求直接携带认证信息的 client.</p> 
    </div> 
@@ -209,7 +209,7 @@ IsRememberedAuthorizer</pre>
    </div> 
   </div> 
   <div class="sect2"> 
-   <h3 id="_logout_controller">logout controller</h3> 
+   <h3 id="_strong_logout_controller_strong"><strong>logout controller</strong></h3> 
    <div class="paragraph"> 
     <p>执行登出操作</p> 
    </div> 

@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期日, 15 四月 2018 20:30:34 +0800</pubDate>
-    <lastBuildDate>星期日, 15 四月 2018 20:30:34 +0800</lastBuildDate>
+    <pubDate>星期日, 15 四月 2018 20:33:31 +0800</pubDate>
+    <lastBuildDate>星期日, 15 四月 2018 20:33:31 +0800</lastBuildDate>
 
     <item>
       <title>pac4j 简介</title>
@@ -23,16 +23,16 @@
   &lt;li&gt;&lt;a href=&quot;#_什么是_pac4j&quot;&gt;什么是 pac4j&lt;/a&gt;&lt;/li&gt; 
   &lt;li&gt;&lt;a href=&quot;#_重要组件和概念&quot;&gt;重要组件和概念&lt;/a&gt; 
    &lt;ul class=&quot;sectlevel2&quot;&gt; 
-    &lt;li&gt;&lt;a href=&quot;#_client&quot;&gt;client&lt;/a&gt;&lt;/li&gt; 
-    &lt;li&gt;&lt;a href=&quot;#_authenticator&quot;&gt;authenticator&lt;/a&gt;&lt;/li&gt; 
-    &lt;li&gt;&lt;a href=&quot;#_authorizer&quot;&gt;authorizer&lt;/a&gt;&lt;/li&gt; 
-    &lt;li&gt;&lt;a href=&quot;#_matcher&quot;&gt;matcher&lt;/a&gt;&lt;/li&gt; 
-    &lt;li&gt;&lt;a href=&quot;#_config&quot;&gt;config&lt;/a&gt;&lt;/li&gt; 
-    &lt;li&gt;&lt;a href=&quot;#_user_profile&quot;&gt;user profile&lt;/a&gt;&lt;/li&gt; 
-    &lt;li&gt;&lt;a href=&quot;#_web_context&quot;&gt;web context&lt;/a&gt;&lt;/li&gt; 
-    &lt;li&gt;&lt;a href=&quot;#_security_filter&quot;&gt;security filter&lt;/a&gt;&lt;/li&gt; 
-    &lt;li&gt;&lt;a href=&quot;#_callback_controller&quot;&gt;callback controller&lt;/a&gt;&lt;/li&gt; 
-    &lt;li&gt;&lt;a href=&quot;#_logout_controller&quot;&gt;logout controller&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_strong_client_strong&quot;&gt;&lt;strong&gt;client&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_strong_authenticator_strong&quot;&gt;&lt;strong&gt;authenticator&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_strong_authorizer_strong&quot;&gt;&lt;strong&gt;authorizer&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_strong_matcher_strong&quot;&gt;&lt;strong&gt;matcher&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_strong_config_strong&quot;&gt;&lt;strong&gt;config&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_strong_user_profile_strong&quot;&gt;&lt;strong&gt;user profile&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_strong_web_context_strong&quot;&gt;&lt;strong&gt;web context&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_strong_security_filter_strong&quot;&gt;&lt;strong&gt;security filter&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_strong_callback_controller_strong&quot;&gt;&lt;strong&gt;callback controller&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_strong_logout_controller_strong&quot;&gt;&lt;strong&gt;logout controller&lt;/strong&gt;&lt;/a&gt;&lt;/li&gt; 
    &lt;/ul&gt; &lt;/li&gt; 
   &lt;li&gt;&lt;a href=&quot;#_流程&quot;&gt;流程&lt;/a&gt;&lt;/li&gt; 
   &lt;li&gt;&lt;a href=&quot;#_例子&quot;&gt;例子&lt;/a&gt; 
@@ -67,7 +67,7 @@
  &lt;h2 id=&quot;_重要组件和概念&quot;&gt;重要组件和概念&lt;/h2&gt; 
  &lt;div class=&quot;sectionbody&quot;&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
-   &lt;h3 id=&quot;_client&quot;&gt;client&lt;/h3&gt; 
+   &lt;h3 id=&quot;_strong_client_strong&quot;&gt;&lt;strong&gt;client&lt;/strong&gt;&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
     &lt;p&gt;引入不同的认证包会包含不同的 Client 类, 每一种 Client 类就代表一种登录和认证方式. 比如:&lt;/p&gt; 
    &lt;/div&gt; 
@@ -76,13 +76,13 @@
    &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
-   &lt;h3 id=&quot;_authenticator&quot;&gt;authenticator&lt;/h3&gt; 
+   &lt;h3 id=&quot;_strong_authenticator_strong&quot;&gt;&lt;strong&gt;authenticator&lt;/strong&gt;&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
     &lt;p&gt;Authenticator 是 client 的一个组件, 用来 validate credentials, 并且用来创建 user profile.&lt;/p&gt; 
    &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
-   &lt;h3 id=&quot;_authorizer&quot;&gt;authorizer&lt;/h3&gt; 
+   &lt;h3 id=&quot;_strong_authorizer_strong&quot;&gt;&lt;strong&gt;authorizer&lt;/strong&gt;&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
     &lt;p&gt;是用来检测 user profiles 是否能够通过授权. pac4j 内置了很多 authorizer:&lt;/p&gt; 
    &lt;/div&gt; 
@@ -107,7 +107,7 @@ IsRememberedAuthorizer&lt;/pre&gt;
    &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
-   &lt;h3 id=&quot;_matcher&quot;&gt;matcher&lt;/h3&gt; 
+   &lt;h3 id=&quot;_strong_matcher_strong&quot;&gt;&lt;strong&gt;matcher&lt;/strong&gt;&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
     &lt;p&gt;matcher 通常用来判断一个请求, 是否要经过登录或认证.&lt;/p&gt; 
    &lt;/div&gt; 
@@ -122,25 +122,25 @@ IsRememberedAuthorizer&lt;/pre&gt;
    &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
-   &lt;h3 id=&quot;_config&quot;&gt;config&lt;/h3&gt; 
+   &lt;h3 id=&quot;_strong_config_strong&quot;&gt;&lt;strong&gt;config&lt;/strong&gt;&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
     &lt;p&gt;config 配置了要用到的 clients, authorizers, matchers&lt;/p&gt; 
    &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
-   &lt;h3 id=&quot;_user_profile&quot;&gt;user profile&lt;/h3&gt; 
+   &lt;h3 id=&quot;_strong_user_profile_strong&quot;&gt;&lt;strong&gt;user profile&lt;/strong&gt;&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
     &lt;p&gt;代表一个认证后的用户, 包括 id, 属性, 角色, 权限等.&lt;/p&gt; 
    &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
-   &lt;h3 id=&quot;_web_context&quot;&gt;web context&lt;/h3&gt; 
+   &lt;h3 id=&quot;_strong_web_context_strong&quot;&gt;&lt;strong&gt;web context&lt;/strong&gt;&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
     &lt;p&gt;是对一个请求的抽象, 包含了 request, response, session, 还有 pac4j 提供的其他的来辅助描述这次请求的数据.&lt;/p&gt; 
    &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
-   &lt;h3 id=&quot;_security_filter&quot;&gt;security filter&lt;/h3&gt; 
+   &lt;h3 id=&quot;_strong_security_filter_strong&quot;&gt;&lt;strong&gt;security filter&lt;/strong&gt;&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
     &lt;p&gt;security filter 或者其他拦截 http 请求的机制. 根据 client 的不同来进行认证检查, 授权检查, 从而保护一个 url 地址.&lt;/p&gt; 
    &lt;/div&gt; 
@@ -149,7 +149,7 @@ IsRememberedAuthorizer&lt;/pre&gt;
    &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
-   &lt;h3 id=&quot;_callback_controller&quot;&gt;callback controller&lt;/h3&gt; 
+   &lt;h3 id=&quot;_strong_callback_controller_strong&quot;&gt;&lt;strong&gt;callback controller&lt;/strong&gt;&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
     &lt;p&gt;对与 &quot;间接 client&quot; indirect client, 比如需要在一个特殊页面进行登录, 而不是每个请求直接携带认证信息的 client.&lt;/p&gt; 
    &lt;/div&gt; 
@@ -158,7 +158,7 @@ IsRememberedAuthorizer&lt;/pre&gt;
    &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
-   &lt;h3 id=&quot;_logout_controller&quot;&gt;logout controller&lt;/h3&gt; 
+   &lt;h3 id=&quot;_strong_logout_controller_strong&quot;&gt;&lt;strong&gt;logout controller&lt;/strong&gt;&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
     &lt;p&gt;执行登出操作&lt;/p&gt; 
    &lt;/div&gt; 
