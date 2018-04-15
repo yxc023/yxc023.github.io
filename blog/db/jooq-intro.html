@@ -85,20 +85,8 @@
    <ul class="sectlevel2"> 
     <li><a href="#_sql_builder_作为_sql_的构造器">sql builder, 作为 sql 的构造器</a></li> 
     <li><a href="#_sql_executor_更进一步_作为_sql_执行器">sql executor, 更进一步, 作为 sql 执行器</a></li> 
-    <li><a href="#_typesafe_sql_builder_and_executor_作为强类型的_sql_构建和执行器">typesafe sql builder and executor, 作为强类型的 sql 构建和执行器</a> 
-     <ul class="sectlevel3"> 
-      <li><a href="#_curd">curd</a></li> 
-     </ul> </li> 
-    <li><a href="#_mapper">mapper</a></li> 
-    <li><a href="#_特性总结">特性总结</a></li> 
    </ul> </li> 
-  <li><a href="#_缺点">缺点</a> 
-   <ul class="sectlevel2"> 
-    <li><a href="#_性能">性能</a></li> 
-    <li><a href="#_商业化">商业化</a></li> 
-    <li><a href="#_jdk_要求">jdk 要求</a></li> 
-    <li><a href="#_学习成本">学习成本</a></li> 
-   </ul> </li> 
+  <li><a href="#_执行结果">执行结果</a></li> 
  </ul> 
 </div> 
 <div class="sect1"> 
@@ -320,9 +308,9 @@
    </div> 
    <div class="listingblock"> 
     <div class="content"> 
-     <pre class="prettyprint highlight"><code class="language-console" data-lang="console">select id, title, published_in from book
+     <pre>select id, title, published_in from book
 select * from book join language as `a` on (book.language_id = a.id)
-select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = ? and (published_in = 1990))</code></pre> 
+select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = ? and (published_in = 1990))</pre> 
     </div> 
    </div> 
    <div class="paragraph"> 
@@ -369,72 +357,72 @@ public void before() {
 }</code></pre> 
     </div> 
    </div> 
-   <div class="paragraph"> 
-    <p>执行结果</p> 
-   </div> 
-   <div class="listingblock"> 
-    <div class="content"> 
-     <pre class="prettyprint highlight"><code class="language-console" data-lang="console">11:44:36.067 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = ? and (published_in = 1990))
-11:44:36.068 [main] DEBUG org.jooq.tools.LoggerListener - -&gt; with bind values      : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = 2 and (published_in = 1990))
-11:44:36.660 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = ? and (published_in = 1990))
-11:44:36.660 [main] DEBUG org.jooq.tools.LoggerListener - -&gt; with bind values      : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = 2 and (published_in = 1990))
-11:44:36.760 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-------------------------------+------------+-----------+---------+----+----+-----------+
-11:44:36.760 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|title                          |published_in|language_id|new_field|  id|cd  |description|
-11:44:36.764 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------+------------+-----------+---------+----+----+-----------+
-11:44:36.764 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Bridahahahahahahahahahahahahaha|        1990|          2|        0|   2|de  |Deutsch    |
-11:44:36.764 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------+------------+-----------+---------+----+----+-----------+</code></pre> 
-    </div> 
-   </div> 
-   <div class="paragraph"> 
-    <p>以上是我们通过 jooq api 和自己拼写 sql 字符串的方式执行 sql.</p> 
+  </div> 
+ </div> 
+</div> 
+<div class="sect1"> 
+ <h2 id="_执行结果">执行结果</h2> 
+ <div class="sectionbody"> 
+  <div class="paragraph"> 
+   <p>11:44:36.067 [main] DEBUG org.jooq.tools.LoggerListener - Executing query : select * from book join language as <code>a</code> on (book.language_id = a.id) where (book.author_id = ? and (published_in = 1990)) 11:44:36.068 [main] DEBUG org.jooq.tools.LoggerListener - → with bind values : select * from book join language as <code>a</code> on (book.language_id = a.id) where (book.author_id = 2 and (published_in = 1990)) 11:44:36.660 [main] DEBUG org.jooq.tools.LoggerListener - Executing query : select * from book join language as <code>a</code> on (book.language_id = a.id) where (book.author_id = ? and (published_in = 1990)) 11:44:36.660 [main] DEBUG org.jooq.tools.LoggerListener - → with bind values : select * from book join language as <code>a</code> on (book.language_id = a.id) where (book.author_id = 2 and (published_in = 1990)) 11:44:36.760 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result : ----------------------------------------------------------------------------------------------- 11:44:36.760 [main] DEBUG org.jooq.tools.LoggerListener - : | id|author_id|title |published_in|language_id|new_field| id|cd |description| 11:44:36.764 [main] DEBUG org.jooq.tools.LoggerListener - : ----------------------------------------------------------------------------------------------- 11:44:36.764 [main] DEBUG org.jooq.tools.LoggerListener - : | 4| 2|Bridahahahahahahahahahahahahaha| 1990| 2| 0| 2|de |Deutsch | 11:44:36.764 [main] DEBUG org.jooq.tools.LoggerListener - : -----------------------------------------------------------------------------------------------</p> 
+  </div> 
+  <div class="listingblock"> 
+   <div class="content"> 
+    <pre>以上是我们通过 jooq api 和自己拼写 sql 字符串的方式执行 sql.
+
+=== typesafe sql builder and executor, 作为强类型的 sql 构建和执行器
+
+这一步我们要借助 jooq 的 code generator 来生成数据库的描述文件.
+
+code generator 有 gradle 和 maven 的插件可以使用. 我是用的是 gradle 插件, 我的测试使用配置如下
+[source,gradle]</pre> 
    </div> 
   </div> 
-  <div class="sect2"> 
-   <h3 id="_typesafe_sql_builder_and_executor_作为强类型的_sql_构建和执行器">typesafe sql builder and executor, 作为强类型的 sql 构建和执行器</h3> 
-   <div class="paragraph"> 
-    <p>这一步我们要借助 jooq 的 code generator 来生成数据库的描述文件.</p> 
+  <div class="paragraph"> 
+   <p>plugins { id 'nu.studer.jooq' version '2.0.9' id 'java' }</p> 
+  </div> 
+  <div class="paragraph"> 
+   <p>dependencies {</p> 
+  </div> 
+  <div class="literalblock"> 
+   <div class="content"> 
+    <pre>jooqRuntime('mysql:mysql-connector-java:5.1.44')</pre> 
    </div> 
-   <div class="paragraph"> 
-    <p>code generator 有 gradle 和 maven 的插件可以使用. 我是用的是 gradle 插件, 我的测试使用配置如下</p> 
+  </div> 
+  <div class="literalblock"> 
+   <div class="content"> 
+    <pre>testCompile group: 'junit', name: 'junit', version: '4.12'
+testCompile 'org.slf4j:slf4j-api:1.7.21'
+testCompile 'ch.qos.logback:logback-core:1.2.3'
+testCompile 'ch.qos.logback:logback-classic:1.2.3'</pre> 
    </div> 
-   <div class="listingblock"> 
-    <div class="content"> 
-     <pre class="prettyprint highlight"><code class="language-gradle" data-lang="gradle">plugins {
-    id 'nu.studer.jooq' version '2.0.9'
-    id 'java'
-}
-
-dependencies {
-
-    jooqRuntime('mysql:mysql-connector-java:5.1.44')
-
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile 'org.slf4j:slf4j-api:1.7.21'
-    testCompile 'ch.qos.logback:logback-core:1.2.3'
-    testCompile 'ch.qos.logback:logback-classic:1.2.3'
-
-    testCompile('org.jooq:jooq:3.10.6')
+  </div> 
+  <div class="literalblock"> 
+   <div class="content"> 
+    <pre>    testCompile('org.jooq:jooq:3.10.6')
     testCompile('mysql:mysql-connector-java:5.1.44')
-}
-
-jooq {
-    sample(sourceSets.main) {
-        jdbc {
-            driver = 'com.mysql.jdbc.Driver'
-            url = 'jdbc:mysql://localhost:3306/test'
-            user = 'root'
-            password = ''
-        }
-        generator {
-
-            database {
-                name = 'org.jooq.util.mysql.MySQLDatabase'
-                inputSchema = 'jooq_test'
-                outputSchemaToDefault = true
-
-            }
-
-            generate {
+}</pre> 
+   </div> 
+  </div> 
+  <div class="paragraph"> 
+   <p>jooq { sample(sourceSets.main) { jdbc { driver = 'com.mysql.jdbc.Driver' url = 'jdbc:mysql://localhost:3306/test' user = 'root' password = '' } generator {</p> 
+  </div> 
+  <div class="literalblock"> 
+   <div class="content"> 
+    <pre>database {
+    name = 'org.jooq.util.mysql.MySQLDatabase'
+    inputSchema = 'jooq_test'
+    outputSchemaToDefault = true</pre> 
+   </div> 
+  </div> 
+  <div class="literalblock"> 
+   <div class="content"> 
+    <pre>}</pre> 
+   </div> 
+  </div> 
+  <div class="literalblock"> 
+   <div class="content"> 
+    <pre>            generate {
                 relations = true
                 deprecated = false
                 records = true
@@ -449,147 +437,90 @@ jooq {
             }
         }
     }
-}</code></pre> 
-    </div> 
-   </div> 
-   <div class="paragraph"> 
-    <p>然后执行</p> 
-   </div> 
-   <div class="listingblock"> 
-    <div class="content"> 
-     <pre class="prettyprint highlight"><code class="language-console" data-lang="console">./gradlew generateSampleJooqSchemaSource</code></pre> 
-    </div> 
-   </div> 
-   <div class="paragraph"> 
-    <p>生成代码.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>生成之后, 就可以使用了</p> 
-   </div> 
-   <div class="listingblock"> 
-    <div class="content"> 
-     <pre class="prettyprint highlight"><code class="language-java" data-lang="java">{
-    Result&lt;Record3&lt;Integer, Integer, String&gt;&gt; result = sql.select(BOOK.ID, BOOK.AUTHOR_ID, LANGUAGE.DESCRIPTION).from(BOOK).join(LANGUAGE)
-            .on(BOOK.LANGUAGE_ID.eq(LANGUAGE.ID))
-            .where(BOOK.PUBLISHED_IN.eq(1990))
-            .fetch();
-    Integer id = result.get(0).getValue(BOOK.ID);
-    Integer authorId = result.get(0).get("author_id", Integer.class);
-    String desc = result.get(0).value3();
-    System.out.println(id + " " + authorId + " " + desc);
-
-}</code></pre> 
-    </div> 
-   </div> 
-   <div class="paragraph"> 
-    <p>执行结果:</p> 
-   </div> 
-   <div class="listingblock"> 
-    <div class="content"> 
-     <pre class="prettyprint highlight"><code class="language-console" data-lang="console">12:06:40.515 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
-12:06:40.516 [main] DEBUG org.jooq.tools.LoggerListener - -&gt; with bind values      : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = 1990
-12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------+
-12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|description|
-12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
-12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Deutsch    |
-12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
-4 2 Deutsch</code></pre> 
-    </div> 
-   </div> 
-   <div class="paragraph"> 
-    <p>可以看到, jooq 通过生成数据库描述代码来保证强类型, 当数据库发生变动, 可以重新生成.</p> 
-   </div> 
-   <div class="sect3"> 
-    <h4 id="_curd">curd</h4> 
-    <div class="paragraph"> 
-     <p>JOOQ 针对 CURD 生成基本代码, 来避免重复编码. JOOQ 对 CURD 的支持主要氛围 record 和 dao 两种方式, 可以一起使用:</p> 
-    </div> 
-    <div class="listingblock"> 
-     <div class="content"> 
-      <pre class="prettyprint highlight"><code class="language-java" data-lang="java">BookRecord bookRecord = sql.selectFrom(BOOK).where(BOOK.ID.eq(4)).fetchOne();
-System.out.println(bookRecord);
-bookRecord.setTitle(bookRecord.getTitle() + "ha");
-bookRecord.store();
-
-BookRecord bookRecord1 = sql.newRecord(BOOK);
-bookRecord1.setAuthorId(2);
-bookRecord1.setLanguageId(1);
-bookRecord1.setTitle("hello");
-bookRecord1.setPublishedIn(2018);
-bookRecord1.store();
-
-System.out.println(bookRecord1);
-
-BookDao bookDao = new BookDao(sql.configuration());
-List&lt;Book&gt; books = bookDao.fetchByAuthorId(2);
-System.out.println(books.get(0));</code></pre> 
-     </div> 
-    </div> 
-    <div class="paragraph"> 
-     <p>执行结果</p> 
-    </div> 
-    <div class="listingblock"> 
-     <div class="content"> 
-      <pre class="prettyprint highlight"><code class="language-console" data-lang="console">12:18:55.420 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = ?
-12:18:55.422 [main] DEBUG org.jooq.tools.LoggerListener - -&gt; with bind values      : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = 4
-12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------------------------------+------------+-----------+---------+
-12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|title                              |published_in|language_id|new_field|
-12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------------------------------+------------+-----------+---------+
-12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Bridahahahahahahahahahahahahahahaha|        1990|          2|        0|
-12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------------------------------+------------+-----------+---------+
-+----+---------+-----------------------------------+------------+-----------+---------+
-|  id|author_id|title                              |published_in|language_id|new_field|
-+----+---------+-----------------------------------+------------+-----------+---------+
-|   4|        2|Bridahahahahahahahahahahahahahahaha|        1990|          2|        0|
-+----+---------+-----------------------------------+------------+-----------+---------+
-12:18:56.198 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : update `book` set `book`.`title` = ? where `book`.`id` = ?
-12:18:56.199 [main] DEBUG org.jooq.tools.LoggerListener - -&gt; with bind values      : update `book` set `book`.`title` = 'Bridahahahahahahahahahahahahahahahaha' where `book`.`id` = 4
-12:18:56.240 [main] DEBUG org.jooq.tools.LoggerListener - Affected row(s)          : 1
-12:18:56.250 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : insert into `book` (`author_id`, `title`, `published_in`, `language_id`) values (?, ?, ?, ?)
-12:18:56.250 [main] DEBUG org.jooq.tools.LoggerListener - -&gt; with bind values      : insert into `book` (`author_id`, `title`, `published_in`, `language_id`) values (2, 'hello', 2018, 1)
-12:18:56.268 [main] DEBUG org.jooq.tools.LoggerListener - Affected row(s)          : 1
-12:18:56.270 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id` from `book` where `book`.`id` = ?
-12:18:56.271 [main] DEBUG org.jooq.tools.LoggerListener - -&gt; with bind values      : select `book`.`id` from `book` where `book`.`id` = 19
-12:18:56.291 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+
-12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|
-12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+
-12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  19|
-12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+
-+----+---------+-----+------------+-----------+---------+
-|  id|author_id|title|published_in|language_id|new_field|
-+----+---------+-----+------------+-----------+---------+
-|  19|        2|hello|        2018|          1|   {null}|
-+----+---------+-----+------------+-----------+---------+
-12:18:56.305 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`author_id` in (?)
-12:18:56.306 [main] DEBUG org.jooq.tools.LoggerListener - -&gt; with bind values      : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`author_id` in (2)
-12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-------------------------------------+------------+-----------+---------+
-12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|title                                |published_in|language_id|new_field|
-12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------------+------------+-----------+---------+
-12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   3|        2|O Alquimista                         |        1988|          4|        0|
-12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Bridahahahahahahahahahahahahahahahaha|        1990|          2|        0|
-12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  10|        2|hello                                |        2018|          1|        0|
-12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  11|        2|hello                                |        2018|          1|        0|
-12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  12|        2|hello                                |        2018|          1|        0|
-12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------------+------------+-----------+---------+
-12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |...7 record(s) truncated...
-Book (3, 2, O Alquimista, 1988, 4, 0)</code></pre> 
-     </div> 
-    </div> 
+}</pre> 
    </div> 
   </div> 
-  <div class="sect2"> 
-   <h3 id="_mapper">mapper</h3> 
-   <div class="paragraph"> 
-    <p>JOOQ 还提供了内置的映射功能, 方便我们进行对象的转换</p> 
+  <div class="listingblock"> 
+   <div class="content"> 
+    <pre>然后执行
+[source,console]</pre> 
    </div> 
-   <div class="listingblock"> 
-    <div class="content"> 
-     <pre class="prettyprint highlight"><code class="language-java" data-lang="java"> public static class R {
-    public Integer id;
-    public Integer authorId;
-    public String description;
+  </div> 
+  <div class="listingblock"> 
+   <div class="title">
+    /gradlew generateSampleJooqSchemaSource
+   </div> 
+   <div class="content"> 
+    <pre>生成代码.
 
-    @Override
+生成之后, 就可以使用了
+[source,java]</pre> 
+   </div> 
+  </div> 
+  <div class="paragraph"> 
+   <p>{ Result&lt;Record3&lt;Integer, Integer, String&gt;&gt; result = sql.select(BOOK.ID, BOOK.AUTHOR_ID, LANGUAGE.DESCRIPTION) .from(BOOK).join(LANGUAGE) .on(BOOK.LANGUAGE_ID.eq(LANGUAGE.ID)) .where(BOOK.PUBLISHED_IN.eq(1990)) .fetch(); Integer id = result.get(0).getValue(BOOK.ID); Integer authorId = result.get(0).get("author_id", Integer.class); String desc = result.get(0).value3(); System.out.println(id + " " + authorId + " " + desc);</p> 
+  </div> 
+  <div class="paragraph"> 
+   <p>}</p> 
+  </div> 
+  <div class="listingblock"> 
+   <div class="content"> 
+    <pre>执行结果:</pre> 
+   </div> 
+  </div> 
+  <div class="paragraph"> 
+   <p>12:06:40.515 [main] DEBUG org.jooq.tools.LoggerListener - Executing query : select <code>book</code>.<code>id</code>, <code>book</code>.<code>author_id</code>, <code>language</code>.<code>description</code> from <code>book</code> join <code>language</code> on <code>book</code>.<code>language_id</code> = <code>language</code>.<code>id</code> where <code>book</code>.<code>published_in</code> = ? 12:06:40.516 [main] DEBUG org.jooq.tools.LoggerListener - → with bind values : select <code>book</code>.<code>id</code>, <code>book</code>.<code>author_id</code>, <code>language</code>.<code>description</code> from <code>book</code> join <code>language</code> on <code>book</code>.<code>language_id</code> = <code>language</code>.<code>id</code> where <code>book</code>.<code>published_in</code> = 1990 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result : ------------------------ 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener - : | id|author_id|description| 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener - : ------------------------ 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener - : | 4| 2|Deutsch | 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener - : ------------------------ 4 2 Deutsch</p> 
+  </div> 
+  <div class="listingblock"> 
+   <div class="content"> 
+    <pre>可以看到, jooq 通过生成数据库描述代码来保证强类型, 当数据库发生变动, 可以重新生成.
+
+==== curd
+
+JOOQ 针对 CURD 生成基本代码, 来避免重复编码. JOOQ 对 CURD 的支持主要氛围 record 和 dao 两种方式, 可以一起使用:
+
+[source,java]</pre> 
+   </div> 
+  </div> 
+  <div class="paragraph"> 
+   <p>BookRecord bookRecord = sql.selectFrom(BOOK).where(BOOK.ID.eq(4)).fetchOne(); System.out.println(bookRecord); bookRecord.setTitle(bookRecord.getTitle() + "ha"); bookRecord.store();</p> 
+  </div> 
+  <div class="paragraph"> 
+   <p>BookRecord bookRecord1 = sql.newRecord(BOOK); bookRecord1.setAuthorId(2); bookRecord1.setLanguageId(1); bookRecord1.setTitle("hello"); bookRecord1.setPublishedIn(2018); bookRecord1.store();</p> 
+  </div> 
+  <div class="paragraph"> 
+   <p>System.out.println(bookRecord1);</p> 
+  </div> 
+  <div class="paragraph"> 
+   <p>BookDao bookDao = new BookDao(sql.configuration()); List&lt;Book&gt; books = bookDao.fetchByAuthorId(2); System.out.println(books.get(0));</p> 
+  </div> 
+  <div class="listingblock"> 
+   <div class="content"> 
+    <pre>执行结果</pre> 
+   </div> 
+  </div> 
+  <div class="paragraph"> 
+   <p>12:18:55.420 [main] DEBUG org.jooq.tools.LoggerListener - Executing query : select <code>book</code>.<code>id</code>, <code>book</code>.<code>author_id</code>, <code>book</code>.<code>title</code>, <code>book</code>.<code>published_in</code>, <code>book</code>.<code>language_id</code>, <code>book</code>.<code>new_field</code> from <code>book</code> where <code>book</code>.<code>id</code> = ? 12:18:55.422 [main] DEBUG org.jooq.tools.LoggerListener - → with bind values : select <code>book</code>.<code>id</code>, <code>book</code>.<code>author_id</code>, <code>book</code>.<code>title</code>, <code>book</code>.<code>published_in</code>, <code>book</code>.<code>language_id</code>, <code>book</code>.<code>new_field</code> from <code>book</code> where <code>book</code>.<code>id</code> = 4 12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result : --------------------------------------------------------------------------------+ 12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener - : | id|author_id|title |published_in|language_id|new_field| 12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener - : --------------------------------------------------------------------------------+ 12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener - : | 4| 2|Bridahahahahahahahahahahahahahahaha| 1990| 2| 0| 12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener - : --------------------------------------------------------------------------------+ --------------------------------------------------------------------------------+ | id|author_id|title |published_in|language_id|new_field| --------------------------------------------------------------------------------+ | 4| 2|Bridahahahahahahahahahahahahahahaha| 1990| 2| 0| --------------------------------------------------------------------------------+ 12:18:56.198 [main] DEBUG org.jooq.tools.LoggerListener - Executing query : update <code>book</code> set <code>book</code>.<code>title</code> = ? where <code>book</code>.<code>id</code> = ? 12:18:56.199 [main] DEBUG org.jooq.tools.LoggerListener - → with bind values : update <code>book</code> set <code>book</code>.<code>title</code> = 'Bridahahahahahahahahahahahahahahahaha' where <code>book</code>.<code>id</code> = 4 12:18:56.240 [main] DEBUG org.jooq.tools.LoggerListener - Affected row(s) : 1 12:18:56.250 [main] DEBUG org.jooq.tools.LoggerListener - Executing query : insert into <code>book</code> (<code>author_id</code>, <code>title</code>, <code>published_in</code>, <code>language_id</code>) values (?, ?, ?, ?) 12:18:56.250 [main] DEBUG org.jooq.tools.LoggerListener - → with bind values : insert into <code>book</code> (<code>author_id</code>, <code>title</code>, <code>published_in</code>, <code>language_id</code>) values (2, 'hello', 2018, 1) 12:18:56.268 [main] DEBUG org.jooq.tools.LoggerListener - Affected row(s) : 1 12:18:56.270 [main] DEBUG org.jooq.tools.LoggerListener - Executing query : select <code>book</code>.<code>id</code> from <code>book</code> where <code>book</code>.<code>id</code> = ? 12:18:56.271 [main] DEBUG org.jooq.tools.LoggerListener - → with bind values : select <code>book</code>.<code>id</code> from <code>book</code> where <code>book</code>.<code>id</code> = 19 12:18:56.291 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result : ---- 12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener - : | id| 12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener - : ---- 12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener - : | 19| 12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener - : ---- --------------------------------------------------+ | id|author_id|title|published_in|language_id|new_field| --------------------------------------------------+ | 19| 2|hello| 2018| 1| {null}| --------------------------------------------------+ 12:18:56.305 [main] DEBUG org.jooq.tools.LoggerListener - Executing query : select <code>book</code>.<code>id</code>, <code>book</code>.<code>author_id</code>, <code>book</code>.<code>title</code>, <code>book</code>.<code>published_in</code>, <code>book</code>.<code>language_id</code>, <code>book</code>.<code>new_field</code> from <code>book</code> where <code>book</code>.<code>author_id</code> in (?) 12:18:56.306 [main] DEBUG org.jooq.tools.LoggerListener - → with bind values : select <code>book</code>.<code>id</code>, <code>book</code>.<code>author_id</code>, <code>book</code>.<code>title</code>, <code>book</code>.<code>published_in</code>, <code>book</code>.<code>language_id</code>, <code>book</code>.<code>new_field</code> from <code>book</code> where <code>book</code>.<code>author_id</code> in (2) 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result : ----------------------------------------------------------------------------------+ 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener - : | id|author_id|title |published_in|language_id|new_field| 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener - : ----------------------------------------------------------------------------------+ 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener - : | 3| 2|O Alquimista | 1988| 4| 0| 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener - : | 4| 2|Bridahahahahahahahahahahahahahahahaha| 1990| 2| 0| 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener - : | 10| 2|hello | 2018| 1| 0| 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener - : | 11| 2|hello | 2018| 1| 0| 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener - : | 12| 2|hello | 2018| 1| 0| 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener - : ----------------------------------------------------------------------------------+ 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener - : |…​7 record(s) truncated…​ Book (3, 2, O Alquimista, 1988, 4, 0)</p> 
+  </div> 
+  <div class="listingblock"> 
+   <div class="content"> 
+    <pre>=== mapper
+
+JOOQ 还提供了内置的映射功能, 方便我们进行对象的转换
+[source,java]</pre> 
+   </div> 
+  </div> 
+  <div class="literalblock"> 
+   <div class="content"> 
+    <pre>public static class R {
+   public Integer id;
+   public Integer authorId;
+   public String description;</pre> 
+   </div> 
+  </div> 
+  <div class="literalblock"> 
+   <div class="content"> 
+    <pre>    @Override
     public String toString() {
         return "R{" +
                 "id=" + id +
@@ -597,110 +528,82 @@ Book (3, 2, O Alquimista, 1988, 4, 0)</code></pre>
                 ", description='" + description + '\'' +
                 '}';
     }
-}
-
-@Test
-public void mapping() {
-
-    List&lt;R&gt; r = sql.select(BOOK.ID, BOOK.AUTHOR_ID, LANGUAGE.DESCRIPTION).from(BOOK).join(LANGUAGE)
-            .on(BOOK.LANGUAGE_ID.eq(LANGUAGE.ID))
-            .where(BOOK.PUBLISHED_IN.eq(1990)).fetch().into(R.class);
-
-    r.forEach(it -&gt; System.out.println(it));
-}</code></pre> 
-    </div> 
-   </div> 
-   <div class="paragraph"> 
-    <p>执行结果</p> 
-   </div> 
-   <div class="listingblock"> 
-    <div class="content"> 
-     <pre class="prettyprint highlight"><code class="language-console" data-lang="console">12:23:00.964 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
-12:23:00.965 [main] DEBUG org.jooq.tools.LoggerListener - -&gt; with bind values      : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = 1990
-12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------+
-12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|description|
-12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
-12:23:01.863 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Deutsch    |
-12:23:01.863 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
-R{id=4, authorId=2, description='Deutsch'}</code></pre> 
-    </div> 
+}</pre> 
    </div> 
   </div> 
-  <div class="sect2"> 
-   <h3 id="_特性总结">特性总结</h3> 
-   <div class="paragraph"> 
-    <p>JOOQ 提供了方便流式 API 用于构建各种各样的 SQL</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>通过代码生成数据库描述文件, 提供了类型安全保障, 代码与数据库的映射</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>通过生成 record, dao 等方式支持了 curd, 无需再写基础代码.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>内置映射功能方便了对象之间的转化.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>JOOQ 还有其他很多特性比如: 反过来通过代码描述生成数据库, 支持 xml 读写 等等. 不在本文讨论范围.</p> 
-   </div> 
-  </div> 
- </div> 
-</div> 
-<div class="sect1"> 
- <h2 id="_缺点">缺点</h2> 
- <div class="sectionbody"> 
   <div class="paragraph"> 
-   <p>JOOQ 也有自身的缺点和局限, 或者说在使用时需要考虑的地方</p> 
+   <p>@Test public void mapping() {</p> 
   </div> 
-  <div class="sect2"> 
-   <h3 id="_性能">性能</h3> 
-   <div class="paragraph"> 
-    <p>JOOQ 在提供了方便的同事, 在以下几个阶段都会有额外的性能开销.</p> 
-   </div> 
-   <div class="ulist"> 
-    <ul> 
-     <li> <p>construct jOOQ queries</p> </li> 
-     <li> <p>render SQL strings</p> </li> 
-     <li> <p>bind values to prepared statements</p> </li> 
-     <li> <p>fetch results</p> </li> 
-    </ul> 
-   </div> 
-   <div class="paragraph"> 
-    <p>上面这些开销, 可以自己来设置一些缓存来减小开销, 比如保存和复用 Query 对象.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>而且, 这个开销并不大, 引用官方文档的描述:</p> 
-   </div> 
-   <div class="quoteblock"> 
-    <blockquote> 
-     <div class="paragraph"> 
-      <p>jOOQ’s overhead compared to plain JDBC is typically less than 1ms per query.</p> 
-     </div> 
-    </blockquote> 
-   </div> 
-   <div class="paragraph"> 
-    <p>每个查询的额外开销是 1ms 以内.</p> 
+  <div class="literalblock"> 
+   <div class="content"> 
+    <pre>List&lt;R&gt; r = sql.select(BOOK.ID, BOOK.AUTHOR_ID, LANGUAGE.DESCRIPTION)
+        .from(BOOK).join(LANGUAGE)
+        .on(BOOK.LANGUAGE_ID.eq(LANGUAGE.ID))
+        .where(BOOK.PUBLISHED_IN.eq(1990)).fetch().into(R.class);</pre> 
    </div> 
   </div> 
-  <div class="sect2"> 
-   <h3 id="_商业化">商业化</h3> 
-   <div class="paragraph"> 
-    <p>jooq 是个商业软件, 售价不菲. 但我们可以使用开源版本.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>商业版本针对的是商业数据库比如 oracle, sqlServer 等, 并且会提供技术支持.</p> 
+  <div class="literalblock"> 
+   <div class="content"> 
+    <pre>    r.forEach(it -&gt; System.out.println(it));
+}</pre> 
    </div> 
   </div> 
-  <div class="sect2"> 
-   <h3 id="_jdk_要求">jdk 要求</h3> 
-   <div class="paragraph"> 
-    <p>比较新的开源版 jooq 要求 jdk8 以上</p> 
+  <div class="listingblock"> 
+   <div class="content"> 
+    <pre>执行结果</pre> 
    </div> 
   </div> 
-  <div class="sect2"> 
-   <h3 id="_学习成本">学习成本</h3> 
-   <div class="paragraph"> 
-    <p> * 生成器配置比较复杂. 需要一个找一个同事来阅读文档称为配置专家, 当然也可以直接找一些比较通用的配置, 比如我这次进行测试的这个配置就可以满足大多数的需求. * DSL写法需要看文档. 但文档很全, 比如想知道 <code>group by</code> 怎么写直接文档中搜索就好.</p> 
+  <div class="paragraph"> 
+   <p>12:23:00.964 [main] DEBUG org.jooq.tools.LoggerListener - Executing query : select <code>book</code>.<code>id</code>, <code>book</code>.<code>author_id</code>, <code>language</code>.<code>description</code> from <code>book</code> join <code>language</code> on <code>book</code>.<code>language_id</code> = <code>language</code>.<code>id</code> where <code>book</code>.<code>published_in</code> = ? 12:23:00.965 [main] DEBUG org.jooq.tools.LoggerListener - → with bind values : select <code>book</code>.<code>id</code>, <code>book</code>.<code>author_id</code>, <code>language</code>.<code>description</code> from <code>book</code> join <code>language</code> on <code>book</code>.<code>language_id</code> = <code>language</code>.<code>id</code> where <code>book</code>.<code>published_in</code> = 1990 12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result : ------------------------ 12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener - : | id|author_id|description| 12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener - : ------------------------ 12:23:01.863 [main] DEBUG org.jooq.tools.LoggerListener - : | 4| 2|Deutsch | 12:23:01.863 [main] DEBUG org.jooq.tools.LoggerListener - : ------------------------ R{id=4, authorId=2, description='Deutsch'}</p> 
+  </div> 
+  <div class="listingblock"> 
+   <div class="content"> 
+    <pre>=== 特性总结
+JOOQ 提供了方便流式 API 用于构建各种各样的 SQL
+
+通过代码生成数据库描述文件, 提供了类型安全保障, 代码与数据库的映射
+
+通过生成 record, dao 等方式支持了 curd, 无需再写基础代码.
+
+内置映射功能方便了对象之间的转化.
+
+JOOQ 还有其他很多特性比如: 反过来通过代码描述生成数据库, 支持 xml 读写 等等. 不在本文讨论范围.
+
+== 缺点
+
+JOOQ 也有自身的缺点和局限, 或者说在使用时需要考虑的地方
+
+=== 性能
+
+JOOQ 在提供了方便的同事, 在以下几个阶段都会有额外的性能开销.
+
+* construct jOOQ queries
+* render SQL strings
+* bind values to prepared statements
+* fetch results
+
+上面这些开销, 可以自己来设置一些缓存来减小开销, 比如保存和复用 Query 对象.
+
+而且, 这个开销并不大, 引用官方文档的描述:
+
+&gt; jOOQ's overhead compared to plain JDBC is typically less than 1ms per query.
+
+每个查询的额外开销是 1ms 以内.
+
+=== 商业化
+
+jooq 是个商业软件, 售价不菲. 但我们可以使用开源版本.
+
+商业版本针对的是商业数据库比如 oracle, sqlServer 等, 并且会提供技术支持.
+
+=== jdk 要求
+
+比较新的开源版 jooq 要求 jdk8 以上
+
+=== 学习成本
+
+* 生成器配置比较复杂. 需要一个找一个同事来阅读文档称为配置专家, 当然也可以直接找一些比较通用的配置, 比如我这次进行测试的这个配置就可以满足大多数的需求.
+* DSL写法需要看文档. 但文档很全, 比如想知道 `group by` 怎么写直接文档中搜索就好.</pre> 
    </div> 
   </div> 
  </div> 
