@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>homebrew安装旧版本软件</title>
+    <title>定位占用cpu的java线程</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="yxc023@qq.com">
@@ -61,38 +61,78 @@
     </div>
     <div class="container">	
 	<div class="page-header">
-		<h1>homebrew安装旧版本软件</h1>
+		<h1>定位占用cpu的java线程</h1>
 	</div>
 
-	<p><em>09 二月 2016</em></p>
+	<p><em>01 四月 2016</em></p>
 
 	<p><div class="paragraph"> 
- <p>不需要用brew versions ,这个已经过时了.</p> 
+ <p>列出一个进程中线程 cpu 占用</p> 
 </div> 
-<div class="paragraph"> 
- <p>很多有重要版本的软件都已经区分版本的设定formulae了 参见项目地址 <a href="https://github.com/Homebrew/homebrew-versions" class="bare">https://github.com/Homebrew/homebrew-versions</a></p> 
-</div> 
-<div class="paragraph"> 
- <p>比如nodejs 有重要的0.10.*版本</p> 
-</div> 
-<div class="literalblock"> 
+<div class="listingblock"> 
  <div class="content"> 
-  <pre>yangxiaochen:/usr/local$ brew search node
-leafnode node node010 node04 node06 node08 nodebrew nodenv</pre> 
+  <pre>    top -Hp 18207</pre> 
  </div> 
 </div> 
 <div class="paragraph"> 
- <p>node010就是</p> 
+ <p>获取一个 java 进程 cup 占用率 top10 的线程堆栈, groovy 脚本 <code>groovy 本脚本 [pid]</code>. need JAVA_HOME</p> 
 </div> 
-<div class="paragraph"> 
- <p>同理php也是这样分php56 php55 php54 ….</p> 
+<div class="listingblock"> 
+ <div class="content"> 
+  <pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">if(args.size() &lt; 1 ) {
+    println "need pid"
+    return
+}
+def pid = args[0]
+
+def sout = new StringBuilder(), serr = new StringBuilder()
+def proc = "top -b -n 1 -H -p ${pid}".execute()
+proc.consumeProcessOutput(sout, serr)
+proc.waitFor()
+println sout
+
+def begin = false
+def countLimit = 10
+def count = 0
+sout.eachLine { line -&gt;
+    if (line.trim().size() == 0) {
+        return
+    }
+    if (begin &amp;&amp; count &lt;= countLimit) {
+        println line
+        def row = line.trim().split(" +")
+        def tid = String.format("nid=0x%x", row[0].toInteger())
+        println tid
+
+        def sout1 = new StringBuilder(), serr1 = new StringBuilder()
+        def p1 =  (System.getenv("JAVA_HOME")+"/bin/jstack -l ${pid} ").execute() | ["grep", tid ,"-A 20"].execute()
+        p1.consumeProcessOutput(sout1, serr1)
+        p1.waitFor()
+
+        serr1.eachLine { println it }
+        def lines = sout1.readLines()
+
+        if (lines.size() &gt; 0) {
+            println lines[0]
+            lines[1..-1].takeWhile { !it.startsWith("\"") }.each { println it }
+        }
+
+        println()
+        count++
+    }
+    if (!begin &amp;&amp; line.trim().toUpperCase().startsWith("PID")) {
+        begin = true
+    }
+
+}</code></pre> 
+ </div> 
 </div></p>
 
 	<hr />
 
 	<div id="cyReward" role="cylabs" data-use="reward"></div>
 	<!--PC版-->
-	<div id="SOHUCS" sid="homebrew-install-old-version"></div>
+	<div id="SOHUCS" sid="top-thread"></div>
 	<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
 	<script type="text/javascript">
 	window.changyan.api.config({

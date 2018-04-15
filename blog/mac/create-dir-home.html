@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>homebrew安装旧版本软件</title>
+    <title>mkdir在/home目录下新建文件夹 for mac</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="yxc023@qq.com">
@@ -61,38 +61,92 @@
     </div>
     <div class="container">	
 	<div class="page-header">
-		<h1>homebrew安装旧版本软件</h1>
+		<h1>mkdir在/home目录下新建文件夹 for mac</h1>
 	</div>
 
-	<p><em>09 二月 2016</em></p>
+	<p><em>31 三月 2016</em></p>
 
 	<p><div class="paragraph"> 
- <p>不需要用brew versions ,这个已经过时了.</p> 
+ <p>Hmmm, trying to create a directory under '/home' on a Mac?</p> 
 </div> 
 <div class="paragraph"> 
- <p>很多有重要版本的软件都已经区分版本的设定formulae了 参见项目地址 <a href="https://github.com/Homebrew/homebrew-versions" class="bare">https://github.com/Homebrew/homebrew-versions</a></p> 
+ <p>Well, Apple doesn’t want you to (with good reason, automounter owns this dir, which makes it easier to do NFS mounts and such) so you shouldn’t muck with it but if you really just 'have to do it', here is how you can.</p> 
 </div> 
 <div class="paragraph"> 
- <p>比如nodejs 有重要的0.10.*版本</p> 
+ <p>Basically: Edit <code>/etc/auto_master</code> and remove or comment out the line that starts with "/home".</p> 
+</div> 
+<div class="paragraph"> 
+ <p>&lt;!-- more -→</p> 
+</div> 
+<div class="paragraph"> 
+ <p>example:</p> 
 </div> 
 <div class="literalblock"> 
  <div class="content"> 
-  <pre>yangxiaochen:/usr/local$ brew search node
-leafnode node node010 node04 node06 node08 nodebrew nodenv</pre> 
+  <pre>sudo vim /etc/auto_master</pre> 
  </div> 
 </div> 
 <div class="paragraph"> 
- <p>node010就是</p> 
+ <p>before:</p> 
+</div> 
+<div class="literalblock"> 
+ <div class="content"> 
+  <pre># Automounter master map
++auto_master            # Use directory service
+/net                    -hosts          -nobrowse,hidefromfinder,nosuid
+/home                  auto_home      -nobrowse,hidefromfinder
+/Network/Servers        -fstab
+/-                      -static</pre> 
+ </div> 
 </div> 
 <div class="paragraph"> 
- <p>同理php也是这样分php56 php55 php54 ….</p> 
+ <p>after:</p> 
+</div> 
+<div class="literalblock"> 
+ <div class="content"> 
+  <pre># Automounter master map
++auto_master            # Use directory service
+/net                    -hosts          -nobrowse,hidefromfinder,nosuid
+#/home                  auto_home      -nobrowse,hidefromfinder
+/Network/Servers        -fstab
+/-                      -static</pre> 
+ </div> 
+</div> 
+<div class="paragraph"> 
+ <p>to have the change take effect without a reboot:</p> 
+</div> 
+<div class="literalblock"> 
+ <div class="content"> 
+  <pre>sudo automount</pre> 
+ </div> 
+</div> 
+<div class="paragraph"> 
+ <p>.</p> 
+</div> 
+<div class="literalblock"> 
+ <div class="content"> 
+  <pre>mkdir /home/test
+ls -l /home/
+total 0
+drwxr-xr-x 3 root admin 102 Aug 10 11:33 test</pre> 
+ </div> 
+</div> 
+<div class="admonitionblock note"> 
+ <table> 
+  <tbody>
+   <tr> 
+    <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
+    <td class="content"> I wouldn’t do anything 'important' with this directory as it’s easy to forget you altered this and an upgrade will plow over this directory, removing all data. (this dir is also not included in any Time Machine backups. </td> 
+   </tr> 
+  </tbody>
+ </table> 
 </div></p>
 
 	<hr />
 
 	<div id="cyReward" role="cylabs" data-use="reward"></div>
 	<!--PC版-->
-	<div id="SOHUCS" sid="homebrew-install-old-version"></div>
+	<div id="SOHUCS" sid="create-dir-home-on-mac"></div>
 	<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
 	<script type="text/javascript">
 	window.changyan.api.config({

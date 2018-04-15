@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期日, 15 四月 2018 20:33:31 +0800</pubDate>
-    <lastBuildDate>星期日, 15 四月 2018 20:33:31 +0800</lastBuildDate>
+    <pubDate>星期日, 15 四月 2018 20:58:23 +0800</pubDate>
+    <lastBuildDate>星期日, 15 四月 2018 20:58:23 +0800</lastBuildDate>
 
     <item>
       <title>pac4j 简介</title>
@@ -1584,9 +1584,7 @@ idea {
  &lt;li&gt;如果是页面请求。500转错误页，显示 &lt;code&gt;ex.getMessage()&lt;/code&gt;，如果是debug环境或者是请求带有debug参数，也把错误堆栈输出在页面上。&lt;/li&gt; 
  &lt;li&gt;如果是 ajax 请求。返回表示错误的 json 消息，同样，如果是debug环境或者是请求带有debug参数，消息中带上堆栈信息。&lt;/li&gt; 
 &lt;/ol&gt; 
-&lt;p&gt;以上，就是一个简单而有效的异常处理机制。&lt;/p&gt; 
-&lt;h2&gt;最后&lt;/h2&gt; 
-&lt;p&gt;以上是我的个人实践经验总结，请各位批评指正，欢迎讨论。&lt;/p&gt;
+&lt;p&gt;以上，就是一个简单而有效的异常处理机制。&lt;/p&gt;
 	</description>
     </item>
     <item>
@@ -2224,6 +2222,301 @@ Summary of actions:
 	</description>
     </item>
     <item>
+      <title>java 多线程同步的几种写法</title>
+      <link>http://blog.yangxiaochen.com/blog/java/thread-coordinate-n-methods.html</link>
+      <pubDate>星期四, 14 四月 2016 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/java/thread-coordinate-n-methods.html</guid>
+      	<description>
+	&lt;div class=&quot;quoteblock&quot;&gt; 
+ &lt;blockquote&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;回字的四种写法…​&lt;/p&gt; 
+  &lt;/div&gt; 
+ &lt;/blockquote&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;假设有三个比较耗时的非cpu密集型任务, 最后的结果分些需要这三个任务的结果相加, 使用多线程并发可以让三个任务同时进行. &amp;lt;!-- more -→&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;下面是几种写法:&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;package com.yangxiaochen;&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ForkJoinTask;
+import java.util.concurrent.FutureTask;
+import java.util.concurrent.Semaphore;&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;/**
+ * @author yangxiaochen
+ * @date 16/4/14 上午12:17
+ */
+public class ForkJoinTest {&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;public int m1() {
+    try {
+        Thread.sleep(5000);
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+    System.out.println(&quot;m1&quot;);
+    return 1;
+}&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;public int m2() {
+    try {
+        Thread.sleep(5000);
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+    System.out.println(&quot;m2&quot;);
+    return 2;
+}&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;public int m3() {
+    try {
+        Thread.sleep(5000);
+    } catch (InterruptedException e) {
+        e.printStackTrace();
+    }
+    System.out.println(&quot;m3&quot;);
+    return 3;
+}&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;    public static void main(String[] args) throws ExecutionException, InterruptedException {
+        type0();
+//        type1();
+//        type2();
+//        type3();
+//        type4();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;}&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;private static void type0() throws InterruptedException {
+    ForkJoinTest test = new ForkJoinTest();
+    class Holder {
+        int a;
+        int b;
+        int c;
+    }
+    Holder h = new Holder();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;Thread t1 = new Thread(() -&amp;gt; h.a = test.m1());
+t1.start();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;Thread t2 = new Thread(() -&amp;gt; h.b = test.m2());
+t2.start();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;Thread t3 = new Thread(() -&amp;gt; h.c = test.m3());
+t3.start();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;    t1.join();
+    t2.join();
+    t3.join();
+    System.out.println(h.a + h.b + h.c);
+}&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;private static void type4() throws InterruptedException {
+    Semaphore semaphore = new Semaphore(0);&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;ForkJoinTest test = new ForkJoinTest();
+class Holder {
+    int a;
+    int b;
+    int c;
+}
+Holder h = new Holder();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;new Thread(() -&amp;gt; {
+    h.a = test.m1();
+    semaphore.release();
+}).start();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;new Thread(() -&amp;gt; {
+    h.b = test.m2();
+    semaphore.release();
+}).start();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;new Thread(() -&amp;gt; {
+    h.c = test.m3();
+    semaphore.release();
+}).start();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;    semaphore.acquire(3);
+    System.out.println(h.a + h.b + h.c);
+}&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;private static void type3() throws InterruptedException {
+    ForkJoinTest test = new ForkJoinTest();
+    class Holder {
+        int a;
+        int b;
+        int c;
+    }
+    Holder h = new Holder();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;new Thread(() -&amp;gt; {
+    h.a = test.m1();
+    synchronized (test) {
+        if (h.a != 0 &amp;amp;&amp;amp; h.b != 0 &amp;amp;&amp;amp; h.c != 0) {
+            test.notify();
+        }
+    }
+}).start();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;new Thread(() -&amp;gt; {
+    h.b = test.m2();
+    synchronized (test) {
+        if (h.a != 0 &amp;amp;&amp;amp; h.b != 0 &amp;amp;&amp;amp; h.c != 0) {
+            test.notify();
+        }
+    }
+}).start();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;new Thread(() -&amp;gt; {
+    h.c = test.m3();
+    synchronized (test) {
+        if (h.a != 0 &amp;amp;&amp;amp; h.b != 0 &amp;amp;&amp;amp; h.c != 0) {
+            test.notify();
+        }
+    }
+}).start();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;synchronized (test) {
+    test.wait();
+}&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;    System.out.println(h.a + h.b + h.c);
+}&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;private static void type2() throws InterruptedException, ExecutionException {
+    ForkJoinTest test = new ForkJoinTest();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;FutureTask&amp;lt;Integer&amp;gt; f1 = new FutureTask&amp;lt;&amp;gt;(() -&amp;gt; test.m1());
+FutureTask&amp;lt;Integer&amp;gt; f2 = new FutureTask&amp;lt;&amp;gt;(() -&amp;gt; test.m2());
+FutureTask&amp;lt;Integer&amp;gt; f3 = new FutureTask&amp;lt;&amp;gt;(() -&amp;gt; test.m3());&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;new Thread(f1).start();
+new Thread(f2).start();
+new Thread(f3).start();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;    System.out.println(f1.get() + f2.get() + f3.get());
+}&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;private static void type1() throws InterruptedException, ExecutionException {&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;ForkJoinTest test = new ForkJoinTest();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;ForkJoinTask&amp;lt;Integer&amp;gt; f1 = ForkJoinTask.adapt(() -&amp;gt; test.m1()).fork();
+ForkJoinTask&amp;lt;Integer&amp;gt; f2 = ForkJoinTask.adapt(() -&amp;gt; test.m2()).fork();
+ForkJoinTask&amp;lt;Integer&amp;gt; f3 = ForkJoinTask.adapt(() -&amp;gt; test.m3()).fork();&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;        System.out.println(f1.join() + f2.join() + f3.join());
+    }
+}&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt;
+	</description>
+    </item>
+    <item>
       <title>从一个丢失的iphone看互联网信息安全</title>
       <link>http://blog.yangxiaochen.com/blog/secure/a-lost-iphone-secure.html</link>
       <pubDate>星期一, 4 四月 2016 00:00:00 +0800</pubDate>
@@ -2304,6 +2597,187 @@ Summary of actions:
 	</description>
     </item>
     <item>
+      <title>定位占用cpu的java线程</title>
+      <link>http://blog.yangxiaochen.com/blog/linux/top-thread.html</link>
+      <pubDate>星期五, 1 四月 2016 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/linux/top-thread.html</guid>
+      	<description>
+	&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;列出一个进程中线程 cpu 占用&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;listingblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;    top -Hp 18207&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;获取一个 java 进程 cup 占用率 top10 的线程堆栈, groovy 脚本 &lt;code&gt;groovy 本脚本 [pid]&lt;/code&gt;. need JAVA_HOME&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;listingblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;if(args.size() &amp;lt; 1 ) {
+    println &quot;need pid&quot;
+    return
+}
+def pid = args[0]
+
+def sout = new StringBuilder(), serr = new StringBuilder()
+def proc = &quot;top -b -n 1 -H -p ${pid}&quot;.execute()
+proc.consumeProcessOutput(sout, serr)
+proc.waitFor()
+println sout
+
+def begin = false
+def countLimit = 10
+def count = 0
+sout.eachLine { line -&amp;gt;
+    if (line.trim().size() == 0) {
+        return
+    }
+    if (begin &amp;amp;&amp;amp; count &amp;lt;= countLimit) {
+        println line
+        def row = line.trim().split(&quot; +&quot;)
+        def tid = String.format(&quot;nid=0x%x&quot;, row[0].toInteger())
+        println tid
+
+        def sout1 = new StringBuilder(), serr1 = new StringBuilder()
+        def p1 =  (System.getenv(&quot;JAVA_HOME&quot;)+&quot;/bin/jstack -l ${pid} &quot;).execute() | [&quot;grep&quot;, tid ,&quot;-A 20&quot;].execute()
+        p1.consumeProcessOutput(sout1, serr1)
+        p1.waitFor()
+
+        serr1.eachLine { println it }
+        def lines = sout1.readLines()
+
+        if (lines.size() &amp;gt; 0) {
+            println lines[0]
+            lines[1..-1].takeWhile { !it.startsWith(&quot;\&quot;&quot;) }.each { println it }
+        }
+
+        println()
+        count++
+    }
+    if (!begin &amp;amp;&amp;amp; line.trim().toUpperCase().startsWith(&quot;PID&quot;)) {
+        begin = true
+    }
+
+}&lt;/code&gt;&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt;
+	</description>
+    </item>
+    <item>
+      <title>mkdir在/home目录下新建文件夹 for mac</title>
+      <link>http://blog.yangxiaochen.com/blog/mac/create-dir-home.html</link>
+      <pubDate>星期四, 31 三月 2016 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/mac/create-dir-home.html</guid>
+      	<description>
+	&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;Hmmm, trying to create a directory under &apos;/home&apos; on a Mac?&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;Well, Apple doesn’t want you to (with good reason, automounter owns this dir, which makes it easier to do NFS mounts and such) so you shouldn’t muck with it but if you really just &apos;have to do it&apos;, here is how you can.&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;Basically: Edit &lt;code&gt;/etc/auto_master&lt;/code&gt; and remove or comment out the line that starts with &quot;/home&quot;.&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;&amp;lt;!-- more -→&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;example:&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;sudo vim /etc/auto_master&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;before:&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;# Automounter master map
++auto_master            # Use directory service
+/net                    -hosts          -nobrowse,hidefromfinder,nosuid
+/home                  auto_home      -nobrowse,hidefromfinder
+/Network/Servers        -fstab
+/-                      -static&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;after:&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;# Automounter master map
++auto_master            # Use directory service
+/net                    -hosts          -nobrowse,hidefromfinder,nosuid
+#/home                  auto_home      -nobrowse,hidefromfinder
+/Network/Servers        -fstab
+/-                      -static&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;to have the change take effect without a reboot:&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;sudo automount&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;.&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;mkdir /home/test
+ls -l /home/
+total 0
+drwxr-xr-x 3 root admin 102 Aug 10 11:33 test&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;admonitionblock note&quot;&gt; 
+ &lt;table&gt; 
+  &lt;tbody&gt;
+   &lt;tr&gt; 
+    &lt;td class=&quot;icon&quot;&gt; &lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt; &lt;/td&gt; 
+    &lt;td class=&quot;content&quot;&gt; I wouldn’t do anything &apos;important&apos; with this directory as it’s easy to forget you altered this and an upgrade will plow over this directory, removing all data. (this dir is also not included in any Time Machine backups. &lt;/td&gt; 
+   &lt;/tr&gt; 
+  &lt;/tbody&gt;
+ &lt;/table&gt; 
+&lt;/div&gt;
+	</description>
+    </item>
+    <item>
+      <title>homebrew安装旧版本软件</title>
+      <link>http://blog.yangxiaochen.com/blog/mac/homebrew-install-old-version-soft.html</link>
+      <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/mac/homebrew-install-old-version-soft.html</guid>
+      	<description>
+	&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;不需要用brew versions ,这个已经过时了.&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;很多有重要版本的软件都已经区分版本的设定formulae了 参见项目地址 &lt;a href=&quot;https://github.com/Homebrew/homebrew-versions&quot; class=&quot;bare&quot;&gt;https://github.com/Homebrew/homebrew-versions&lt;/a&gt;&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;比如nodejs 有重要的0.10.*版本&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;literalblock&quot;&gt; 
+ &lt;div class=&quot;content&quot;&gt; 
+  &lt;pre&gt;yangxiaochen:/usr/local$ brew search node
+leafnode node node010 node04 node06 node08 nodebrew nodenv&lt;/pre&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;node010就是&lt;/p&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;paragraph&quot;&gt; 
+ &lt;p&gt;同理php也是这样分php56 php55 php54 ….&lt;/p&gt; 
+&lt;/div&gt;
+	</description>
+    </item>
+    <item>
       <title>python入门</title>
       <link>http://blog.yangxiaochen.com/blog/develop/python-starter.html</link>
       <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
@@ -2328,107 +2802,208 @@ Summary of actions:
 	</description>
     </item>
     <item>
-      <title>homebrew安装旧版本软件</title>
-      <link>http://blog.yangxiaochen.com/blog/mac/homebrew-install-old-version-soft.html</link>
-      <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/mac/homebrew-install-old-version-soft.html</guid>
-      	<description>
-	&lt;h4&gt;原创, 转载请注明出处&lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/h4&gt; 
-&lt;p&gt;不需要用brew versions ,这个已经过时了.&lt;/p&gt; 
-&lt;p&gt;很多有重要版本的软件都已经区分版本的设定formulae了&lt;br&gt; 参见项目地址 &lt;a href=&quot;https://github.com/Homebrew/homebrew-versions&quot;&gt;https://github.com/Homebrew/homebrew-versions&lt;/a&gt;&lt;/p&gt; 
-&lt;p&gt;比如nodejs 有重要的0.10.*版本&lt;/p&gt; 
-&lt;pre&gt;&lt;code&gt;yangxiaochen:/usr/local$ brew search node
-leafnode node node010 node04 node06 node08 nodebrew nodenv
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;p&gt;node010就是&lt;/p&gt; 
-&lt;p&gt;同理php也是这样分php56 php55 php54 ….&lt;/p&gt;
-	</description>
-    </item>
-    <item>
       <title>rabbitmq管理使用实践</title>
       <link>http://blog.yangxiaochen.com/blog/develop/rabbitmq-in-action.html</link>
       <pubDate>星期一, 8 二月 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/develop/rabbitmq-in-action.html</guid>
       	<description>
-	&lt;h4&gt;原创, 转载请注明出处&lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/h4&gt; 
-&lt;!-- more --&gt; 
-&lt;p&gt;# MQ数据源&lt;/p&gt; 
-&lt;ol&gt; 
- &lt;li&gt; &lt;p&gt;&lt;code&gt;datasource -&amp;gt; topic exchange&lt;/code&gt;, 数据源已固定格式发入exchange, exchange类型为topic,既可以使用路由route_key, 又可以进行通配. 不要将生产者, 消费者用在同一队列上, 这样耦合度高, 消息无法复用.&lt;/p&gt; &lt;/li&gt; 
- &lt;li&gt; &lt;p&gt;数据源只关心输入exchange, 对后续消费者无需关心&lt;/p&gt; &lt;/li&gt; 
- &lt;li&gt; &lt;p&gt;新加,修改数据源需要备案记录.&lt;/p&gt; &lt;/li&gt; 
- &lt;li&gt; &lt;p&gt;消费者一般情况下使用临时队列, 必要情况下使用持久队列. 队列从数据源的exchange中订阅数据.&lt;/p&gt; &lt;/li&gt; 
- &lt;li&gt; &lt;p&gt;程序中不要生成持久的exchange, queue. 而是在管理界面生成. 防止程序改动造成的废弃的exchange, queue仍然存在在rabbitmq中.&lt;/p&gt; &lt;/li&gt; 
- &lt;li&gt; &lt;p&gt;命名统一.&lt;/p&gt; &lt;pre&gt;&lt;code&gt;exchangeName: datasource:[sth.sth]
+	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt; 
+ &lt;div id=&quot;toctitle&quot;&gt;
+  Table of Contents
+ &lt;/div&gt; 
+ &lt;ul class=&quot;sectlevel3&quot;&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_原创_转载请注明出处_a_href_https_blog_yangxiaochen_com_class_bare_https_blog_yangxiaochen_com_a_a_href_https_blog_yangxiaochen_com_class_bare_https_blog_yangxiaochen_com_a&quot;&gt;原创, 转载请注明出处[&lt;/a&gt;&lt;a href=&quot;https://blog.yangxiaochen.com&quot; class=&quot;bare&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;](&lt;a href=&quot;https://blog.yangxiaochen.com&quot; class=&quot;bare&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;)&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_poi&quot;&gt;poi&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_业务事件流&quot;&gt;业务事件流&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_日志流&quot;&gt;日志流&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_其他&quot;&gt;其他&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_rabbitmq_规范&quot;&gt;rabbitmq 规范&lt;/a&gt; 
+   &lt;ul class=&quot;sectlevel1&quot;&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_使用规范&quot;&gt;使用规范&lt;/a&gt; 
+     &lt;ul class=&quot;sectlevel2&quot;&gt; 
+      &lt;li&gt;&lt;a href=&quot;#_0_使用原则&quot;&gt;0. 使用原则&lt;/a&gt;&lt;/li&gt; 
+      &lt;li&gt;&lt;a href=&quot;#_1_datasourceexchanges&quot;&gt;1. datasourceExchanges&lt;/a&gt;&lt;/li&gt; 
+      &lt;li&gt;&lt;a href=&quot;#_2_durable_queues_exchanges&quot;&gt;2. durable queues, exchanges&lt;/a&gt;&lt;/li&gt; 
+      &lt;li&gt;&lt;a href=&quot;#_3_temp_queues_exchagnes&quot;&gt;3. temp queues, exchagnes&lt;/a&gt;&lt;/li&gt; 
+     &lt;/ul&gt; &lt;/li&gt; 
+   &lt;/ul&gt; &lt;/li&gt; 
+ &lt;/ul&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect3&quot;&gt; 
+ &lt;h4 id=&quot;_原创_转载请注明出处_a_href_https_blog_yangxiaochen_com_class_bare_https_blog_yangxiaochen_com_a_a_href_https_blog_yangxiaochen_com_class_bare_https_blog_yangxiaochen_com_a&quot;&gt;原创, 转载请注明出处[&lt;a href=&quot;https://blog.yangxiaochen.com&quot; class=&quot;bare&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;](&lt;a href=&quot;https://blog.yangxiaochen.com&quot; class=&quot;bare&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;)&lt;/h4&gt; 
+ &lt;div class=&quot;paragraph&quot;&gt; 
+  &lt;p&gt;&amp;lt;!-- more -→&lt;/p&gt; 
+ &lt;/div&gt; 
+ &lt;div class=&quot;literalblock&quot;&gt; 
+  &lt;div class=&quot;content&quot;&gt; 
+   &lt;pre&gt;# MQ数据源&lt;/pre&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+ &lt;div class=&quot;olist arabic&quot;&gt; 
+  &lt;ol class=&quot;arabic&quot;&gt; 
+   &lt;li&gt; &lt;p&gt;&lt;code&gt;&lt;code&gt;datasource → topic exchange&lt;/code&gt;&lt;/code&gt;, 数据源已固定格式发入exchange, exchange类型为topic,既可以使用路由route_key, 又可以进行通配. 不要将生产者, 消费者用在同一队列上, 这样耦合度高, 消息无法复用.&lt;/p&gt; &lt;/li&gt; 
+   &lt;li&gt; &lt;p&gt;数据源只关心输入exchange, 对后续消费者无需关心&lt;/p&gt; &lt;/li&gt; 
+   &lt;li&gt; &lt;p&gt;新加,修改数据源需要备案记录.&lt;/p&gt; &lt;/li&gt; 
+   &lt;li&gt; &lt;p&gt;消费者一般情况下使用临时队列, 必要情况下使用持久队列. 队列从数据源的exchange中订阅数据.&lt;/p&gt; &lt;/li&gt; 
+   &lt;li&gt; &lt;p&gt;程序中不要生成持久的exchange, queue. 而是在管理界面生成. 防止程序改动造成的废弃的exchange, queue仍然存在在rabbitmq中.&lt;/p&gt; &lt;/li&gt; 
+   &lt;li&gt; &lt;p&gt;命名统一.&lt;/p&gt; 
+    &lt;div class=&quot;literalblock&quot;&gt; 
+     &lt;div class=&quot;content&quot;&gt; 
+      &lt;pre&gt;exchangeName: datasource:[sth.sth]
 queueName: [消费者程序名称]:[exchangeName].[subject]
-route_key: [exchangeName].[subject]
-
-例:
+route_key: [exchangeName].[subject]&lt;/pre&gt; 
+     &lt;/div&gt; 
+    &lt;/div&gt; 
+    &lt;div class=&quot;literalblock&quot;&gt; 
+     &lt;div class=&quot;content&quot;&gt; 
+      &lt;pre&gt;例:
 exchangeName: datasource:dispatch.event
 queueName: autoDispatch:dispatch.event.orderCreate
-route_key: dispatch.event.orderCreate
-&lt;/code&gt;&lt;/pre&gt; &lt;/li&gt; 
-&lt;/ol&gt; 
-&lt;h3&gt;poi&lt;/h3&gt; 
-&lt;pre&gt;&lt;code&gt;exchangeName: datasource:poi
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;h3&gt;业务事件流&lt;/h3&gt; 
-&lt;pre&gt;&lt;code&gt;exchangeName: datasource:dispatch.event
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;h3&gt;日志流&lt;/h3&gt; 
-&lt;h3&gt;其他&lt;/h3&gt; 
-&lt;h1&gt;rabbitmq 规范&lt;/h1&gt; 
-&lt;h2&gt;使用规范&lt;/h2&gt; 
-&lt;h3&gt;0. 使用原则&lt;/h3&gt; 
-&lt;ol&gt; 
- &lt;li&gt;数据源已固定格式发入exchange, exchange类型为topic.数据源只关心输入exchange.&lt;/li&gt; 
- &lt;li&gt;修改数据源, 持久队列, 持久内部exchange需要备案记录.&lt;/li&gt; 
- &lt;li&gt;消费者一般非必要情况下使用临时队列. 队列从数据源的exchange中订阅数据.&lt;/li&gt; 
- &lt;li&gt;程序中不要生成持久的exchange, queue. 而是在管理界面生成.&lt;/li&gt; 
-&lt;/ol&gt; 
-&lt;h3&gt;1. datasourceExchanges&lt;/h3&gt; 
-&lt;ol&gt; 
- &lt;li&gt; &lt;p&gt;命名&lt;/p&gt; &lt;pre&gt;&lt;code&gt;datasource:[datasourceName]
-
-例:
+route_key: dispatch.event.orderCreate&lt;/pre&gt; 
+     &lt;/div&gt; 
+    &lt;/div&gt; &lt;/li&gt; 
+  &lt;/ol&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect2&quot;&gt; 
+ &lt;h3 id=&quot;_poi&quot;&gt;poi&lt;/h3&gt; 
+ &lt;div class=&quot;literalblock&quot;&gt; 
+  &lt;div class=&quot;content&quot;&gt; 
+   &lt;pre&gt;exchangeName: datasource:poi&lt;/pre&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect2&quot;&gt; 
+ &lt;h3 id=&quot;_业务事件流&quot;&gt;业务事件流&lt;/h3&gt; 
+ &lt;div class=&quot;literalblock&quot;&gt; 
+  &lt;div class=&quot;content&quot;&gt; 
+   &lt;pre&gt;exchangeName: datasource:dispatch.event&lt;/pre&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect2&quot;&gt; 
+ &lt;h3 id=&quot;_日志流&quot;&gt;日志流&lt;/h3&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect2&quot;&gt; 
+ &lt;h3 id=&quot;_其他&quot;&gt;其他&lt;/h3&gt; 
+&lt;/div&gt; 
+&lt;h1 id=&quot;_rabbitmq_规范&quot; class=&quot;sect0&quot;&gt;rabbitmq 规范&lt;/h1&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_使用规范&quot;&gt;使用规范&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_0_使用原则&quot;&gt;0. 使用原则&lt;/h3&gt; 
+   &lt;div class=&quot;olist arabic&quot;&gt; 
+    &lt;ol class=&quot;arabic&quot;&gt; 
+     &lt;li&gt; &lt;p&gt;数据源已固定格式发入exchange, exchange类型为topic.数据源只关心输入exchange.&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;修改数据源, 持久队列, 持久内部exchange需要备案记录.&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;消费者一般非必要情况下使用临时队列. 队列从数据源的exchange中订阅数据.&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;程序中不要生成持久的exchange, queue. 而是在管理界面生成.&lt;/p&gt; &lt;/li&gt; 
+    &lt;/ol&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_1_datasourceexchanges&quot;&gt;1. datasourceExchanges&lt;/h3&gt; 
+   &lt;div class=&quot;olist arabic&quot;&gt; 
+    &lt;ol class=&quot;arabic&quot;&gt; 
+     &lt;li&gt; &lt;p&gt;命名&lt;/p&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;datasource:[datasourceName]&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;例:
 datasource:poi
-datasource:dispatch.event
-&lt;/code&gt;&lt;/pre&gt; &lt;/li&gt; 
- &lt;li&gt; &lt;p&gt;记录备案&lt;/p&gt; &lt;pre&gt;&lt;code&gt;git@gitlab.supaide.cn:sys/rabbitmq.git
-datasources.txt
-
-备案说明详见文件内部格式.
-&lt;/code&gt;&lt;/pre&gt; &lt;/li&gt; 
-&lt;/ol&gt; 
-&lt;h3&gt;2. durable queues, exchanges&lt;/h3&gt; 
-&lt;ol&gt; 
- &lt;li&gt; &lt;p&gt;命名&lt;/p&gt; &lt;pre&gt;&lt;code&gt;queueName
-[appName]:[routingKey]
-
-exchangeName
-x:[appName]:[routingKey]
-
-例:
+datasource:dispatch.event&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;记录备案&lt;/p&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;git@gitlab.supaide.cn:sys/rabbitmq.git
+datasources.txt&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;备案说明详见文件内部格式.&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+    &lt;/ol&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_2_durable_queues_exchanges&quot;&gt;2. durable queues, exchanges&lt;/h3&gt; 
+   &lt;div class=&quot;olist arabic&quot;&gt; 
+    &lt;ol class=&quot;arabic&quot;&gt; 
+     &lt;li&gt; &lt;p&gt;命名&lt;/p&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;queueName
+[appName]:[routingKey]&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;exchangeName
+x:[appName]:[routingKey]&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;例:
 autoDispatch:dispatch.event.orderCreate
-x:autoDispatch:dispatch.event.*
-&lt;/code&gt;&lt;/pre&gt; &lt;/li&gt; 
- &lt;li&gt; &lt;p&gt;记录备案&lt;/p&gt; &lt;pre&gt;&lt;code&gt;git@gitlab.supaide.cn:sys/rabbitmq.git
-durableQueues.txt
-
-备案说明详见文件内部格式.
-&lt;/code&gt;&lt;/pre&gt; &lt;/li&gt; 
-&lt;/ol&gt; 
-&lt;h3&gt;3. temp queues, exchagnes&lt;/h3&gt; 
-&lt;ol&gt; 
- &lt;li&gt; &lt;p&gt;命名&lt;/p&gt; &lt;pre&gt;&lt;code&gt;gen.[appName]:[routingKey]
-
-or
-
-默认随机名称
-&lt;/code&gt;&lt;/pre&gt; &lt;/li&gt; 
- &lt;li&gt; &lt;p&gt;记录备案&lt;/p&gt; &lt;pre&gt;&lt;code&gt;无需备案
-&lt;/code&gt;&lt;/pre&gt; &lt;/li&gt; 
-&lt;/ol&gt;
+x:autoDispatch:dispatch.event.*&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;记录备案&lt;/p&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;git@gitlab.supaide.cn:sys/rabbitmq.git
+durableQueues.txt&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;备案说明详见文件内部格式.&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+    &lt;/ol&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_3_temp_queues_exchagnes&quot;&gt;3. temp queues, exchagnes&lt;/h3&gt; 
+   &lt;div class=&quot;olist arabic&quot;&gt; 
+    &lt;ol class=&quot;arabic&quot;&gt; 
+     &lt;li&gt; &lt;p&gt;命名&lt;/p&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;gen.[appName]:[routingKey]&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;or&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;默认随机名称&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;记录备案&lt;/p&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;无需备案&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+    &lt;/ol&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt;
 	</description>
     </item>
     <item>
