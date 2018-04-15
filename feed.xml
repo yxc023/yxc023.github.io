@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期五, 13 四月 2018 22:06:14 +0800</pubDate>
-    <lastBuildDate>星期五, 13 四月 2018 22:06:14 +0800</lastBuildDate>
+    <pubDate>星期日, 15 四月 2018 12:40:55 +0800</pubDate>
+    <lastBuildDate>星期日, 15 四月 2018 12:40:55 +0800</lastBuildDate>
 
     <item>
       <title>jooq 介绍</title>
@@ -25,19 +25,29 @@
    &lt;ul class=&quot;sectlevel2&quot;&gt; 
     &lt;li&gt;&lt;a href=&quot;#_jpa_hibernate&quot;&gt;jpa, hibernate&lt;/a&gt;&lt;/li&gt; 
     &lt;li&gt;&lt;a href=&quot;#_mybatis&quot;&gt;mybatis&lt;/a&gt;&lt;/li&gt; 
-    &lt;li&gt;&lt;a href=&quot;#_jdbctemplate&quot;&gt;jdbcTemplate&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_jdbc_template&quot;&gt;jdbc template&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_总结&quot;&gt;总结&lt;/a&gt;&lt;/li&gt; 
    &lt;/ul&gt; &lt;/li&gt; 
-  &lt;li&gt;&lt;a href=&quot;#_我们的项目&quot;&gt;我们的项目&lt;/a&gt;&lt;/li&gt; 
-  &lt;li&gt;&lt;a href=&quot;#_in_php&quot;&gt;in php&lt;/a&gt;&lt;/li&gt; 
-  &lt;li&gt;&lt;a href=&quot;#_in_groovy&quot;&gt;in groovy&lt;/a&gt;&lt;/li&gt; 
-  &lt;li&gt;&lt;a href=&quot;#_使用方式&quot;&gt;使用方式&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_我们的现状&quot;&gt;我们的现状&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_jooq_是怎么做的&quot;&gt;JOOQ 是怎么做的&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_使用方式&quot;&gt;使用方式&lt;/a&gt; 
+   &lt;ul class=&quot;sectlevel2&quot;&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_sql_builder_作为_sql_的构造器&quot;&gt;sql builder, 作为 sql 的构造器&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_sql_executor_更进一步_作为_sql_执行器&quot;&gt;sql executor, 更进一步, 作为 sql 执行器&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_typesafe_sql_builder_and_executor_作为强类型的_sql_构建和执行器&quot;&gt;typesafe sql builder and executor, 作为强类型的 sql 构建和执行器&lt;/a&gt; 
+     &lt;ul class=&quot;sectlevel3&quot;&gt; 
+      &lt;li&gt;&lt;a href=&quot;#_curd&quot;&gt;curd&lt;/a&gt;&lt;/li&gt; 
+     &lt;/ul&gt; &lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_mapper&quot;&gt;mapper&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_特性总结&quot;&gt;特性总结&lt;/a&gt;&lt;/li&gt; 
+   &lt;/ul&gt; &lt;/li&gt; 
   &lt;li&gt;&lt;a href=&quot;#_缺点&quot;&gt;缺点&lt;/a&gt; 
    &lt;ul class=&quot;sectlevel2&quot;&gt; 
     &lt;li&gt;&lt;a href=&quot;#_性能&quot;&gt;性能&lt;/a&gt;&lt;/li&gt; 
-    &lt;li&gt;&lt;a href=&quot;#_商业化版本&quot;&gt;商业化版本&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_商业化&quot;&gt;商业化&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_jdk_要求&quot;&gt;jdk 要求&lt;/a&gt;&lt;/li&gt; 
     &lt;li&gt;&lt;a href=&quot;#_学习成本&quot;&gt;学习成本&lt;/a&gt;&lt;/li&gt; 
    &lt;/ul&gt; &lt;/li&gt; 
-  &lt;li&gt;&lt;a href=&quot;#_提出的问题&quot;&gt;提出的问题&lt;/a&gt;&lt;/li&gt; 
  &lt;/ul&gt; 
 &lt;/div&gt; 
 &lt;div class=&quot;sect1&quot;&gt; 
@@ -57,10 +67,17 @@
 &lt;div class=&quot;sect1&quot;&gt; 
  &lt;h2 id=&quot;_对比&quot;&gt;对比&lt;/h2&gt; 
  &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;我们拿出最常用的一些数据抽象层框架来做比较: jpa, hibernate, mybatis, jdbc template.&lt;/p&gt; 
+  &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
    &lt;h3 id=&quot;_jpa_hibernate&quot;&gt;jpa, hibernate&lt;/h3&gt; 
    &lt;div class=&quot;ulist&quot;&gt; 
     &lt;ul&gt; 
+     &lt;li&gt; &lt;p&gt;善于 CURD&lt;/p&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;对于针对单一对象的基础增删改查, 支持很到位, 这也是他们的立身之本.&lt;/p&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
      &lt;li&gt; &lt;p&gt;ORM 依赖重&lt;/p&gt; 
       &lt;div class=&quot;paragraph&quot;&gt; 
        &lt;p&gt;对于复杂查询, 关联查询, 配置复杂, 依靠对象 mapping 不灵活&lt;/p&gt; 
@@ -74,28 +91,85 @@
       &lt;/div&gt; &lt;/li&gt; 
      &lt;li&gt; &lt;p&gt;jSQL, HQL&lt;/p&gt; 
       &lt;div class=&quot;paragraph&quot;&gt; 
-       &lt;p&gt;这两个&lt;/p&gt; 
+       &lt;p&gt;这两个自创的类SQL语法应对复杂查询, 但是增加了学习成本.&lt;/p&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+    &lt;/ul&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;综上所述, 你要想在项目中用好 jpa 和 hibernate, 你需要有一个熟悉这两种框架的专家.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;即使这样, 在应对复杂查询的时候依然非常蹩脚.&lt;/p&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_mybatis&quot;&gt;mybatis&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;mybatis 在一定程度上解决了一些 jpa 和 heibernate 不善于复杂查询和连表查询的问题, 这也是 mybatis 现在被广泛使用的原因.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;大家都看重 mybatis 能够自主掌控 sql 的能力.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;但同时, mybatis 也有自己的问题.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;ulist&quot;&gt; 
+    &lt;ul&gt; 
+     &lt;li&gt; &lt;p&gt;xml 繁杂&lt;/p&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;xml 本身就是一种复杂的格式, 加之 mybatis 要定义 ResultMap, 动态 sql 等.&lt;/p&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;改动时需要在代码跟 xml 间来回切换.&lt;/p&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;当一个字段改动时, 通常要 db → model → xml 改 sql → xml 改 ResultMap 一套改一遍.&lt;/p&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;虽然可以codegen, 但复杂的不支持&lt;/p&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;通过代码生成插件可以解决上面那一些问题, 但是复杂的查询无法生成, 还需要自己写.&lt;/p&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;而且自己写的 sql 还不能在生成的 xml 和 dao 里, 不然重新生成时会有问题.&lt;/p&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;通过注解定义查询&lt;/p&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;看上去写起来也不简单, 我是没有试过.&lt;/p&gt; 
       &lt;/div&gt; &lt;/li&gt; 
     &lt;/ul&gt; 
    &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
-   &lt;h3 id=&quot;_mybatis&quot;&gt;mybatis&lt;/h3&gt; 
+   &lt;h3 id=&quot;_jdbc_template&quot;&gt;jdbc template&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;jdbc template 是 spring jdbc 提供的一个简单数据访问层框架, 以简单方便著称.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;jdbcTempate 通过直接代码中写 sql, 然后定义 RowMapper 来将每一行的数据转化成需要的对象.&lt;/p&gt; 
+   &lt;/div&gt; 
    &lt;div class=&quot;ulist&quot;&gt; 
     &lt;ul&gt; 
-     &lt;li&gt; &lt;p&gt;xml 繁杂&lt;/p&gt; &lt;/li&gt; 
-     &lt;li&gt; &lt;p&gt;注解配置不直观&lt;/p&gt; &lt;/li&gt; 
-     &lt;li&gt; &lt;p&gt;虽然可以codegen, 但复杂的不支持.&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;不保证 Typesafe&lt;/p&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;写字符串形式的 sql, 需要人工保证字段名字都不写错.&lt;/p&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;因为 java 语言强类型的特性, 取出数据时需要指定类型.&lt;/p&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;RowMapper, dao 要自己实现, 重复工作多.&lt;/p&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;因为没有代码生成的机制, RowMapper, dao 需要自己实现, 那么通常来说, 有多少数据对象, 就要生成多少 RowMapper 和 dao&lt;/p&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
     &lt;/ul&gt; 
    &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
-   &lt;h3 id=&quot;_jdbctemplate&quot;&gt;jdbcTemplate&lt;/h3&gt; 
-   &lt;div class=&quot;ulist&quot;&gt; 
-    &lt;ul&gt; 
-     &lt;li&gt; &lt;p&gt;typesafe 不保证&lt;/p&gt; &lt;/li&gt; 
-     &lt;li&gt; &lt;p&gt;mapper 自己实现&lt;/p&gt; &lt;/li&gt; 
-    &lt;/ul&gt; 
+   &lt;h3 id=&quot;_总结&quot;&gt;总结&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;因为 java 是一个面向对象的语言, 所以很多框架都是用面向对象的方式来抽象数据访问.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;然而, 借用 jooq 文档里的一句话:&lt;/p&gt; 
    &lt;/div&gt; 
    &lt;div class=&quot;quoteblock&quot;&gt; 
     &lt;blockquote&gt; 
@@ -104,70 +178,434 @@
      &lt;/div&gt; 
     &lt;/blockquote&gt; 
    &lt;/div&gt; 
-  &lt;/div&gt; 
- &lt;/div&gt; 
-&lt;/div&gt; 
-&lt;div class=&quot;sect1&quot;&gt; 
- &lt;h2 id=&quot;_我们的项目&quot;&gt;我们的项目&lt;/h2&gt; 
- &lt;div class=&quot;sectionbody&quot;&gt; 
-  &lt;div class=&quot;ulist&quot;&gt; 
-   &lt;ul&gt; 
-    &lt;li&gt; &lt;p&gt;50% ~ 80% curd&lt;/p&gt; &lt;/li&gt; 
-    &lt;li&gt; &lt;p&gt;20% ~ 50% query&lt;/p&gt; &lt;/li&gt; 
-   &lt;/ul&gt; 
-  &lt;/div&gt; 
- &lt;/div&gt; 
-&lt;/div&gt; 
-&lt;div class=&quot;sect1&quot;&gt; 
- &lt;h2 id=&quot;_in_php&quot;&gt;in php&lt;/h2&gt; 
- &lt;div class=&quot;sectionbody&quot;&gt; 
-  &lt;div class=&quot;ulist&quot;&gt; 
-   &lt;ul&gt; 
-    &lt;li&gt; &lt;p&gt;pdo 直接写 sql&lt;/p&gt; &lt;/li&gt; 
-    &lt;li&gt; &lt;p&gt;Eloquent ORM&lt;/p&gt; &lt;/li&gt; 
-   &lt;/ul&gt; 
-  &lt;/div&gt; 
-  &lt;div class=&quot;listingblock&quot;&gt; 
-   &lt;div class=&quot;content&quot;&gt; 
-    &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;$results = DB::select(&apos;select * from users where id = :id&apos;, [&apos;id&apos; =&amp;gt; 1]);
-
-$price = DB::table(&apos;orders&apos;)
-                -&amp;gt;where(&apos;finalized&apos;, 1)
-                -&amp;gt;avg(&apos;price&apos;);&lt;/code&gt;&lt;/pre&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;传统 ORM 解决的问题是 &lt;code&gt;程序中对象&lt;/code&gt; ←→ &lt;code&gt;数据库存储&lt;/code&gt; 的对应, 提供了一套面向对象的封装, 屏蔽了 jdbc 的复杂性.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;而 jdbc template 等非 orm 的框架提供了完全控制 sql 的能力但无法提供 ORM 提供的强类型映射, 需要开发人员大量的重复编码.&lt;/p&gt; 
    &lt;/div&gt; 
   &lt;/div&gt; 
  &lt;/div&gt; 
 &lt;/div&gt; 
 &lt;div class=&quot;sect1&quot;&gt; 
- &lt;h2 id=&quot;_in_groovy&quot;&gt;in groovy&lt;/h2&gt; 
+ &lt;h2 id=&quot;_我们的现状&quot;&gt;我们的现状&lt;/h2&gt; 
  &lt;div class=&quot;sectionbody&quot;&gt; 
-  &lt;div class=&quot;listingblock&quot;&gt; 
-   &lt;div class=&quot;content&quot;&gt; 
-    &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;def taxRows = sql.rows(&quot;select * from product_tax where (product_id = ? or category_id = ?) AND ? &amp;gt;= stime AND ? &amp;lt;= etime&quot;,
-                    [productId, categoryId, orderTime, orderTime])&lt;/code&gt;&lt;/pre&gt; 
-   &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;在我们的项目中, 几乎无法避免要使用到关系型数据库, 无法避免要使用 sql.&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;但是, 我们对 sql 的使用可以分成两种类型:&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;ulist&quot;&gt; 
+   &lt;ul&gt; 
+    &lt;li&gt; &lt;p&gt;50% ~ 80% 的 CURD&lt;/p&gt; 
+     &lt;div class=&quot;paragraph&quot;&gt; 
+      &lt;p&gt;基础的 CURD 是项目中最常见的使用方式, 增删改查一个实体.&lt;/p&gt; 
+     &lt;/div&gt; 
+     &lt;div class=&quot;paragraph&quot;&gt; 
+      &lt;p&gt;我们在写业务逻辑的时候, 就是获取各种实体数据, 然后通过计算更改数据, 再将数据保存.&lt;/p&gt; 
+     &lt;/div&gt; &lt;/li&gt; 
+    &lt;li&gt; &lt;p&gt;20% ~ 50% query&lt;/p&gt; 
+     &lt;div class=&quot;paragraph&quot;&gt; 
+      &lt;p&gt;如果项目中只有 CURD, 那么生活将会非常美好. 然而项目中总是免不了需要复杂的 sql 来实现的功能.&lt;/p&gt; 
+     &lt;/div&gt; 
+     &lt;div class=&quot;paragraph&quot;&gt; 
+      &lt;p&gt;比如列表查询, 往往需求比较个性化, 一行的数据可能涉及多个数据表.&lt;/p&gt; 
+     &lt;/div&gt; 
+     &lt;div class=&quot;paragraph&quot;&gt; 
+      &lt;p&gt;这种需求虽然现在可以通过冗余存储的方式来解决, 但通常还是用连表查询配合缓存来完成, 有时还会涉及到聚合查询, 可变条件等情况.&lt;/p&gt; 
+     &lt;/div&gt; 
+     &lt;div class=&quot;paragraph&quot;&gt; 
+      &lt;p&gt;传统 ORM 对于这种情况就会显得力不从心.&lt;/p&gt; 
+     &lt;/div&gt; &lt;/li&gt; 
+   &lt;/ul&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_jooq_是怎么做的&quot;&gt;JOOQ 是怎么做的&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;JOOQ 是要来解决上面问题的. JOOQ 通过大量的流式 API 来灵活构建一个 SQL. 下面通过 JOOQ 的几种使用方式来体验下 JOOQ 的特性:&lt;/p&gt; 
   &lt;/div&gt; 
  &lt;/div&gt; 
 &lt;/div&gt; 
 &lt;div class=&quot;sect1&quot;&gt; 
  &lt;h2 id=&quot;_使用方式&quot;&gt;使用方式&lt;/h2&gt; 
  &lt;div class=&quot;sectionbody&quot;&gt; 
-  &lt;div class=&quot;ulist&quot;&gt; 
-   &lt;ul&gt; 
-    &lt;li&gt; &lt;p&gt;sql builder&lt;/p&gt; &lt;/li&gt; 
-    &lt;li&gt; &lt;p&gt;sql executor&lt;/p&gt; &lt;/li&gt; 
-    &lt;li&gt; &lt;p&gt;typesafe executor&lt;/p&gt; &lt;/li&gt; 
-    &lt;li&gt; &lt;p&gt;curd&lt;/p&gt; &lt;/li&gt; 
-    &lt;li&gt; &lt;p&gt;use with other&lt;/p&gt; &lt;/li&gt; 
-   &lt;/ul&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_sql_builder_作为_sql_的构造器&quot;&gt;sql builder, 作为 sql 的构造器&lt;/h3&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;{
+    String s = DSL.select(DSL.field(&quot;id&quot;), DSL.field(&quot;title&quot;), DSL.field(&quot;published_in&quot;))
+            .from(&quot;book&quot;).getSQL();
+    System.out.println(s);
+}
+
+{
+    String s = DSL.using(SQLDialect.MYSQL).select()
+            .from(&quot;book&quot;)
+            .join(DSL.table(&quot;language&quot;).as(&quot;a&quot;))
+            .on(&quot;book.language_id = a.id&quot;)
+            .getSQL();
+    System.out.println(s);
+}
+
+{
+    String s = DSL.using(SQLDialect.MYSQL).select()
+            .from(&quot;book&quot;)
+            .join(DSL.table(&quot;language&quot;).as(&quot;a&quot;))
+            .on(&quot;book.language_id = a.id&quot;)
+            .where(DSL.field(&quot;book.author_id&quot;).eq(2))
+            .and(&quot;published_in = 1990&quot;)
+            .getSQL();
+    System.out.println(s);
+}&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;不需要数据源, 不需要代码生成, 使用 &lt;code&gt;org.jooq.impl.DSL&lt;/code&gt; 来构建 sql 语句, 来看一下输出结果:&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;select id, title, published_in from book
+select * from book join language as `a` on (book.language_id = a.id)
+select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = ? and (published_in = 1990))&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;通过 jooq 的 api, 可以构建出满足我们需要的简单或复杂的 sql.&lt;/p&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_sql_executor_更进一步_作为_sql_执行器&quot;&gt;sql executor, 更进一步, 作为 sql 执行器&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;jooq 构建 sql 之后, 可以作为 sql 的执行器来运行 sql.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;首先, 利用数据源建立 DSLContext 对象, 下面需要执行的例子都会使用这个对象.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;DSLContext sql;
+
+@Before
+public void before() {
+    MysqlDataSource mysqlDataSource = new MysqlDataSource();
+    mysqlDataSource.setDatabaseName(&quot;jooq_test&quot;);
+    mysqlDataSource.setUser(&quot;root&quot;);
+    mysqlDataSource.setPassword(&quot;&quot;);
+    sql = DSL.using(mysqlDataSource, SQLDialect.MYSQL);
+}&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;执行构建好的 sql 语句&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;{
+    String s = DSL.using(SQLDialect.MYSQL).select()
+            .from(&quot;book&quot;)
+            .join(DSL.table(&quot;language&quot;).as(&quot;a&quot;))
+            .on(&quot;book.language_id = a.id&quot;)
+            .where(DSL.field(&quot;book.author_id&quot;).eq(2))
+            .and(&quot;published_in = 1990&quot;)
+            .getSQL();
+    sql.execute(s, 2);
+    sql.resultQuery(s, 2).fetch();
+}&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;执行结果&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;11:44:36.067 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = ? and (published_in = 1990))
+11:44:36.068 [main] DEBUG org.jooq.tools.LoggerListener - -&amp;gt; with bind values      : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = 2 and (published_in = 1990))
+11:44:36.660 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = ? and (published_in = 1990))
+11:44:36.660 [main] DEBUG org.jooq.tools.LoggerListener - -&amp;gt; with bind values      : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = 2 and (published_in = 1990))
+11:44:36.760 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-------------------------------+------------+-----------+---------+----+----+-----------+
+11:44:36.760 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|title                          |published_in|language_id|new_field|  id|cd  |description|
+11:44:36.764 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------+------------+-----------+---------+----+----+-----------+
+11:44:36.764 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Bridahahahahahahahahahahahahaha|        1990|          2|        0|   2|de  |Deutsch    |
+11:44:36.764 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------+------------+-----------+---------+----+----+-----------+&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;以上是我们通过 jooq api 和自己拼写 sql 字符串的方式执行 sql.&lt;/p&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_typesafe_sql_builder_and_executor_作为强类型的_sql_构建和执行器&quot;&gt;typesafe sql builder and executor, 作为强类型的 sql 构建和执行器&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;这一步我们要借助 jooq 的 code generator 来生成数据库的描述文件.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;code generator 有 gradle 和 maven 的插件可以使用. 我是用的是 gradle 插件, 我的测试使用配置如下&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-gradle&quot; data-lang=&quot;gradle&quot;&gt;plugins {
+    id &apos;nu.studer.jooq&apos; version &apos;2.0.9&apos;
+    id &apos;java&apos;
+}
+
+dependencies {
+
+    jooqRuntime(&apos;mysql:mysql-connector-java:5.1.44&apos;)
+
+    testCompile group: &apos;junit&apos;, name: &apos;junit&apos;, version: &apos;4.12&apos;
+    testCompile &apos;org.slf4j:slf4j-api:1.7.21&apos;
+    testCompile &apos;ch.qos.logback:logback-core:1.2.3&apos;
+    testCompile &apos;ch.qos.logback:logback-classic:1.2.3&apos;
+
+    testCompile(&apos;org.jooq:jooq:3.10.6&apos;)
+    testCompile(&apos;mysql:mysql-connector-java:5.1.44&apos;)
+}
+
+jooq {
+    sample(sourceSets.main) {
+        jdbc {
+            driver = &apos;com.mysql.jdbc.Driver&apos;
+            url = &apos;jdbc:mysql://localhost:3306/test&apos;
+            user = &apos;root&apos;
+            password = &apos;&apos;
+        }
+        generator {
+
+            database {
+                name = &apos;org.jooq.util.mysql.MySQLDatabase&apos;
+                inputSchema = &apos;jooq_test&apos;
+                outputSchemaToDefault = true
+
+            }
+
+            generate {
+                relations = true
+                deprecated = false
+                records = true
+                immutablePojos = true
+                fluentSetters = true
+                daos = true
+                // ...
+            }
+            target {
+                packageName = &apos;com.yangxiaochen.jooq&apos;
+                // directory = ...
+            }
+        }
+    }
+}&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;然后执行&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;./gradlew generateSampleJooqSchemaSource&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;生成代码.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;生成之后, 就可以使用了&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;{
+    Result&amp;lt;Record3&amp;lt;Integer, Integer, String&amp;gt;&amp;gt; result = sql.select(BOOK.ID, BOOK.AUTHOR_ID, LANGUAGE.DESCRIPTION).from(BOOK).join(LANGUAGE)
+            .on(BOOK.LANGUAGE_ID.eq(LANGUAGE.ID))
+            .where(BOOK.PUBLISHED_IN.eq(1990))
+            .fetch();
+    Integer id = result.get(0).getValue(BOOK.ID);
+    Integer authorId = result.get(0).get(&quot;author_id&quot;, Integer.class);
+    String desc = result.get(0).value3();
+    System.out.println(id + &quot; &quot; + authorId + &quot; &quot; + desc);
+
+}&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;执行结果:&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre&gt;12:06:40.515 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
+12:06:40.516 [main] DEBUG org.jooq.tools.LoggerListener - -&amp;gt; with bind values      : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = 1990
+12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------+
+12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|description|
+12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
+12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Deutsch    |
+12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
+4 2 Deutsch&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;可以看到, jooq 通过生成数据库描述代码来保证强类型, 当数据库发生变动, 可以重新生成.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;sect3&quot;&gt; 
+    &lt;h4 id=&quot;_curd&quot;&gt;curd&lt;/h4&gt; 
+    &lt;div class=&quot;paragraph&quot;&gt; 
+     &lt;p&gt;JOOQ 针对 CURD 生成基本代码, 来避免重复编码. JOOQ 对 CURD 的支持主要氛围 record 和 dao 两种方式, 可以一起使用:&lt;/p&gt; 
+    &lt;/div&gt; 
+    &lt;div class=&quot;listingblock&quot;&gt; 
+     &lt;div class=&quot;content&quot;&gt; 
+      &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;BookRecord bookRecord = sql.selectFrom(BOOK).where(BOOK.ID.eq(4)).fetchOne();
+System.out.println(bookRecord);
+bookRecord.setTitle(bookRecord.getTitle() + &quot;ha&quot;);
+bookRecord.store();
+
+BookRecord bookRecord1 = sql.newRecord(BOOK);
+bookRecord1.setAuthorId(2);
+bookRecord1.setLanguageId(1);
+bookRecord1.setTitle(&quot;hello&quot;);
+bookRecord1.setPublishedIn(2018);
+bookRecord1.store();
+
+System.out.println(bookRecord1);
+
+BookDao bookDao = new BookDao(sql.configuration());
+List&amp;lt;Book&amp;gt; books = bookDao.fetchByAuthorId(2);
+System.out.println(books.get(0));&lt;/code&gt;&lt;/pre&gt; 
+     &lt;/div&gt; 
+    &lt;/div&gt; 
+    &lt;div class=&quot;paragraph&quot;&gt; 
+     &lt;p&gt;执行结果&lt;/p&gt; 
+    &lt;/div&gt; 
+    &lt;div class=&quot;listingblock&quot;&gt; 
+     &lt;div class=&quot;content&quot;&gt; 
+      &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;12:18:55.420 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = ?
+12:18:55.422 [main] DEBUG org.jooq.tools.LoggerListener - -&amp;gt; with bind values      : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = 4
+12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------------------------------+------------+-----------+---------+
+12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|title                              |published_in|language_id|new_field|
+12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------------------------------+------------+-----------+---------+
+12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Bridahahahahahahahahahahahahahahaha|        1990|          2|        0|
+12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------------------------------+------------+-----------+---------+
++----+---------+-----------------------------------+------------+-----------+---------+
+|  id|author_id|title                              |published_in|language_id|new_field|
++----+---------+-----------------------------------+------------+-----------+---------+
+|   4|        2|Bridahahahahahahahahahahahahahahaha|        1990|          2|        0|
++----+---------+-----------------------------------+------------+-----------+---------+
+12:18:56.198 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : update `book` set `book`.`title` = ? where `book`.`id` = ?
+12:18:56.199 [main] DEBUG org.jooq.tools.LoggerListener - -&amp;gt; with bind values      : update `book` set `book`.`title` = &apos;Bridahahahahahahahahahahahahahahahaha&apos; where `book`.`id` = 4
+12:18:56.240 [main] DEBUG org.jooq.tools.LoggerListener - Affected row(s)          : 1
+12:18:56.250 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : insert into `book` (`author_id`, `title`, `published_in`, `language_id`) values (?, ?, ?, ?)
+12:18:56.250 [main] DEBUG org.jooq.tools.LoggerListener - -&amp;gt; with bind values      : insert into `book` (`author_id`, `title`, `published_in`, `language_id`) values (2, &apos;hello&apos;, 2018, 1)
+12:18:56.268 [main] DEBUG org.jooq.tools.LoggerListener - Affected row(s)          : 1
+12:18:56.270 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id` from `book` where `book`.`id` = ?
+12:18:56.271 [main] DEBUG org.jooq.tools.LoggerListener - -&amp;gt; with bind values      : select `book`.`id` from `book` where `book`.`id` = 19
+12:18:56.291 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+
+12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|
+12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+
+12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  19|
+12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+
++----+---------+-----+------------+-----------+---------+
+|  id|author_id|title|published_in|language_id|new_field|
++----+---------+-----+------------+-----------+---------+
+|  19|        2|hello|        2018|          1|   {null}|
++----+---------+-----+------------+-----------+---------+
+12:18:56.305 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`author_id` in (?)
+12:18:56.306 [main] DEBUG org.jooq.tools.LoggerListener - -&amp;gt; with bind values      : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`author_id` in (2)
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-------------------------------------+------------+-----------+---------+
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|title                                |published_in|language_id|new_field|
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------------+------------+-----------+---------+
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   3|        2|O Alquimista                         |        1988|          4|        0|
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Bridahahahahahahahahahahahahahahahaha|        1990|          2|        0|
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  10|        2|hello                                |        2018|          1|        0|
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  11|        2|hello                                |        2018|          1|        0|
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  12|        2|hello                                |        2018|          1|        0|
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------------+------------+-----------+---------+
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |...7 record(s) truncated...
+Book (3, 2, O Alquimista, 1988, 4, 0)&lt;/code&gt;&lt;/pre&gt; 
+     &lt;/div&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_mapper&quot;&gt;mapper&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;JOOQ 还提供了内置的映射功能, 方便我们进行对象的转换&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt; public static class R {
+    public Integer id;
+    public Integer authorId;
+    public String description;
+
+    @Override
+    public String toString() {
+        return &quot;R{&quot; +
+                &quot;id=&quot; + id +
+                &quot;, authorId=&quot; + authorId +
+                &quot;, description=&apos;&quot; + description + &apos;\&apos;&apos; +
+                &apos;}&apos;;
+    }
+}
+
+@Test
+public void mapping() {
+
+    List&amp;lt;R&amp;gt; r = sql.select(BOOK.ID, BOOK.AUTHOR_ID, LANGUAGE.DESCRIPTION).from(BOOK).join(LANGUAGE)
+            .on(BOOK.LANGUAGE_ID.eq(LANGUAGE.ID))
+            .where(BOOK.PUBLISHED_IN.eq(1990)).fetch().into(R.class);
+
+    r.forEach(it -&amp;gt; System.out.println(it));
+}&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;执行结果&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre&gt;12:23:00.964 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
+12:23:00.965 [main] DEBUG org.jooq.tools.LoggerListener - -&amp;gt; with bind values      : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = 1990
+12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------+
+12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|description|
+12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
+12:23:01.863 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Deutsch    |
+12:23:01.863 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
+R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_特性总结&quot;&gt;特性总结&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;JOOQ 提供了方便流式 API 用于构建各种各样的 SQL&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;通过代码生成数据库描述文件, 提供了类型安全保障, 代码与数据库的映射&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;通过生成 record, dao 等方式支持了 curd, 无需再写基础代码.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;内置映射功能方便了对象之间的转化.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;JOOQ 还有其他很多特性比如: 反过来通过代码描述生成数据库, 支持 xml 读写 等等. 不在本文讨论范围.&lt;/p&gt; 
+   &lt;/div&gt; 
   &lt;/div&gt; 
  &lt;/div&gt; 
 &lt;/div&gt; 
 &lt;div class=&quot;sect1&quot;&gt; 
  &lt;h2 id=&quot;_缺点&quot;&gt;缺点&lt;/h2&gt; 
  &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;JOOQ 也有自身的缺点和局限, 或者说在使用时需要考虑的地方&lt;/p&gt; 
+  &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
    &lt;h3 id=&quot;_性能&quot;&gt;性能&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;JOOQ 在提供了方便的同事, 在以下几个阶段都会有额外的性能开销.&lt;/p&gt; 
+   &lt;/div&gt; 
    &lt;div class=&quot;ulist&quot;&gt; 
     &lt;ul&gt; 
      &lt;li&gt; &lt;p&gt;construct jOOQ queries&lt;/p&gt; &lt;/li&gt; 
@@ -176,6 +614,12 @@ $price = DB::table(&apos;orders&apos;)
      &lt;li&gt; &lt;p&gt;fetch results&lt;/p&gt; &lt;/li&gt; 
     &lt;/ul&gt; 
    &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;上面这些开销, 可以自己来设置一些缓存来减小开销, 比如保存和复用 Query 对象.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;而且, 这个开销并不大, 引用官方文档的描述:&lt;/p&gt; 
+   &lt;/div&gt; 
    &lt;div class=&quot;quoteblock&quot;&gt; 
     &lt;blockquote&gt; 
      &lt;div class=&quot;paragraph&quot;&gt; 
@@ -183,34 +627,30 @@ $price = DB::table(&apos;orders&apos;)
      &lt;/div&gt; 
     &lt;/blockquote&gt; 
    &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;每个查询的额外开销是 1ms 以内.&lt;/p&gt; 
+   &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
-   &lt;h3 id=&quot;_商业化版本&quot;&gt;商业化版本&lt;/h3&gt; 
+   &lt;h3 id=&quot;_商业化&quot;&gt;商业化&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
-    &lt;p&gt;针对商业数据库&lt;/p&gt; 
+    &lt;p&gt;jooq 是个商业软件, 售价不菲. 但我们可以使用开源版本.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;商业版本针对的是商业数据库比如 oracle, sqlServer 等, 并且会提供技术支持.&lt;/p&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_jdk_要求&quot;&gt;jdk 要求&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;比较新的开源版 jooq 要求 jdk8 以上&lt;/p&gt; 
    &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;sect2&quot;&gt; 
    &lt;h3 id=&quot;_学习成本&quot;&gt;学习成本&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
-    &lt;p&gt; * 生成器配置比较复杂. 但可以配置为常用场景. * 写法需要看文档.&lt;/p&gt; 
+    &lt;p&gt; * 生成器配置比较复杂. 需要一个找一个同事来阅读文档称为配置专家, 当然也可以直接找一些比较通用的配置, 比如我这次进行测试的这个配置就可以满足大多数的需求. * DSL写法需要看文档. 但文档很全, 比如想知道 &lt;code&gt;group by&lt;/code&gt; 怎么写直接文档中搜索就好.&lt;/p&gt; 
    &lt;/div&gt; 
-  &lt;/div&gt; 
- &lt;/div&gt; 
-&lt;/div&gt; 
-&lt;div class=&quot;sect1&quot;&gt; 
- &lt;h2 id=&quot;_提出的问题&quot;&gt;提出的问题&lt;/h2&gt; 
- &lt;div class=&quot;sectionbody&quot;&gt; 
-  &lt;div class=&quot;olist arabic&quot;&gt; 
-   &lt;ol class=&quot;arabic&quot;&gt; 
-    &lt;li&gt; &lt;p&gt;不是直接通过 sql 查问题点&lt;/p&gt; 
-     &lt;div class=&quot;literalblock&quot;&gt; 
-      &lt;div class=&quot;content&quot;&gt; 
-       &lt;pre&gt;log 的问题.  mybatis 也是同样问题: &amp;lt;include&amp;gt; , 动态 SQL&lt;/pre&gt; 
-      &lt;/div&gt; 
-     &lt;/div&gt; &lt;/li&gt; 
-    &lt;li&gt; &lt;p&gt;java8以上&lt;/p&gt; &lt;/li&gt; 
-   &lt;/ol&gt; 
   &lt;/div&gt; 
  &lt;/div&gt; 
 &lt;/div&gt;
