@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期日, 15 四月 2018 13:12:55 +0800</pubDate>
-    <lastBuildDate>星期日, 15 四月 2018 13:12:55 +0800</lastBuildDate>
+    <pubDate>星期日, 15 四月 2018 17:03:24 +0800</pubDate>
+    <lastBuildDate>星期日, 15 四月 2018 17:03:24 +0800</lastBuildDate>
 
     <item>
       <title>jooq 介绍</title>
@@ -34,10 +34,8 @@
    &lt;ul class=&quot;sectlevel2&quot;&gt; 
     &lt;li&gt;&lt;a href=&quot;#_sql_builder_作为_sql_的构造器&quot;&gt;sql builder, 作为 sql 的构造器&lt;/a&gt;&lt;/li&gt; 
     &lt;li&gt;&lt;a href=&quot;#_sql_executor_更进一步_作为_sql_执行器&quot;&gt;sql executor, 更进一步, 作为 sql 执行器&lt;/a&gt;&lt;/li&gt; 
-    &lt;li&gt;&lt;a href=&quot;#_typesafe_sql_builder_and_executor_作为强类型的_sql_构建和执行器&quot;&gt;typesafe sql builder and executor, 作为强类型的 sql 构建和执行器&lt;/a&gt; 
-     &lt;ul class=&quot;sectlevel3&quot;&gt; 
-      &lt;li&gt;&lt;a href=&quot;#_curd&quot;&gt;curd&lt;/a&gt;&lt;/li&gt; 
-     &lt;/ul&gt; &lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_typesafe_sql_builder_and_executor_作为强类型的_sql_构建和执行器&quot;&gt;typesafe sql builder and executor, 作为强类型的 sql 构建和执行器&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_curd&quot;&gt;curd&lt;/a&gt;&lt;/li&gt; 
     &lt;li&gt;&lt;a href=&quot;#_mapper&quot;&gt;mapper&lt;/a&gt;&lt;/li&gt; 
     &lt;li&gt;&lt;a href=&quot;#_特性总结&quot;&gt;特性总结&lt;/a&gt;&lt;/li&gt; 
    &lt;/ul&gt; &lt;/li&gt; 
@@ -449,14 +447,15 @@ jooq {
    &lt;div class=&quot;paragraph&quot;&gt; 
     &lt;p&gt;可以看到, jooq 通过生成数据库描述代码来保证强类型, 当数据库发生变动, 可以重新生成.&lt;/p&gt; 
    &lt;/div&gt; 
-   &lt;div class=&quot;sect3&quot;&gt; 
-    &lt;h4 id=&quot;_curd&quot;&gt;curd&lt;/h4&gt; 
-    &lt;div class=&quot;paragraph&quot;&gt; 
-     &lt;p&gt;JOOQ 针对 CURD 生成基本代码, 来避免重复编码. JOOQ 对 CURD 的支持主要氛围 record 和 dao 两种方式, 可以一起使用:&lt;/p&gt; 
-    &lt;/div&gt; 
-    &lt;div class=&quot;listingblock&quot;&gt; 
-     &lt;div class=&quot;content&quot;&gt; 
-      &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;BookRecord bookRecord = sql.selectFrom(BOOK).where(BOOK.ID.eq(4)).fetchOne();
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_curd&quot;&gt;curd&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;JOOQ 针对 CURD 生成基本代码, 来避免重复编码. JOOQ 对 CURD 的支持主要氛围 record 和 dao 两种方式, 可以一起使用:&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;BookRecord bookRecord = sql.selectFrom(BOOK).where(BOOK.ID.eq(4)).fetchOne();
 System.out.println(bookRecord);
 bookRecord.setTitle(bookRecord.getTitle() + &quot;ha&quot;);
 bookRecord.store();
@@ -473,14 +472,14 @@ System.out.println(bookRecord1);
 BookDao bookDao = new BookDao(sql.configuration());
 List&amp;lt;Book&amp;gt; books = bookDao.fetchByAuthorId(2);
 System.out.println(books.get(0));&lt;/code&gt;&lt;/pre&gt; 
-     &lt;/div&gt; 
     &lt;/div&gt; 
-    &lt;div class=&quot;paragraph&quot;&gt; 
-     &lt;p&gt;执行结果&lt;/p&gt; 
-    &lt;/div&gt; 
-    &lt;div class=&quot;listingblock&quot;&gt; 
-     &lt;div class=&quot;content&quot;&gt; 
-      &lt;pre&gt;12:18:55.420 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = ?
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;执行结果&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre&gt;12:18:55.420 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = ?
 12:18:55.422 [main] DEBUG org.jooq.tools.LoggerListener - -&amp;gt; with bind values      : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = 4
 12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------------------------------+------------+-----------+---------+
 12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|title                              |published_in|language_id|new_field|
@@ -523,7 +522,6 @@ System.out.println(books.get(0));&lt;/code&gt;&lt;/pre&gt;
 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------------+------------+-----------+---------+
 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |...7 record(s) truncated...
 Book (3, 2, O Alquimista, 1988, 4, 0)&lt;/pre&gt; 
-     &lt;/div&gt; 
     &lt;/div&gt; 
    &lt;/div&gt; 
   &lt;/div&gt; 
@@ -849,45 +847,146 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
       <pubDate>星期一, 24 七月 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/gradle简明教程.html</guid>
       	<description>
-	&lt;!-- # gradle简明教程 --&gt; 
-&lt;h2&gt;前言&lt;/h2&gt; 
-&lt;p&gt;本文没有 gradle 与 maven 对比，也没有深入 gradle 实现。只有 gradle 从 0 开始使用的说明。&lt;/p&gt; 
-&lt;ul&gt; 
- &lt;li&gt;简介&lt;/li&gt; 
- &lt;li&gt;安装&lt;/li&gt; 
- &lt;li&gt;新建一个 gradle 项目&lt;/li&gt; 
- &lt;li&gt;引入一个 gradle 项目&lt;/li&gt; 
- &lt;li&gt;常见问题&lt;/li&gt; 
- &lt;li&gt;交流&lt;/li&gt; 
-&lt;/ul&gt; 
-&lt;!-- more --&gt; 
-&lt;h2&gt;简介&lt;/h2&gt; 
-&lt;p&gt;gradle 是一个构建工具。负责管理项目依赖，组织项目结构，完成项目构建的工作。&lt;/p&gt; 
-&lt;h2&gt;安装&lt;/h2&gt; 
-&lt;p&gt;从 官网 下载，解压即可，并将 bin/gradle 命令加入到 path 中。&lt;/p&gt; 
-&lt;h2&gt;新建一个 gradle 项目&lt;/h2&gt; 
-&lt;ol&gt; 
- &lt;li&gt;新建一个文件夹作为项目文件夹&lt;/li&gt; 
-&lt;/ol&gt; 
-&lt;pre&gt;&lt;code&gt;mkdir project-example
+	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt; 
+ &lt;div id=&quot;toctitle&quot;&gt;
+  Table of Contents
+ &lt;/div&gt; 
+ &lt;ul class=&quot;sectlevel1&quot;&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_前言&quot;&gt;前言&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_简介&quot;&gt;简介&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_安装&quot;&gt;安装&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_打开一个_gradle_项目&quot;&gt;打开一个 gradle 项目&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_新建一个_gradle_项目&quot;&gt;新建一个 gradle 项目&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_常见问题&quot;&gt;常见问题&lt;/a&gt; 
+   &lt;ul class=&quot;sectlevel2&quot;&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_插件选择&quot;&gt;插件选择&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_build速度慢&quot;&gt;build速度慢&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_如何debug&quot;&gt;如何debug&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_私服使用和包管理混乱引起的问题&quot;&gt;私服使用和包管理混乱引起的问题&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_常用命令或参数&quot;&gt;常用命令或参数&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_依赖冲突处理&quot;&gt;依赖冲突处理&lt;/a&gt;&lt;/li&gt; 
+   &lt;/ul&gt; &lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_参考资料&quot;&gt;参考资料&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_交流&quot;&gt;交流&lt;/a&gt;&lt;/li&gt; 
+ &lt;/ul&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_前言&quot;&gt;前言&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;本文没有 gradle 与 maven 对比，也没有深入 gradle 实现。只有 gradle 从 0 开始使用的说明。&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;ulist&quot;&gt; 
+   &lt;ul&gt; 
+    &lt;li&gt; &lt;p&gt;简介&lt;/p&gt; &lt;/li&gt; 
+    &lt;li&gt; &lt;p&gt;安装&lt;/p&gt; &lt;/li&gt; 
+    &lt;li&gt; &lt;p&gt;新建一个 gradle 项目&lt;/p&gt; &lt;/li&gt; 
+    &lt;li&gt; &lt;p&gt;引入一个 gradle 项目&lt;/p&gt; &lt;/li&gt; 
+    &lt;li&gt; &lt;p&gt;常见问题&lt;/p&gt; &lt;/li&gt; 
+    &lt;li&gt; &lt;p&gt;交流 &amp;lt;!-- more -→&lt;/p&gt; &lt;/li&gt; 
+   &lt;/ul&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_简介&quot;&gt;简介&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;gradle 是一个构建工具。负责管理项目依赖，组织项目结构，完成项目构建的工作。&lt;/p&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_安装&quot;&gt;安装&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;从 官网 下载，解压即可，并将 bin/gradle 命令加入到 path 中。&lt;/p&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_打开一个_gradle_项目&quot;&gt;打开一个 gradle 项目&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;通常, 大家首次接触 gradle 是遇到一个 gradle 作为构建工具项目.&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;观察基于 gradle 构建的项目结构, 通常有以下几个文件:&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;listingblock&quot;&gt; 
+   &lt;div class=&quot;content&quot;&gt; 
+    &lt;pre&gt;build.gradle                      // 重要, 构建脚本文件，主要的构建配置都在这里写
+gradlew                           // gradle wrapper 执行脚本文件，用来在没有安装 gradle 的情况下执行 gradle 命令。当然，第一次执行时会下载 gradle。
+gradlew.bat                       // gradle wrapper 执行脚本文件的 windows 版
+gradle
+|- wrapper
+   |- gradle-wrapper.properties   // 重要, 描述了 gradlew 使用的 gradle 版本
+   |- gradle-wrapper.jar          // gradlew 执行时用到的 jar, 无需关注
+settings.gradle                   // 项目配置，指明根项目名字和引入的 module&lt;/pre&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;执行下&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;listingblock&quot;&gt; 
+   &lt;div class=&quot;content&quot;&gt; 
+    &lt;pre&gt;./gradlew tasks&lt;/pre&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;能够列出所有可用的构建命令. 这时如果是第一次运行 gradle, 且本地没有缓存过 gradle-wrapper.properties 中描述的 gradle 版本, 则会去 gradle-wrapper.properties 指的的 url 去下载 gradle.&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;但是这个官方地址的 gradle 下载通常会比较慢, 所以如果是要给同事分享 gradle 项目时, 可以把 gradle 提前下载到内网, 然后将 gradle-wrapper.properties 中的下载地址改成内网的地址.&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;使用 idea 打开这个项目, 也就是 open build.gradle 文件, 就可以引入项目了.&lt;/p&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_新建一个_gradle_项目&quot;&gt;新建一个 gradle 项目&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;olist arabic&quot;&gt; 
+   &lt;ol class=&quot;arabic&quot;&gt; 
+    &lt;li&gt; &lt;p&gt;新建一个文件夹作为项目文件夹&lt;/p&gt; 
+     &lt;div class=&quot;literalblock&quot;&gt; 
+      &lt;div class=&quot;content&quot;&gt; 
+       &lt;pre&gt;```
+mkdir project-example
 cd project-example
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;ol&gt; 
- &lt;li&gt;使用 gradle 初始化&lt;/li&gt; 
-&lt;/ol&gt; 
-&lt;pre&gt;&lt;code&gt;gradle init
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;p&gt;然后目录下会生成这些文件&lt;/p&gt; 
-&lt;pre&gt;&lt;code&gt;build.gradle     // 构建脚本文件，主要的构建配置都在这里写
+```&lt;/pre&gt; 
+      &lt;/div&gt; 
+     &lt;/div&gt; &lt;/li&gt; 
+    &lt;li&gt; &lt;p&gt;使用 gradle 初始化&lt;/p&gt; 
+     &lt;div class=&quot;literalblock&quot;&gt; 
+      &lt;div class=&quot;content&quot;&gt; 
+       &lt;pre&gt;```
+gradle init
+```&lt;/pre&gt; 
+      &lt;/div&gt; 
+     &lt;/div&gt; 
+     &lt;div class=&quot;literalblock&quot;&gt; 
+      &lt;div class=&quot;content&quot;&gt; 
+       &lt;pre&gt;然后目录下会生成这些文件&lt;/pre&gt; 
+      &lt;/div&gt; 
+     &lt;/div&gt; 
+     &lt;div class=&quot;literalblock&quot;&gt; 
+      &lt;div class=&quot;content&quot;&gt; 
+       &lt;pre&gt;```
+build.gradle     // 构建脚本文件，主要的构建配置都在这里写
 gradle           // 存放gradle wrapper 执行配置和工具的文件夹，
 gradlew          // gradle wrapper 执行脚本文件，用来在没有安装 gradle 的情况下执行 gradle 命令。当然，第一次执行时会下载 gradle。
 gradlew.bat      // gradle wrapper 执行脚本文件的 windows 版
 settings.gradle  // 项目配置，指明根项目名字和引入的 module
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;ol&gt; 
- &lt;li&gt;修改 build.gradle 文件，结果像下面这样&lt;/li&gt; 
-&lt;/ol&gt; 
-&lt;pre&gt;&lt;code&gt;/*
+```&lt;/pre&gt; 
+      &lt;/div&gt; 
+     &lt;/div&gt; &lt;/li&gt; 
+    &lt;li&gt; &lt;p&gt;修改 build.gradle 文件，结果像下面这样&lt;/p&gt; 
+     &lt;div class=&quot;literalblock&quot;&gt; 
+      &lt;div class=&quot;content&quot;&gt; 
+       &lt;pre&gt;```
+/*
 声明插件，声明插件的方式有两种，下面这种是 2.* 版本之后的新的定义方式。可以声明两种插件：
 1. 官方内置插件，如 java，idea。
 2. 在 gradle 插件中心注册过的插件，如第三个就是，这种要还要声明版本。
@@ -895,101 +994,138 @@ settings.gradle  // 项目配置，指明根项目名字和引入的 module
 */
 plugins {
     id &apos;java&apos;
-    id &apos;idea&apos;
-    id &quot;com.yangxiaochen.scaffold&quot; version &quot;1.0.2&quot;
-}
-
-/*
+}&lt;/pre&gt; 
+      &lt;/div&gt; 
+     &lt;/div&gt; 
+     &lt;div class=&quot;literalblock&quot;&gt; 
+      &lt;div class=&quot;content&quot;&gt; 
+       &lt;pre&gt;/*
 声明 group 和 版本，而 project 的名字在 settings.gradle 文件中，而子 module ，或者又称为 sub projects 的名字通常和文件夹名字一样。
 */
 group &apos;com.yangxiaochen.gradle&apos;
-version &apos;1.0.0-SNAPSHOT&apos;
-
-/*
+version &apos;1.0.0-SNAPSHOT&apos;&lt;/pre&gt; 
+      &lt;/div&gt; 
+     &lt;/div&gt; 
+     &lt;div class=&quot;literalblock&quot;&gt; 
+      &lt;div class=&quot;content&quot;&gt; 
+       &lt;pre&gt;/*
 声明依赖仓库，这里使用的是 jcenter，也可以使用其他的如 mavenCentral 等。也可以声明多个，会按顺序查找。
 */
 repositories {
     jcenter()
-}
-
-/*
+}&lt;/pre&gt; 
+      &lt;/div&gt; 
+     &lt;/div&gt; 
+     &lt;div class=&quot;literalblock&quot;&gt; 
+      &lt;div class=&quot;content&quot;&gt; 
+       &lt;pre&gt;/*
 声明依赖
 */
 dependencies {
     compile &apos;org.slf4j:slf4j-api:1.7.21&apos;
     testCompile &apos;junit:junit:4.12&apos;
 }
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;p&gt;编辑 settings.gradle 文件如下，声明了project name&lt;/p&gt; 
-&lt;pre&gt;&lt;code&gt;rootProject.name = &apos;project-example&apos;
-// include &apos;sub-project&apos;
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;ol&gt; 
- &lt;li&gt;引入到 Idea IDE 中&lt;/li&gt; 
-&lt;/ol&gt; 
-&lt;pre&gt;&lt;code&gt;gradle idea
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;p&gt;目录下新生成了三个文件&lt;/p&gt; 
-&lt;pre&gt;&lt;code&gt;project-example.iml
-project-example.ipr
-project-example.iws
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;p&gt;接下来只要用 Idea IDE 来 open project-example.ipr 文件，就可以引入 project 了， 之后每当&lt;br&gt; 1. 依赖更改&lt;/p&gt; 
-&lt;ol&gt; 
- &lt;li&gt;目录结构更改&lt;/li&gt; 
-&lt;/ol&gt; 
-&lt;p&gt;只要执行 &lt;code&gt;gradle cleanIdea idea&lt;/code&gt; 就可以刷新这三个文件，Idea IDE 就会重新加载识别项目了。&lt;/p&gt; 
-&lt;p&gt;&amp;gt; 我的经验是不要使用 Idea IDE 来直接用 build.gradle 来打开文件，因为 Idea IDE 在解析 build.gradle 文件时有其他操作，而且 Idea IDE 与 gradle 版本有时会不太兼容，导致项目解析错误；而使用 gradle 来生成 Idea IDE 工程文件的方式就不会有问题，而且速度更快，更容易debug。&lt;/p&gt; 
-&lt;ol&gt; 
- &lt;li&gt;引入之后，还需要生成 src 文件夹和 sub project&lt;/li&gt; 
-&lt;/ol&gt; 
-&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;gradle createSrc idea
-gradle createModule --name foo idea
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;p&gt;&lt;code&gt;createSrc&lt;/code&gt; 和&lt;code&gt;createModule&lt;/code&gt;都是插件 &lt;code&gt;com.yangxiaochen.scaffold&lt;/code&gt;里的 task，而 &lt;code&gt;idea&lt;/code&gt;和&lt;code&gt;cleanIdea&lt;/code&gt; 是插件 &lt;code&gt;idea&lt;/code&gt;提供的 task&lt;/p&gt; 
-&lt;h2&gt;引入一个 gradle 项目&lt;/h2&gt; 
-&lt;p&gt;跟上一节创建一个 gradle 项目类似，引入&lt;code&gt;idea&lt;/code&gt;插件，然后生成 Idea IDE 的工程文件，再 open 即可&lt;/p&gt; 
-&lt;h2&gt;常见问题&lt;/h2&gt; 
-&lt;h3&gt;插件选择&lt;/h3&gt; 
-&lt;p&gt;内置插件都在官方文档中有说明，除了内置插件外, 可以 &lt;a href=&quot;https://plugins.gradle.org/&quot;&gt;Search Gradle plugins&lt;/a&gt;，gradle 插件的官方仓库。&lt;/p&gt; 
-&lt;h3&gt;build速度慢&lt;/h3&gt; 
-&lt;p&gt;速度慢一般来说是依赖更新慢，因为众所周知的原因，国内使用国外的仓库速度并不乐观，所以可以替换&lt;code&gt;repositories&lt;/code&gt;, 使用阿里云的仓库&lt;/p&gt; 
-&lt;pre&gt;&lt;code&gt;repositories {
+```&lt;/pre&gt; 
+      &lt;/div&gt; 
+     &lt;/div&gt; 
+     &lt;div class=&quot;literalblock&quot;&gt; 
+      &lt;div class=&quot;content&quot;&gt; 
+       &lt;pre&gt;   编辑 settings.gradle 文件如下，声明了project name
+   ```
+   rootProject.name = &apos;project-example&apos;
+   // include &apos;sub-project&apos;
+   ```
+4. 用 idea open build.gradle 文件.&lt;/pre&gt; 
+      &lt;/div&gt; 
+     &lt;/div&gt; &lt;/li&gt; 
+   &lt;/ol&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_常见问题&quot;&gt;常见问题&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_插件选择&quot;&gt;插件选择&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;内置插件都在官方文档中有说明，除了内置插件外, 可以 [Search Gradle plugins](&lt;a href=&quot;https://plugins.gradle.org/)，gradle&quot; class=&quot;bare&quot;&gt;https://plugins.gradle.org/)，gradle&lt;/a&gt; 插件的官方仓库。&lt;/p&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_build速度慢&quot;&gt;build速度慢&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;速度慢一般来说是依赖更新慢，因为众所周知的原因，国内使用国外的仓库速度并不乐观，所以可以替换`repositories`, 使用阿里云的仓库&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code&gt;repositories {
   maven {
   	url &quot;http://maven.aliyun.com/nexus/content/groups/public&quot;
   }
-}
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;p&gt;再者, 有的同学使用私服, 可能是公司搭建的. 这个有时候会有不稳定, 且有时需要认证的情况. 看稍后的章节.&lt;/p&gt; 
-&lt;h3&gt;如何debug&lt;/h3&gt; 
-&lt;p&gt;gradle 运行中的提示并不算很友好, 尤其在链接仓库和下载jar包时, 在连接有问题的时候, 经常没有提示(新版本的可能好一些.)&lt;/p&gt; 
-&lt;p&gt;经常使用&lt;/p&gt; 
-&lt;pre&gt;&lt;code&gt;gradle idea -i
+}&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;再者, 有的同学使用私服, 可能是公司搭建的. 这个有时候会有不稳定, 且有时需要认证的情况. 看稍后的章节.&lt;/p&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_如何debug&quot;&gt;如何debug&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;gradle 运行中的提示并不算很友好, 尤其在链接仓库和下载jar包时, 在连接有问题的时候, 经常没有提示(新版本的可能好一些.)&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;经常使用&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code&gt;gradle idea -i
 gradle idea -id
 
 还可以加入 --no-daemon 参数来避免daemon启动产生的日志干扰
 gradle idea -id --no-daemon
-一般来说就能定位到构建问题.
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;p&gt;来获取更多的信息. 比较常见的卡住是因为&lt;code&gt;仓库链接不上&lt;/code&gt;, &lt;code&gt;jar包下载链接不上, 又不返回 response (私有仓库偶尔有问题)&lt;/code&gt;, &lt;code&gt;资源下载缓慢&lt;/code&gt;, &lt;code&gt;仓库需要认证登陆&lt;/code&gt;&lt;/p&gt; 
-&lt;ul&gt; 
- &lt;li&gt;仓库连接不上: 检查仓库地址, 检查网络.&lt;/li&gt; 
- &lt;li&gt;资源无法连接又没有response: 这种通常会在上面打出的日志中体现, 请求一个 url 便没有响应.&lt;/li&gt; 
- &lt;li&gt;下载缓慢: 更换仓库, 或者忍耐下第一次, 以后会好很多&lt;/li&gt; 
-&lt;/ul&gt; 
-&lt;p&gt;在 IDEA 刷新有问题时, 可以执行这个命令debug, 一般这个命令能成功, 那么 IDEA 刷新通常也能成功. (请注意版本问题, 命令行里执行的 gradle 版本需要跟 IDEA 里配置的 gradle 版本一致)&lt;/p&gt; 
-&lt;h3&gt;私服使用和包管理混乱引起的问题&lt;/h3&gt; 
-&lt;p&gt;私服使用中会有以下问题:&lt;/p&gt; 
-&lt;ol&gt; 
- &lt;li&gt; &lt;p&gt;不稳定, 偶尔服务无响应.&lt;/p&gt; &lt;/li&gt; 
- &lt;li&gt; &lt;p&gt;配置出错, 无法 proxy maven 主仓库. 或者出现私服中存在第三方包但是却不完整到时无法下载.&lt;/p&gt; &lt;/li&gt; 
-&lt;/ol&gt; 
-&lt;p&gt;一般来说会尝试把第三方仓库配置到私服之前:&lt;/p&gt; 
-&lt;pre&gt;&lt;code&gt;maven {
-  url &quot;http://maven.aliyun.com/nexus/content/groups/public&quot;
-}
-
+一般来说就能定位到构建问题.&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;来获取更多的信息. 比较常见的卡住是因为`仓库链接不上`, &lt;code&gt;jar包下载链接不上, 又不返回 response (私有仓库偶尔有问题)&lt;/code&gt;, &lt;code&gt;资源下载缓慢&lt;/code&gt;, &lt;code&gt;仓库需要认证登陆&lt;/code&gt;&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;ulist&quot;&gt; 
+    &lt;ul&gt; 
+     &lt;li&gt; &lt;p&gt;仓库连接不上: 检查仓库地址, 检查网络.&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;资源无法连接又没有response: 这种通常会在上面打出的日志中体现, 请求一个 url 便没有响应.&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;下载缓慢: 更换仓库, 或者忍耐下第一次, 以后会好很多&lt;/p&gt; &lt;/li&gt; 
+    &lt;/ul&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;在 IDEA 刷新有问题时, 可以执行这个命令debug, 一般这个命令能成功, 那么 IDEA 刷新通常也能成功. (请注意版本问题, 命令行里执行的 gradle 版本需要跟 IDEA 里配置的 gradle 版本一致)&lt;/p&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_私服使用和包管理混乱引起的问题&quot;&gt;私服使用和包管理混乱引起的问题&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;私服使用中会有以下问题:&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;olist arabic&quot;&gt; 
+    &lt;ol class=&quot;arabic&quot;&gt; 
+     &lt;li&gt; &lt;p&gt;不稳定, 偶尔服务无响应.&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;配置出错, 无法 proxy maven 主仓库. 或者出现私服中存在第三方包但是却不完整到时无法下载.&lt;/p&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;一般来说会尝试把第三方仓库配置到私服之前:&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;```
 maven {
+  url &quot;http://maven.aliyun.com/nexus/content/groups/public&quot;
+}&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;maven {
   url &quot;http://你家私服地址/&quot;
   credentials {
     username &quot;xxx&quot;
@@ -999,54 +1135,124 @@ maven {
   	basic(BasicAuthentication)
   }
 }
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;p&gt;这样先去第三方查找, 再到私服查找.&lt;/p&gt; 
-&lt;ol&gt; 
- &lt;li&gt;私服有认证. 可以参照第二条私服的认证方式. 其中&lt;/li&gt; 
-&lt;/ol&gt; 
-&lt;pre&gt;&lt;code&gt;  authentication {
+```&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;这样先去第三方查找, 再到私服查找.&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;私服有认证. 可以参照第二条私服的认证方式. 其中&lt;/p&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;```
+  authentication {
   	basic(BasicAuthentication)
   }
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;p&gt;是可选填的, 不填的话会自动识别认证方式.&lt;/p&gt; 
-&lt;ol&gt; 
- &lt;li&gt;打包方式不完整. 有的同学上传包的时候虽然包含了编译后的jar包, pom文件, 但是有时却没有把source包上传, gradle 默认是会下载source的, 如果没有, 私服返回404还好, 最怕会卡主(遇到过私服虽然没有这个文件却迟迟不返回response的情况.), 所以, 如果遇到这种问题, 可以:&lt;/li&gt; 
-&lt;/ol&gt; 
-&lt;pre&gt;&lt;code&gt;idea {
+```&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;是可选填的, 不填的话会自动识别认证方式.&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;打包方式不完整. 有的同学上传包的时候虽然包含了编译后的jar包, pom文件, 但是有时却没有把source包上传, gradle 默认是会下载source的, 如果没有, 私服返回404还好, 最怕会卡主(遇到过私服虽然没有这个文件却迟迟不返回response的情况.), 所以, 如果遇到这种问题, 可以:&lt;/p&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;```
+idea {
 	module {
 		downloadJavadoc = false
 		downloadSources = false
 	}
 }
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;p&gt;不让 IDEA 刷新的时候下载源码和文档, 万不得已还是不要用.&lt;/p&gt; 
-&lt;h3&gt;常用命令或参数&lt;/h3&gt; 
-&lt;p&gt;&lt;code&gt;--refresh-dependencies&lt;/code&gt; 刷新依赖，刷新那些SNAPSHOT的依赖，类似于 maven 的 -U 参数&lt;/p&gt; 
-&lt;p&gt;&lt;code&gt;gradle tasks&lt;/code&gt; 列出所有可执行的task&lt;/p&gt; 
-&lt;p&gt;&lt;code&gt;gradle tasks --all&lt;/code&gt; 列出所有可执行的task, 并附加上 mudole&lt;/p&gt; 
-&lt;p&gt;&lt;code&gt;gradle help --task taskName&lt;/code&gt; 查看一个task的帮助, 不过并不是所有task都有, 因为task都是可以自己来实现的.&lt;/p&gt; 
-&lt;p&gt;&lt;code&gt;gradle idea -id&lt;/code&gt; 用来debug IDEA进行刷新时遇到的问题, 一般这个任务能成功, 刷新就能成功. 注意使用的 gradle 版本要一致.&lt;/p&gt; 
-&lt;p&gt;&lt;code&gt;--no-daemon&lt;/code&gt; 不是使用daemon进行构建. daemon的作用是不用每次 build 都再启动一个进程, 节省时间. 但却会在我们 debug 问题的时候不停的生产日志, 产生干扰.&lt;/p&gt; 
-&lt;h3&gt;依赖冲突处理&lt;/h3&gt; 
-&lt;p&gt;可以通过命令来查看一个项目的依赖&lt;/p&gt; 
-&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;gradle webapp:dependencies --configuration=compile
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;p&gt;不同于maven的&lt;strong&gt;最近&lt;/strong&gt;原则，gradle 依赖使用的是&lt;strong&gt;最新&lt;/strong&gt;原则. 比如你构建处于依赖顶层的 module , 那么版本会优先使用这个顶层module 的&lt;code&gt;build.grale&lt;/code&gt; 中定义的版本. 所以可以在顶层module 中强制定义版本&lt;/p&gt; 
-&lt;p&gt;依赖排除, 通常可以使用&lt;/p&gt; 
-&lt;pre&gt;&lt;code&gt;compile(&quot;org.springframework.boot:spring-boot-starter-web&quot;) {
+```&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; 
+      &lt;div class=&quot;literalblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre&gt;不让 IDEA 刷新的时候下载源码和文档, 万不得已还是不要用.&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+    &lt;/ol&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_常用命令或参数&quot;&gt;常用命令或参数&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;&lt;code&gt;--refresh-dependencies&lt;/code&gt; 刷新依赖，刷新那些SNAPSHOT的依赖，类似于 maven 的 -U 参数&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;&lt;code&gt;gradle tasks&lt;/code&gt; 列出所有可执行的task&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;&lt;code&gt;gradle tasks --all&lt;/code&gt; 列出所有可执行的task, 并附加上 mudole&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;&lt;code&gt;gradle help --task taskName&lt;/code&gt; 查看一个task的帮助, 不过并不是所有task都有, 因为task都是可以自己来实现的.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;&lt;code&gt;gradle idea -id&lt;/code&gt; 用来debug IDEA进行刷新时遇到的问题, 一般这个任务能成功, 刷新就能成功. 注意使用的 gradle 版本要一致.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;&lt;code&gt;--no-daemon&lt;/code&gt; 不是使用daemon进行构建. daemon的作用是不用每次 build 都再启动一个进程, 节省时间. 但却会在我们 debug 问题的时候不停的生产日志, 产生干扰.&lt;/p&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_依赖冲突处理&quot;&gt;依赖冲突处理&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;可以通过命令来查看一个项目的依赖&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;gradle webapp:dependencies --configuration=compile&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;不同于maven的&lt;strong&gt;最近&lt;/strong&gt;原则，gradle 依赖使用的是&lt;strong&gt;最新&lt;/strong&gt;原则. 比如你构建处于依赖顶层的 module , 那么版本会优先使用这个顶层module 的`build.grale` 中定义的版本. 所以可以在顶层module 中强制定义版本&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;依赖排除, 通常可以使用&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code&gt;compile(&quot;org.springframework.boot:spring-boot-starter-web&quot;) {
     exclude module: &quot;spring-boot-starter-logging&quot;
-}
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;p&gt;这样的语法, 还有更为粗暴直接的:&lt;/p&gt; 
-&lt;pre&gt;&lt;code&gt;configurations {
+}&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;这样的语法, 还有更为粗暴直接的:&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code&gt;configurations {
     all*.exclude group: &apos;ch.qos.logback&apos;, module: &apos;logback-classic&apos;
     all*.exclude group: &apos;ch.qos.logback&apos;, module: &apos;logback-core&apos;
-}
-&lt;/code&gt;&lt;/pre&gt; 
-&lt;h2&gt;参考资料&lt;/h2&gt; 
-&lt;p&gt;官方文档相当的详细，且附有很多example，配合 gradle 安装包里的 example 源文件阅读&lt;/p&gt; 
-&lt;h2&gt;交流&lt;/h2&gt; 
-&lt;p&gt;欢迎加入群 661035226，gradle，spring，activiti 交流&lt;/p&gt;
+}&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_参考资料&quot;&gt;参考资料&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;官方文档相当的详细，且附有很多example，配合 gradle 安装包里的 example 源文件阅读&lt;/p&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_交流&quot;&gt;交流&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;欢迎加入群 661035226，gradle，spring，activiti 交流&lt;/p&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt;
 	</description>
     </item>
     <item>

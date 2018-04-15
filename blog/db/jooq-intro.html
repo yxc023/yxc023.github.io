@@ -85,10 +85,8 @@
    <ul class="sectlevel2"> 
     <li><a href="#_sql_builder_作为_sql_的构造器">sql builder, 作为 sql 的构造器</a></li> 
     <li><a href="#_sql_executor_更进一步_作为_sql_执行器">sql executor, 更进一步, 作为 sql 执行器</a></li> 
-    <li><a href="#_typesafe_sql_builder_and_executor_作为强类型的_sql_构建和执行器">typesafe sql builder and executor, 作为强类型的 sql 构建和执行器</a> 
-     <ul class="sectlevel3"> 
-      <li><a href="#_curd">curd</a></li> 
-     </ul> </li> 
+    <li><a href="#_typesafe_sql_builder_and_executor_作为强类型的_sql_构建和执行器">typesafe sql builder and executor, 作为强类型的 sql 构建和执行器</a></li> 
+    <li><a href="#_curd">curd</a></li> 
     <li><a href="#_mapper">mapper</a></li> 
     <li><a href="#_特性总结">特性总结</a></li> 
    </ul> </li> 
@@ -500,14 +498,15 @@ jooq {
    <div class="paragraph"> 
     <p>可以看到, jooq 通过生成数据库描述代码来保证强类型, 当数据库发生变动, 可以重新生成.</p> 
    </div> 
-   <div class="sect3"> 
-    <h4 id="_curd">curd</h4> 
-    <div class="paragraph"> 
-     <p>JOOQ 针对 CURD 生成基本代码, 来避免重复编码. JOOQ 对 CURD 的支持主要氛围 record 和 dao 两种方式, 可以一起使用:</p> 
-    </div> 
-    <div class="listingblock"> 
-     <div class="content"> 
-      <pre class="prettyprint highlight"><code class="language-java" data-lang="java">BookRecord bookRecord = sql.selectFrom(BOOK).where(BOOK.ID.eq(4)).fetchOne();
+  </div> 
+  <div class="sect2"> 
+   <h3 id="_curd">curd</h3> 
+   <div class="paragraph"> 
+    <p>JOOQ 针对 CURD 生成基本代码, 来避免重复编码. JOOQ 对 CURD 的支持主要氛围 record 和 dao 两种方式, 可以一起使用:</p> 
+   </div> 
+   <div class="listingblock"> 
+    <div class="content"> 
+     <pre class="prettyprint highlight"><code class="language-java" data-lang="java">BookRecord bookRecord = sql.selectFrom(BOOK).where(BOOK.ID.eq(4)).fetchOne();
 System.out.println(bookRecord);
 bookRecord.setTitle(bookRecord.getTitle() + "ha");
 bookRecord.store();
@@ -524,14 +523,14 @@ System.out.println(bookRecord1);
 BookDao bookDao = new BookDao(sql.configuration());
 List&lt;Book&gt; books = bookDao.fetchByAuthorId(2);
 System.out.println(books.get(0));</code></pre> 
-     </div> 
     </div> 
-    <div class="paragraph"> 
-     <p>执行结果</p> 
-    </div> 
-    <div class="listingblock"> 
-     <div class="content"> 
-      <pre>12:18:55.420 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = ?
+   </div> 
+   <div class="paragraph"> 
+    <p>执行结果</p> 
+   </div> 
+   <div class="listingblock"> 
+    <div class="content"> 
+     <pre>12:18:55.420 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = ?
 12:18:55.422 [main] DEBUG org.jooq.tools.LoggerListener - -&gt; with bind values      : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = 4
 12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------------------------------+------------+-----------+---------+
 12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|title                              |published_in|language_id|new_field|
@@ -574,7 +573,6 @@ System.out.println(books.get(0));</code></pre>
 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------------+------------+-----------+---------+
 12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |...7 record(s) truncated...
 Book (3, 2, O Alquimista, 1988, 4, 0)</pre> 
-     </div> 
     </div> 
    </div> 
   </div> 
