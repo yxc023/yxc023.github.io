@@ -6,9 +6,48 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期日, 15 四月 2018 17:03:24 +0800</pubDate>
-    <lastBuildDate>星期日, 15 四月 2018 17:03:24 +0800</lastBuildDate>
+    <pubDate>星期日, 15 四月 2018 17:15:32 +0800</pubDate>
+    <lastBuildDate>星期日, 15 四月 2018 17:15:32 +0800</lastBuildDate>
 
+    <item>
+      <title>pac4j 简介</title>
+      <link>http://blog.yangxiaochen.com/blog/java/pac4j简介.html</link>
+      <pubDate>星期日, 15 四月 2018 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/java/pac4j简介.html</guid>
+      	<description>
+	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt; 
+ &lt;div id=&quot;toctitle&quot;&gt;
+  Table of Contents
+ &lt;/div&gt; 
+ &lt;ul class=&quot;sectlevel1&quot;&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_什么是_pac4j&quot;&gt;什么是 pac4j&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_重要概念&quot;&gt;重要概念&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_流程&quot;&gt;流程&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_例子&quot;&gt;例子&lt;/a&gt;&lt;/li&gt; 
+ &lt;/ul&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_什么是_pac4j&quot;&gt;什么是 pac4j&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_重要概念&quot;&gt;重要概念&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_流程&quot;&gt;流程&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_例子&quot;&gt;例子&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt;
+	</description>
+    </item>
     <item>
       <title>jooq 介绍</title>
       <link>http://blog.yangxiaochen.com/blog/db/jooq-intro.html</link>
