@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期日, 15 四月 2018 13:09:07 +0800</pubDate>
-    <lastBuildDate>星期日, 15 四月 2018 13:09:07 +0800</lastBuildDate>
+    <pubDate>星期日, 15 四月 2018 13:12:55 +0800</pubDate>
+    <lastBuildDate>星期日, 15 四月 2018 13:12:55 +0800</lastBuildDate>
 
     <item>
       <title>jooq 介绍</title>
@@ -1046,7 +1046,7 @@ maven {
 &lt;h2&gt;参考资料&lt;/h2&gt; 
 &lt;p&gt;官方文档相当的详细，且附有很多example，配合 gradle 安装包里的 example 源文件阅读&lt;/p&gt; 
 &lt;h2&gt;交流&lt;/h2&gt; 
-&lt;p&gt;欢迎加入群 536890082，gradle，spring，activiti 交流&lt;/p&gt;
+&lt;p&gt;欢迎加入群 661035226，gradle，spring，activiti 交流&lt;/p&gt;
 	</description>
     </item>
     <item>
