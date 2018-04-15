@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>rabbitmq管理使用实践</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="yxc023@qq.com">
+    <meta name="keywords" content="">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+	
+	<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Michael的文档</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+             <li><a href="../../index.html">首页</a></li> 
+            <li><a href="../../wiki_gradle_index.html">gradle</a></li>
+            <li><a href="../../tags/git.html">git</a></li>
+            <li><a href="../../tags/spring.html">spring</a></li>
+            <li><a href="../../archive.html">archive</a></li>
+
+            <li><a href="https://github.com/yxc023/jbake">my jbake</a></li>
+
+            <li><a href="../../about.html">关于</a></li>
+
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">	
+	<div class="page-header">
+		<h1>rabbitmq管理使用实践</h1>
+	</div>
+
+	<p><em>08 二月 2016</em></p>
+
+	<p><h4>原创, 转载请注明出处<a href="https://blog.yangxiaochen.com">https://blog.yangxiaochen.com</a></h4> 
+<!-- more --> 
+<p># MQ数据源</p> 
+<ol> 
+ <li> <p><code>datasource -&gt; topic exchange</code>, 数据源已固定格式发入exchange, exchange类型为topic,既可以使用路由route_key, 又可以进行通配. 不要将生产者, 消费者用在同一队列上, 这样耦合度高, 消息无法复用.</p> </li> 
+ <li> <p>数据源只关心输入exchange, 对后续消费者无需关心</p> </li> 
+ <li> <p>新加,修改数据源需要备案记录.</p> </li> 
+ <li> <p>消费者一般情况下使用临时队列, 必要情况下使用持久队列. 队列从数据源的exchange中订阅数据.</p> </li> 
+ <li> <p>程序中不要生成持久的exchange, queue. 而是在管理界面生成. 防止程序改动造成的废弃的exchange, queue仍然存在在rabbitmq中.</p> </li> 
+ <li> <p>命名统一.</p> <pre><code>exchangeName: datasource:[sth.sth]
+queueName: [消费者程序名称]:[exchangeName].[subject]
+route_key: [exchangeName].[subject]
+
+例:
+exchangeName: datasource:dispatch.event
+queueName: autoDispatch:dispatch.event.orderCreate
+route_key: dispatch.event.orderCreate
+</code></pre> </li> 
+</ol> 
+<h3>poi</h3> 
+<pre><code>exchangeName: datasource:poi
+</code></pre> 
+<h3>业务事件流</h3> 
+<pre><code>exchangeName: datasource:dispatch.event
+</code></pre> 
+<h3>日志流</h3> 
+<h3>其他</h3> 
+<h1>rabbitmq 规范</h1> 
+<h2>使用规范</h2> 
+<h3>0. 使用原则</h3> 
+<ol> 
+ <li>数据源已固定格式发入exchange, exchange类型为topic.数据源只关心输入exchange.</li> 
+ <li>修改数据源, 持久队列, 持久内部exchange需要备案记录.</li> 
+ <li>消费者一般非必要情况下使用临时队列. 队列从数据源的exchange中订阅数据.</li> 
+ <li>程序中不要生成持久的exchange, queue. 而是在管理界面生成.</li> 
+</ol> 
+<h3>1. datasourceExchanges</h3> 
+<ol> 
+ <li> <p>命名</p> <pre><code>datasource:[datasourceName]
+
+例:
+datasource:poi
+datasource:dispatch.event
+</code></pre> </li> 
+ <li> <p>记录备案</p> <pre><code>git@gitlab.supaide.cn:sys/rabbitmq.git
+datasources.txt
+
+备案说明详见文件内部格式.
+</code></pre> </li> 
+</ol> 
+<h3>2. durable queues, exchanges</h3> 
+<ol> 
+ <li> <p>命名</p> <pre><code>queueName
+[appName]:[routingKey]
+
+exchangeName
+x:[appName]:[routingKey]
+
+例:
+autoDispatch:dispatch.event.orderCreate
+x:autoDispatch:dispatch.event.*
+</code></pre> </li> 
+ <li> <p>记录备案</p> <pre><code>git@gitlab.supaide.cn:sys/rabbitmq.git
+durableQueues.txt
+
+备案说明详见文件内部格式.
+</code></pre> </li> 
+</ol> 
+<h3>3. temp queues, exchagnes</h3> 
+<ol> 
+ <li> <p>命名</p> <pre><code>gen.[appName]:[routingKey]
+
+or
+
+默认随机名称
+</code></pre> </li> 
+ <li> <p>记录备案</p> <pre><code>无需备案
+</code></pre> </li> 
+</ol></p>
+
+	<hr />
+
+	<div id="cyReward" role="cylabs" data-use="reward"></div>
+	<!--PC版-->
+	<div id="SOHUCS" sid="rabbitmq管理使用实践"></div>
+	<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+	<script type="text/javascript">
+	window.changyan.api.config({
+	appid: 'cysiPXECq',
+	conf: 'prod_ae8c2fcf65d92ee749cc9cf448e5b285'
+	});
+	</script>
+
+	<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
+	<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysiPXECq"></script>
+	
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">&copy; 2017 | Michael Yang</p>
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    
+  </body>
+</html>
