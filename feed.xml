@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期日, 15 四月 2018 12:40:55 +0800</pubDate>
-    <lastBuildDate>星期日, 15 四月 2018 12:40:55 +0800</lastBuildDate>
+    <pubDate>星期日, 15 四月 2018 12:46:38 +0800</pubDate>
+    <lastBuildDate>星期日, 15 四月 2018 12:46:38 +0800</lastBuildDate>
 
     <item>
       <title>jooq 介绍</title>
@@ -435,14 +435,14 @@ jooq {
    &lt;/div&gt; 
    &lt;div class=&quot;listingblock&quot;&gt; 
     &lt;div class=&quot;content&quot;&gt; 
-     &lt;pre&gt;12:06:40.515 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;12:06:40.515 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
 12:06:40.516 [main] DEBUG org.jooq.tools.LoggerListener - -&amp;gt; with bind values      : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = 1990
 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------+
 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|description|
 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Deutsch    |
 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
-4 2 Deutsch&lt;/pre&gt; 
+4 2 Deutsch&lt;/code&gt;&lt;/pre&gt; 
     &lt;/div&gt; 
    &lt;/div&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
@@ -564,14 +564,14 @@ public void mapping() {
    &lt;/div&gt; 
    &lt;div class=&quot;listingblock&quot;&gt; 
     &lt;div class=&quot;content&quot;&gt; 
-     &lt;pre&gt;12:23:00.964 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-console&quot; data-lang=&quot;console&quot;&gt;12:23:00.964 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
 12:23:00.965 [main] DEBUG org.jooq.tools.LoggerListener - -&amp;gt; with bind values      : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = 1990
 12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------+
 12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|description|
 12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
 12:23:01.863 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Deutsch    |
 12:23:01.863 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
-R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt; 
+R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/code&gt;&lt;/pre&gt; 
     &lt;/div&gt; 
    &lt;/div&gt; 
   &lt;/div&gt; 

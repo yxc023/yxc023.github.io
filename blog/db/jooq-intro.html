@@ -486,14 +486,14 @@ jooq {
    </div> 
    <div class="listingblock"> 
     <div class="content"> 
-     <pre>12:06:40.515 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
+     <pre class="prettyprint highlight"><code class="language-console" data-lang="console">12:06:40.515 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
 12:06:40.516 [main] DEBUG org.jooq.tools.LoggerListener - -&gt; with bind values      : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = 1990
 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------+
 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|description|
 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Deutsch    |
 12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
-4 2 Deutsch</pre> 
+4 2 Deutsch</code></pre> 
     </div> 
    </div> 
    <div class="paragraph"> 
@@ -615,14 +615,14 @@ public void mapping() {
    </div> 
    <div class="listingblock"> 
     <div class="content"> 
-     <pre>12:23:00.964 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
+     <pre class="prettyprint highlight"><code class="language-console" data-lang="console">12:23:00.964 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
 12:23:00.965 [main] DEBUG org.jooq.tools.LoggerListener - -&gt; with bind values      : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = 1990
 12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------+
 12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|description|
 12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
 12:23:01.863 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Deutsch    |
 12:23:01.863 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
-R{id=4, authorId=2, description='Deutsch'}</pre> 
+R{id=4, authorId=2, description='Deutsch'}</code></pre> 
     </div> 
    </div> 
   </div> 
