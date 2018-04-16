@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期一, 16 四月 2018 13:02:14 +0800</pubDate>
-    <lastBuildDate>星期一, 16 四月 2018 13:02:14 +0800</lastBuildDate>
+    <pubDate>星期一, 16 四月 2018 16:07:31 +0800</pubDate>
+    <lastBuildDate>星期一, 16 四月 2018 16:07:31 +0800</lastBuildDate>
 
     <item>
       <title>pac4j 简介</title>
@@ -916,6 +916,13 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
    &lt;h3 id=&quot;_学习成本&quot;&gt;学习成本&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
     &lt;p&gt; * 生成器配置比较复杂. 需要一个找一个同事来阅读文档称为配置专家, 当然也可以直接找一些比较通用的配置, 比如我这次进行测试的这个配置就可以满足大多数的需求. * DSL写法需要看文档. 但文档很全, 比如想知道 &lt;code&gt;group by&lt;/code&gt; 怎么写直接文档中搜索就好.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;quoteblock&quot;&gt; 
+    &lt;blockquote&gt; 
+     &lt;div class=&quot;paragraph&quot;&gt; 
+      &lt;p&gt;示例完整源码 &lt;a href=&quot;https://github.com/yxc023/code-examples/blob/master/java/jooq/src/test/java/com/yangxiaochen/example/jooq/JOOQTest.java&quot; class=&quot;bare&quot;&gt;https://github.com/yxc023/code-examples/blob/master/java/jooq/src/test/java/com/yangxiaochen/example/jooq/JOOQTest.java&lt;/a&gt;&lt;/p&gt; 
+     &lt;/div&gt; 
+    &lt;/blockquote&gt; 
    &lt;/div&gt; 
   &lt;/div&gt; 
  &lt;/div&gt; 
