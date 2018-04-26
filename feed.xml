@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期五, 27 四月 2018 02:42:18 +0800</pubDate>
-    <lastBuildDate>星期五, 27 四月 2018 02:42:18 +0800</lastBuildDate>
+    <pubDate>星期五, 27 四月 2018 02:48:45 +0800</pubDate>
+    <lastBuildDate>星期五, 27 四月 2018 02:48:45 +0800</lastBuildDate>
 
     <item>
       <title>2018 北京 qcon 大会笔记</title>
@@ -26,7 +26,7 @@
     &lt;li&gt;&lt;a href=&quot;#_历史背景&quot;&gt;历史背景&lt;/a&gt; 
      &lt;ul class=&quot;sectlevel3&quot;&gt; 
       &lt;li&gt;&lt;a href=&quot;#_all_in_one&quot;&gt;all in one&lt;/a&gt;&lt;/li&gt; 
-      &lt;li&gt;&lt;a href=&quot;#_代码共享&quot;&gt;代码共享&lt;/a&gt;&lt;/li&gt; 
+      &lt;li&gt;&lt;a href=&quot;#_code_share&quot;&gt;code share&lt;/a&gt;&lt;/li&gt; 
       &lt;li&gt;&lt;a href=&quot;#_api&quot;&gt;api&lt;/a&gt;&lt;/li&gt; 
      &lt;/ul&gt; &lt;/li&gt; 
     &lt;li&gt;&lt;a href=&quot;#_问题&quot;&gt;问题&lt;/a&gt;&lt;/li&gt; 
@@ -78,7 +78,7 @@
     &lt;/div&gt; 
    &lt;/div&gt; 
    &lt;div class=&quot;sect3&quot;&gt; 
-    &lt;h4 id=&quot;_代码共享&quot;&gt;代码共享&lt;/h4&gt; 
+    &lt;h4 id=&quot;_code_share&quot;&gt;code share&lt;/h4&gt; 
     &lt;div class=&quot;paragraph&quot;&gt; 
      &lt;p&gt;然后在09-12年, 做项目拆分, 但是是通过代码共享, 即业务功能写完后, 发布成 jar 包, 供几个项目引用.&lt;/p&gt; 
     &lt;/div&gt; 
@@ -186,9 +186,6 @@
    &lt;h3 id=&quot;_其他内容&quot;&gt;其他内容&lt;/h3&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
     &lt;p&gt;演讲者也简单介绍一下他们的微服务中心, 主要是中间件, 容器管控, 监控, 提供一些应用管理能力. 介绍不多.&lt;/p&gt; 
-   &lt;/div&gt; 
-   &lt;div class=&quot;paragraph&quot;&gt; 
-    &lt;p&gt;但这是现在微服务都会涉及的东西, 可以说是微服务的的基础设施. 这个最后总结在说.&lt;/p&gt; 
    &lt;/div&gt; 
   &lt;/div&gt; 
  &lt;/div&gt; 
@@ -311,7 +308,7 @@
    &lt;/div&gt; 
    &lt;div class=&quot;imageblock&quot;&gt; 
     &lt;div class=&quot;content&quot;&gt; 
-     &lt;img src=&quot;http://blog.yangxiaochen.com/../img/2018-beijing-qcon/能力地图.png&quot; alt=&quot;能力地图&quot;&gt; 
+     &lt;img src=&quot;http://blog.yangxiaochen.com/img/2018-beijing-qcon/能力地图.png&quot; alt=&quot;能力地图&quot;&gt; 
     &lt;/div&gt; 
    &lt;/div&gt; 
    &lt;div class=&quot;paragraph&quot;&gt; 
