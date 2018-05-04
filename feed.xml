@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期五, 4 五月 2018 01:21:49 +0800</pubDate>
-    <lastBuildDate>星期五, 4 五月 2018 01:21:49 +0800</lastBuildDate>
+    <pubDate>星期五, 4 五月 2018 18:14:29 +0800</pubDate>
+    <lastBuildDate>星期五, 4 五月 2018 18:14:29 +0800</lastBuildDate>
 
     <item>
       <title>spring 中 aspectj 扫描内容太多导致的启动时加载缓慢</title>
@@ -108,6 +108,22 @@
    &lt;/div&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;结果界面无效, 因为我要切的目标是 mybatis 的 mapper, 因为这个 mapper 实际上是 com.sun.proxy.Proxy 对象. 最终改成&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;listingblock&quot;&gt; 
+   &lt;div class=&quot;content&quot;&gt; 
+    &lt;pre&gt;@Pointcut(&quot;within(com.sun.proxy..*) &amp;amp;&amp;amp; execution(* com.lianjia.xxx.platform.*.dao..*.*(..))&quot; )&lt;/pre&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;或者&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;listingblock&quot;&gt; 
+   &lt;div class=&quot;content&quot;&gt; 
+    &lt;pre&gt;@Pointcut(&quot;!within(org.jooq.impl..*) &amp;amp;&amp;amp; execution(* com.lianjia.xxx.platform.*.dao..*.*(..))&quot; )&lt;/pre&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
    &lt;p&gt;spring 启动是到织如阶段时, 对 DefaultDSLContext 的实例进行判断织如时, 可以通过 fastMatch 直接判断不行, 就不用对方法逐个检查了.&lt;/p&gt; 
   &lt;/div&gt; 
   &lt;div class=&quot;paragraph&quot;&gt; 
@@ -126,6 +142,9 @@
   &lt;/div&gt; 
   &lt;div class=&quot;paragraph&quot;&gt; 
    &lt;p&gt;aop 是个好东西, 但是也带来复杂性, 可读性, 性能上的隐患. 严格一点来说, 要刨根问底, 保证项目的配置启动过程是完全掌控在手的, 避免黑盒(即不知道为啥, 反正这么配就能 run 起来了, 没有啥问题出现)&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;代理对象和正常对象的切入方式会有不同, 需要注意.&lt;/p&gt; 
   &lt;/div&gt; 
  &lt;/div&gt; 
 &lt;/div&gt;

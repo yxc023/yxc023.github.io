@@ -159,6 +159,22 @@
    </div> 
   </div> 
   <div class="paragraph"> 
+   <p>结果界面无效, 因为我要切的目标是 mybatis 的 mapper, 因为这个 mapper 实际上是 com.sun.proxy.Proxy 对象. 最终改成</p> 
+  </div> 
+  <div class="listingblock"> 
+   <div class="content"> 
+    <pre>@Pointcut("within(com.sun.proxy..*) &amp;&amp; execution(* com.lianjia.xxx.platform.*.dao..*.*(..))" )</pre> 
+   </div> 
+  </div> 
+  <div class="paragraph"> 
+   <p>或者</p> 
+  </div> 
+  <div class="listingblock"> 
+   <div class="content"> 
+    <pre>@Pointcut("!within(org.jooq.impl..*) &amp;&amp; execution(* com.lianjia.xxx.platform.*.dao..*.*(..))" )</pre> 
+   </div> 
+  </div> 
+  <div class="paragraph"> 
    <p>spring 启动是到织如阶段时, 对 DefaultDSLContext 的实例进行判断织如时, 可以通过 fastMatch 直接判断不行, 就不用对方法逐个检查了.</p> 
   </div> 
   <div class="paragraph"> 
@@ -177,6 +193,9 @@
   </div> 
   <div class="paragraph"> 
    <p>aop 是个好东西, 但是也带来复杂性, 可读性, 性能上的隐患. 严格一点来说, 要刨根问底, 保证项目的配置启动过程是完全掌控在手的, 避免黑盒(即不知道为啥, 反正这么配就能 run 起来了, 没有啥问题出现)</p> 
+  </div> 
+  <div class="paragraph"> 
+   <p>代理对象和正常对象的切入方式会有不同, 需要注意.</p> 
   </div> 
  </div> 
 </div></p>
