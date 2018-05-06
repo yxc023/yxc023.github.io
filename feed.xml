@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期日, 6 五月 2018 14:42:46 +0800</pubDate>
-    <lastBuildDate>星期日, 6 五月 2018 14:42:46 +0800</lastBuildDate>
+    <pubDate>星期日, 6 五月 2018 14:47:11 +0800</pubDate>
+    <lastBuildDate>星期日, 6 五月 2018 14:47:11 +0800</lastBuildDate>
 
     <item>
       <title>groovy技巧 for java 开发者</title>
@@ -42,6 +42,7 @@
    &lt;/ul&gt; &lt;/li&gt; 
   &lt;li&gt;&lt;a href=&quot;#_io&quot;&gt;io&lt;/a&gt;&lt;/li&gt; 
   &lt;li&gt;&lt;a href=&quot;#_命令行_command&quot;&gt;命令行 command&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_更多&quot;&gt;更多&lt;/a&gt;&lt;/li&gt; 
  &lt;/ul&gt; 
 &lt;/div&gt; 
 &lt;div class=&quot;sect1&quot;&gt; 
@@ -341,6 +342,20 @@ sout.eachLine { line -&amp;gt;
 
 }&lt;/code&gt;&lt;/pre&gt; 
    &lt;/div&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_更多&quot;&gt;更多&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;参考实例: &lt;a href=&quot;http://www.groovy-lang.org/groovy-dev-kit.html&quot; class=&quot;bare&quot;&gt;http://www.groovy-lang.org/groovy-dev-kit.html&lt;/a&gt;&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;db 操作: &lt;a href=&quot;http://www.groovy-lang.org/databases.html&quot; class=&quot;bare&quot;&gt;http://www.groovy-lang.org/databases.html&lt;/a&gt;&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;json 操作: &lt;a href=&quot;http://www.groovy-lang.org/json.html&quot; class=&quot;bare&quot;&gt;http://www.groovy-lang.org/json.html&lt;/a&gt;&lt;/p&gt; 
   &lt;/div&gt; 
  &lt;/div&gt; 
 &lt;/div&gt;
