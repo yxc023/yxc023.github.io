@@ -6,9 +6,346 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期五, 4 五月 2018 18:14:29 +0800</pubDate>
-    <lastBuildDate>星期五, 4 五月 2018 18:14:29 +0800</lastBuildDate>
+    <pubDate>星期日, 6 五月 2018 14:42:46 +0800</pubDate>
+    <lastBuildDate>星期日, 6 五月 2018 14:42:46 +0800</lastBuildDate>
 
+    <item>
+      <title>groovy技巧 for java 开发者</title>
+      <link>http://blog.yangxiaochen.com/blog/groovy/groovy-tips-for-javaer.html</link>
+      <pubDate>星期六, 5 五月 2018 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/groovy/groovy-tips-for-javaer.html</guid>
+      	<description>
+	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt; 
+ &lt;div id=&quot;toctitle&quot;&gt;
+  Table of Contents
+ &lt;/div&gt; 
+ &lt;ul class=&quot;sectlevel1&quot;&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_前言&quot;&gt;前言&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_语法_格式&quot;&gt;语法,格式&lt;/a&gt; 
+   &lt;ul class=&quot;sectlevel2&quot;&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_基础&quot;&gt;基础&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_对象&quot;&gt;对象&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_方法调用&quot;&gt;方法调用&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_字符串&quot;&gt;字符串&lt;/a&gt; 
+     &lt;ul class=&quot;sectlevel3&quot;&gt; 
+      &lt;li&gt;&lt;a href=&quot;#_引号&quot;&gt;引号&lt;/a&gt;&lt;/li&gt; 
+     &lt;/ul&gt; &lt;/li&gt; 
+   &lt;/ul&gt; &lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_list&quot;&gt;list&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_map&quot;&gt;map&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_流式操作&quot;&gt;流式操作&lt;/a&gt; 
+   &lt;ul class=&quot;sectlevel2&quot;&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_each_遍历&quot;&gt;each 遍历&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_grep_过滤&quot;&gt;grep 过滤&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_collect_转换&quot;&gt;collect 转换&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_groupby_列表转_map&quot;&gt;groupBy 列表转 map&lt;/a&gt;&lt;/li&gt; 
+   &lt;/ul&gt; &lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_io&quot;&gt;io&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_命令行_command&quot;&gt;命令行 command&lt;/a&gt;&lt;/li&gt; 
+ &lt;/ul&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_前言&quot;&gt;前言&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;本文旨在对有 java 基础的程序员在几分钟内了解 groovy 不同于 groovy 的技巧, 方便快速使用到 groovy 带来的便捷.&lt;/p&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_语法_格式&quot;&gt;语法,格式&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_基础&quot;&gt;基础&lt;/h3&gt; 
+   &lt;div class=&quot;ulist&quot;&gt; 
+    &lt;ul&gt; 
+     &lt;li&gt; &lt;p&gt;每句语法后不需要分号&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;兼容绝大多数 java 语法&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;非强类型语言, 使用推导类型, 可以使用 &lt;code&gt;def&lt;/code&gt; 来定义变量&lt;/p&gt; &lt;/li&gt; 
+    &lt;/ul&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_对象&quot;&gt;对象&lt;/h3&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;class Person {
+    String name
+    final int age
+}&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;ulist&quot;&gt; 
+    &lt;ul&gt; 
+     &lt;li&gt; &lt;p&gt;属性和对象默认为 public&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;属性会自动生成 getter 和 setter.&lt;/p&gt; 
+      &lt;div class=&quot;paragraph&quot;&gt; 
+       &lt;p&gt;调用 &lt;code&gt;person.name&lt;/code&gt; 等同于调用 &lt;code&gt;person.getName()&lt;/code&gt;&lt;/p&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;final 只有 get 方法.&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;可以使用带参数名的构造方法&lt;/p&gt; 
+      &lt;div class=&quot;listingblock&quot;&gt; 
+       &lt;div class=&quot;content&quot;&gt; 
+        &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;def person = new Person(name: &quot;John&quot;, age: 18)&lt;/code&gt;&lt;/pre&gt; 
+       &lt;/div&gt; 
+      &lt;/div&gt; &lt;/li&gt; 
+    &lt;/ul&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_方法调用&quot;&gt;方法调用&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;方法调用可以不写括号, 下面两句是一样的&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;println(&quot;haha&quot;)
+println &quot;haha&quot;&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_字符串&quot;&gt;字符串&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;groovy 中字符串字面量有两种:&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;def s1 = &quot;world&quot;
+def s2 = &quot;hello $s1&quot;
+
+assert s2 == &quot;hello world&quot; // true&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;s1 是 String 类型, s2 是 GString 类型, 因为 s2 中有 &lt;code&gt;$&lt;/code&gt; 形式的插入值&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;觉大多数情况下, 可以忽略两种类型的差异.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;groovy 中字符串可以通过 &lt;code&gt;==&lt;/code&gt; 来判断字符串相等.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;sect3&quot;&gt; 
+    &lt;h4 id=&quot;_引号&quot;&gt;引号&lt;/h4&gt; 
+    &lt;div class=&quot;ulist&quot;&gt; 
+     &lt;ul&gt; 
+      &lt;li&gt; &lt;p&gt;单引号 &lt;code&gt;&apos;&lt;/code&gt; 的字符串, 就是纯字符串 &lt;code&gt;java.lang.String&lt;/code&gt;&lt;/p&gt; &lt;/li&gt; 
+      &lt;li&gt; &lt;p&gt;双引号 &lt;code&gt;&quot;&lt;/code&gt; 的字符串, 可以有插入值, 如 &lt;code&gt;assert &quot;hello $1&quot; == &quot;hello world&quot;&lt;/code&gt;&lt;/p&gt; &lt;/li&gt; 
+      &lt;li&gt; &lt;p&gt;三引号 &lt;code&gt;&apos;&apos;&apos;&lt;/code&gt; 和 &lt;code&gt;&quot;&quot;&quot;&lt;/code&gt;, 是多行形式, 比如&lt;/p&gt; 
+       &lt;div class=&quot;listingblock&quot;&gt; 
+        &lt;div class=&quot;content&quot;&gt; 
+         &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;def s1 = &quot;&quot;&quot;hello
+world&quot;&quot;&quot;&lt;/code&gt;&lt;/pre&gt; 
+        &lt;/div&gt; 
+       &lt;/div&gt; &lt;/li&gt; 
+     &lt;/ul&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_list&quot;&gt;list&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;groovy 提供了方便的 list 定义方式, 这个方式的 list 默认是 ArrayList 形式&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;listingblock&quot;&gt; 
+   &lt;div class=&quot;content&quot;&gt; 
+    &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;// 定义 list
+def letters = [&apos;a&apos;, &apos;b&apos;, &apos;c&apos;, &apos;d&apos;]
+
+assert letters[0] == &apos;a&apos;
+assert letters[1] == &apos;b&apos;
+
+assert letters[-1] == &apos;d&apos;
+assert letters[-2] == &apos;c&apos;
+
+letters[2] = &apos;C&apos;
+assert letters[2] == &apos;C&apos;
+
+// 添加一个元素
+letters &amp;lt;&amp;lt; &apos;e&apos;
+assert letters[ 4] == &apos;e&apos;
+assert letters[-1] == &apos;e&apos;
+
+// 根据下标取子集
+assert letters[1, 3] == [&apos;b&apos;, &apos;d&apos;]
+// 根据范围去子集
+assert letters[2..4] == [&apos;C&apos;, &apos;d&apos;, &apos;e&apos;]&lt;/code&gt;&lt;/pre&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_map&quot;&gt;map&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;groovy 提供了方便的 map 定义方式, 这个方式的 map 默认是 LinkedHashMap 形式&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;listingblock&quot;&gt; 
+   &lt;div class=&quot;content&quot;&gt; 
+    &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;def colors = [red: &apos;#FF0000&apos;, green: &apos;#00FF00&apos;, blue: &apos;#0000FF&apos;]
+
+assert colors[&apos;red&apos;] == &apos;#FF0000&apos;
+assert colors.green  == &apos;#00FF00&apos;
+
+colors[&apos;pink&apos;] = &apos;#FF00FF&apos;
+colors.yellow  = &apos;#FFFF00&apos;
+
+assert colors.pink == &apos;#FF00FF&apos;
+assert colors[&apos;yellow&apos;] == &apos;#FFFF00&apos;
+
+assert colors instanceof java.util.LinkedHashMap&lt;/code&gt;&lt;/pre&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_流式操作&quot;&gt;流式操作&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;java8 的 stream 操作带来很多便利, groovy 除了能使用 java8 的 stream 外, 还有自己的一套更为方便的流式操作&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_each_遍历&quot;&gt;each 遍历&lt;/h3&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre&gt;[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;].each { it -&amp;gt;
+    println &quot;$it&quot;
+}
+[&apos;a&apos;, &apos;b&apos;, &apos;c&apos;].eachWithIndex { it, i -&amp;gt;
+    println &quot;$i: $it&quot;
+}&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_grep_过滤&quot;&gt;grep 过滤&lt;/h3&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;def list = [1, 2, 3, 4, 5]
+assert list.grep {it &amp;gt; 3} == [4, 5]&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_collect_转换&quot;&gt;collect 转换&lt;/h3&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;def list = [1, 2, 3, 4, 5]
+assert list.collect { (it * 2) as String } == [&quot;2&quot;, &quot;4&quot;, &quot;6&quot;, &quot;8&quot;, &quot;10&quot;]&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_groupby_列表转_map&quot;&gt;groupBy 列表转 map&lt;/h3&gt; 
+   &lt;div class=&quot;listingblock&quot;&gt; 
+    &lt;div class=&quot;content&quot;&gt; 
+     &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;assert [
+        [name: &apos;Clark&apos;, city: &apos;London&apos;], [name: &apos;Sharma&apos;, city: &apos;London&apos;],
+        [name: &apos;Maradona&apos;, city: &apos;LA&apos;], [name: &apos;Zhang&apos;, city: &apos;HK&apos;],
+        [name: &apos;Ali&apos;, city: &apos;HK&apos;], [name: &apos;Liu&apos;, city: &apos;HK&apos;],
+].groupBy { it.city } == [
+        London: [[name: &apos;Clark&apos;, city: &apos;London&apos;],
+                 [name: &apos;Sharma&apos;, city: &apos;London&apos;]],
+        LA    : [[name: &apos;Maradona&apos;, city: &apos;LA&apos;]],
+        HK    : [[name: &apos;Zhang&apos;, city: &apos;HK&apos;],
+                 [name: &apos;Ali&apos;, city: &apos;HK&apos;],
+                 [name: &apos;Liu&apos;, city: &apos;HK&apos;]],
+]
+
+// 对于常见的把一个列表建立 id 索引
+assert [
+        [id: 1, name: &apos;Clark&apos;, city: &apos;London&apos;], [id: 2, name: &apos;Sharma&apos;, city: &apos;London&apos;],
+        [id: 3, name: &apos;Maradona&apos;, city: &apos;LA&apos;]
+].groupBy { it.id }.collectEntries { key, value -&amp;gt; [key, value.first] } == [
+        1: [id: 1, name: &apos;Clark&apos;, city: &apos;London&apos;],
+        2: [id: 2, name: &apos;Sharma&apos;, city: &apos;London&apos;],
+        3: [id: 3, name: &apos;Maradona&apos;, city: &apos;LA&apos;]
+]&lt;/code&gt;&lt;/pre&gt; 
+    &lt;/div&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_io&quot;&gt;io&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;listingblock&quot;&gt; 
+   &lt;div class=&quot;content&quot;&gt; 
+    &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;new File(&quot;a.txt&quot;).eachLine { line -&amp;gt;
+    println line
+}
+
+def out = new File(&quot;out.txt&quot;)
+out &amp;lt;&amp;lt; &quot;hello world\n&quot;
+out &amp;lt;&amp;lt; &quot;something&quot;&lt;/code&gt;&lt;/pre&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_命令行_command&quot;&gt;命令行 command&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;看例子&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;listingblock&quot;&gt; 
+   &lt;div class=&quot;content&quot;&gt; 
+    &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;if(args.size() &amp;lt; 1 ) {
+    println &quot;need pid&quot;
+    return
+}
+def pid = args[0]
+
+def sout = new StringBuilder(), serr = new StringBuilder()
+def proc = &quot;top -b -n 1 -H -p ${pid}&quot;.execute()
+
+proc.consumeProcessOutput(sout, serr)
+proc.waitFor()
+
+def begin = false
+def countLimit = 10
+def count = 0
+sout.eachLine { line -&amp;gt;
+    if (line.trim().size() == 0) {
+        return
+    }
+    if (begin &amp;amp;&amp;amp; count &amp;lt;= countLimit) {
+        println line
+        def row = line.trim().split(&quot; +&quot;)
+        def tid = String.format(&quot;nid=0x%x&quot;, row[0].toInteger())
+        println tid
+
+        def sout1 = new StringBuilder(), serr1 = new StringBuilder()
+        def p1 =  (System.getenv(&quot;JAVA_HOME&quot;)+&quot;/bin/jstack -l ${pid} &quot;).execute() | [&quot;grep&quot;, tid ,&quot;-A 20&quot;].execute()
+        p1.consumeProcessOutput(sout1, serr1)
+        p1.waitFor()
+
+        serr1.eachLine { println it }
+        def lines = sout1.readLines()
+
+        if (lines.size() &amp;gt; 0) {
+            println lines[0]
+            lines[1..-1].takeWhile { !it.startsWith(&quot;\&quot;&quot;) }.each { println it }
+        }
+
+        println()
+        count++
+    }
+    if (!begin &amp;amp;&amp;amp; line.trim().toUpperCase().startsWith(&quot;PID&quot;)) {
+        begin = true
+    }
+
+}&lt;/code&gt;&lt;/pre&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt;
+	</description>
+    </item>
     <item>
       <title>spring 中 aspectj 扫描内容太多导致的启动时加载缓慢</title>
       <link>http://blog.yangxiaochen.com/blog/stackoverflow/spring-aspectj-slow.html</link>
