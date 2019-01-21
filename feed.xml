@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期日, 6 五月 2018 14:47:11 +0800</pubDate>
-    <lastBuildDate>星期日, 6 五月 2018 14:47:11 +0800</lastBuildDate>
+    <pubDate>星期一, 21 一月 2019 21:22:36 +0800</pubDate>
+    <lastBuildDate>星期一, 21 一月 2019 21:22:36 +0800</lastBuildDate>
 
     <item>
       <title>groovy技巧 for java 开发者</title>
@@ -1828,6 +1828,7 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
     &lt;li&gt;&lt;a href=&quot;#_领域驱动在审批流的一些使用&quot;&gt;领域驱动在审批流的一些使用&lt;/a&gt;&lt;/li&gt; 
     &lt;li&gt;&lt;a href=&quot;#_一些心得和方法论&quot;&gt;一些心得和方法论&lt;/a&gt;&lt;/li&gt; 
    &lt;/ul&gt; &lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_完结&quot;&gt;完结&lt;/a&gt;&lt;/li&gt; 
  &lt;/ul&gt; 
 &lt;/div&gt; 
 &lt;div class=&quot;sect1&quot;&gt; 
@@ -1905,7 +1906,8 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
    &lt;/div&gt; 
   &lt;/div&gt; 
  &lt;/div&gt; 
-&lt;/div&gt;
+&lt;/div&gt; 
+&lt;h1 id=&quot;_完结&quot; class=&quot;sect0&quot;&gt;完结&lt;/h1&gt;
 	</description>
     </item>
     <item>
