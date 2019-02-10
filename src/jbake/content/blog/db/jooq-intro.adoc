@@ -1,0 +1,484 @@
+= jooq 介绍
+杨晓辰
+2018-04-04
+:toc: left
+:toclevels: 4
+:icons: font
+:jbake-sid: jooq-intro
+:jbake-type: post
+:jbake-tags: db, jooq
+:jbake-status: published
+
+
+== 前言
+
+几乎每一个 java 程序员都要跟数据库打交道. 最常用的就是通过 java 的 jdbc 来跟数据库进行交互操作.
+
+而 jdbc 本身比较底层, 写起来比较繁琐, 于是产生了很多数据库抽象层的框架或者工具. 比如 JPA, Hibernate, Mybatis 等等.
+
+今天介绍的 JOOQ 也是这样一个框架.
+
+== 对比
+
+我们拿出最常用的一些数据抽象层框架来做比较: jpa, hibernate, mybatis, jdbc template.
+
+=== jpa, hibernate
+* 善于 CURD
++
+对于针对单一对象的基础增删改查, 支持很到位, 这也是他们的立身之本.
+
+* ORM 依赖重
++
+对于复杂查询, 关联查询, 配置复杂, 依靠对象 mapping 不灵活
+
+* 隐藏了 sql
++
+sql是大家都很熟悉的, 通过 sql 我们能够很直观的评估语句的性能.
++
+而这个框架隐藏了 sql, 不能直观知道我们对数据库切实执行了什么操作.
+
+* jSQL, HQL
++
+这两个自创的类SQL语法应对复杂查询, 但是增加了学习成本.
+
+综上所述, 你要想在项目中用好 jpa 和 hibernate, 你需要有一个熟悉这两种框架的专家.
+
+即使这样, 在应对复杂查询的时候依然非常蹩脚.
+
+=== mybatis
+
+mybatis 在一定程度上解决了一些 jpa 和 heibernate 不善于复杂查询和连表查询的问题, 这也是 mybatis 现在被广泛使用的原因.
+
+大家都看重 mybatis 能够自主掌控 sql 的能力.
+
+但同时, mybatis 也有自己的问题.
+
+* xml 繁杂
++
+xml 本身就是一种复杂的格式, 加之 mybatis 要定义 ResultMap, 动态 sql 等.
++
+改动时需要在代码跟 xml 间来回切换.
++
+当一个字段改动时, 通常要 db -> model -> xml 改 sql -> xml 改 ResultMap 一套改一遍.
+
+* 虽然可以codegen, 但复杂的不支持
++
+通过代码生成插件可以解决上面那一些问题, 但是复杂的查询无法生成, 还需要自己写.
++
+而且自己写的 sql 还不能在生成的 xml 和 dao 里, 不然重新生成时会有问题.
+
+* 通过注解定义查询
++
+看上去写起来也不简单, 我是没有试过.
+
+
+=== jdbc template
+
+jdbc template 是 spring jdbc 提供的一个简单数据访问层框架, 以简单方便著称.
+
+jdbcTempate 通过直接代码中写 sql, 然后定义 RowMapper 来将每一行的数据转化成需要的对象.  
+
+* 不保证 Typesafe
++
+写字符串形式的 sql, 需要人工保证字段名字都不写错.
++
+因为 java 语言强类型的特性, 取出数据时需要指定类型.
+
+* RowMapper, dao 要自己实现, 重复工作多.
++
+因为没有代码生成的机制, RowMapper, dao 需要自己实现, 那么通常来说, 有多少数据对象, 就要生成多少 RowMapper 和 dao
+
+=== 总结
+因为 java 是一个面向对象的语言, 所以很多框架都是用面向对象的方式来抽象数据访问.
+
+然而, 借用 jooq 文档里的一句话:
+
+> SQL was never meant to be object-oriented. SQL was never meant to be anything other than... SQL!
+
+传统 ORM 解决的问题是 `程序中对象` <--> `数据库存储` 的对应, 提供了一套面向对象的封装, 屏蔽了 jdbc 的复杂性.
+
+而 jdbc template 等非 orm 的框架提供了完全控制 sql 的能力但无法提供 ORM 提供的强类型映射, 需要开发人员大量的重复编码.
+
+== 我们的现状
+在我们的项目中, 几乎无法避免要使用到关系型数据库, 无法避免要使用 sql.
+
+但是, 我们对 sql 的使用可以分成两种类型:
+
+* 50% ~ 80% 的 CURD
++
+基础的 CURD 是项目中最常见的使用方式, 增删改查一个实体. 
++
+我们在写业务逻辑的时候, 就是获取各种实体数据, 然后通过计算更改数据, 再将数据保存. 
+
+* 20% ~ 50% query
++
+如果项目中只有 CURD, 那么生活将会非常美好. 然而项目中总是免不了需要复杂的 sql 来实现的功能.
++
+比如列表查询, 往往需求比较个性化, 一行的数据可能涉及多个数据表.
++
+这种需求虽然现在可以通过冗余存储的方式来解决, 但通常还是用连表查询配合缓存来完成, 有时还会涉及到聚合查询, 可变条件等情况.
++
+传统 ORM 对于这种情况就会显得力不从心.
+
+== JOOQ 是怎么做的
+
+JOOQ 是要来解决上面问题的. JOOQ 通过大量的流式 API 来灵活构建一个 SQL. 下面通过 JOOQ 的几种使用方式来体验下 JOOQ 的特性:
+
+== 使用方式
+=== sql builder, 作为 sql 的构造器
+[source,java]
+----
+{
+    String s = DSL.select(DSL.field("id"), DSL.field("title"), DSL.field("published_in"))
+            .from("book").getSQL();
+    System.out.println(s);
+}
+
+{
+    String s = DSL.using(SQLDialect.MYSQL).select()
+            .from("book")
+            .join(DSL.table("language").as("a"))
+            .on("book.language_id = a.id")
+            .getSQL();
+    System.out.println(s);
+}
+
+{
+    String s = DSL.using(SQLDialect.MYSQL).select()
+            .from("book")
+            .join(DSL.table("language").as("a"))
+            .on("book.language_id = a.id")
+            .where(DSL.field("book.author_id").eq(2))
+            .and("published_in = 1990")
+            .getSQL();
+    System.out.println(s);
+}
+----
+
+不需要数据源, 不需要代码生成, 使用 `org.jooq.impl.DSL` 来构建 sql 语句, 来看一下输出结果:
+[source,console]
+----
+select id, title, published_in from book
+select * from book join language as `a` on (book.language_id = a.id)
+select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = ? and (published_in = 1990))
+----
+
+通过 jooq 的 api, 可以构建出满足我们需要的简单或复杂的 sql.
+
+=== sql executor, 更进一步, 作为 sql 执行器
+
+jooq 构建 sql 之后, 可以作为 sql 的执行器来运行 sql.
+
+首先, 利用数据源建立 DSLContext 对象, 下面需要执行的例子都会使用这个对象.
+[source,java]
+----
+DSLContext sql;
+
+@Before
+public void before() {
+    MysqlDataSource mysqlDataSource = new MysqlDataSource();
+    mysqlDataSource.setDatabaseName("jooq_test");
+    mysqlDataSource.setUser("root");
+    mysqlDataSource.setPassword("");
+    sql = DSL.using(mysqlDataSource, SQLDialect.MYSQL);
+}
+----
+
+执行构建好的 sql 语句
+[source,java]
+----
+{
+    String s = DSL.using(SQLDialect.MYSQL).select()
+            .from("book")
+            .join(DSL.table("language").as("a"))
+            .on("book.language_id = a.id")
+            .where(DSL.field("book.author_id").eq(2))
+            .and("published_in = 1990")
+            .getSQL();
+    sql.execute(s, 2);
+    sql.resultQuery(s, 2).fetch();
+}
+----
+
+执行结果
+
+----
+11:44:36.067 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = ? and (published_in = 1990))
+11:44:36.068 [main] DEBUG org.jooq.tools.LoggerListener - -> with bind values      : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = 2 and (published_in = 1990))
+11:44:36.660 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = ? and (published_in = 1990))
+11:44:36.660 [main] DEBUG org.jooq.tools.LoggerListener - -> with bind values      : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = 2 and (published_in = 1990))
+11:44:36.760 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-------------------------------+------------+-----------+---------+----+----+-----------+
+11:44:36.760 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|title                          |published_in|language_id|new_field|  id|cd  |description|
+11:44:36.764 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------+------------+-----------+---------+----+----+-----------+
+11:44:36.764 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Bridahahahahahahahahahahahahaha|        1990|          2|        0|   2|de  |Deutsch    |
+11:44:36.764 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------+------------+-----------+---------+----+----+-----------+
+----
+
+以上是我们通过 jooq api 和自己拼写 sql 字符串的方式执行 sql.
+
+=== typesafe sql builder and executor, 作为强类型的 sql 构建和执行器 
+
+这一步我们要借助 jooq 的 code generator 来生成数据库的描述文件.
+
+code generator 有 gradle 和 maven 的插件可以使用. 我是用的是 gradle 插件, 我的测试使用配置如下
+[source,gradle]
+----
+plugins {
+    id 'nu.studer.jooq' version '2.0.9'
+    id 'java'
+}
+
+dependencies {
+
+    jooqRuntime('mysql:mysql-connector-java:5.1.44')
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile 'org.slf4j:slf4j-api:1.7.21'
+    testCompile 'ch.qos.logback:logback-core:1.2.3'
+    testCompile 'ch.qos.logback:logback-classic:1.2.3'
+
+    testCompile('org.jooq:jooq:3.10.6')
+    testCompile('mysql:mysql-connector-java:5.1.44')
+}
+
+jooq {
+    sample(sourceSets.main) {
+        jdbc {
+            driver = 'com.mysql.jdbc.Driver'
+            url = 'jdbc:mysql://localhost:3306/test'
+            user = 'root'
+            password = ''
+        }
+        generator {
+
+            database {
+                name = 'org.jooq.util.mysql.MySQLDatabase'
+                inputSchema = 'jooq_test'
+                outputSchemaToDefault = true
+
+            }
+
+            generate {
+                relations = true
+                deprecated = false
+                records = true
+                immutablePojos = true
+                fluentSetters = true
+                daos = true
+                // ...
+            }
+            target {
+                packageName = 'com.yangxiaochen.jooq'
+                // directory = ...
+            }
+        }
+    }
+}
+----
+然后执行
+[source,console]
+----
+./gradlew generateSampleJooqSchemaSource
+----
+生成代码.
+
+生成之后, 就可以使用了
+[source,java]
+----
+{
+    Result<Record3<Integer, Integer, String>> result = sql.select(BOOK.ID, BOOK.AUTHOR_ID, LANGUAGE.DESCRIPTION)
+        .from(BOOK).join(LANGUAGE)
+            .on(BOOK.LANGUAGE_ID.eq(LANGUAGE.ID))
+            .where(BOOK.PUBLISHED_IN.eq(1990))
+            .fetch();
+    Integer id = result.get(0).getValue(BOOK.ID);
+    Integer authorId = result.get(0).get("author_id", Integer.class);
+    String desc = result.get(0).value3();
+    System.out.println(id + " " + authorId + " " + desc);
+
+}
+----
+
+执行结果:
+
+----
+12:06:40.515 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
+12:06:40.516 [main] DEBUG org.jooq.tools.LoggerListener - -> with bind values      : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = 1990
+12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------+
+12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|description|
+12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
+12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Deutsch    |
+12:06:41.312 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
+4 2 Deutsch
+----
+
+可以看到, jooq 通过生成数据库描述代码来保证强类型, 当数据库发生变动, 可以重新生成.
+
+=== curd
+
+JOOQ 针对 CURD 生成基本代码, 来避免重复编码. JOOQ 对 CURD 的支持主要氛围 record 和 dao 两种方式, 可以一起使用:
+
+[source,java]
+----
+BookRecord bookRecord = sql.selectFrom(BOOK).where(BOOK.ID.eq(4)).fetchOne();
+System.out.println(bookRecord);
+bookRecord.setTitle(bookRecord.getTitle() + "ha");
+bookRecord.store();
+
+BookRecord bookRecord1 = sql.newRecord(BOOK);
+bookRecord1.setAuthorId(2);
+bookRecord1.setLanguageId(1);
+bookRecord1.setTitle("hello");
+bookRecord1.setPublishedIn(2018);
+bookRecord1.store();
+
+System.out.println(bookRecord1);
+
+BookDao bookDao = new BookDao(sql.configuration());
+List<Book> books = bookDao.fetchByAuthorId(2);
+System.out.println(books.get(0));
+----
+
+
+执行结果
+
+----
+12:18:55.420 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = ?
+12:18:55.422 [main] DEBUG org.jooq.tools.LoggerListener - -> with bind values      : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = 4
+12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------------------------------+------------+-----------+---------+
+12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|title                              |published_in|language_id|new_field|
+12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------------------------------+------------+-----------+---------+
+12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Bridahahahahahahahahahahahahahahaha|        1990|          2|        0|
+12:18:56.134 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------------------------------+------------+-----------+---------+
++----+---------+-----------------------------------+------------+-----------+---------+
+|  id|author_id|title                              |published_in|language_id|new_field|
++----+---------+-----------------------------------+------------+-----------+---------+
+|   4|        2|Bridahahahahahahahahahahahahahahaha|        1990|          2|        0|
++----+---------+-----------------------------------+------------+-----------+---------+
+12:18:56.198 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : update `book` set `book`.`title` = ? where `book`.`id` = ?
+12:18:56.199 [main] DEBUG org.jooq.tools.LoggerListener - -> with bind values      : update `book` set `book`.`title` = 'Bridahahahahahahahahahahahahahahahaha' where `book`.`id` = 4
+12:18:56.240 [main] DEBUG org.jooq.tools.LoggerListener - Affected row(s)          : 1
+12:18:56.250 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : insert into `book` (`author_id`, `title`, `published_in`, `language_id`) values (?, ?, ?, ?)
+12:18:56.250 [main] DEBUG org.jooq.tools.LoggerListener - -> with bind values      : insert into `book` (`author_id`, `title`, `published_in`, `language_id`) values (2, 'hello', 2018, 1)
+12:18:56.268 [main] DEBUG org.jooq.tools.LoggerListener - Affected row(s)          : 1
+12:18:56.270 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id` from `book` where `book`.`id` = ?
+12:18:56.271 [main] DEBUG org.jooq.tools.LoggerListener - -> with bind values      : select `book`.`id` from `book` where `book`.`id` = 19
+12:18:56.291 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+
+12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|
+12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+
+12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  19|
+12:18:56.292 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+
++----+---------+-----+------------+-----------+---------+
+|  id|author_id|title|published_in|language_id|new_field|
++----+---------+-----+------------+-----------+---------+
+|  19|        2|hello|        2018|          1|   {null}|
++----+---------+-----+------------+-----------+---------+
+12:18:56.305 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`author_id` in (?)
+12:18:56.306 [main] DEBUG org.jooq.tools.LoggerListener - -> with bind values      : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`author_id` in (2)
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-------------------------------------+------------+-----------+---------+
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|title                                |published_in|language_id|new_field|
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------------+------------+-----------+---------+
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   3|        2|O Alquimista                         |        1988|          4|        0|
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Bridahahahahahahahahahahahahahahahaha|        1990|          2|        0|
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  10|        2|hello                                |        2018|          1|        0|
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  11|        2|hello                                |        2018|          1|        0|
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  12|        2|hello                                |        2018|          1|        0|
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-------------------------------------+------------+-----------+---------+
+12:18:56.326 [main] DEBUG org.jooq.tools.LoggerListener -                          : |...7 record(s) truncated...
+Book (3, 2, O Alquimista, 1988, 4, 0)
+----
+
+=== mapper
+
+JOOQ 还提供了内置的映射功能, 方便我们进行对象的转换
+[source,java]
+----
+ public static class R {
+    public Integer id;
+    public Integer authorId;
+    public String description;
+
+    @Override
+    public String toString() {
+        return "R{" +
+                "id=" + id +
+                ", authorId=" + authorId +
+                ", description='" + description + '\'' +
+                '}';
+    }
+}
+
+@Test
+public void mapping() {
+
+    List<R> r = sql.select(BOOK.ID, BOOK.AUTHOR_ID, LANGUAGE.DESCRIPTION)
+            .from(BOOK).join(LANGUAGE)
+            .on(BOOK.LANGUAGE_ID.eq(LANGUAGE.ID))
+            .where(BOOK.PUBLISHED_IN.eq(1990)).fetch().into(R.class);
+    
+    r.forEach(it -> System.out.println(it));
+}
+----
+
+执行结果
+
+----
+12:23:00.964 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
+12:23:00.965 [main] DEBUG org.jooq.tools.LoggerListener - -> with bind values      : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = 1990
+12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener - Fetched result           : +----+---------+-----------+
+12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener -                          : |  id|author_id|description|
+12:23:01.862 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
+12:23:01.863 [main] DEBUG org.jooq.tools.LoggerListener -                          : |   4|        2|Deutsch    |
+12:23:01.863 [main] DEBUG org.jooq.tools.LoggerListener -                          : +----+---------+-----------+
+R{id=4, authorId=2, description='Deutsch'}
+----
+
+=== 特性总结
+JOOQ 提供了方便流式 API 用于构建各种各样的 SQL
+
+通过代码生成数据库描述文件, 提供了类型安全保障, 代码与数据库的映射
+
+通过生成 record, dao 等方式支持了 curd, 无需再写基础代码.
+
+内置映射功能方便了对象之间的转化.
+
+JOOQ 还有其他很多特性比如: 反过来通过代码描述生成数据库, 支持 xml 读写 等等. 不在本文讨论范围.
+
+== 缺点
+
+JOOQ 也有自身的缺点和局限, 或者说在使用时需要考虑的地方
+
+=== 性能
+
+JOOQ 在提供了方便的同事, 在以下几个阶段都会有额外的性能开销.
+
+* construct jOOQ queries
+* render SQL strings
+* bind values to prepared statements
+* fetch results
+
+上面这些开销, 可以自己来设置一些缓存来减小开销, 比如保存和复用 Query 对象.
+
+而且, 这个开销并不大, 引用官方文档的描述:
+
+> jOOQ's overhead compared to plain JDBC is typically less than 1ms per query.
+
+每个查询的额外开销是 1ms 以内.
+
+=== 商业化
+
+jooq 是个商业软件, 售价不菲. 但我们可以使用开源版本.
+
+商业版本针对的是商业数据库比如 oracle, sqlServer 等, 并且会提供技术支持.
+
+=== jdk 要求
+
+比较新的开源版 jooq 要求 jdk8 以上 
+
+=== 学习成本
+
+* 生成器配置比较复杂. 需要一个找一个同事来阅读文档称为配置专家, 当然也可以直接找一些比较通用的配置, 比如我这次进行测试的这个配置就可以满足大多数的需求.
+* DSL写法需要看文档. 但文档很全, 比如想知道 `group by` 怎么写直接文档中搜索就好.
+
+
+> 示例完整源码 https://github.com/yxc023/code-examples/blob/master/java/jooq/src/test/java/com/yangxiaochen/example/jooq/JOOQTest.java

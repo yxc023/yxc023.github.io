@@ -1,0 +1,114 @@
+= rabbitmq管理使用实践
+杨晓辰
+2016-02-08 23:19:32
+:toc: left
+:toclevels: 4
+:icons: font
+:jbake-sid: rabbit-mq-manage
+:jbake-type: post
+:jbake-tags: mq, rabbitmq
+:jbake-status: published
+
+#### 原创, 转载请注明出处[https://blog.yangxiaochen.com](https://blog.yangxiaochen.com)
+<!-- more -->
+
+ # MQ数据源 
+
+1. ```datasource -> topic exchange```, 数据源已固定格式发入exchange, exchange类型为topic,既可以使用路由route_key, 又可以进行通配. 不要将生产者, 消费者用在同一队列上, 这样耦合度高, 消息无法复用.
+
+2. 数据源只关心输入exchange, 对后续消费者无需关心
+
+3. 新加,修改数据源需要备案记录.
+
+4. 消费者一般情况下使用临时队列, 必要情况下使用持久队列. 队列从数据源的exchange中订阅数据.
+
+5. 程序中不要生成持久的exchange, queue. 而是在管理界面生成. 防止程序改动造成的废弃的exchange, queue仍然存在在rabbitmq中.
+
+6. 命名统一.
+
+        exchangeName: datasource:[sth.sth]
+        queueName: [消费者程序名称]:[exchangeName].[subject]
+        route_key: [exchangeName].[subject]
+
+        例:
+        exchangeName: datasource:dispatch.event
+        queueName: autoDispatch:dispatch.event.orderCreate
+        route_key: dispatch.event.orderCreate
+
+### poi
+
+    exchangeName: datasource:poi
+
+### 业务事件流
+
+    exchangeName: datasource:dispatch.event
+
+### 日志流
+
+### 其他
+
+
+
+# rabbitmq 规范
+## 使用规范
+### 0. 使用原则
+1. 数据源已固定格式发入exchange, exchange类型为topic.数据源只关心输入exchange.
+2. 修改数据源, 持久队列, 持久内部exchange需要备案记录.
+3. 消费者一般非必要情况下使用临时队列. 队列从数据源的exchange中订阅数据.
+4. 程序中不要生成持久的exchange, queue. 而是在管理界面生成.
+
+
+### 1. datasourceExchanges
+1. 命名
+
+        datasource:[datasourceName]
+
+        例:
+        datasource:poi
+        datasource:dispatch.event
+
+
+2. 记录备案
+
+        git@gitlab.supaide.cn:sys/rabbitmq.git
+        datasources.txt
+
+        备案说明详见文件内部格式.
+
+
+
+### 2. durable queues, exchanges
+1. 命名
+
+        queueName
+        [appName]:[routingKey]
+
+        exchangeName
+        x:[appName]:[routingKey]
+
+        例:
+        autoDispatch:dispatch.event.orderCreate
+        x:autoDispatch:dispatch.event.*
+
+
+2. 记录备案
+
+        git@gitlab.supaide.cn:sys/rabbitmq.git
+        durableQueues.txt
+
+        备案说明详见文件内部格式.
+
+
+### 3. temp queues, exchagnes
+1. 命名
+
+        gen.[appName]:[routingKey]
+
+        or
+
+        默认随机名称
+
+2. 记录备案
+
+
+        无需备案

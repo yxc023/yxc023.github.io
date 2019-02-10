@@ -1,0 +1,256 @@
+= groovy技巧 for java 开发者
+杨晓辰
+2018-05-05
+:toc: left
+:toclevels: 4
+:icons: font
+:jbake-type: post
+:jbake-tags: java, groovy
+:jbake-status: published
+
+== 前言
+
+本文旨在对有 java 基础的程序员在几分钟内了解 groovy 不同于 groovy 的技巧, 方便快速使用到 groovy 带来的便捷. 
+
+== 语法,格式
+=== 基础
+
+* 每句语法后不需要分号
+* 兼容绝大多数 java 语法
+* 非强类型语言, 使用推导类型, 可以使用 `def` 来定义变量
+
+=== 对象
+[source,groovy]
+----
+class Person {
+    String name                             
+    final int age                                 
+}
+----
+
+* 属性和对象默认为 public
+* 属性会自动生成 getter 和 setter. 
++
+调用 `person.name` 等同于调用 `person.getName()`
+
+* final 只有 get 方法.
+* 可以使用带参数名的构造方法
++
+[source,groovy]
+----
+def person = new Person(name: "John", age: 18)
+----
+
+=== 方法调用
+方法调用可以不写括号, 下面两句是一样的
+[source,groovy]
+----
+println("haha")
+println "haha" 
+----
+
+
+=== 字符串
+groovy 中字符串字面量有两种: 
+[source,groovy]
+----
+def s1 = "world"
+def s2 = "hello $s1"
+
+assert s2 == "hello world" // true
+----
+
+s1 是 String 类型, s2 是 GString 类型, 因为 s2 中有 `$` 形式的插入值
+
+觉大多数情况下, 可以忽略两种类型的差异.
+
+groovy 中字符串可以通过 `==` 来判断字符串相等.
+
+==== 引号
+
+* 单引号 `'` 的字符串, 就是纯字符串 `java.lang.String`
+* 双引号 `"` 的字符串, 可以有插入值, 如 `assert "hello $1" == "hello world"`
+* 三引号 `'''` 和 `"""`, 是多行形式, 比如
++
+[source,groovy]
+----
+def s1 = """hello
+world"""
+----
+
+== list
+
+groovy 提供了方便的 list 定义方式, 这个方式的 list 默认是 ArrayList 形式
+
+[source,groovy]
+----
+// 定义 list
+def letters = ['a', 'b', 'c', 'd']
+
+assert letters[0] == 'a'     
+assert letters[1] == 'b'
+
+assert letters[-1] == 'd'    
+assert letters[-2] == 'c'
+
+letters[2] = 'C'             
+assert letters[2] == 'C'
+
+// 添加一个元素
+letters << 'e'               
+assert letters[ 4] == 'e'
+assert letters[-1] == 'e'
+
+// 根据下标取子集
+assert letters[1, 3] == ['b', 'd'] 
+// 根据范围去子集        
+assert letters[2..4] == ['C', 'd', 'e'] 
+----
+
+== map
+
+groovy 提供了方便的 map 定义方式, 这个方式的 map 默认是 LinkedHashMap 形式
+[source,groovy]
+----
+def colors = [red: '#FF0000', green: '#00FF00', blue: '#0000FF']   
+
+assert colors['red'] == '#FF0000'    
+assert colors.green  == '#00FF00'    
+
+colors['pink'] = '#FF00FF'           
+colors.yellow  = '#FFFF00'           
+
+assert colors.pink == '#FF00FF'
+assert colors['yellow'] == '#FFFF00'
+
+assert colors instanceof java.util.LinkedHashMap
+----
+
+== 流式操作
+
+java8 的 stream 操作带来很多便利, groovy 除了能使用 java8 的 stream 外, 还有自己的一套更为方便的流式操作
+
+=== each 遍历
+----
+['a', 'b', 'c'].each { it -> 
+    println "$it"
+}
+['a', 'b', 'c'].eachWithIndex { it, i -> 
+    println "$i: $it"
+}
+----
+
+=== grep 过滤
+[source,groovy]
+----
+def list = [1, 2, 3, 4, 5]
+assert list.grep {it > 3} == [4, 5]
+----
+
+=== collect 转换
+[source,groovy]
+----
+def list = [1, 2, 3, 4, 5]
+assert list.collect { (it * 2) as String } == ["2", "4", "6", "8", "10"]
+----
+
+=== groupBy 列表转 map
+[source,groovy]
+----
+assert [
+        [name: 'Clark', city: 'London'], [name: 'Sharma', city: 'London'],
+        [name: 'Maradona', city: 'LA'], [name: 'Zhang', city: 'HK'],
+        [name: 'Ali', city: 'HK'], [name: 'Liu', city: 'HK'],
+].groupBy { it.city } == [
+        London: [[name: 'Clark', city: 'London'],
+                 [name: 'Sharma', city: 'London']],
+        LA    : [[name: 'Maradona', city: 'LA']],
+        HK    : [[name: 'Zhang', city: 'HK'],
+                 [name: 'Ali', city: 'HK'],
+                 [name: 'Liu', city: 'HK']],
+]
+
+// 对于常见的把一个列表建立 id 索引
+assert [
+        [id: 1, name: 'Clark', city: 'London'], [id: 2, name: 'Sharma', city: 'London'],
+        [id: 3, name: 'Maradona', city: 'LA']
+].groupBy { it.id }.collectEntries { key, value -> [key, value.first] } == [
+        1: [id: 1, name: 'Clark', city: 'London'],
+        2: [id: 2, name: 'Sharma', city: 'London'],
+        3: [id: 3, name: 'Maradona', city: 'LA']
+]
+----
+
+== io
+[source,groovy]
+----
+new File("a.txt").eachLine { line ->
+    println line
+}
+
+def out = new File("out.txt")
+out << "hello world\n"
+out << "something"
+----
+
+
+== 命令行 command
+
+看例子
+[source,groovy]
+----
+if(args.size() < 1 ) {
+    println "need pid"
+    return
+}
+def pid = args[0]
+
+def sout = new StringBuilder(), serr = new StringBuilder()
+def proc = "top -b -n 1 -H -p ${pid}".execute()
+
+proc.consumeProcessOutput(sout, serr)
+proc.waitFor()
+
+def begin = false
+def countLimit = 10
+def count = 0
+sout.eachLine { line ->
+    if (line.trim().size() == 0) {
+        return
+    }
+    if (begin && count <= countLimit) {
+        println line
+        def row = line.trim().split(" +")
+        def tid = String.format("nid=0x%x", row[0].toInteger())
+        println tid
+
+        def sout1 = new StringBuilder(), serr1 = new StringBuilder()
+        def p1 =  (System.getenv("JAVA_HOME")+"/bin/jstack -l ${pid} ").execute() | ["grep", tid ,"-A 20"].execute()
+        p1.consumeProcessOutput(sout1, serr1)
+        p1.waitFor()
+
+        serr1.eachLine { println it }
+        def lines = sout1.readLines()
+
+        if (lines.size() > 0) {
+            println lines[0]
+            lines[1..-1].takeWhile { !it.startsWith("\"") }.each { println it }
+        }
+
+        println()
+        count++
+    }
+    if (!begin && line.trim().toUpperCase().startsWith("PID")) {
+        begin = true
+    }
+
+}
+----
+
+== 更多
+
+参考实例: http://www.groovy-lang.org/groovy-dev-kit.html
+
+db 操作: http://www.groovy-lang.org/databases.html
+
+json 操作: http://www.groovy-lang.org/json.html

@@ -1,0 +1,88 @@
+= spring 中 aspectj 扫描内容太多导致的启动时加载缓慢
+杨晓辰
+2018-05-03
+:toc: left
+:toclevels: 4
+:icons: font
+:jbake-type: post
+:jbake-tags: stackoverflow, aspectj, spring
+:jbake-status: published
+
+== 现象
+
+我在一个现有的项目中, 引入 jooq. 这个项目本身是使用的 mybatis, 我引入 jooq, 想并行使用, 之后逐渐替换.
+
+引入 jooq 之后, 启动过程中发现中间停顿了 2-3 分钟. 也没有日志输出.
+
+== 发现问题
+
+dump 出主线程的堆栈, 一直是 aspectj 的代码块, 在判断一个 target 是否需要被进行切面代理.
+
+debug 模式启动, 到这个位置时, 在上面 dump 堆栈显示过的位置打断点.
+
+发现是一个表达式为 
+
+----
+@Pointcut("execution(* com.lianjia.xxx.platform.*.dao..*.*(..))" )
+----
+
+的 PointCut 在检测 `DefaultDSLContext`` 类中的每一个方法是否需要进行切面代理.
+
+而 `DefaultDSLContext` 是 jooq 的入口类, 为了方便我们使用 jooq, 这个类里有大量的方法重载和泛型, 为了支持 jooq 的 22 度强类型, 方法都有 1 - 22 个参数.
+
+所以对每一个方法匹配时, 都要获取方法签名, 每一个方法的参数列表类型, 如果是泛型, 还有额外操作. 
+
+== 解决
+
+通过 spring aspectj 部分的文档和源码, 总结有以下结论:
+
+1. 切面与代码的匹配是一个非常耗时的工作.
+2. 匹配的表达式越精确约好.
+
+如何做呢, spring aspectj 的文档给出了一些建议:
+
+一般来说, 切面声明有以下集中类型
+
+1. Kinded designators, 比如 execution, get, set, call, handler. 特定类型代码的切面
+2. Scoping designators, 比如 within, withincode. 一组切面, 包含了多种类型的代码, 但是有一个范围.
+3. Contextual designators, 比如 this, target, @annotation. 可能需要切面的上下文来帮助进行匹配检测.
+
+单独使用 Kinded designators 或者 Contextual designators 都是可以完成功能的, 但可能会影响织入性能, 因为要做额外的处理和分析.
+
+Scoping designators 可以非常快的判断目标是否在范围内, 避免不必要的分析处理.
+
+所以通常写切面定义时, 最好加上 Scoping designators.
+
+最后, 我把切面定义修改为:
+
+----
+@Pointcut("within(com.lianjia.xxx.platform..*) && execution(* com.lianjia.xxx.platform.*.dao..*.*(..))" )
+----
+
+结果界面无效, 因为我要切的目标是 mybatis 的 mapper, 因为这个 mapper 实际上是 com.sun.proxy.Proxy 对象. 最终改成
+
+----
+@Pointcut("within(com.sun.proxy..*) && execution(* com.lianjia.xxx.platform.*.dao..*.*(..))" )
+----
+
+或者
+
+----
+@Pointcut("!within(org.jooq.impl..*) && execution(* com.lianjia.xxx.platform.*.dao..*.*(..))" )
+----
+
+spring 启动是到织如阶段时, 对 DefaultDSLContext 的实例进行判断织如时, 可以通过 fastMatch 直接判断不行, 就不用对方法逐个检查了.
+
+
+
+最终结果启动耗时减少了.
+
+== 后记
+
+其实 `execution(* com.lianjia.xxx.platform.*.dao..*.*(..))` 应该也是可以分析出范围的, 还没有细究是出于什么考虑没有做判断.
+
+大家可以对现有项目中的切面进行优化, 尝试减少启动时间.
+
+aop 是个好东西, 但是也带来复杂性, 可读性, 性能上的隐患. 严格一点来说, 要刨根问底, 保证项目的配置启动过程是完全掌控在手的, 避免黑盒(即不知道为啥, 反正这么配就能 run 起来了, 没有啥问题出现) 
+
+代理对象和正常对象的切入方式会有不同, 需要注意.

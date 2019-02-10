@@ -1,0 +1,68 @@
+= 定位占用cpu的java线程
+杨晓辰
+2016-04-01
+:toc: left
+:toclevels: 4
+:icons: font
+:jbake-sid: top-thread
+:jbake-type: post
+:jbake-tags: java, thread
+:jbake-status: published
+
+列出一个进程中线程 cpu 占用
+
+----
+    top -Hp 18207
+----
+
+获取一个 java 进程 cup 占用率 top10 的线程堆栈, groovy 脚本 `groovy 本脚本 [pid]`. need JAVA_HOME
+
+[source,groovy]
+----
+if(args.size() < 1 ) {
+    println "need pid"
+    return
+}
+def pid = args[0]
+
+def sout = new StringBuilder(), serr = new StringBuilder()
+def proc = "top -b -n 1 -H -p ${pid}".execute()
+proc.consumeProcessOutput(sout, serr)
+proc.waitFor()
+println sout
+
+def begin = false
+def countLimit = 10
+def count = 0
+sout.eachLine { line ->
+    if (line.trim().size() == 0) {
+        return
+    }
+    if (begin && count <= countLimit) {
+        println line
+        def row = line.trim().split(" +")
+        def tid = String.format("nid=0x%x", row[0].toInteger())
+        println tid
+
+        def sout1 = new StringBuilder(), serr1 = new StringBuilder()
+        def p1 =  (System.getenv("JAVA_HOME")+"/bin/jstack -l ${pid} ").execute() | ["grep", tid ,"-A 20"].execute()
+        p1.consumeProcessOutput(sout1, serr1)
+        p1.waitFor()
+
+        serr1.eachLine { println it }
+        def lines = sout1.readLines()
+
+        if (lines.size() > 0) {
+            println lines[0]
+            lines[1..-1].takeWhile { !it.startsWith("\"") }.each { println it }
+        }
+
+        println()
+        count++
+    }
+    if (!begin && line.trim().toUpperCase().startsWith("PID")) {
+        begin = true
+    }
+
+}
+----
