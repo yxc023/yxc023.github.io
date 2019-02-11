@@ -6,9 +6,98 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期一, 21 一月 2019 21:22:36 +0800</pubDate>
-    <lastBuildDate>星期一, 21 一月 2019 21:22:36 +0800</lastBuildDate>
+    <pubDate>星期二, 12 二月 2019 00:08:23 +0800</pubDate>
+    <lastBuildDate>星期二, 12 二月 2019 00:08:23 +0800</lastBuildDate>
 
+    <item>
+      <title>在 windows 系统下适用 linux 命令行做开发</title>
+      <link>http://blog.yangxiaochen.com/blog/tools/linux-in-windows.html</link>
+      <pubDate>星期一, 11 二月 2019 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/tools/linux-in-windows.html</guid>
+      	<description>
+	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt; 
+ &lt;div id=&quot;toctitle&quot;&gt;
+  Table of Contents
+ &lt;/div&gt; 
+ &lt;ul class=&quot;sectlevel1&quot;&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_前言&quot;&gt;1. 前言&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_manjaro_deepin&quot;&gt;2. manjaro &amp;amp; deepin&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_虚拟机&quot;&gt;3. 虚拟机&lt;/a&gt;&lt;/li&gt; 
+  &lt;li&gt;&lt;a href=&quot;#_ubuntu_子系统&quot;&gt;4. ubuntu 子系统&lt;/a&gt; 
+   &lt;ul class=&quot;sectlevel2&quot;&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_安装&quot;&gt;4.1. 安装&lt;/a&gt;&lt;/li&gt; 
+    &lt;li&gt;&lt;a href=&quot;#_使用&quot;&gt;4.2. 使用&lt;/a&gt;&lt;/li&gt; 
+   &lt;/ul&gt; &lt;/li&gt; 
+ &lt;/ul&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_前言&quot;&gt;1. 前言&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;我的开发主力机器是一台2014年的13寸 macbook pro. 几年来一直战斗力良好. 但是平时上班比较远, 有时候加班晚点, 回家的时候就不想背这个电脑.&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;有时回到家中想干点什么, 家里一台老旧的神舟战神笔记本被封存已久, 每次拿出来都要翻箱倒柜, 还要在收拾回去, 而且, 性能也比较落后, 摆到桌子上也占地方.&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;年前就把这个笔记本咸鱼出手了, 自己 DIY 了一个小型台式机, 放到桌子下面, 配合我去年买的显示器, 作为家中的常备电脑, 偶尔还能打打游戏.&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;但是习惯了 macOS 下的开发体验, 很多操作习惯用命令行来做, 又很依赖 oh-my-zsh, 装一些开发工具也方便. 在 window 下没有了熟悉的命令行怎么办.&lt;/p&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_manjaro_deepin&quot;&gt;2. manjaro &amp;amp; deepin&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;先想到的是装 linux 系统, 试用了比较流行的 manjaro 和 deepin, 开始感觉还不错, 但是要装一些沟通工具时, 总会出现这样那样的问题.&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;这么多年来, 每次想要使用一个 linux 发行版来做开发环境, 最终的结果都是折腾两天然后删掉分区..&lt;/p&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_虚拟机&quot;&gt;3. 虚拟机&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;windows 上装 linux 虚拟机, 使用 windows 的沟通工具, 在 linux 下做开发, 体验不如原生, 且切换麻烦, 有一点微妙的卡顿, 让我在虚拟机里下载 idea 做开发, 想想都卡. 数据交换也是问题.&lt;/p&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt; 
+&lt;div class=&quot;sect1&quot;&gt; 
+ &lt;h2 id=&quot;_ubuntu_子系统&quot;&gt;4. ubuntu 子系统&lt;/h2&gt; 
+ &lt;div class=&quot;sectionbody&quot;&gt; 
+  &lt;div class=&quot;paragraph&quot;&gt; 
+   &lt;p&gt;试过种种之后, 了解到在 Windows 10 里, 有 Windows Subsystem for Linux（WSL）这一特性, 支持在 windows 下运行 bash, 来操作一个 linux 系统.&lt;/p&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_安装&quot;&gt;4.1. 安装&lt;/h3&gt; 
+   &lt;div class=&quot;olist arabic&quot;&gt; 
+    &lt;ol class=&quot;arabic&quot;&gt; 
+     &lt;li&gt; &lt;p&gt;windows 10 商店中搜索 linux, 可以看到很多个 linux 发行版, 像 ubuntu, suse 等. 选择最熟悉的 ubuntu 安装.&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;在 menu:控制面板[程序 &amp;gt; 启用或关闭 windows 功能 ] 中, 勾选 &lt;code&gt;适用于linux 的 windows 子系统&lt;/code&gt;&lt;/p&gt; &lt;/li&gt; 
+     &lt;li&gt; &lt;p&gt;重启&lt;/p&gt; &lt;/li&gt; 
+    &lt;/ol&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+  &lt;div class=&quot;sect2&quot;&gt; 
+   &lt;h3 id=&quot;_使用&quot;&gt;4.2. 使用&lt;/h3&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;使用 &lt;code&gt;win + R&lt;/code&gt; 打开运行, 输入 &lt;code&gt;bash&lt;/code&gt; 或者 &lt;code&gt;wsl&lt;/code&gt; 或者 &lt;code&gt;ubuntu&lt;/code&gt;, 就进入了 linux 命令行.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;可以通过 &lt;code&gt;/mnt/&amp;lt;盘号&amp;gt;/&lt;/code&gt; 来访问 windows 的目录.&lt;/p&gt; 
+   &lt;/div&gt; 
+   &lt;div class=&quot;paragraph&quot;&gt; 
+    &lt;p&gt;在 window 下, 可以使用 &lt;a href=&quot;http://cmder.net/&quot;&gt;cmder&lt;/a&gt; 来改善终端.&lt;/p&gt; 
+   &lt;/div&gt; 
+  &lt;/div&gt; 
+ &lt;/div&gt; 
+&lt;/div&gt;
+	</description>
+    </item>
     <item>
       <title>groovy技巧 for java 开发者</title>
       <link>http://blog.yangxiaochen.com/blog/groovy/groovy-tips-for-javaer.html</link>
