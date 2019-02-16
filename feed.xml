@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>Sat, 16 Feb 2019 15:38:04 +0000</pubDate>
-    <lastBuildDate>Sat, 16 Feb 2019 15:38:04 +0000</lastBuildDate>
+    <pubDate>Sat, 16 Feb 2019 15:40:17 +0000</pubDate>
+    <lastBuildDate>Sat, 16 Feb 2019 15:40:17 +0000</lastBuildDate>
 
     <item>
       <title>在 windows 系统下适用 linux 命令行做开发</title>
@@ -104,8 +104,10 @@
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;上图:&lt;/p&gt;
 &lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;image:/img/tools/linux-in-windows/screen.png&lt;/p&gt;
+&lt;div class=&quot;imageblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;img src=&quot;/img/tools/linux-in-windows/screen.png&quot; alt=&quot;screen&quot;&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
