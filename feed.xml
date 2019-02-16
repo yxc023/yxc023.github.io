@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>Sat, 16 Feb 2019 15:33:43 +0000</pubDate>
-    <lastBuildDate>Sat, 16 Feb 2019 15:33:43 +0000</lastBuildDate>
+    <pubDate>Sat, 16 Feb 2019 15:38:04 +0000</pubDate>
+    <lastBuildDate>Sat, 16 Feb 2019 15:38:04 +0000</lastBuildDate>
 
     <item>
       <title>在 windows 系统下适用 linux 命令行做开发</title>
@@ -96,7 +96,16 @@
 &lt;p&gt;可以通过 &lt;code&gt;/mnt/&amp;lt;盘号&amp;gt;/&lt;/code&gt; 来访问 windows 的目录.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;在 window 下, 可以使用 &lt;a href=&quot;http://cmder.net/&quot;&gt;cmder&lt;/a&gt; 来改善终端.&lt;/p&gt;
+&lt;p&gt;&lt;span class=&quot;line-through&quot;&gt;在 window 下, 可以使用 &lt;a href=&quot;http://cmder.net/&quot;&gt;cmder&lt;/a&gt; 来改善终端.&lt;/span&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;在windows下, 可以使用 &lt;a href=&quot;https://github.com/eugeny/terminus&quot;&gt;terminus&lt;/a&gt; 来改善终端.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;上图:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;image:/img/tools/linux-in-windows/screen.png&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
