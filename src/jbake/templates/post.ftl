@@ -15,7 +15,7 @@
 	<div id="cyReward" role="cylabs" data-use="reward"></div>
 	<!--PC版-->
 	<div id="SOHUCS" sid="${content.sid!content.title}"></div>
-	<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+	<script charset="utf-8" type="text/javascript" src="/js/changyan.js" ></script>
 	<script type="text/javascript">
 	window.changyan.api.config({
 	appid: 'cysiPXECq',
