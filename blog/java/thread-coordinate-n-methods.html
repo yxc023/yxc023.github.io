@@ -64,46 +64,47 @@
 		<h1>java 多线程同步的几种写法</h1>
 	</div>
 
-	<p><em>14 四月 2016</em></p>
+	<p><em>14 April 2016</em></p>
 
-	<p><div class="quoteblock"> 
- <blockquote> 
-  <div class="paragraph"> 
-   <p>回字的四种写法…​</p> 
-  </div> 
- </blockquote> 
-</div> 
-<div class="paragraph"> 
- <p>假设有三个比较耗时的非cpu密集型任务, 最后的结果分些需要这三个任务的结果相加, 使用多线程并发可以让三个任务同时进行. &lt;!-- more -→</p> 
-</div> 
-<div class="paragraph"> 
- <p>下面是几种写法:</p> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>package com.yangxiaochen;</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>import java.util.concurrent.ExecutionException;
+	<p><div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>回字的四种写法&#8230;&#8203;</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>假设有三个比较耗时的非cpu密集型任务, 最后的结果分些需要这三个任务的结果相加, 使用多线程并发可以让三个任务同时进行.
+&lt;!-- more -&#8594;</p>
+</div>
+<div class="paragraph">
+<p>下面是几种写法:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>package com.yangxiaochen;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinTask;
 import java.util.concurrent.FutureTask;
-import java.util.concurrent.Semaphore;</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>/**
+import java.util.concurrent.Semaphore;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>/**
  * @author yangxiaochen
  * @date 16/4/14 上午12:17
  */
-public class ForkJoinTest {</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>public int m1() {
+public class ForkJoinTest {</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>public int m1() {
     try {
         Thread.sleep(5000);
     } catch (InterruptedException e) {
@@ -111,12 +112,12 @@ public class ForkJoinTest {</pre>
     }
     System.out.println("m1");
     return 1;
-}</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>public int m2() {
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>public int m2() {
     try {
         Thread.sleep(5000);
     } catch (InterruptedException e) {
@@ -124,12 +125,12 @@ public class ForkJoinTest {</pre>
     }
     System.out.println("m2");
     return 2;
-}</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>public int m3() {
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>public int m3() {
     try {
         Thread.sleep(5000);
     } catch (InterruptedException e) {
@@ -137,221 +138,221 @@ public class ForkJoinTest {</pre>
     }
     System.out.println("m3");
     return 3;
-}</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>    public static void main(String[] args) throws ExecutionException, InterruptedException {
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    public static void main(String[] args) throws ExecutionException, InterruptedException {
         type0();
 //        type1();
 //        type2();
 //        type3();
-//        type4();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>}</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>private static void type0() throws InterruptedException {
+//        type4();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>private static void type0() throws InterruptedException {
     ForkJoinTest test = new ForkJoinTest();
     class Holder {
         int a;
         int b;
         int c;
     }
-    Holder h = new Holder();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>Thread t1 = new Thread(() -&gt; h.a = test.m1());
-t1.start();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>Thread t2 = new Thread(() -&gt; h.b = test.m2());
-t2.start();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>Thread t3 = new Thread(() -&gt; h.c = test.m3());
-t3.start();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>    t1.join();
+    Holder h = new Holder();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Thread t1 = new Thread(() -&gt; h.a = test.m1());
+t1.start();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Thread t2 = new Thread(() -&gt; h.b = test.m2());
+t2.start();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Thread t3 = new Thread(() -&gt; h.c = test.m3());
+t3.start();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    t1.join();
     t2.join();
     t3.join();
     System.out.println(h.a + h.b + h.c);
-}</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>private static void type4() throws InterruptedException {
-    Semaphore semaphore = new Semaphore(0);</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>ForkJoinTest test = new ForkJoinTest();
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>private static void type4() throws InterruptedException {
+    Semaphore semaphore = new Semaphore(0);</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>ForkJoinTest test = new ForkJoinTest();
 class Holder {
     int a;
     int b;
     int c;
 }
-Holder h = new Holder();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>new Thread(() -&gt; {
+Holder h = new Holder();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>new Thread(() -&gt; {
     h.a = test.m1();
     semaphore.release();
-}).start();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>new Thread(() -&gt; {
+}).start();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>new Thread(() -&gt; {
     h.b = test.m2();
     semaphore.release();
-}).start();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>new Thread(() -&gt; {
+}).start();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>new Thread(() -&gt; {
     h.c = test.m3();
     semaphore.release();
-}).start();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>    semaphore.acquire(3);
+}).start();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    semaphore.acquire(3);
     System.out.println(h.a + h.b + h.c);
-}</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>private static void type3() throws InterruptedException {
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>private static void type3() throws InterruptedException {
     ForkJoinTest test = new ForkJoinTest();
     class Holder {
         int a;
         int b;
         int c;
     }
-    Holder h = new Holder();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>new Thread(() -&gt; {
+    Holder h = new Holder();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>new Thread(() -&gt; {
     h.a = test.m1();
     synchronized (test) {
         if (h.a != 0 &amp;&amp; h.b != 0 &amp;&amp; h.c != 0) {
             test.notify();
         }
     }
-}).start();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>new Thread(() -&gt; {
+}).start();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>new Thread(() -&gt; {
     h.b = test.m2();
     synchronized (test) {
         if (h.a != 0 &amp;&amp; h.b != 0 &amp;&amp; h.c != 0) {
             test.notify();
         }
     }
-}).start();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>new Thread(() -&gt; {
+}).start();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>new Thread(() -&gt; {
     h.c = test.m3();
     synchronized (test) {
         if (h.a != 0 &amp;&amp; h.b != 0 &amp;&amp; h.c != 0) {
             test.notify();
         }
     }
-}).start();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>synchronized (test) {
+}).start();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>synchronized (test) {
     test.wait();
-}</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>    System.out.println(h.a + h.b + h.c);
-}</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>private static void type2() throws InterruptedException, ExecutionException {
-    ForkJoinTest test = new ForkJoinTest();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>FutureTask&lt;Integer&gt; f1 = new FutureTask&lt;&gt;(() -&gt; test.m1());
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    System.out.println(h.a + h.b + h.c);
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>private static void type2() throws InterruptedException, ExecutionException {
+    ForkJoinTest test = new ForkJoinTest();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>FutureTask&lt;Integer&gt; f1 = new FutureTask&lt;&gt;(() -&gt; test.m1());
 FutureTask&lt;Integer&gt; f2 = new FutureTask&lt;&gt;(() -&gt; test.m2());
-FutureTask&lt;Integer&gt; f3 = new FutureTask&lt;&gt;(() -&gt; test.m3());</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>new Thread(f1).start();
+FutureTask&lt;Integer&gt; f3 = new FutureTask&lt;&gt;(() -&gt; test.m3());</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>new Thread(f1).start();
 new Thread(f2).start();
-new Thread(f3).start();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>    System.out.println(f1.get() + f2.get() + f3.get());
-}</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>private static void type1() throws InterruptedException, ExecutionException {</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>ForkJoinTest test = new ForkJoinTest();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>ForkJoinTask&lt;Integer&gt; f1 = ForkJoinTask.adapt(() -&gt; test.m1()).fork();
+new Thread(f3).start();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    System.out.println(f1.get() + f2.get() + f3.get());
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>private static void type1() throws InterruptedException, ExecutionException {</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>ForkJoinTest test = new ForkJoinTest();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>ForkJoinTask&lt;Integer&gt; f1 = ForkJoinTask.adapt(() -&gt; test.m1()).fork();
 ForkJoinTask&lt;Integer&gt; f2 = ForkJoinTask.adapt(() -&gt; test.m2()).fork();
-ForkJoinTask&lt;Integer&gt; f3 = ForkJoinTask.adapt(() -&gt; test.m3()).fork();</pre> 
- </div> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>        System.out.println(f1.join() + f2.join() + f3.join());
+ForkJoinTask&lt;Integer&gt; f3 = ForkJoinTask.adapt(() -&gt; test.m3()).fork();</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>        System.out.println(f1.join() + f2.join() + f3.join());
     }
-}</pre> 
- </div> 
+}</pre>
+</div>
 </div></p>
 
 	<hr />
@@ -359,7 +360,7 @@ ForkJoinTask&lt;Integer&gt; f3 = ForkJoinTask.adapt(() -&gt; test.m3()).fork();<
 	<div id="cyReward" role="cylabs" data-use="reward"></div>
 	<!--PC版-->
 	<div id="SOHUCS" sid="thread-coordinate-n-methods"></div>
-	<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+	<script charset="utf-8" type="text/javascript" src="/js/changyan.js" ></script>
 	<script type="text/javascript">
 	window.changyan.api.config({
 	appid: 'cysiPXECq',

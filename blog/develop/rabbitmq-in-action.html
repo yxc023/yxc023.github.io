@@ -64,204 +64,238 @@
 		<h1>rabbitmq管理使用实践</h1>
 	</div>
 
-	<p><em>08 二月 2016</em></p>
+	<p><em>08 February 2016</em></p>
 
-	<p><div id="toc" class="toc"> 
- <div id="toctitle">
-  Table of Contents
- </div> 
- <ul class="sectlevel3"> 
-  <li><a href="#_原创_转载请注明出处_a_href_https_blog_yangxiaochen_com_class_bare_https_blog_yangxiaochen_com_a_a_href_https_blog_yangxiaochen_com_class_bare_https_blog_yangxiaochen_com_a">原创, 转载请注明出处[</a><a href="https://blog.yangxiaochen.com" class="bare">https://blog.yangxiaochen.com</a>](<a href="https://blog.yangxiaochen.com" class="bare">https://blog.yangxiaochen.com</a>)</li> 
-  <li><a href="#_poi">poi</a></li> 
-  <li><a href="#_业务事件流">业务事件流</a></li> 
-  <li><a href="#_日志流">日志流</a></li> 
-  <li><a href="#_其他">其他</a></li> 
-  <li><a href="#_rabbitmq_规范">rabbitmq 规范</a> 
-   <ul class="sectlevel1"> 
-    <li><a href="#_使用规范">使用规范</a> 
-     <ul class="sectlevel2"> 
-      <li><a href="#_0_使用原则">0. 使用原则</a></li> 
-      <li><a href="#_1_datasourceexchanges">1. datasourceExchanges</a></li> 
-      <li><a href="#_2_durable_queues_exchanges">2. durable queues, exchanges</a></li> 
-      <li><a href="#_3_temp_queues_exchagnes">3. temp queues, exchagnes</a></li> 
-     </ul> </li> 
-   </ul> </li> 
- </ul> 
-</div> 
-<div class="sect3"> 
- <h4 id="_原创_转载请注明出处_a_href_https_blog_yangxiaochen_com_class_bare_https_blog_yangxiaochen_com_a_a_href_https_blog_yangxiaochen_com_class_bare_https_blog_yangxiaochen_com_a">原创, 转载请注明出处[<a href="https://blog.yangxiaochen.com" class="bare">https://blog.yangxiaochen.com</a>](<a href="https://blog.yangxiaochen.com" class="bare">https://blog.yangxiaochen.com</a>)</h4> 
- <div class="paragraph"> 
-  <p>&lt;!-- more -→</p> 
- </div> 
- <div class="literalblock"> 
-  <div class="content"> 
-   <pre># MQ数据源</pre> 
-  </div> 
- </div> 
- <div class="olist arabic"> 
-  <ol class="arabic"> 
-   <li> <p><code><code>datasource → topic exchange</code></code>, 数据源已固定格式发入exchange, exchange类型为topic,既可以使用路由route_key, 又可以进行通配. 不要将生产者, 消费者用在同一队列上, 这样耦合度高, 消息无法复用.</p> </li> 
-   <li> <p>数据源只关心输入exchange, 对后续消费者无需关心</p> </li> 
-   <li> <p>新加,修改数据源需要备案记录.</p> </li> 
-   <li> <p>消费者一般情况下使用临时队列, 必要情况下使用持久队列. 队列从数据源的exchange中订阅数据.</p> </li> 
-   <li> <p>程序中不要生成持久的exchange, queue. 而是在管理界面生成. 防止程序改动造成的废弃的exchange, queue仍然存在在rabbitmq中.</p> </li> 
-   <li> <p>命名统一.</p> 
-    <div class="literalblock"> 
-     <div class="content"> 
-      <pre>exchangeName: datasource:[sth.sth]
+	<p><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel3">
+<li><a href="#_原创_转载请注明出处httpsblog_yangxiaochen_comhttpsblog_yangxiaochen_com">原创, 转载请注明出处[https://blog.yangxiaochen.com](https://blog.yangxiaochen.com)</a></li>
+<li><a href="#_poi">poi</a></li>
+<li><a href="#_业务事件流">业务事件流</a></li>
+<li><a href="#_日志流">日志流</a></li>
+<li><a href="#_其他">其他</a></li>
+<li><a href="#_rabbitmq_规范">rabbitmq 规范</a>
+<ul class="sectlevel1">
+<li><a href="#_使用规范">使用规范</a>
+<ul class="sectlevel2">
+<li><a href="#_0_使用原则">0. 使用原则</a></li>
+<li><a href="#_1_datasourceexchanges">1. datasourceExchanges</a></li>
+<li><a href="#_2_durable_queues_exchanges">2. durable queues, exchanges</a></li>
+<li><a href="#_3_temp_queues_exchagnes">3. temp queues, exchagnes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sect3">
+<h4 id="_原创_转载请注明出处httpsblog_yangxiaochen_comhttpsblog_yangxiaochen_com">原创, 转载请注明出处[<a href="https://blog.yangxiaochen.com" class="bare">https://blog.yangxiaochen.com</a>](<a href="https://blog.yangxiaochen.com" class="bare">https://blog.yangxiaochen.com</a>)</h4>
+<div class="paragraph">
+<p>&lt;!-- more -&#8594;</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># MQ数据源</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code><code>datasource &#8594; topic exchange</code></code>, 数据源已固定格式发入exchange, exchange类型为topic,既可以使用路由route_key, 又可以进行通配. 不要将生产者, 消费者用在同一队列上, 这样耦合度高, 消息无法复用.</p>
+</li>
+<li>
+<p>数据源只关心输入exchange, 对后续消费者无需关心</p>
+</li>
+<li>
+<p>新加,修改数据源需要备案记录.</p>
+</li>
+<li>
+<p>消费者一般情况下使用临时队列, 必要情况下使用持久队列. 队列从数据源的exchange中订阅数据.</p>
+</li>
+<li>
+<p>程序中不要生成持久的exchange, queue. 而是在管理界面生成. 防止程序改动造成的废弃的exchange, queue仍然存在在rabbitmq中.</p>
+</li>
+<li>
+<p>命名统一.</p>
+<div class="literalblock">
+<div class="content">
+<pre>exchangeName: datasource:[sth.sth]
 queueName: [消费者程序名称]:[exchangeName].[subject]
-route_key: [exchangeName].[subject]</pre> 
-     </div> 
-    </div> 
-    <div class="literalblock"> 
-     <div class="content"> 
-      <pre>例:
+route_key: [exchangeName].[subject]</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>例:
 exchangeName: datasource:dispatch.event
 queueName: autoDispatch:dispatch.event.orderCreate
-route_key: dispatch.event.orderCreate</pre> 
-     </div> 
-    </div> </li> 
-  </ol> 
- </div> 
-</div> 
-<div class="sect2"> 
- <h3 id="_poi">poi</h3> 
- <div class="literalblock"> 
-  <div class="content"> 
-   <pre>exchangeName: datasource:poi</pre> 
-  </div> 
- </div> 
-</div> 
-<div class="sect2"> 
- <h3 id="_业务事件流">业务事件流</h3> 
- <div class="literalblock"> 
-  <div class="content"> 
-   <pre>exchangeName: datasource:dispatch.event</pre> 
-  </div> 
- </div> 
-</div> 
-<div class="sect2"> 
- <h3 id="_日志流">日志流</h3> 
-</div> 
-<div class="sect2"> 
- <h3 id="_其他">其他</h3> 
-</div> 
-<h1 id="_rabbitmq_规范" class="sect0">rabbitmq 规范</h1> 
-<div class="sect1"> 
- <h2 id="_使用规范">使用规范</h2> 
- <div class="sectionbody"> 
-  <div class="sect2"> 
-   <h3 id="_0_使用原则">0. 使用原则</h3> 
-   <div class="olist arabic"> 
-    <ol class="arabic"> 
-     <li> <p>数据源已固定格式发入exchange, exchange类型为topic.数据源只关心输入exchange.</p> </li> 
-     <li> <p>修改数据源, 持久队列, 持久内部exchange需要备案记录.</p> </li> 
-     <li> <p>消费者一般非必要情况下使用临时队列. 队列从数据源的exchange中订阅数据.</p> </li> 
-     <li> <p>程序中不要生成持久的exchange, queue. 而是在管理界面生成.</p> </li> 
-    </ol> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_1_datasourceexchanges">1. datasourceExchanges</h3> 
-   <div class="olist arabic"> 
-    <ol class="arabic"> 
-     <li> <p>命名</p> 
-      <div class="literalblock"> 
-       <div class="content"> 
-        <pre>datasource:[datasourceName]</pre> 
-       </div> 
-      </div> 
-      <div class="literalblock"> 
-       <div class="content"> 
-        <pre>例:
+route_key: dispatch.event.orderCreate</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_poi">poi</h3>
+<div class="literalblock">
+<div class="content">
+<pre>exchangeName: datasource:poi</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_业务事件流">业务事件流</h3>
+<div class="literalblock">
+<div class="content">
+<pre>exchangeName: datasource:dispatch.event</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_日志流">日志流</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_其他">其他</h3>
+
+</div>
+<h1 id="_rabbitmq_规范" class="sect0">rabbitmq 规范</h1>
+<div class="sect1">
+<h2 id="_使用规范">使用规范</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_0_使用原则">0. 使用原则</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>数据源已固定格式发入exchange, exchange类型为topic.数据源只关心输入exchange.</p>
+</li>
+<li>
+<p>修改数据源, 持久队列, 持久内部exchange需要备案记录.</p>
+</li>
+<li>
+<p>消费者一般非必要情况下使用临时队列. 队列从数据源的exchange中订阅数据.</p>
+</li>
+<li>
+<p>程序中不要生成持久的exchange, queue. 而是在管理界面生成.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_1_datasourceexchanges">1. datasourceExchanges</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>命名</p>
+<div class="literalblock">
+<div class="content">
+<pre>datasource:[datasourceName]</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>例:
 datasource:poi
-datasource:dispatch.event</pre> 
-       </div> 
-      </div> </li> 
-     <li> <p>记录备案</p> 
-      <div class="literalblock"> 
-       <div class="content"> 
-        <pre>git@gitlab.supaide.cn:sys/rabbitmq.git
-datasources.txt</pre> 
-       </div> 
-      </div> 
-      <div class="literalblock"> 
-       <div class="content"> 
-        <pre>备案说明详见文件内部格式.</pre> 
-       </div> 
-      </div> </li> 
-    </ol> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_2_durable_queues_exchanges">2. durable queues, exchanges</h3> 
-   <div class="olist arabic"> 
-    <ol class="arabic"> 
-     <li> <p>命名</p> 
-      <div class="literalblock"> 
-       <div class="content"> 
-        <pre>queueName
-[appName]:[routingKey]</pre> 
-       </div> 
-      </div> 
-      <div class="literalblock"> 
-       <div class="content"> 
-        <pre>exchangeName
-x:[appName]:[routingKey]</pre> 
-       </div> 
-      </div> 
-      <div class="literalblock"> 
-       <div class="content"> 
-        <pre>例:
+datasource:dispatch.event</pre>
+</div>
+</div>
+</li>
+<li>
+<p>记录备案</p>
+<div class="literalblock">
+<div class="content">
+<pre>git@gitlab.supaide.cn:sys/rabbitmq.git
+datasources.txt</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>备案说明详见文件内部格式.</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_durable_queues_exchanges">2. durable queues, exchanges</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>命名</p>
+<div class="literalblock">
+<div class="content">
+<pre>queueName
+[appName]:[routingKey]</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>exchangeName
+x:[appName]:[routingKey]</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>例:
 autoDispatch:dispatch.event.orderCreate
-x:autoDispatch:dispatch.event.*</pre> 
-       </div> 
-      </div> </li> 
-     <li> <p>记录备案</p> 
-      <div class="literalblock"> 
-       <div class="content"> 
-        <pre>git@gitlab.supaide.cn:sys/rabbitmq.git
-durableQueues.txt</pre> 
-       </div> 
-      </div> 
-      <div class="literalblock"> 
-       <div class="content"> 
-        <pre>备案说明详见文件内部格式.</pre> 
-       </div> 
-      </div> </li> 
-    </ol> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_3_temp_queues_exchagnes">3. temp queues, exchagnes</h3> 
-   <div class="olist arabic"> 
-    <ol class="arabic"> 
-     <li> <p>命名</p> 
-      <div class="literalblock"> 
-       <div class="content"> 
-        <pre>gen.[appName]:[routingKey]</pre> 
-       </div> 
-      </div> 
-      <div class="literalblock"> 
-       <div class="content"> 
-        <pre>or</pre> 
-       </div> 
-      </div> 
-      <div class="literalblock"> 
-       <div class="content"> 
-        <pre>默认随机名称</pre> 
-       </div> 
-      </div> </li> 
-     <li> <p>记录备案</p> 
-      <div class="literalblock"> 
-       <div class="content"> 
-        <pre>无需备案</pre> 
-       </div> 
-      </div> </li> 
-    </ol> 
-   </div> 
-  </div> 
- </div> 
+x:autoDispatch:dispatch.event.*</pre>
+</div>
+</div>
+</li>
+<li>
+<p>记录备案</p>
+<div class="literalblock">
+<div class="content">
+<pre>git@gitlab.supaide.cn:sys/rabbitmq.git
+durableQueues.txt</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>备案说明详见文件内部格式.</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_temp_queues_exchagnes">3. temp queues, exchagnes</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>命名</p>
+<div class="literalblock">
+<div class="content">
+<pre>gen.[appName]:[routingKey]</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>or</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>默认随机名称</pre>
+</div>
+</div>
+</li>
+<li>
+<p>记录备案</p>
+<div class="literalblock">
+<div class="content">
+<pre>无需备案</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
 </div></p>
 
 	<hr />
@@ -269,7 +303,7 @@ durableQueues.txt</pre>
 	<div id="cyReward" role="cylabs" data-use="reward"></div>
 	<!--PC版-->
 	<div id="SOHUCS" sid="rabbit-mq-manage"></div>
-	<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+	<script charset="utf-8" type="text/javascript" src="/js/changyan.js" ></script>
 	<script type="text/javascript">
 	window.changyan.api.config({
 	appid: 'cysiPXECq',

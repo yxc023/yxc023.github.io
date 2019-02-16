@@ -64,116 +64,134 @@
 		<h1>git分支管理与使用规范</h1>
 	</div>
 
-	<p><em>21 六月 2016</em></p>
+	<p><em>21 June 2016</em></p>
 
-	<p><!-- # git分支管理与使用规范 --> 
-<h2>分支管理</h2> 
-<h3>flow</h3> 
-<ul> 
- <li>git flow</li> 
- <li>github flow</li> 
- <li>gitlab flow</li> 
- <li>fn flow</li> 
-</ul> 
-<!-- more --> 
-<h3>分支与开发定义</h3> 
-<h4>主要分支</h4> 
-<ul> 
- <li> <p>master</p> <p>线上分支, 一直存在</p> </li> 
- <li> <p>develop</p> <p>常规开发分支, 一直存在</p> </li> 
- <li> <p>masterfix</p> <p>线上bug修改分支, 一直存在</p> </li> 
-</ul> 
-<h4>辅助分支</h4> 
-<ul> 
- <li> <p>feature/*</p> <p>功能开发分支, 从develop分支而来, 然后合并入develop, 最终删除.</p> </li> 
- <li> <p>release/*</p> <p>上线分支, 从develop分支而来, 然后合并入master, 并应用到develop, 最终删除.</p> </li> 
- <li> <p>hotfix/*</p> <p>线上bug修改分支, 从masterfix分支而来, 然后合并入masterfix, 最终删除.</p> </li> 
-</ul> 
-<h3>如何使用各种分支</h3> 
-<h4>init</h4> 
-<p>一个项目初始有master分支, 需要新建立一个develop分支和masterfix分支.</p> 
+	<p><!-- # git分支管理与使用规范 -->
+<h2>分支管理</h2>
+<h3>flow</h3>
+<ul>
+<li>git flow</li>
+<li>github flow</li>
+<li>gitlab flow</li>
+<li>fn flow</li>
+</ul>
+<!-- more -->
+<h3>分支与开发定义</h3>
+<h4>主要分支</h4>
+<ul>
+<li>
+<p>master</p>
+<p>线上分支, 一直存在</p>
+</li>
+<li>
+<p>develop</p>
+<p>常规开发分支, 一直存在</p>
+</li>
+<li>
+<p>masterfix</p>
+<p>线上bug修改分支, 一直存在</p>
+</li>
+</ul>
+<h4>辅助分支</h4>
+<ul>
+<li>
+<p>feature/*</p>
+<p>功能开发分支, 从develop分支而来, 然后合并入develop, 最终删除.</p>
+</li>
+<li>
+<p>release/*</p>
+<p>上线分支, 从develop分支而来, 然后合并入master, 并应用到develop, 最终删除.</p>
+</li>
+<li>
+<p>hotfix/*</p>
+<p>线上bug修改分支, 从masterfix分支而来, 然后合并入masterfix, 最终删除.</p>
+</li>
+</ul>
+<h3>如何使用各种分支</h3>
+<h4>init</h4>
+<p>一个项目初始有master分支, 需要新建立一个develop分支和masterfix分支.</p>
 <pre><code>git br -b develop 
 git push origin develop
 
 git br -b masterfix
 git push origin masterfix
-</code></pre> 
-<h4>feature</h4> 
-<p>常规功能开发需要从develop分支checkout出feature分支.</p> 
+</code></pre>
+<h4>feature</h4>
+<p>常规功能开发需要从develop分支checkout出feature分支.</p>
 <pre><code>git checkout -b feature/GET-1008-添加用户查询列表 [develop]
-</code></pre> 
-<p>开发完毕后合并回develop分支</p> 
+</code></pre>
+<p>开发完毕后合并回develop分支</p>
 <pre><code>git checkout develop
 git pull // 先更新develop
 git merge feature/GET-1008-添加用户查询列表 --no-ff
 git push origin develop
 
 git branch -d feature/GET-1008-添加用户查询列表
-</code></pre> 
-<h4>Release</h4> 
-<p>开发完毕, 准备发布:</p> 
+</code></pre>
+<h4>Release</h4>
+<p>开发完毕, 准备发布:</p>
 <pre><code>git checkout -b release/1.0.0 [develop]
-</code></pre> 
-<p>然后在发布分支上处理一些发布操作, 比如更改版本号, 上线前测试, 问题修改等等. 当分支可以进行上线发布后:</p> 
+</code></pre>
+<p>然后在发布分支上处理一些发布操作, 比如更改版本号, 上线前测试, 问题修改等等. 当分支可以进行上线发布后:</p>
 <pre><code>git checkout master
 git merge release/1.0.0 --no-ff 
 git tag -a 1.0.0
-</code></pre> 
-<p>至此release完成, 但是需要将在release分支上的修改应用到develop上.</p> 
+</code></pre>
+<p>至此release完成, 但是需要将在release分支上的修改应用到develop上.</p>
 <pre><code>git checkout develop
 git merge release/1.0.0 --no-ff
 
 git branch -d release/1.0.0
-</code></pre> 
-<p>然后, 我们可以激活masterfix分支, 同步一下已经上线的master分支, 为修改将要出现的线上bug做准备</p> 
+</code></pre>
+<p>然后, 我们可以激活masterfix分支, 同步一下已经上线的master分支, 为修改将要出现的线上bug做准备</p>
 <pre><code>git checkout masterfix
 git merge master // 在正常情况下, 这里一定是fast-faward
-</code></pre> 
-<h2>hotfix</h2> 
-<p>当出现bug时, 我们需要从master或者是masterfix分支上分出hotfix分支来修改bug.</p> 
+</code></pre>
+<h2>hotfix</h2>
+<p>当出现bug时, 我们需要从master或者是masterfix分支上分出hotfix分支来修改bug.</p>
 <pre><code>git checkout -b hotfix/修改空指针 masterfix
-</code></pre> 
-<p>修改完毕后</p> 
+</code></pre>
+<p>修改完毕后</p>
 <pre><code>git checkout masterfix
 git merge hotfix/修改空指针 --no-ff
-</code></pre> 
-<p>期间可以进行多次hotfix, 最后当masterfix测试后没有问题, 准备上线:</p> 
+</code></pre>
+<p>期间可以进行多次hotfix, 最后当masterfix测试后没有问题, 准备上线:</p>
 <pre><code>git checkout master
 git merge masterfix --no-ff
-</code></pre> 
-<p>在master上打下当前上线的tag</p> 
+</code></pre>
+<p>在master上打下当前上线的tag</p>
 <pre><code>git tag -a 1.0.1
-</code></pre> 
-<p>同样, 这些修改要应用到develop分支上</p> 
+</code></pre>
+<p>同样, 这些修改要应用到develop分支上</p>
 <pre><code>git checkout develop
 git merge masterfix --no-ff
-</code></pre> 
-<h3>分支与环境对应?</h3> 
-<ul> 
- <li>master -- online</li> 
- <li>release -- off</li> 
- <li>develop -- ci</li> 
- <li>masterfix -- online-bug-fix</li> 
- <li>feature -- local, dev</li> 
-</ul> 
-<h3>总结</h3> 
-<h2>使用规范</h2> 
-<h3>鼓励开分支</h3> 
-<p>鼓励本地开分支开发, 独立功能独立分支.</p> 
-<h3>将分支上提交合并</h3> 
-<p>分支上开发的commit建议合并为一个commit, 这样易读, 方便主分支管理.</p> 
-<p>一种最简单直接的方法</p> 
+</code></pre>
+<h3>分支与环境对应?</h3>
+<ul>
+<li>master    --  online</li>
+<li>release   --  off</li>
+<li>develop   --  ci</li>
+<li>masterfix --  online-bug-fix</li>
+<li>feature   --  local, dev</li>
+</ul>
+<h3>总结</h3>
+<h2>使用规范</h2>
+<h3>鼓励开分支</h3>
+<p>鼓励本地开分支开发, 独立功能独立分支.</p>
+<h3>将分支上提交合并</h3>
+<p>分支上开发的commit建议合并为一个commit, 这样易读, 方便主分支管理.</p>
+<p>一种最简单直接的方法</p>
 <pre><code>git reset [分支开始处]
-git commit -m "..."
-</code></pre> 
-<p>另一种方法, 在feature分支上执行</p> 
+git commit -m &quot;...&quot;
+</code></pre>
+<p>另一种方法, 在feature分支上执行</p>
 <pre><code>git rebase -i develop // 将feature分支的修改应用到develop上
 
 // 后续操作
 http://www.ruanyifeng.com/blog/2015/08/git-use-process.html
-</code></pre> 
-<h3>保留分支信息</h3> 
-<p>在不同分支合并时使用 <code>--no-ff</code> 参数生成merge commit</p> 
+</code></pre>
+<h3>保留分支信息</h3>
+<p>在不同分支合并时使用 <code>--no-ff</code> 参数生成merge commit</p>
 <pre><code>commit e562022b423f7bf29f77927dea4d13cb05230681
 Merge: d88f815 799b7f8
 Author: 杨晓辰 &lt;yangxiaochen@yangxiaochendemacbook-pro.local&gt;
@@ -192,52 +210,56 @@ Author: 杨晓辰 &lt;yangxiaochen@yangxiaochendemacbook-pro.local&gt;
 Date:   Tue May 31 17:08:04 2016 +0800
 
     修改 auth
-</code></pre> 
-<h3>减少以及消除无意义的分支内merge</h3> 
-<p>同一分支更新时要避免产生无意义的merge</p> 
-<p>如果是一个人使用git-flow, 你会发现你所有的commit以及commit log都是有意义的. 你所有的更改, feature合并都是有明确记录的.</p> 
-<p>但是在多人使用下, 大家各自在本地开发, 往develop分支上merge, 那么就会出现每个人的develop分支不一致. 那么当一个人把自己的develop分支push到远端时, 其他人pull的时候就会出现分支合并, 产生 "Merge branch 'develop' of remote into develop" 的类似commit.</p> 
-<p>很多时候, 合并时没有冲突, 自动完成. 这种merge产生的commit是没有意义的, 而且会让分支看起来混乱.</p> 
-<p>按照以下规则可以减少甚至消除这种无意义的commit:</p> 
-<ol> 
- <li>本地在往develop分支进行合并时, ** <code>先在develop上执行git pull</code> **, 当你没有在本地对develop分支有commit时, 执行<code>git pull</code>是会发生Fast-forward合并的, 这种默认并不产生commit.</li> 
- <li>将feature合并到develop上.</li> 
- <li>push develop. 将你的修改提交到远端.</li> 
-</ol> 
-<p>多数时候, 如果多个人分开执行以上操作, 是不会有问题的.</p> 
-<p>如果多个人同时进行以上操作, 那么在进行第三步的时候, 是push不上去的, 需要先pull, 那么又会产生所谓的无意义commit, 该怎么办呢:</p> 
-<p>这时不要用<code>git pull</code>来拉取更改, 改为使用:</p> 
+</code></pre>
+<h3>减少以及消除无意义的分支内merge</h3>
+<p>同一分支更新时要避免产生无意义的merge</p>
+<p>如果是一个人使用git-flow, 你会发现你所有的commit以及commit log都是有意义的. 你所有的更改, feature合并都是有明确记录的.</p>
+<p>但是在多人使用下, 大家各自在本地开发, 往develop分支上merge, 那么就会出现每个人的develop分支不一致. 那么当一个人把自己的develop分支push到远端时, 其他人pull的时候就会出现分支合并, 产生 &quot;Merge branch 'develop' of remote into develop&quot; 的类似commit.</p>
+<p>很多时候, 合并时没有冲突, 自动完成. 这种merge产生的commit是没有意义的, 而且会让分支看起来混乱.</p>
+<p>按照以下规则可以减少甚至消除这种无意义的commit:</p>
+<ol>
+<li>本地在往develop分支进行合并时, ** <code>先在develop上执行git pull</code> **, 当你没有在本地对develop分支有commit时, 执行<code>git pull</code>是会发生Fast-forward合并的, 这种默认并不产生commit.</li>
+<li>将feature合并到develop上.</li>
+<li>push develop. 将你的修改提交到远端.</li>
+</ol>
+<p>多数时候, 如果多个人分开执行以上操作, 是不会有问题的.</p>
+<p>如果多个人同时进行以上操作, 那么在进行第三步的时候, 是push不上去的, 需要先pull, 那么又会产生所谓的无意义commit, 该怎么办呢:</p>
+<p>这时不要用<code>git pull</code>来拉取更改, 改为使用:</p>
 <pre><code>git pull --rebase
-</code></pre> 
-<p>这个命令会将远端代develop拉下来, 然后从本地develop上跟远端develop分叉的地方开始, 将本地的commit一个个应用到远端develop的末端, 使之成为一条直线, 从而没有了merge commit.</p> 
-<p>关于冲突, rebase的时候也会有冲突:</p> 
-<p>比如远端 <code>a-&gt;b-&gt;c</code></p> 
-<p>你的 <code>a-&gt;b-&gt;d</code></p> 
-<p>进行rebase之后 <code>a-&gt;b-&gt;c-&gt;e</code>, 其中<code>e</code>的更改内容和log就是你的<code>d</code>, 如果有冲突, 冲突的修改也是提现在<code>e</code>中</p> 
-<h3>冲突提交</h3> 
-<p>修改完冲突, 我们会进行commit提交冲突修改. <strong>不要使用<code>git commit -m</code>, 请直接使用<code>git commit</code>, git会识别你这是一个冲突提交.</strong></p> 
-<h3>常用操作</h3> 
-<p>回滚<br> git reset --hard [version] // 丢弃版本后的所有修改<br> git reset [version] // 保留版本后的所有已提交修改<br> git reset --soft [version] // 保留版本后的所有已提交修改到commit stage</p> 
-<p>补充提交</p> 
+</code></pre>
+<p>这个命令会将远端代develop拉下来, 然后从本地develop上跟远端develop分叉的地方开始, 将本地的commit一个个应用到远端develop的末端, 使之成为一条直线, 从而没有了merge commit.</p>
+<p>关于冲突, rebase的时候也会有冲突:</p>
+<p>比如远端 <code>a-&gt;b-&gt;c</code></p>
+<p>你的 <code>a-&gt;b-&gt;d</code></p>
+<p>进行rebase之后 <code>a-&gt;b-&gt;c-&gt;e</code>, 其中<code>e</code>的更改内容和log就是你的<code>d</code>, 如果有冲突, 冲突的修改也是提现在<code>e</code>中</p>
+<h3>冲突提交</h3>
+<p>修改完冲突, 我们会进行commit提交冲突修改. <strong>不要使用<code>git commit -m</code>, 请直接使用<code>git commit</code>, git会识别你这是一个冲突提交.</strong></p>
+<h3>常用操作</h3>
+<p>回滚<br />
+git reset --hard [version]  // 丢弃版本后的所有修改<br />
+git reset [version]         // 保留版本后的所有已提交修改<br />
+git reset --soft [version]  // 保留版本后的所有已提交修改到commit stage</p>
+<p>补充提交</p>
 <pre><code>git commit --amend
-</code></pre> 
-<p>提交tag到服务器</p> 
+</code></pre>
+<p>提交tag到服务器</p>
 <pre><code>git push origin --tags
-</code></pre> 
-<p>日志与diff</p> 
+</code></pre>
+<p>日志与diff</p>
 <pre><code>sourcetree // 软件
-</code></pre> 
-<h1>参考</h1> 
-<p><a href="http://nvie.com/posts/a-successful-git-branching-model/">http://nvie.com/posts/a-successful-git-branching-model/</a></p> 
-<p><a href="http://www.ruanyifeng.com/blog/2015/12/git-workflow.html">Git 工作流程</a></p> 
-<p><a href="http://www.ruanyifeng.com/blog/2015/08/git-use-process.html">合并commit</a></p></p>
+</code></pre>
+<h1>参考</h1>
+<p><a href="http://nvie.com/posts/a-successful-git-branching-model/">http://nvie.com/posts/a-successful-git-branching-model/</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2015/12/git-workflow.html">Git 工作流程</a></p>
+<p><a href="http://www.ruanyifeng.com/blog/2015/08/git-use-process.html">合并commit</a></p>
+</p>
 
 	<hr />
 
 	<div id="cyReward" role="cylabs" data-use="reward"></div>
 	<!--PC版-->
 	<div id="SOHUCS" sid="git分支管理与使用规范"></div>
-	<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+	<script charset="utf-8" type="text/javascript" src="/js/changyan.js" ></script>
 	<script type="text/javascript">
 	window.changyan.api.config({
 	appid: 'cysiPXECq',

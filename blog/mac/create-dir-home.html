@@ -64,82 +64,84 @@
 		<h1>mkdir在/home目录下新建文件夹 for mac</h1>
 	</div>
 
-	<p><em>31 三月 2016</em></p>
+	<p><em>31 March 2016</em></p>
 
-	<p><div class="paragraph"> 
- <p>Hmmm, trying to create a directory under '/home' on a Mac?</p> 
-</div> 
-<div class="paragraph"> 
- <p>Well, Apple doesn’t want you to (with good reason, automounter owns this dir, which makes it easier to do NFS mounts and such) so you shouldn’t muck with it but if you really just 'have to do it', here is how you can.</p> 
-</div> 
-<div class="paragraph"> 
- <p>Basically: Edit <code>/etc/auto_master</code> and remove or comment out the line that starts with "/home".</p> 
-</div> 
-<div class="paragraph"> 
- <p>&lt;!-- more -→</p> 
-</div> 
-<div class="paragraph"> 
- <p>example:</p> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>sudo vim /etc/auto_master</pre> 
- </div> 
-</div> 
-<div class="paragraph"> 
- <p>before:</p> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre># Automounter master map
+	<p><div class="paragraph">
+<p>Hmmm, trying to create a directory under '/home' on a Mac?</p>
+</div>
+<div class="paragraph">
+<p>Well, Apple doesn&#8217;t want you to (with good reason, automounter owns this dir, which makes it easier to do NFS mounts and such) so you shouldn&#8217;t muck with it but if you really just 'have to do it', here is how you can.</p>
+</div>
+<div class="paragraph">
+<p>Basically: Edit <code>/etc/auto_master</code> and remove or comment out the line that starts with "/home".</p>
+</div>
+<div class="paragraph">
+<p>&lt;!-- more -&#8594;</p>
+</div>
+<div class="paragraph">
+<p>example:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo vim /etc/auto_master</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>before:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># Automounter master map
 +auto_master            # Use directory service
 /net                    -hosts          -nobrowse,hidefromfinder,nosuid
 /home                  auto_home      -nobrowse,hidefromfinder
 /Network/Servers        -fstab
-/-                      -static</pre> 
- </div> 
-</div> 
-<div class="paragraph"> 
- <p>after:</p> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre># Automounter master map
+/-                      -static</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>after:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre># Automounter master map
 +auto_master            # Use directory service
 /net                    -hosts          -nobrowse,hidefromfinder,nosuid
 #/home                  auto_home      -nobrowse,hidefromfinder
 /Network/Servers        -fstab
-/-                      -static</pre> 
- </div> 
-</div> 
-<div class="paragraph"> 
- <p>to have the change take effect without a reboot:</p> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>sudo automount</pre> 
- </div> 
-</div> 
-<div class="paragraph"> 
- <p>.</p> 
-</div> 
-<div class="literalblock"> 
- <div class="content"> 
-  <pre>mkdir /home/test
+/-                      -static</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to have the change take effect without a reboot:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>sudo automount</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>mkdir /home/test
 ls -l /home/
 total 0
-drwxr-xr-x 3 root admin 102 Aug 10 11:33 test</pre> 
- </div> 
-</div> 
-<div class="admonitionblock note"> 
- <table> 
-  <tbody>
-   <tr> 
-    <td class="icon"> <i class="fa icon-note" title="Note"></i> </td> 
-    <td class="content"> I wouldn’t do anything 'important' with this directory as it’s easy to forget you altered this and an upgrade will plow over this directory, removing all data. (this dir is also not included in any Time Machine backups. </td> 
-   </tr> 
-  </tbody>
- </table> 
+drwxr-xr-x 3 root admin 102 Aug 10 11:33 test</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+I wouldn&#8217;t do anything 'important' with this directory as it&#8217;s easy to forget you altered this and an upgrade will plow over this directory, removing all data. (this dir is also not included in any Time Machine backups.
+</td>
+</tr>
+</table>
 </div></p>
 
 	<hr />
@@ -147,7 +149,7 @@ drwxr-xr-x 3 root admin 102 Aug 10 11:33 test</pre>
 	<div id="cyReward" role="cylabs" data-use="reward"></div>
 	<!--PC版-->
 	<div id="SOHUCS" sid="create-dir-home-on-mac"></div>
-	<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+	<script charset="utf-8" type="text/javascript" src="/js/changyan.js" ></script>
 	<script type="text/javascript">
 	window.changyan.api.config({
 	appid: 'cysiPXECq',
