@@ -1,4 +1,4 @@
-= 在 windows 系统下适用 linux 命令行做开发
+= 在 windows 系统下使用 linux 命令行做开发
 杨晓辰
 2019-02-11
 :toc: left
@@ -47,4 +47,11 @@ windows 上装 linux 虚拟机, 使用 windows 的沟通工具, 在 linux 下做
 
 可以通过 `/mnt/<盘号>/` 来访问 windows 的目录.
 
-在 window 下, 可以使用 link:http://cmder.net/[cmder] 来改善终端.
+[.line-through]#在 window 下, 可以使用 link:http://cmder.net/[cmder] 来改善终端.#
+
+在windows下, 可以使用 link:https://github.com/eugeny/terminus[terminus] 来改善终端.
+
+上图:
+
+image::/img/tools/linux-in-windows/screen.png[]
+
