@@ -66,383 +66,431 @@
 
 	<p><em>24 四月 2018</em></p>
 
-	<p><div id="toc" class="toc"> 
- <div id="toctitle">
-  Table of Contents
- </div> 
- <ul class="sectlevel1"> 
-  <li><a href="#_前言">前言</a></li> 
-  <li><a href="#_第一场_阿里巴巴微服务技术实践">第一场: 阿里巴巴微服务技术实践</a> 
-   <ul class="sectlevel2"> 
-    <li><a href="#_历史背景">历史背景</a> 
-     <ul class="sectlevel3"> 
-      <li><a href="#_all_in_one">all in one</a></li> 
-      <li><a href="#_code_share">code share</a></li> 
-      <li><a href="#_api">api</a></li> 
-     </ul> </li> 
-    <li><a href="#_问题">问题</a></li> 
-    <li><a href="#_pandora_出现">"Pandora" 出现</a></li> 
-    <li><a href="#_pandora_问题">"Pandora" 问题</a></li> 
-    <li><a href="#_pandora_boot_来解决上面的问题">"pandora boot" 来解决上面的问题</a></li> 
-    <li><a href="#_其他内容">其他内容</a></li> 
-   </ul> </li> 
-  <li><a href="#_第二场_51信用卡在微服务架构下的监控平台架构实践">第二场: 51信用卡在微服务架构下的监控平台架构实践</a> 
-   <ul class="sectlevel2"> 
-    <li><a href="#_总结">总结</a></li> 
-   </ul> </li> 
-  <li><a href="#_第三场_京东阿基米德微服务平台">第三场: 京东阿基米德微服务平台</a> 
-   <ul class="sectlevel2"> 
-    <li><a href="#_jsf">JSF</a></li> 
-    <li><a href="#_containermesh">ContainerMesh</a></li> 
-    <li><a href="#_调用图谱">调用图谱</a></li> 
-    <li><a href="#_应用集市">应用集市</a></li> 
-    <li><a href="#_能力地图">能力地图</a></li> 
-    <li><a href="#_总结_2">总结</a></li> 
-   </ul> </li> 
-  <li><a href="#_第四场_saga分布式事务解决方案与实践">第四场: Saga分布式事务解决方案与实践</a></li> 
-  <li><a href="#_end">end</a></li> 
- </ul> 
-</div> 
-<div class="sect1"> 
- <h2 id="_前言">前言</h2> 
- <div class="sectionbody"> 
-  <div class="paragraph"> 
-   <p>4月22日下午去听了半天的 Qcon 软件开发大会分享. 主要是服务化探索的内容.</p> 
-  </div> 
- </div> 
-</div> 
-<div class="sect1"> 
- <h2 id="_第一场_阿里巴巴微服务技术实践">第一场: 阿里巴巴微服务技术实践</h2> 
- <div class="sectionbody"> 
-  <div class="paragraph"> 
-   <p>这一场虽然名字是"阿里巴巴微服务实践", 但主要讲的是一个名为 "Pandora" 的服务隔离框架, 和为了这个框架能够方便使用的 "Pandora boot"</p> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_历史背景">历史背景</h3> 
-   <div class="paragraph"> 
-    <p>服务化在阿里的过程:</p> 
-   </div> 
-   <div class="sect3"> 
-    <h4 id="_all_in_one">all in one</h4> 
-    <div class="paragraph"> 
-     <p>最早很自然都是 all in one, 一个大的系统所有功能都在一个项目里.</p> 
-    </div> 
-   </div> 
-   <div class="sect3"> 
-    <h4 id="_code_share">code share</h4> 
-    <div class="paragraph"> 
-     <p>然后在09-12年, 做项目拆分, 但是是通过代码共享, 即业务功能写完后, 发布成 jar 包, 供几个项目引用.</p> 
-    </div> 
-    <div class="paragraph"> 
-     <p>这里我不得不吐槽, 我在15年也是这么做的, 现在接手的新项目也是这么做的. 显然是很不爽的, 因为修改一个业务逻辑, 就要生成新的 jar 包发布出去, 然后凡是依赖这个 jar 包的应用都要进行更新.</p> 
-    </div> 
-    <div class="paragraph"> 
-     <p>反过来说, 当你在关注一个应用时, 需要修改它的逻辑, 发现逻辑放在底层的 jar 包里, 需要另开一个项目更改, 很烦.</p> 
-    </div> 
-    <div class="paragraph"> 
-     <p>我最初这么做的想法, 无非是想避免同样的逻辑在不同的系统里写多次, 尤其是数据存取的那些逻辑, 毕竟在 java 里写 pojo mapper 很繁琐, 不能没个项目里都维护一份.</p> 
-    </div> 
-    <div class="paragraph"> 
-     <p>现在看来, 这种写法非常教条化. 在工作中也遇到有的同学严格照搬分层标准, 对同一个实体封装的 po, vo, dto, 对一个实体的不同纬度的的查询, 就一定要在一个包里, 哪怕这个查询就是为了某一个应用而写的特殊查询, 也要写在公共的包里. 我感觉这很教条, 不灵活, 忽视了功能和业务的聚集, 而仅仅考虑它们是描述同一实体的代码.</p> 
-    </div> 
-   </div> 
-   <div class="sect3"> 
-    <h4 id="_api">api</h4> 
-    <div class="paragraph"> 
-     <p>12年到15, 16年. 就向每个系统代码相互独立, 系统间通过 api 进行交互.</p> 
-    </div> 
-    <div class="paragraph"> 
-     <p>这也就是我们现在通常所认为的微服务.</p> 
-    </div> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_问题">问题</h3> 
-   <div class="paragraph"> 
-    <p>在以上服务化演进过程中, 就产生了一些中间件来支持每个应用. 比如 HSF中间件, 消息中间件, tddl, tair, ons 等阿里内部的中间件系统.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>这样业务系统就会因为这些中间件的 client 端或者 sdk.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>产生了一下问题:</p> 
-   </div> 
-   <div class="ulist"> 
-    <ul> 
-     <li> <p>中间件统一运维, 统一更新, 要求业务方应用更新 client 和 sdk.</p> </li> 
-     <li> <p>中间件 client 或 sdk 的依赖与业务方应用所需要的依赖冲突.</p> 
-      <div class="paragraph"> 
-       <p>比如某个中间件 client 用到 netty 是 4.0.* , 而业务方应用的功能需要依赖 netty 4.1.*</p> 
-      </div> </li> 
-     <li> <p>不同中间件之间的所需依赖冲突</p> </li> 
-    </ul> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_pandora_出现">"Pandora" 出现</h3> 
-   <div class="paragraph"> 
-    <p>"Pandora" 就是这种背景产生下的隔离容器.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>是基于 java 的 classloader 体系, 通过在 tomcat 等容器上配置自定义的 pandora classloader, 实现加载不同的中间件及其依赖的 class 时, 到不同的目录来查找.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>在业务应用部署时, 一个包含了所有中间件依赖的 "Pandora" 目录会部署在项目目录下.</p> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_pandora_问题">"Pandora" 问题</h3> 
-   <div class="paragraph"> 
-    <p>想一下, 就是知道这一套东西用起来很麻烦:</p> 
-   </div> 
-   <div class="ulist"> 
-    <ul> 
-     <li> <p>本地开发需要引入这样一堆组件.</p> </li> 
-     <li> <p>增加特殊的虚拟机参数, 容器配置.</p> </li> 
-     <li> <p>如果不引用这个 "pandora" 组件, 则需要自己用 maven 添加中间件所需依赖. 等到上线时才发现自己使用的依赖跟 "pandora" 里的依赖版本不一致造成运行时错误.</p> </li> 
-     <li> <p>应用创建麻烦, 找兄弟项目拷贝.</p> </li> 
-    </ul> 
-   </div> 
-   <div class="paragraph"> 
-    <p>其中第四点我们也有同样的问题. 新建项目就是拷贝代码, 一些不好的结构, 过期的依赖, 不合理的配置都会迁移过来…​</p> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_pandora_boot_来解决上面的问题">"pandora boot" 来解决上面的问题</h3> 
-   <div class="ulist"> 
-    <ul> 
-     <li> <p>解决项目新建问题:</p> 
-      <div class="paragraph"> 
-       <p>有一个类似于 <a href="http://start.spring.io" class="bare">http://start.spring.io</a> 的一站式应用创建页面. 勾选后直接下载一个完整的初始项目压缩包</p> 
-      </div> </li> 
-     <li> <p>解决开发依赖的问题:</p> 
-      <div class="paragraph"> 
-       <p>"pandora" 发布 middleware-sdk包, 包含了所有中间件的依赖, 但全都移除了方法体和实现, 只保留 class 和方法签名, 非常小, 供开发时的编译使用.</p> 
-      </div> </li> 
-     <li> <p>解决本地开发运行:</p> 
-      <div class="paragraph"> 
-       <p>项目引入"pandora boot", 所有项目第一句, <code>PandoraBootstrap.run(args)</code>, 这也是收 springboot 启发, 在打包后, pandora-boot 会启动自己的 pandoraboot classloader 来管理类的加载, 实现不同中间件类加载的依赖隔离.</p> 
-      </div> </li> 
-     <li> <p>解决中间件 sdk 的插件化:</p> 
-      <div class="paragraph"> 
-       <p>利用 spring-boot 的 starter 的方式, 引入不同的中间件依赖. 纳入 pandora-boot 的管理.</p> 
-      </div> </li> 
-    </ul> 
-   </div> 
-   <div class="paragraph"> 
-    <p>这几个事情听上去比较简单做起来还是挺复杂的! 就拿 pandora boot 这个自定义类加载来说, 既要考虑打成 jar 包之后的类加载方式和路径, 又要考虑开发时直接从 main 函数启动的类加载方式和路径.</p> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_其他内容">其他内容</h3> 
-   <div class="paragraph"> 
-    <p>演讲者也简单介绍一下他们的微服务中心, 主要是中间件, 容器管控, 监控, 提供一些应用管理能力. 介绍不多.</p> 
-   </div> 
-  </div> 
- </div> 
-</div> 
-<div class="sect1"> 
- <h2 id="_第二场_51信用卡在微服务架构下的监控平台架构实践">第二场: 51信用卡在微服务架构下的监控平台架构实践</h2> 
- <div class="sectionbody"> 
-  <div class="paragraph"> 
-   <p>这个分享主要就是讲微服务监控, 分享者是51信用卡微服务监控平台的负责人.</p> 
-  </div> 
-  <div class="paragraph"> 
-   <p>这个涉及业务比较少, 主要讲的是监控技术.</p> 
-  </div> 
-  <div class="paragraph"> 
-   <p>微服务监控主要是: 日志监控, 链路监控, 指标监控.</p> 
-  </div> 
-  <div class="paragraph"> 
-   <p>他们的监控平台通过拉业务日志, 又接受 push 事件的方式获取需要监控的内容, 使用的是一个 prometheus 的指标统计框架</p> 
-  </div> 
-  <div class="paragraph"> 
-   <p>但是由于微服务之后, 相互调用的日志和事件变多了, 又是金融项目, 要求记录详细, 机器扛不住了.</p> 
-  </div> 
-  <div class="paragraph"> 
-   <p>所以他们做了平台化:</p> 
-  </div> 
-  <div class="ulist"> 
-   <ul> 
-    <li> <p>"拉取" 和 "推送" 分别建立了不同的服务器</p> </li> 
-    <li> <p>把获取到的监控内容发到转换服务器处理成 prometheus 支持的格式, 根据应用存到不同的存储实例上.</p> </li> 
-   </ul> 
-  </div> 
-  <div class="paragraph"> 
-   <p>之后又做些优化点:</p> 
-  </div> 
-  <div class="ulist"> 
-   <ul> 
-    <li> <p>将时序型数据(用来做指标, 统计的那种, 比如一次 pv 打点) 和 非时序型数据(用来查看的, 比如日志) 分别用 Cassandra 和 es 存储</p> </li> 
-    <li> <p>指标的 key 长度占用空间: 使用 bitmap 做枚举, 减小单个指标长度</p> </li> 
-    <li> <p>用 druid 来解决预聚合, 维度合并, 减少指标数量.</p> </li> 
-   </ul> 
-  </div> 
-  <div class="paragraph"> 
-   <p>最后还讲到了智能诊断:</p> 
-  </div> 
-  <div class="ulist"> 
-   <ul> 
-    <li> <p>当报警发生时, 会取报警前后日志, 尤其会去查找 ERROR, Exception 关键字.</p> </li> 
-    <li> <p>如果有链路日志, 还会进行排序, 方便查看.</p> </li> 
-   </ul> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_总结">总结</h3> 
-   <div class="paragraph"> 
-    <p>这个监控的介绍打开了一些眼界, 毕竟作为业务开发者, 对监控这方面了解并不多. 这里列举的坑和解决办法可以在以后工作中提前考虑到.</p> 
-   </div> 
-  </div> 
- </div> 
-</div> 
-<div class="sect1"> 
- <h2 id="_第三场_京东阿基米德微服务平台">第三场: 京东阿基米德微服务平台</h2> 
- <div class="sectionbody"> 
-  <div class="paragraph"> 
-   <p>阿基米德是京东一系列服务化支持框架的总称. 这次分享介绍了京东内部为了支持微服务所示用的各种框架和技术.</p> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_jsf">JSF</h3> 
-   <div class="paragraph"> 
-    <p>京东服务框架, 微服务基础, 负责服务发现和注册, rpc 调用, 类似于 dubbo, 同时能够做到异地多活.</p> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_containermesh">ContainerMesh</h3> 
-   <div class="paragraph"> 
-    <p>之前听过 ServiceMesh, 说是微服务的未来. 简略了解是提供一个微服务的容器, 具有检测死活, 流量控制, 注册与发现等功能.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>总之, 是不需要每个服务自身再去关心去哪里注册和发现服务, 调用权限, 熔断, 监控等, 只需要做好你的服务放进来.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>极大的简化了服务部署的成本, 每个服务只需关心自己要发布什么功能, 要调用哪些功能.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>京东这个也是这个思路, 基于 google 的 Istio 开发. 包含在了自定义 linux 镜像里.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>这个仅仅是了解, 没有实践过, 这个算是服务化运维的范畴. 所以服务化不只是开发人员的工作, 更是运维人员的工作.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>我们其实也可以试试成熟的云平台上的容器服务. 公司也确实需要统一微服务的基础设施.</p> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_调用图谱">调用图谱</h3> 
-   <div class="paragraph"> 
-    <p>微服务统一基础设施后, 收集到的日志, 指标都可以统一处理, 形成调用图谱, 包含调用关系, 流量统计, 耗时等.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>如同玲姐的 dkimi 的效果.</p> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_应用集市">应用集市</h3> 
-   <div class="paragraph"> 
-    <p>这是我认为的亮点之一: 把大家的服务的信息集中起来, 分门别类. 一个服务是什么, 有哪些功能, 开发团队, 版本迭代都集中在应用集市上. 形成了公司内信息共享.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>同时, 一个功能可能有多个应用提供, 大家在选择的时候就能比较, 还可以反馈, 点赞, 评价.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>不好用的服务, 不好的服务态度, 都会导致你的服务被淘汰. 而优秀的会在各方评价建议中不断进化.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>这个想法非常亮, 他们也在开发中, 说是五月要上线. 不知道推广起来怎么样.</p> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_能力地图">能力地图</h3> 
-   <div class="paragraph"> 
-    <p>这又是个亮点! 看图:</p> 
-   </div> 
-   <div class="imageblock"> 
-    <div class="content"> 
-     <img src="http://blog.yangxiaochen.com/img/2018-beijing-qcon/能力地图.png" alt="能力地图"> 
-    </div> 
-   </div> 
-   <div class="paragraph"> 
-    <p>通过微服务细分, 微服务添加自己的业务标签, 结合调用图谱, 就能形成可视的业务描述.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>比如下一个订单, 会经过那些功能模块的处理.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>能让开发人员更直观熟悉项目, 也能让非开发人员(产品, 测试)对项目有所了解, 方便沟通, 价值很大!</p> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_总结_2">总结</h3> 
-   <div class="paragraph"> 
-    <p>京东这一套东西很实用, 想法也非常好. 他们是基础架构部一个专门的服务化治理组来做这些事情, 具体规模不太清楚.</p> 
-   </div> 
-  </div> 
- </div> 
-</div> 
-<div class="sect1"> 
- <h2 id="_第四场_saga分布式事务解决方案与实践">第四场: Saga分布式事务解决方案与实践</h2> 
- <div class="sectionbody"> 
-  <div class="paragraph"> 
-   <p>这一场是一个实际技术应用的分享. 讲了一个使用 saga 方式解决分布式事务的库 ServiceComb. 演讲者是这个库的发起人, 目前已经维护到 apache 了.</p> 
-  </div> 
-  <div class="paragraph"> 
-   <p>分布式事务场景下, saga 其实是一个很容易想到的方案: 使用事件来触发业务逻辑执行, 再某一步出错后, 倒序向前执行 undo 事件. 通过最终一致性来保障事务.</p> 
-  </div> 
-  <div class="paragraph"> 
-   <p>但目前的问题是, 没有一个公认的, 成熟的 saga 实现. 反正我接触的都没用过, 大家都是自己写异步事件通知, 保证幂等, 加入补偿.</p> 
-  </div> 
-  <div class="paragraph"> 
-   <p>他们就是想做这个事. 项目也是在开发中.</p> 
-  </div> 
-  <div class="paragraph"> 
-   <p>说几点提到的比较有价值的地方:</p> 
-  </div> 
-  <div class="ulist"> 
-   <ul> 
-    <li> <p>事务外柔内刚.</p> 
-     <div class="paragraph"> 
-      <p>意思是一个实例内部, 通过数据库保证刚性事务; 实例之间, 通过最终一致性保障柔性事务. 深以为然, 其实我们做的时候也是这么做的.</p> 
-     </div> </li> 
-    <li> <p>不要期望框架能够做回滚操作</p> 
-     <div class="paragraph"> 
-      <p>这是 saga 最长被挑战的部分, 有人就问了, 我用你这个框架, 出了错数据能够自动回滚吗. 这显然是想多了.</p> 
-     </div> 
-     <div class="paragraph"> 
-      <p>补偿操作, undo 操作, 都是要自己写.</p> 
-     </div> 
-     <div class="paragraph"> 
-      <p>可以认为是你如果对一个 saga 事件要写一段业务逻辑, 就要同时把补偿和回滚的逻辑写了. 这个其实挺难得, 要考虑的很全面.</p> 
-     </div> </li> 
-    <li> <p>解决隔离性的问题</p> 
-     <div class="paragraph"> 
-      <p>比如分布式条件下对订单的操作, 要对订单加分布式锁, 来让对同一个订单的操作隔离.</p> 
-     </div> </li> 
-    <li> <p>一个业务操作伴随一组 saga 事件</p> 
-     <div class="paragraph"> 
-      <p>比如下单, 就有生成订单, 扣减库存等一些列事件. 这些事件看成是一个事务, 而不是互相独立, 需要统一saga协调器管理:</p> 
-     </div> 
-     <div class="paragraph"> 
-      <p>saga start → order create → inventory 扣减 → saga end</p> 
-     </div> </li> 
-    <li> <p>推荐了论文:</p> 
-     <div class="paragraph"> 
-      <p><a href="https://github.com/aphyr/dist-sagas/blob/master/sagas.pdf">Distributed Sagas - Caitie McCaffrey</a></p> 
-     </div> 
-     <div class="paragraph"> 
-      <p><a href="http://microservices.io/patterns/data/saga.html">Microservice saga pattern - Chris Richardson</a></p> 
-     </div> </li> 
-   </ul> 
-  </div> 
- </div> 
-</div> 
-<div class="sect1"> 
- <h2 id="_end">end</h2> 
- <div class="sectionbody"> 
-  <div class="paragraph"> 
-   <p>以上是半天的收获, 其实也关注了点 团队建设与工程师个人成长 分会场的 ppt, 感觉也很不错, 以后再说吧.</p> 
-  </div> 
- </div> 
+	<p><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_前言">前言</a></li>
+<li><a href="#_第一场_阿里巴巴微服务技术实践">第一场: 阿里巴巴微服务技术实践</a>
+<ul class="sectlevel2">
+<li><a href="#_历史背景">历史背景</a>
+<ul class="sectlevel3">
+<li><a href="#_all_in_one">all in one</a></li>
+<li><a href="#_code_share">code share</a></li>
+<li><a href="#_api">api</a></li>
+</ul>
+</li>
+<li><a href="#_问题">问题</a></li>
+<li><a href="#_pandora_出现">"Pandora" 出现</a></li>
+<li><a href="#_pandora_问题">"Pandora" 问题</a></li>
+<li><a href="#_pandora_boot_来解决上面的问题">"pandora boot" 来解决上面的问题</a></li>
+<li><a href="#_其他内容">其他内容</a></li>
+</ul>
+</li>
+<li><a href="#_第二场_51信用卡在微服务架构下的监控平台架构实践">第二场: 51信用卡在微服务架构下的监控平台架构实践</a>
+<ul class="sectlevel2">
+<li><a href="#_总结">总结</a></li>
+</ul>
+</li>
+<li><a href="#_第三场_京东阿基米德微服务平台">第三场: 京东阿基米德微服务平台</a>
+<ul class="sectlevel2">
+<li><a href="#_jsf">JSF</a></li>
+<li><a href="#_containermesh">ContainerMesh</a></li>
+<li><a href="#_调用图谱">调用图谱</a></li>
+<li><a href="#_应用集市">应用集市</a></li>
+<li><a href="#_能力地图">能力地图</a></li>
+<li><a href="#_总结_2">总结</a></li>
+</ul>
+</li>
+<li><a href="#_第四场_saga分布式事务解决方案与实践">第四场: Saga分布式事务解决方案与实践</a></li>
+<li><a href="#_end">end</a></li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="_前言">前言</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>4月22日下午去听了半天的 Qcon 软件开发大会分享. 主要是服务化探索的内容.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_第一场_阿里巴巴微服务技术实践">第一场: 阿里巴巴微服务技术实践</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>这一场虽然名字是"阿里巴巴微服务实践", 但主要讲的是一个名为 "Pandora" 的服务隔离框架, 和为了这个框架能够方便使用的 "Pandora boot"</p>
+</div>
+<div class="sect2">
+<h3 id="_历史背景">历史背景</h3>
+<div class="paragraph">
+<p>服务化在阿里的过程:</p>
+</div>
+<div class="sect3">
+<h4 id="_all_in_one">all in one</h4>
+<div class="paragraph">
+<p>最早很自然都是 all in one, 一个大的系统所有功能都在一个项目里.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_code_share">code share</h4>
+<div class="paragraph">
+<p>然后在09-12年, 做项目拆分, 但是是通过代码共享, 即业务功能写完后, 发布成 jar 包, 供几个项目引用.</p>
+</div>
+<div class="paragraph">
+<p>这里我不得不吐槽, 我在15年也是这么做的, 现在接手的新项目也是这么做的. 显然是很不爽的, 因为修改一个业务逻辑, 就要生成新的 jar 包发布出去, 然后凡是依赖这个 jar 包的应用都要进行更新.</p>
+</div>
+<div class="paragraph">
+<p>反过来说, 当你在关注一个应用时, 需要修改它的逻辑, 发现逻辑放在底层的 jar 包里, 需要另开一个项目更改, 很烦.</p>
+</div>
+<div class="paragraph">
+<p>我最初这么做的想法, 无非是想避免同样的逻辑在不同的系统里写多次, 尤其是数据存取的那些逻辑, 毕竟在 java 里写 pojo mapper 很繁琐, 不能没个项目里都维护一份.</p>
+</div>
+<div class="paragraph">
+<p>现在看来, 这种写法非常教条化. 在工作中也遇到有的同学严格照搬分层标准, 对同一个实体封装的 po, vo, dto, 对一个实体的不同纬度的的查询, 就一定要在一个包里, 哪怕这个查询就是为了某一个应用而写的特殊查询, 也要写在公共的包里. 我感觉这很教条, 不灵活, 忽视了功能和业务的聚集, 而仅仅考虑它们是描述同一实体的代码.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_api">api</h4>
+<div class="paragraph">
+<p>12年到15, 16年. 就向每个系统代码相互独立, 系统间通过 api 进行交互.</p>
+</div>
+<div class="paragraph">
+<p>这也就是我们现在通常所认为的微服务.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_问题">问题</h3>
+<div class="paragraph">
+<p>在以上服务化演进过程中, 就产生了一些中间件来支持每个应用. 比如 HSF中间件, 消息中间件, tddl, tair, ons 等阿里内部的中间件系统.</p>
+</div>
+<div class="paragraph">
+<p>这样业务系统就会因为这些中间件的 client 端或者 sdk.</p>
+</div>
+<div class="paragraph">
+<p>产生了一下问题:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>中间件统一运维, 统一更新, 要求业务方应用更新 client 和 sdk.</p>
+</li>
+<li>
+<p>中间件 client 或 sdk 的依赖与业务方应用所需要的依赖冲突.</p>
+<div class="paragraph">
+<p>比如某个中间件 client 用到 netty 是 4.0.* , 而业务方应用的功能需要依赖 netty 4.1.*</p>
+</div>
+</li>
+<li>
+<p>不同中间件之间的所需依赖冲突</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pandora_出现">"Pandora" 出现</h3>
+<div class="paragraph">
+<p>"Pandora" 就是这种背景产生下的隔离容器.</p>
+</div>
+<div class="paragraph">
+<p>是基于 java 的 classloader 体系, 通过在 tomcat 等容器上配置自定义的 pandora classloader, 实现加载不同的中间件及其依赖的 class 时, 到不同的目录来查找.</p>
+</div>
+<div class="paragraph">
+<p>在业务应用部署时, 一个包含了所有中间件依赖的 "Pandora" 目录会部署在项目目录下.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pandora_问题">"Pandora" 问题</h3>
+<div class="paragraph">
+<p>想一下, 就是知道这一套东西用起来很麻烦:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>本地开发需要引入这样一堆组件.</p>
+</li>
+<li>
+<p>增加特殊的虚拟机参数, 容器配置.</p>
+</li>
+<li>
+<p>如果不引用这个 "pandora" 组件, 则需要自己用 maven 添加中间件所需依赖. 等到上线时才发现自己使用的依赖跟 "pandora" 里的依赖版本不一致造成运行时错误.</p>
+</li>
+<li>
+<p>应用创建麻烦, 找兄弟项目拷贝.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>其中第四点我们也有同样的问题. 新建项目就是拷贝代码, 一些不好的结构, 过期的依赖, 不合理的配置都会迁移过来&#8230;&#8203;</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_pandora_boot_来解决上面的问题">"pandora boot" 来解决上面的问题</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>解决项目新建问题:</p>
+<div class="paragraph">
+<p>有一个类似于 <a href="http://start.spring.io" class="bare">http://start.spring.io</a> 的一站式应用创建页面. 勾选后直接下载一个完整的初始项目压缩包</p>
+</div>
+</li>
+<li>
+<p>解决开发依赖的问题:</p>
+<div class="paragraph">
+<p>"pandora" 发布 middleware-sdk包, 包含了所有中间件的依赖, 但全都移除了方法体和实现, 只保留 class 和方法签名, 非常小, 供开发时的编译使用.</p>
+</div>
+</li>
+<li>
+<p>解决本地开发运行:</p>
+<div class="paragraph">
+<p>项目引入"pandora boot", 所有项目第一句, <code>PandoraBootstrap.run(args)</code>, 这也是收 springboot 启发, 在打包后, pandora-boot 会启动自己的 pandoraboot classloader 来管理类的加载, 实现不同中间件类加载的依赖隔离.</p>
+</div>
+</li>
+<li>
+<p>解决中间件 sdk 的插件化:</p>
+<div class="paragraph">
+<p>利用 spring-boot 的 starter 的方式, 引入不同的中间件依赖. 纳入 pandora-boot 的管理.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>这几个事情听上去比较简单做起来还是挺复杂的! 就拿 pandora boot 这个自定义类加载来说, 既要考虑打成 jar 包之后的类加载方式和路径, 又要考虑开发时直接从 main 函数启动的类加载方式和路径.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_其他内容">其他内容</h3>
+<div class="paragraph">
+<p>演讲者也简单介绍一下他们的微服务中心, 主要是中间件, 容器管控, 监控, 提供一些应用管理能力. 介绍不多.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_第二场_51信用卡在微服务架构下的监控平台架构实践">第二场: 51信用卡在微服务架构下的监控平台架构实践</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>这个分享主要就是讲微服务监控, 分享者是51信用卡微服务监控平台的负责人.</p>
+</div>
+<div class="paragraph">
+<p>这个涉及业务比较少, 主要讲的是监控技术.</p>
+</div>
+<div class="paragraph">
+<p>微服务监控主要是: 日志监控, 链路监控, 指标监控.</p>
+</div>
+<div class="paragraph">
+<p>他们的监控平台通过拉业务日志, 又接受 push 事件的方式获取需要监控的内容, 使用的是一个 prometheus 的指标统计框架</p>
+</div>
+<div class="paragraph">
+<p>但是由于微服务之后, 相互调用的日志和事件变多了, 又是金融项目, 要求记录详细, 机器扛不住了.</p>
+</div>
+<div class="paragraph">
+<p>所以他们做了平台化:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>"拉取" 和 "推送" 分别建立了不同的服务器</p>
+</li>
+<li>
+<p>把获取到的监控内容发到转换服务器处理成 prometheus 支持的格式, 根据应用存到不同的存储实例上.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>之后又做些优化点:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>将时序型数据(用来做指标, 统计的那种, 比如一次 pv 打点) 和 非时序型数据(用来查看的, 比如日志) 分别用 Cassandra 和 es 存储</p>
+</li>
+<li>
+<p>指标的 key 长度占用空间: 使用 bitmap 做枚举, 减小单个指标长度</p>
+</li>
+<li>
+<p>用 druid 来解决预聚合, 维度合并, 减少指标数量.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>最后还讲到了智能诊断:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>当报警发生时, 会取报警前后日志, 尤其会去查找 ERROR, Exception 关键字.</p>
+</li>
+<li>
+<p>如果有链路日志, 还会进行排序, 方便查看.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_总结">总结</h3>
+<div class="paragraph">
+<p>这个监控的介绍打开了一些眼界, 毕竟作为业务开发者, 对监控这方面了解并不多. 这里列举的坑和解决办法可以在以后工作中提前考虑到.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_第三场_京东阿基米德微服务平台">第三场: 京东阿基米德微服务平台</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>阿基米德是京东一系列服务化支持框架的总称. 这次分享介绍了京东内部为了支持微服务所示用的各种框架和技术.</p>
+</div>
+<div class="sect2">
+<h3 id="_jsf">JSF</h3>
+<div class="paragraph">
+<p>京东服务框架, 微服务基础, 负责服务发现和注册, rpc 调用, 类似于 dubbo, 同时能够做到异地多活.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_containermesh">ContainerMesh</h3>
+<div class="paragraph">
+<p>之前听过 ServiceMesh, 说是微服务的未来. 简略了解是提供一个微服务的容器, 具有检测死活, 流量控制, 注册与发现等功能.</p>
+</div>
+<div class="paragraph">
+<p>总之, 是不需要每个服务自身再去关心去哪里注册和发现服务, 调用权限, 熔断, 监控等, 只需要做好你的服务放进来.</p>
+</div>
+<div class="paragraph">
+<p>极大的简化了服务部署的成本, 每个服务只需关心自己要发布什么功能, 要调用哪些功能.</p>
+</div>
+<div class="paragraph">
+<p>京东这个也是这个思路, 基于 google 的 Istio 开发. 包含在了自定义 linux 镜像里.</p>
+</div>
+<div class="paragraph">
+<p>这个仅仅是了解, 没有实践过, 这个算是服务化运维的范畴. 所以服务化不只是开发人员的工作, 更是运维人员的工作.</p>
+</div>
+<div class="paragraph">
+<p>我们其实也可以试试成熟的云平台上的容器服务. 公司也确实需要统一微服务的基础设施.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_调用图谱">调用图谱</h3>
+<div class="paragraph">
+<p>微服务统一基础设施后, 收集到的日志, 指标都可以统一处理, 形成调用图谱, 包含调用关系, 流量统计, 耗时等.</p>
+</div>
+<div class="paragraph">
+<p>如同玲姐的 dkimi 的效果.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_应用集市">应用集市</h3>
+<div class="paragraph">
+<p>这是我认为的亮点之一: 把大家的服务的信息集中起来, 分门别类. 一个服务是什么, 有哪些功能, 开发团队, 版本迭代都集中在应用集市上. 形成了公司内信息共享.</p>
+</div>
+<div class="paragraph">
+<p>同时, 一个功能可能有多个应用提供, 大家在选择的时候就能比较, 还可以反馈, 点赞, 评价.</p>
+</div>
+<div class="paragraph">
+<p>不好用的服务, 不好的服务态度, 都会导致你的服务被淘汰. 而优秀的会在各方评价建议中不断进化.</p>
+</div>
+<div class="paragraph">
+<p>这个想法非常亮, 他们也在开发中, 说是五月要上线. 不知道推广起来怎么样.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_能力地图">能力地图</h3>
+<div class="paragraph">
+<p>这又是个亮点! 看图:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/img/2018-beijing-qcon/能力地图.png" alt="能力地图">
+</div>
+</div>
+<div class="paragraph">
+<p>通过微服务细分, 微服务添加自己的业务标签, 结合调用图谱, 就能形成可视的业务描述.</p>
+</div>
+<div class="paragraph">
+<p>比如下一个订单, 会经过那些功能模块的处理.</p>
+</div>
+<div class="paragraph">
+<p>能让开发人员更直观熟悉项目, 也能让非开发人员(产品, 测试)对项目有所了解, 方便沟通, 价值很大!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_总结_2">总结</h3>
+<div class="paragraph">
+<p>京东这一套东西很实用, 想法也非常好. 他们是基础架构部一个专门的服务化治理组来做这些事情, 具体规模不太清楚.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_第四场_saga分布式事务解决方案与实践">第四场: Saga分布式事务解决方案与实践</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>这一场是一个实际技术应用的分享. 讲了一个使用 saga 方式解决分布式事务的库 ServiceComb. 演讲者是这个库的发起人, 目前已经维护到 apache 了.</p>
+</div>
+<div class="paragraph">
+<p>分布式事务场景下, saga 其实是一个很容易想到的方案: 使用事件来触发业务逻辑执行, 再某一步出错后, 倒序向前执行 undo 事件. 通过最终一致性来保障事务.</p>
+</div>
+<div class="paragraph">
+<p>但目前的问题是, 没有一个公认的, 成熟的 saga 实现. 反正我接触的都没用过, 大家都是自己写异步事件通知, 保证幂等, 加入补偿.</p>
+</div>
+<div class="paragraph">
+<p>他们就是想做这个事. 项目也是在开发中.</p>
+</div>
+<div class="paragraph">
+<p>说几点提到的比较有价值的地方:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>事务外柔内刚.</p>
+<div class="paragraph">
+<p>意思是一个实例内部, 通过数据库保证刚性事务; 实例之间, 通过最终一致性保障柔性事务. 深以为然, 其实我们做的时候也是这么做的.</p>
+</div>
+</li>
+<li>
+<p>不要期望框架能够做回滚操作</p>
+<div class="paragraph">
+<p>这是 saga 最长被挑战的部分, 有人就问了, 我用你这个框架, 出了错数据能够自动回滚吗. 这显然是想多了.</p>
+</div>
+<div class="paragraph">
+<p>补偿操作, undo 操作, 都是要自己写.</p>
+</div>
+<div class="paragraph">
+<p>可以认为是你如果对一个 saga 事件要写一段业务逻辑, 就要同时把补偿和回滚的逻辑写了. 这个其实挺难得, 要考虑的很全面.</p>
+</div>
+</li>
+<li>
+<p>解决隔离性的问题</p>
+<div class="paragraph">
+<p>比如分布式条件下对订单的操作, 要对订单加分布式锁, 来让对同一个订单的操作隔离.</p>
+</div>
+</li>
+<li>
+<p>一个业务操作伴随一组 saga 事件</p>
+<div class="paragraph">
+<p>比如下单, 就有生成订单, 扣减库存等一些列事件. 这些事件看成是一个事务, 而不是互相独立, 需要统一saga协调器管理:</p>
+</div>
+<div class="paragraph">
+<p>saga start &#8594; order create &#8594; inventory 扣减 &#8594; saga end</p>
+</div>
+</li>
+<li>
+<p>推荐了论文:</p>
+<div class="paragraph">
+<p><a href="https://github.com/aphyr/dist-sagas/blob/master/sagas.pdf">Distributed Sagas - Caitie McCaffrey</a></p>
+</div>
+<div class="paragraph">
+<p><a href="http://microservices.io/patterns/data/saga.html">Microservice saga pattern - Chris Richardson</a></p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_end">end</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>以上是半天的收获, 其实也关注了点 团队建设与工程师个人成长 分会场的 ppt, 感觉也很不错, 以后再说吧.</p>
+</div>
+</div>
 </div></p>
 
 	<hr />
@@ -450,7 +498,7 @@
 	<div id="cyReward" role="cylabs" data-use="reward"></div>
 	<!--PC版-->
 	<div id="SOHUCS" sid="2018 北京 qcon 大会笔记"></div>
-	<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+	<script charset="utf-8" type="text/javascript" src="/js/changyan.js" ></script>
 	<script type="text/javascript">
 	window.changyan.api.config({
 	appid: 'cysiPXECq',

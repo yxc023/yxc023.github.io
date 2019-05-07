@@ -66,107 +66,160 @@
 
 	<p><em>05 十一月 2017</em></p>
 
-	<p><div id="toc" class="toc"> 
- <div id="toctitle">
-  Table of Contents
- </div> 
- <ul class="sectlevel1"> 
-  <li><a href="#_项目构建和组织">项目构建和组织</a> 
-   <ul class="sectlevel2"> 
-    <li><a href="#_why_gradle">why gradle</a></li> 
-    <li><a href="#_why_not_use_gradle">why not use gradle</a></li> 
-    <li><a href="#_controller_参数接收与验证_exception_handle">controller 参数接收与验证, exception handle</a></li> 
-    <li><a href="#_unit_test_mock">unit test, mock</a></li> 
-    <li><a href="#_领域驱动在审批流的一些使用">领域驱动在审批流的一些使用</a></li> 
-    <li><a href="#_一些心得和方法论">一些心得和方法论</a></li> 
-   </ul> </li> 
-  <li><a href="#_完结">完结</a></li> 
- </ul> 
-</div> 
-<div class="sect1"> 
- <h2 id="_项目构建和组织">项目构建和组织</h2> 
- <div class="sectionbody"> 
-  <div class="sect2"> 
-   <h3 id="_why_gradle">why gradle</h3> 
-   <div class="ulist"> 
-    <ul> 
-     <li> <p>可读性好</p> </li> 
-     <li> <p>插件生态丰富</p> </li> 
-     <li> <p>灵活定义脚本</p> </li> 
-     <li> <p>更快更智能</p> </li> 
-     <li> <p>很多开源项目是 gradle 构建</p> </li> 
-    </ul> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_why_not_use_gradle">why not use gradle</h3> 
-   <div class="ulist"> 
-    <ul> 
-     <li> <p>maven 语法定义更严格</p> </li> 
-    </ul> 
-   </div> 
-   <div class="paragraph"> 
-    <p>总结: gradle 进阶有一定学习成本, 重在积累.</p> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_controller_参数接收与验证_exception_handle">controller 参数接收与验证, exception handle</h3> 
-   <div class="ulist"> 
-    <ul> 
-     <li> <p>利用 spring mvc + validator 验证方法参数.</p> </li> 
-     <li> <p>指定类型的参数接收, 不用自己显示调用 json 转换.</p> </li> 
-     <li> <p>统一异常处理, 对 spring mvc error 的自定义处理</p> </li> 
-     <li> <p>api 文档, swagger &gt; adoc, 转为 csv</p> </li> 
-     <li> <p>debug 输出堆栈</p> </li> 
-     <li> <p>统一接口验证?</p> </li> 
-    </ul> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_unit_test_mock">unit test, mock</h3> 
-   <div class="ulist"> 
-    <ul> 
-     <li> <p>不爱写测试 → 尝到甜头</p> </li> 
-     <li> <p>测试代码 == 项目代码, 封装测试基础设施</p> </li> 
-     <li> <p>构建数据case, 不能避免.</p> </li> 
-     <li> <p>新数据库</p> </li> 
-     <li> <p>mock</p> </li> 
-     <li> <p>BDD</p> </li> 
-    </ul> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_领域驱动在审批流的一些使用">领域驱动在审批流的一些使用</h3> 
-   <div class="ulist"> 
-    <ul> 
-     <li> <p>service层组织</p> </li> 
-     <li> <p>异常组织</p> </li> 
-     <li> <p>领域对象能够反映更可视化的实体关系</p> </li> 
-     <li> <p>能将设计切实的落实到代码. eg. completeJob(Long jobId)</p> </li> 
-    </ul> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_一些心得和方法论">一些心得和方法论</h3> 
-   <div class="ulist"> 
-    <ul> 
-     <li> <p>调研和定位</p> </li> 
-     <li> <p>接口设计角度问题, 从使用者角度出发</p> </li> 
-     <li> <p>api 是否要抛出 exception</p> </li> 
-     <li> <p>重构一往无前没有回头路, 方向正确最重要</p> </li> 
-    </ul> 
-   </div> 
-  </div> 
- </div> 
-</div> 
-<h1 id="_完结" class="sect0">完结</h1></p>
+	<p><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_项目构建和组织">项目构建和组织</a>
+<ul class="sectlevel2">
+<li><a href="#_why_gradle">why gradle</a></li>
+<li><a href="#_why_not_use_gradle">why not use gradle</a></li>
+<li><a href="#_controller_参数接收与验证_exception_handle">controller 参数接收与验证, exception handle</a></li>
+<li><a href="#_unit_test_mock">unit test, mock</a></li>
+<li><a href="#_领域驱动在审批流的一些使用">领域驱动在审批流的一些使用</a></li>
+<li><a href="#_一些心得和方法论">一些心得和方法论</a></li>
+</ul>
+</li>
+<li><a href="#_完结">完结</a></li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="_项目构建和组织">项目构建和组织</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_why_gradle">why gradle</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>可读性好</p>
+</li>
+<li>
+<p>插件生态丰富</p>
+</li>
+<li>
+<p>灵活定义脚本</p>
+</li>
+<li>
+<p>更快更智能</p>
+</li>
+<li>
+<p>很多开源项目是 gradle 构建</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_why_not_use_gradle">why not use gradle</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>maven 语法定义更严格</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>总结: gradle 进阶有一定学习成本, 重在积累.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_controller_参数接收与验证_exception_handle">controller 参数接收与验证, exception handle</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>利用 spring mvc + validator 验证方法参数.</p>
+</li>
+<li>
+<p>指定类型的参数接收, 不用自己显示调用 json 转换.</p>
+</li>
+<li>
+<p>统一异常处理, 对 spring mvc error 的自定义处理</p>
+</li>
+<li>
+<p>api 文档, swagger
+&gt; adoc, 转为 csv</p>
+</li>
+<li>
+<p>debug 输出堆栈</p>
+</li>
+<li>
+<p>统一接口验证?</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_unit_test_mock">unit test, mock</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>不爱写测试 &#8594; 尝到甜头</p>
+</li>
+<li>
+<p>测试代码 == 项目代码, 封装测试基础设施</p>
+</li>
+<li>
+<p>构建数据case, 不能避免.</p>
+</li>
+<li>
+<p>新数据库</p>
+</li>
+<li>
+<p>mock</p>
+</li>
+<li>
+<p>BDD</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_领域驱动在审批流的一些使用">领域驱动在审批流的一些使用</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>service层组织</p>
+</li>
+<li>
+<p>异常组织</p>
+</li>
+<li>
+<p>领域对象能够反映更可视化的实体关系</p>
+</li>
+<li>
+<p>能将设计切实的落实到代码. eg. completeJob(Long jobId)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_一些心得和方法论">一些心得和方法论</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>调研和定位</p>
+</li>
+<li>
+<p>接口设计角度问题, 从使用者角度出发</p>
+</li>
+<li>
+<p>api 是否要抛出 exception</p>
+</li>
+<li>
+<p>重构一往无前没有回头路, 方向正确最重要</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<h1 id="_完结" class="sect0">完结</h1>
+</p>
 
 	<hr />
 
 	<div id="cyReward" role="cylabs" data-use="reward"></div>
 	<!--PC版-->
 	<div id="SOHUCS" sid="方法论总结"></div>
-	<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+	<script charset="utf-8" type="text/javascript" src="/js/changyan.js" ></script>
 	<script type="text/javascript">
 	window.changyan.api.config({
 	appid: 'cysiPXECq',

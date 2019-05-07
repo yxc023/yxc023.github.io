@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>在 windows 系统下适用 linux 命令行做开发</title>
+    <title>在 windows 系统下使用 linux 命令行做开发</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="yxc023@qq.com">
@@ -61,99 +61,115 @@
     </div>
     <div class="container">	
 	<div class="page-header">
-		<h1>在 windows 系统下适用 linux 命令行做开发</h1>
+		<h1>在 windows 系统下使用 linux 命令行做开发</h1>
 	</div>
 
 	<p><em>11 二月 2019</em></p>
 
-	<p><div id="toc" class="toc"> 
- <div id="toctitle">
-  Table of Contents
- </div> 
- <ul class="sectlevel1"> 
-  <li><a href="#_前言">1. 前言</a></li> 
-  <li><a href="#_manjaro_deepin">2. manjaro &amp; deepin</a></li> 
-  <li><a href="#_虚拟机">3. 虚拟机</a></li> 
-  <li><a href="#_ubuntu_子系统">4. ubuntu 子系统</a> 
-   <ul class="sectlevel2"> 
-    <li><a href="#_安装">4.1. 安装</a></li> 
-    <li><a href="#_使用">4.2. 使用</a></li> 
-   </ul> </li> 
- </ul> 
-</div> 
-<div class="sect1"> 
- <h2 id="_前言">1. 前言</h2> 
- <div class="sectionbody"> 
-  <div class="paragraph"> 
-   <p>我的开发主力机器是一台2014年的13寸 macbook pro. 几年来一直战斗力良好. 但是平时上班比较远, 有时候加班晚点, 回家的时候就不想背这个电脑.</p> 
-  </div> 
-  <div class="paragraph"> 
-   <p>有时回到家中想干点什么, 家里一台老旧的神舟战神笔记本被封存已久, 每次拿出来都要翻箱倒柜, 还要在收拾回去, 而且, 性能也比较落后, 摆到桌子上也占地方.</p> 
-  </div> 
-  <div class="paragraph"> 
-   <p>年前就把这个笔记本咸鱼出手了, 自己 DIY 了一个小型台式机, 放到桌子下面, 配合我去年买的显示器, 作为家中的常备电脑, 偶尔还能打打游戏.</p> 
-  </div> 
-  <div class="paragraph"> 
-   <p>但是习惯了 macOS 下的开发体验, 很多操作习惯用命令行来做, 又很依赖 oh-my-zsh, 装一些开发工具也方便. 在 window 下没有了熟悉的命令行怎么办.</p> 
-  </div> 
- </div> 
-</div> 
-<div class="sect1"> 
- <h2 id="_manjaro_deepin">2. manjaro &amp; deepin</h2> 
- <div class="sectionbody"> 
-  <div class="paragraph"> 
-   <p>先想到的是装 linux 系统, 试用了比较流行的 manjaro 和 deepin, 开始感觉还不错, 但是要装一些沟通工具时, 总会出现这样那样的问题.</p> 
-  </div> 
-  <div class="paragraph"> 
-   <p>这么多年来, 每次想要使用一个 linux 发行版来做开发环境, 最终的结果都是折腾两天然后删掉分区..</p> 
-  </div> 
- </div> 
-</div> 
-<div class="sect1"> 
- <h2 id="_虚拟机">3. 虚拟机</h2> 
- <div class="sectionbody"> 
-  <div class="paragraph"> 
-   <p>windows 上装 linux 虚拟机, 使用 windows 的沟通工具, 在 linux 下做开发, 体验不如原生, 且切换麻烦, 有一点微妙的卡顿, 让我在虚拟机里下载 idea 做开发, 想想都卡. 数据交换也是问题.</p> 
-  </div> 
- </div> 
-</div> 
-<div class="sect1"> 
- <h2 id="_ubuntu_子系统">4. ubuntu 子系统</h2> 
- <div class="sectionbody"> 
-  <div class="paragraph"> 
-   <p>试过种种之后, 了解到在 Windows 10 里, 有 Windows Subsystem for Linux（WSL）这一特性, 支持在 windows 下运行 bash, 来操作一个 linux 系统.</p> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_安装">4.1. 安装</h3> 
-   <div class="olist arabic"> 
-    <ol class="arabic"> 
-     <li> <p>windows 10 商店中搜索 linux, 可以看到很多个 linux 发行版, 像 ubuntu, suse 等. 选择最熟悉的 ubuntu 安装.</p> </li> 
-     <li> <p>在 menu:控制面板[程序 &gt; 启用或关闭 windows 功能 ] 中, 勾选 <code>适用于linux 的 windows 子系统</code></p> </li> 
-     <li> <p>重启</p> </li> 
-    </ol> 
-   </div> 
-  </div> 
-  <div class="sect2"> 
-   <h3 id="_使用">4.2. 使用</h3> 
-   <div class="paragraph"> 
-    <p>使用 <code>win + R</code> 打开运行, 输入 <code>bash</code> 或者 <code>wsl</code> 或者 <code>ubuntu</code>, 就进入了 linux 命令行.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>可以通过 <code>/mnt/&lt;盘号&gt;/</code> 来访问 windows 的目录.</p> 
-   </div> 
-   <div class="paragraph"> 
-    <p>在 window 下, 可以使用 <a href="http://cmder.net/">cmder</a> 来改善终端.</p> 
-   </div> 
-  </div> 
- </div> 
+	<p><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_前言">1. 前言</a></li>
+<li><a href="#_manjaro_deepin">2. manjaro &amp; deepin</a></li>
+<li><a href="#_虚拟机">3. 虚拟机</a></li>
+<li><a href="#_ubuntu_子系统">4. ubuntu 子系统</a>
+<ul class="sectlevel2">
+<li><a href="#_安装">4.1. 安装</a></li>
+<li><a href="#_使用">4.2. 使用</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="_前言">1. 前言</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>我的开发主力机器是一台2014年的13寸 macbook pro. 几年来一直战斗力良好. 但是平时上班比较远, 有时候加班晚点, 回家的时候就不想背这个电脑.</p>
+</div>
+<div class="paragraph">
+<p>有时回到家中想干点什么, 家里一台老旧的神舟战神笔记本被封存已久, 每次拿出来都要翻箱倒柜, 还要在收拾回去, 而且, 性能也比较落后, 摆到桌子上也占地方.</p>
+</div>
+<div class="paragraph">
+<p>年前就把这个笔记本咸鱼出手了, 自己 DIY 了一个小型台式机, 放到桌子下面, 配合我去年买的显示器, 作为家中的常备电脑, 偶尔还能打打游戏.</p>
+</div>
+<div class="paragraph">
+<p>但是习惯了 macOS 下的开发体验, 很多操作习惯用命令行来做, 又很依赖 oh-my-zsh, 装一些开发工具也方便. 在 window 下没有了熟悉的命令行怎么办.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_manjaro_deepin">2. manjaro &amp; deepin</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>先想到的是装 linux 系统, 试用了比较流行的 manjaro 和 deepin, 开始感觉还不错, 但是要装一些沟通工具时, 总会出现这样那样的问题.</p>
+</div>
+<div class="paragraph">
+<p>这么多年来, 每次想要使用一个 linux 发行版来做开发环境, 最终的结果都是折腾两天然后删掉分区..</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_虚拟机">3. 虚拟机</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>windows 上装 linux 虚拟机, 使用 windows 的沟通工具, 在 linux 下做开发, 体验不如原生, 且切换麻烦, 有一点微妙的卡顿, 让我在虚拟机里下载 idea 做开发, 想想都卡. 数据交换也是问题.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_ubuntu_子系统">4. ubuntu 子系统</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>试过种种之后, 了解到在 Windows 10 里, 有 Windows Subsystem for Linux（WSL）这一特性, 支持在 windows 下运行 bash, 来操作一个 linux 系统.</p>
+</div>
+<div class="sect2">
+<h3 id="_安装">4.1. 安装</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>windows 10 商店中搜索 linux, 可以看到很多个 linux 发行版, 像 ubuntu, suse 等. 选择最熟悉的 ubuntu 安装.</p>
+</li>
+<li>
+<p>在 menu:控制面板[程序 &gt; 启用或关闭 windows 功能 ] 中, 勾选 <code>适用于linux 的 windows 子系统</code></p>
+</li>
+<li>
+<p>重启</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_使用">4.2. 使用</h3>
+<div class="paragraph">
+<p>使用 <code>win + R</code> 打开运行, 输入 <code>bash</code> 或者 <code>wsl</code> 或者 <code>ubuntu</code>, 就进入了 linux 命令行.</p>
+</div>
+<div class="paragraph">
+<p>可以通过 <code>/mnt/&lt;盘号&gt;/</code> 来访问 windows 的目录.</p>
+</div>
+<div class="paragraph">
+<p><span class="line-through">在 window 下, 可以使用 <a href="http://cmder.net/">cmder</a> 来改善终端.</span></p>
+</div>
+<div class="paragraph">
+<p>在windows下, 可以使用 <a href="https://github.com/eugeny/terminus">terminus</a> 来改善终端.</p>
+</div>
+<div class="paragraph">
+<p>上图:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="/img/tools/linux-in-windows/screen.png" alt="screen">
+</div>
+</div>
+</div>
+</div>
 </div></p>
 
 	<hr />
 
 	<div id="cyReward" role="cylabs" data-use="reward"></div>
 	<!--PC版-->
-	<div id="SOHUCS" sid="在 windows 系统下适用 linux 命令行做开发"></div>
-	<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+	<div id="SOHUCS" sid="在 windows 系统下使用 linux 命令行做开发"></div>
+	<script charset="utf-8" type="text/javascript" src="/js/changyan.js" ></script>
 	<script type="text/javascript">
 	window.changyan.api.config({
 	appid: 'cysiPXECq',

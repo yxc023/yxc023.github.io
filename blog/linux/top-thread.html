@@ -66,20 +66,20 @@
 
 	<p><em>01 四月 2016</em></p>
 
-	<p><div class="paragraph"> 
- <p>列出一个进程中线程 cpu 占用</p> 
-</div> 
-<div class="listingblock"> 
- <div class="content"> 
-  <pre>    top -Hp 18207</pre> 
- </div> 
-</div> 
-<div class="paragraph"> 
- <p>获取一个 java 进程 cup 占用率 top10 的线程堆栈, groovy 脚本 <code>groovy 本脚本 [pid]</code>. need JAVA_HOME</p> 
-</div> 
-<div class="listingblock"> 
- <div class="content"> 
-  <pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">if(args.size() &lt; 1 ) {
+	<p><div class="paragraph">
+<p>列出一个进程中线程 cpu 占用</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>    top -Hp 18207</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>获取一个 java 进程 cup 占用率 top10 的线程堆栈, groovy 脚本 <code>groovy 本脚本 [pid]</code>. need JAVA_HOME</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">if(args.size() &lt; 1 ) {
     println "need pid"
     return
 }
@@ -124,8 +124,8 @@ sout.eachLine { line -&gt;
         begin = true
     }
 
-}</code></pre> 
- </div> 
+}</code></pre>
+</div>
 </div></p>
 
 	<hr />
@@ -133,7 +133,7 @@ sout.eachLine { line -&gt;
 	<div id="cyReward" role="cylabs" data-use="reward"></div>
 	<!--PC版-->
 	<div id="SOHUCS" sid="top-thread"></div>
-	<script charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/changyan.js" ></script>
+	<script charset="utf-8" type="text/javascript" src="/js/changyan.js" ></script>
 	<script type="text/javascript">
 	window.changyan.api.config({
 	appid: 'cysiPXECq',

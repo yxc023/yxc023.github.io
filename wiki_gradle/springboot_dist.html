@@ -65,33 +65,34 @@
 	</div>
 
 	<p><pre><code class="language-java">task(dist, type: Zip, dependsOn: bootRepackage) {
-    description = "Bundles the project as a distribution."
-    group = "distribution"
+    description = &quot;Bundles the project as a distribution.&quot;
+    group = &quot;distribution&quot;
 
     CopySpec binCopySpec = project.copySpec()
-    binCopySpec.from("dist/bin")
-    binCopySpec.into("bin")
+    binCopySpec.from(&quot;dist/bin&quot;)
+    binCopySpec.into(&quot;bin&quot;)
     binCopySpec.setFileMode(0775)
 
 
     CopySpec jarChildSpec = project.copySpec();
-    jarChildSpec.into("lib");
-    jarChildSpec.from(file("$buildDir/libs"))
-    jarChildSpec.include("*.jar")
-    jarChildSpec.rename(/.*\.jar/, project.name + ".jar")
+    jarChildSpec.into(&quot;lib&quot;);
+    jarChildSpec.from(file(&quot;$buildDir/libs&quot;))
+    jarChildSpec.include(&quot;*.jar&quot;)
+    jarChildSpec.rename(/.*\.jar/, project.name + &quot;.jar&quot;)
 
 
     CopySpec distCopySpec = project.copySpec();
-    distCopySpec.into(TextUtil.minus(archiveName, "." + extension))
-    distCopySpec.from("dist")
-    distCopySpec.exclude("bin/*")
+    distCopySpec.into(TextUtil.minus(archiveName, &quot;.&quot; + extension))
+    distCopySpec.from(&quot;dist&quot;)
+    distCopySpec.exclude(&quot;bin/*&quot;)
     distCopySpec.with(jarChildSpec)
     distCopySpec.with(binCopySpec)
 
     with(distCopySpec)
 }
 
-</code></pre></p>
+</code></pre>
+</p>
 
 	<hr />
 
