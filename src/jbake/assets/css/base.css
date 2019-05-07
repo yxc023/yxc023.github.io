@@ -51,4 +51,9 @@ body {
 /*code {
   font-size: 80%;
 }*/
+#feedAv {
+  margin-top: -250px !important;
+  -webkit-transform: scale(0);
+          transform: scale(0);
+}
 /*# sourceMappingURL=base.css.map */
