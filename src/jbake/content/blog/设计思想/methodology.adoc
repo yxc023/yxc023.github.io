@@ -1,0 +1,56 @@
+= 方法论总结
+杨晓辰
+2017-11-05
+:toc: left
+:toclevels: 4
+:icons: font
+:jbake-type: post
+:jbake-tags: code&think
+:jbake-status: published
+
+
+== 项目构建和组织
+
+=== why gradle
+- 可读性好
+- 插件生态丰富
+- 灵活定义脚本
+- 更快更智能
+- 很多开源项目是 gradle 构建
+
+=== why not use gradle
+- maven 语法定义更严格
+
+总结: gradle 进阶有一定学习成本, 重在积累.
+
+=== controller 参数接收与验证, exception handle
+- 利用 spring mvc + validator 验证方法参数.
+- 指定类型的参数接收, 不用自己显示调用 json 转换.
+- 统一异常处理, 对 spring mvc error 的自定义处理
+- api 文档, swagger
+> adoc, 转为 csv
+- debug 输出堆栈
+- 统一接口验证?
+
+=== unit test, mock
+- 不爱写测试 -> 尝到甜头
+- 测试代码 == 项目代码, 封装测试基础设施
+- 构建数据case, 不能避免.
+- 新数据库
+- mock
+- BDD
+
+=== 领域驱动在审批流的一些使用
+- service层组织
+- 异常组织
+- 领域对象能够反映更可视化的实体关系
+- 能将设计切实的落实到代码. eg. completeJob(Long jobId)
+
+=== 一些心得和方法论
+- 调研和定位
+- 接口设计角度问题, 从使用者角度出发
+- api 是否要抛出 exception
+- 重构一往无前没有回头路, 方向正确最重要
+
+
+= 完结
