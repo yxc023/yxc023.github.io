@@ -5,6 +5,8 @@ tags=java, spring
 status=published
 ~~~~~~
 
+NOTE: 本文为原创, 转载请注明出处 https://blog.yangxiaochen.com
+
 
 <!-- # spring & spring mvc 初始化介绍 -->
 

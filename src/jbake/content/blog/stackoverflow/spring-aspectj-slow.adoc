@@ -8,6 +8,8 @@
 :jbake-tags: stackoverflow, aspectj, spring
 :jbake-status: published
 
+NOTE: 本文为原创, 转载请注明出处 https://blog.yangxiaochen.com
+
 == 现象
 
 我在一个现有的项目中, 引入 jooq. 这个项目本身是使用的 mybatis, 我引入 jooq, 想并行使用, 之后逐渐替换.
