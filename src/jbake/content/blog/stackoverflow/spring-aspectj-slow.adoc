@@ -5,7 +5,7 @@
 :toclevels: 4
 :icons: font
 :jbake-type: post
-:jbake-tags: stackoverflow, aspectj, spring
+:jbake-tags: stackoverflow, aspectj, spring, debug
 :jbake-status: published
 
 NOTE: 本文为原创, 转载请注明出处 https://blog.yangxiaochen.com

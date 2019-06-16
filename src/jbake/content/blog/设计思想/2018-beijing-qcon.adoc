@@ -5,7 +5,7 @@
 :toclevels: 4
 :icons: font
 :jbake-type: post
-:jbake-tags: code&think
+:jbake-tags: code_and_think
 :jbake-status: published
 
 == 前言
