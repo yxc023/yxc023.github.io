@@ -6,16 +6,682 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期二, 7 五月 2019 14:32:33 +0800</pubDate>
-    <lastBuildDate>星期二, 7 五月 2019 14:32:33 +0800</lastBuildDate>
+    <pubDate>星期一, 17 六月 2019 01:18:40 +0800</pubDate>
+    <lastBuildDate>星期一, 17 六月 2019 01:18:40 +0800</lastBuildDate>
 
+    <item>
+      <title>如何有效的书写项目单元测试</title>
+      <link>http://blog.yangxiaochen.com/blog/设计思想/how-to-write-unittest.html</link>
+      <pubDate>星期四, 9 五月 2019 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/设计思想/how-to-write-unittest.html</guid>
+      	<description>
+	&lt;div id=&quot;preamble&quot;&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot; class=&quot;bare&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_前言&quot;&gt;1. 前言&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;我近两年在几个业务项目中都尝试编写了单元测试, 用于保障业务逻辑的正确性.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;这里所说的单测, 并不是常规的对单一小方法的测试, 而是对业务流程的测试.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;在这个过程中, 遇到了很多问题, 也总结了一些经验, 所以写下了这篇文章, 感觉是一套比较有效和有参照意义的方法论.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_如何开始写单测的&quot;&gt;2. 如何开始写单测的&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;第一次写单测, 是一个审批流业务相关的项目, 内部业务逻辑很复杂, 分支判断多. 不同的审批流配置, 最终审批流运行时的表现是不一样的. 在当时的开发和测试过程中, 就遇到了问题:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;每修改一个功能或者加一个特性, 测试需要全流程来测试, 而且我还在不断重构代码, 测试的自动化 case 修改速度还跟不上我的功能开发速度.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;另外, 我在开发时也需要自测, 我需要从头构建一个审批流配置, 然后发起流程, 走到我新加了特性的节点, 才能验证我的功能. 当发现验证失败后, 就找问题, 修改代码, 然后重复这个过程, 效率及其低下.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;于是, 我就写了一套从定义审批流配置, 到后续审批节点操作, 整个流程的测试代码. 用于一键自测.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;后来, 因为不同的配置会对逻辑有影响, 所以我准备了多套审批流程配置, 也就是多个测试用例.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;后面, 又进行了优化和完善, 最终达到了以下目标:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;可重复执行&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;易书写&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;这两点, 是单测的灵魂.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;可重复执行, 保证了单测并非一次性的, 每次测试数据是相同的. 如果每次测试都是不一样的数据, 需要人工修改, 那就没有意义.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;易书写, 只有易书写, 单测的编写才能持续下去. 如果编写一个 case 总是需要很长时间, 谁都没有太大动力去维护和添加单测.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_测试带来的好处&quot;&gt;3. 测试带来的好处&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;我之所以坚持给业务项目写单元测试, 是因为我确确实实尝到了甜头:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;开发效率提高&lt;/p&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;开发中验证功能, 通过一键测试就可以. 不用启动项目, 手动构造数据, 再进行触发.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;测试效率提高&lt;/p&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;开发人员是最了解代码的, 开发人员写的单元测试相当于做了白盒测试, 提前检查了问题, 也减少了漏测.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;提升了重构的动力和信心&lt;/p&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;重构风险大? 是的, 改动那么大, 心里怎么才能有底? 重构完成后, 单测一跑全都过了, 别样的舒爽, 重构不害怕.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对业务逻辑进行 review&lt;/p&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;书写单测的过程, 也是对自己业务逻辑 review 的过程.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;如果构建一个单测来完成业务流程都非常费力, 这个代码结构, 逻辑结构一定是有问题的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;总而言之, 最直观的感受就是: 漏测率大大下降; 重构引发的问题几乎没有; 单测跑通后, 在 qa 那边基本不会有大的逻辑上的 bug.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;下面我就罗列一些点, 来说一说如何写单元测试. 这些点都可以归纳到达成 [可重复执行] 或 [易书写] 的目标中.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_如何写业务单元测试&quot;&gt;4. 如何写业务单元测试&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;我所做的项目都是 java 项目, 使用的都是 spring boot 框架, 所以测试也是使用 spring boot test 来进行项目启动和测试的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;具体的实现方式是跟语言框架相关的, 但是思想是通用的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_为单测准备独立的环境_可重复执行&quot;&gt;4.1. 为单测准备独立的环境 [可重复执行]&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;因为项目总是会依赖一些基础服务环境, 比如 数据库, redis, zk 等. 我的一个原则是, 单测时使用独立的一套环境, 而不是跟开发和测试时用一套环境, 并且, 这个环境在每次单测启动时, 是要进行初始化的, 保证每次单测的初始数据是完全一致的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;介绍几个我用过的方式:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;mysql&lt;/p&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;单独建立一个 unittest 的空数据库. 使用 &lt;code&gt;Flyway&lt;/code&gt; 来管理这个项目的所有 sql 初始化语句. 当测试用例启动时, 清空这个库, 执行所有的初始化语句, 并且将项目中的数据源改为这个库.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;redis&lt;/p&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;使用单独的 redis 实例或者 db. 在每次启动时 &lt;code&gt;flushdb&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;zk&lt;/p&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;zk 可以用单独的服务或者更换节点域. 更简单是使用 zk 的 test 框架, 可以直接在测试启动时, 运行一个本地的测试 zk 服务.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;总之, 最终目的是保证单测的环境及初始数据每次都是一致的, 且可预期的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_使用表达力更强的语言来书写测试_易书写&quot;&gt;4.2. 使用表达力更强的语言来书写测试 [易书写]&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;我使用 groovy 来给 java 的项目写测试.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;能够无缝使用 java 的代码&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;表达力更强, 更易书写.&lt;/p&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;能够字面式的初始化对象, 列表, map.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;弱类型, 且语法足够灵活, 简练.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_创建单元测试基础类_易书写&quot;&gt;4.3. 创建单元测试基础类 [易书写]&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;每个项目的业务是不一样的, 但在一个项目内部, 业务和功能大多领域是一致的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;创建一个 &lt;strong&gt;&lt;em&gt;单测基础类&lt;/em&gt;&lt;/strong&gt; , 里面包含这个项目中比较通用的功能或者业务组件, 让所有的测试类都继承这个基础类, 都能够放点的调用自己需要的功能.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;下面是一个 &lt;strong&gt;&lt;em&gt;单测基础类&lt;/em&gt;&lt;/strong&gt; 的简单的例子, 设置了测试的启动环境, 并定义了一些公用变量, 方便子类调用.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;@FixMethodOrder(MethodSorters.NAME_ASCENDING)
+@RunWith(SpringRunner)
+@SpringBootTest(
+        classes = TestBoot,
+        webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
+        properties = [&quot;spring.profiles.active=local,unittest&quot;])
+@ContextConfiguration(initializers = [TestZookeeperServerInitializer, TestDBinitializer, TestRedisinitializer])
+abstract class AbstractTest {
+
+    @LocalServerPort
+    Integer port
+
+    @Autowired
+    Environment environment
+
+    ObjectMapper objectMapper = new ObjectMapper()
+
+    static User USER1 = new User(10000001, &quot;user1&apos;s name&quot;, &quot;18812388888&quot;, &quot;org101&quot;)
+
+    ...&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect3&quot;&gt;
+&lt;h4 id=&quot;_数据模板&quot;&gt;4.3.1. 数据模板&lt;/h4&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;数据是每个测试用例的核心, 如何方便的构造测试数据, 是一个项目测试是否可持续的关键.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;我的方法是, 将项目中关键的领域对象, 实例化一个或多个 &lt;strong&gt;&lt;em&gt;数据模板&lt;/em&gt;&lt;/strong&gt;, 数据模板的数据都是默认数据. 通过修改模板中的数据, 来达到构造不同数据 case 的效果. 最后将模板生成为初始数据.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;整个过程的分 3 步:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;Template template = defaultTemplate() &lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;(1)&lt;/b&gt;
+template.field1 = case1 &lt;i class=&quot;conum&quot; data-value=&quot;2&quot;&gt;&lt;/i&gt;&lt;b&gt;(2)&lt;/b&gt;
+template = saveTemplate(template) &lt;i class=&quot;conum&quot; data-value=&quot;3&quot;&gt;&lt;/i&gt;&lt;b&gt;(3)&lt;/b&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;colist arabic&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;1&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;获取默认数据&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;2&quot;&gt;&lt;/i&gt;&lt;b&gt;2&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;在默认数据基础上构造 case&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;3&quot;&gt;&lt;/i&gt;&lt;b&gt;3&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;生成初始化数据&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;拿一个商店的项目作为例子, 当我想测试下单流程, 我需要有现成的商品才行, 而不同的商品的下单流程逻辑中有不同的分支. 简化的代码如下&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;class OrderTest extends AbstractTest {
+
+    ProductTemplate productTemplate
+
+    void pre() {
+        // 获取初始化的产品数据
+        // 包括产品的基本信息, 店铺信息, sku 信息, 购买时的限制策略等
+        productTemplate = defaultProduct() &lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;(1)&lt;/b&gt;
+
+        productTemplate.productDomain.merchantCode = &apos;test-shop&apos;
+        productTemplate.productDomain.scopeIds = [1, 2, 3] &lt;i class=&quot;conum&quot; data-value=&quot;2&quot;&gt;&lt;/i&gt;&lt;b&gt;(2)&lt;/b&gt;
+        productTemplate.productDomain.attributes += [size: 30]
+        productTemplate.skuDomains[0].productSku.salePrice = 100
+
+        productTemplate = saveProduct(productTemplate) &lt;i class=&quot;conum&quot; data-value=&quot;3&quot;&gt;&lt;/i&gt;&lt;b&gt;(3)&lt;/b&gt;
+
+        adjustInventory(productTemplate.skuDomains[0].skuId, 10) &lt;i class=&quot;conum&quot; data-value=&quot;4&quot;&gt;&lt;/i&gt;&lt;b&gt;(4)&lt;/b&gt;
+        adjustInventory(productTemplate.skuDomains[1].skuId, 10)
+
+    }&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;colist arabic&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;1&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;获取初始化的产品数据. 这个 &lt;code&gt;defaultProduct()&lt;/code&gt; 是写在 &lt;strong&gt;&lt;em&gt;单测基础类&lt;/em&gt;&lt;/strong&gt; 里的 &lt;strong&gt;&lt;em&gt;便捷方法&lt;/em&gt;&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;2&quot;&gt;&lt;/i&gt;&lt;b&gt;2&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;对初始化数据进行修改&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;3&quot;&gt;&lt;/i&gt;&lt;b&gt;3&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;生成初始化数据. 这个 &lt;code&gt;saveProduct()&lt;/code&gt; 是写在 &lt;strong&gt;&lt;em&gt;单测基础类&lt;/em&gt;&lt;/strong&gt; 里的 &lt;strong&gt;&lt;em&gt;便捷方法&lt;/em&gt;&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;4&quot;&gt;&lt;/i&gt;&lt;b&gt;4&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;对初始化好的数据进行操作, 这里是调整了库存. 这个 &lt;code&gt;adjustInventory()&lt;/code&gt; 是写在 &lt;strong&gt;&lt;em&gt;单测基础类&lt;/em&gt;&lt;/strong&gt; 里的 &lt;strong&gt;&lt;em&gt;便捷方法&lt;/em&gt;&lt;/strong&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;这是一个测试下单逻辑的前置数据生成逻辑, 可以方便的构造各种产品 case.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock tip&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-tip&quot; title=&quot;Tip&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+能够方便的生成初始数据, 是代码业务逻辑合理的表现. 当原有业务代码比较糟糕, 写测试的时候也会非常的困难
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect3&quot;&gt;
+&lt;h4 id=&quot;_业务操作便捷方法&quot;&gt;4.3.2. 业务操作便捷方法&lt;/h4&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;上面的例子中, 已经出现了 &lt;strong&gt;&lt;em&gt;便捷方法&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;便捷方法&lt;/em&gt;&lt;/strong&gt; 的意图, 是对业务中的操作进行简化. 有可能我们测试逻辑, 需要很多前置逻辑, 比如: 退款逻辑. 当要测试退款逻辑时, 我们需要前置的一些列逻辑. 通过创造 &lt;strong&gt;&lt;em&gt;便捷方法&lt;/em&gt;&lt;/strong&gt;, 对原有业务代码封装, 简化参数传递, 方便在测试中完成前置动作, 集中精力测试我们要测试的逻辑部分.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;便捷方法&lt;/em&gt;&lt;/strong&gt; 定义在 &lt;strong&gt;&lt;em&gt;单测基础类&lt;/em&gt;&lt;/strong&gt; 中, 供所有测试类使用.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock tip&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-tip&quot; title=&quot;Tip&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+当然, 如果业务操作并不复杂, 也可以直接调用原有业务代码
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;列举一些我在项目中定义的一些 &lt;strong&gt;&lt;em&gt;便捷方法&lt;/em&gt;&lt;/strong&gt;:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;abstract class AbstractTest {
+
+    ProductTemplate defaultProduct()
+
+    ProductTemplate saveProduct(ProductTemplate productTemplate)
+
+    ProductDomain getProductDomain(Long productId) &lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;(1)&lt;/b&gt;
+
+    SkuDomain getSkuDomain(Long skuId)
+
+    void adjustInventory(Long skuId, Long count)
+
+    Long createOrder(CreateOrderBizParam param)
+
+    OrderDomain getOrderDomain(Long orderId)
+
+    void payOrder(Long orderId)
+
+    void payCallback(Long orderId) &lt;i class=&quot;conum&quot; data-value=&quot;2&quot;&gt;&lt;/i&gt;&lt;b&gt;(2)&lt;/b&gt;
+
+    ...&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;colist arabic&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;1&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;获取产品和 sku 信息&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;2&quot;&gt;&lt;/i&gt;&lt;b&gt;2&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;模拟支付回调, 让订单到达支付完成状态&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect3&quot;&gt;
+&lt;h4 id=&quot;_mock_方法&quot;&gt;4.3.3. mock 方法&lt;/h4&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;一个项目总是会依赖其他的系统, 在单测时经常无法正常使用其他服务的接口, 比如你提供的测试用户在其他服务中根本找不到, 你的单测环境不能通过其他服务的访问验证, 还有就是单元测试不能给其他服务写入无用的测试数据.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;这是我们就需要用到 mock 方法.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;在 spring boot test 中, 提供了一种 mock 手段, 让我们能够使用一个 mock bean 来替换 spring 容器中特定的一个 bean.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;当我们的业务逻辑执行这个特定的 bean 的方法时, 实际执行的是我们 mock bean 的对应方法.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;看一个简单实例:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;abstract class AbstractTest {...
+
+    @MockBean
+    UserCenterRpc userCenterRpc &lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;(1)&lt;/b&gt;
+
+    static User USER1 = new User(10000001, &quot;user1&apos;s name&quot;, &quot;18812388888&quot;, &quot;org101&quot;)
+
+    void mockUserCenterRpc() {
+        Mockito.when(userCenterRpc.getUser(10000001)).thenReturn(USER1) &lt;i class=&quot;conum&quot; data-value=&quot;2&quot;&gt;&lt;/i&gt;&lt;b&gt;(2)&lt;/b&gt;
+    }&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;colist arabic&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;1&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;对系统中的 UserCenterRpc 类型的 bean 声明 mock. 这时系统中原有的 UserCenterRpc 类型的 bean 会被生成的 mock bean 给替换&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;2&quot;&gt;&lt;/i&gt;&lt;b&gt;2&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;定义 mock bean 的行为. 之后, 当业务逻辑执行到 &lt;code&gt;userCenterRpc.getUser(10000001)&lt;/code&gt; 时, 将不会执行真正的 user center rpc 操作, 而是直接返回我们给定的 &lt;code&gt;USER1&lt;/code&gt;, 达到 mock 的效果.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sidebarblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;title&quot;&gt;是否要对所有的依赖调用进行 mock?&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;显然, 这是一个非常繁琐的操作, 一定程度上违反了 &quot;易书写&quot; 的原则.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;我的观点: &lt;strong&gt;能不用依赖就不用依赖&lt;/strong&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;如果依赖提供的测试环境稳定, 依赖方能够一直提供你所需要的初始数据, 并且依赖方允许无意义的测试写入, 直接进行真是的依赖是最简单的方案.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;当无法持久稳定的提供我们测试所需要的功能时, 并且 mock 能够提供最方便, 再选择 mock.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;所以 mock 是一个解决依赖问题的手段, 并不是个强制性的规则.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_测试哪些代码&quot;&gt;5. 测试哪些代码&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;究竟要测试哪些代码, 就我的经验来说, 主要测试两部分代码: 业务逻辑层, 接口层.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;这两个部分的测试中, 测试重点是不同的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_业务逻辑层&quot;&gt;5.1. 业务逻辑层&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;业务逻辑层就是通常所说的 &lt;code&gt;business&lt;/code&gt; 或者 &lt;code&gt;service&lt;/code&gt; 层. 是业务逻辑的 interface 层.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;举个例子:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;对于审批流来说, 就是针对 &lt;code&gt;ProcessDefineService&lt;/code&gt; 中 &lt;strong&gt;定义流程&lt;/strong&gt; 的方法写测试, 对 &lt;code&gt;ProcessService&lt;/code&gt; 中 &lt;strong&gt;发起流程&lt;/strong&gt;, &lt;strong&gt;撤回流程&lt;/strong&gt; 等方法写测试.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;对于商店系统来说, 就是对 &lt;code&gt;OrderFlowBusiness&lt;/code&gt; 中 &lt;code&gt;createOrder&lt;/code&gt;, &lt;code&gt;cancelOrder&lt;/code&gt; 等方法做测试.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+这里的测试核心是逻辑的正确性, 考虑代码分支覆盖.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_对外接口层&quot;&gt;5.2. 对外接口层&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;对外接口层, 一般是 http 的 web 前端接口, 或者提供出来的供其他服务进行远程调用的服务 api 接口.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+对外接口层的测试, 核心是接口定义的测试.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;保证正确的参数能够通过; 错误的参数或者业务异常情况, 能够正确返回接口定义中声明的错误编码或信息.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;测试重点是 &lt;strong&gt;不同的响应结果&lt;/strong&gt;, 而不是业务逻辑的每个分支.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock tip&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-tip&quot; title=&quot;Tip&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+接口测试用例, 也能够检测接口兼容性升级的正确性. 比如接口添加了一个字段, 当字段没有传递时, 后端服务是否有设定默认值来兼容.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_其他场景的测试&quot;&gt;6. 其他场景的测试&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;在测试中, 也遇到过一些写测试比较困难的场景. 比如 异步逻辑测试 和 并发逻辑测试.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;下面说一说我对着两个场景测试的经验.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect3&quot;&gt;
+&lt;h4 id=&quot;_异步逻辑测试&quot;&gt;6.1. 异步逻辑测试&lt;/h4&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;异步测试的问题在于经常不知道什么时候真正能拿到测试结果.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;比如我提交了一个支付请求, 而系统内部对收到支付请求后, 会直接返回请求接收的答复. 真正的出款, 入款操作, 都是异步执行, 完成后进行通知回调的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;有几种处理方式:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;等&lt;/p&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;sleep 一段时间. 这是最简单的一个方式, 绝大多数情况下异步操作都是预期能很快执行完, 是够用的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;但如果不能预估异步执行的时间, 或者时间太长, 再或者异步操作可能不会留下方便观测的结果(比如发送了短信, 执行了请求, 但是没有写入数据的逻辑).&lt;/p&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;异步改同步&lt;/p&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;设置代码开关, 在测试时同步执行. 这对开发时也很有利, 可以方便的跟踪执行流程.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;但问题是跟线上真是环境有差异, 经常会有一些只有在异步情况下才会发生的错误. 异步改同步可能会漏掉这类错误.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;点到为止&lt;/p&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;测试到异步任务提交即可. 这应该是最标准的异步测试方式了.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;比如我测试业务中, 里面有一步需要提交一个异步任务, 去执行其他的业务逻辑.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;那么就是用 spring boot test 提供的 @SpyBean, 使用 BBD (Behavior Driven Development) 的方式检测 &lt;code&gt;SyncTaskService.submit()&lt;/code&gt; 方法是执行, 并且传入的 task 是我期望的. 代码类似于:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;BDDMockito.verify(syncTaskService, BDDMockito.times(1)).submit(argument -&amp;gt; {
+    argument.taskId == 101 &amp;amp;&amp;amp; argument instance of
+})&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;异步的逻辑执行的测试单独写, 则直接手动执行特定参数的异步任务, 来测试执行结果.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect3&quot;&gt;
+&lt;h4 id=&quot;_并发逻辑测试&quot;&gt;6.2. 并发逻辑测试&lt;/h4&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;测试并发逻辑的难点在于不能稳定复现. 通常单元测试执行时不会有并发, 那么逻辑中并发场景的问题就无法被测试出.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;这个需要一定的预见性: 业务逻辑哪些地方需要有并发测试? 只有先确定哪里可能会有并发问题, 才能进行测试.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;比如说同一个账户的扣款请求, 比如同一个商品的购买减库存.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;如何测试呢?&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;因为并发的测试不能稳定复现, 所以这个测试一定不是 100% 能触发问题, 只能增加触发问题的概率.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;怎么增大触发并发问题出现的概率? 很简单, 增加次数.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;开启多个线程, 并发调用一块业务逻辑, 完成后检查正确性. 如果正确, 重复这一过程. 可以设定一个重复次数或者测试时间, 当次数或者时间达到时, 没有出现并发问题, 那么我们就认为这个并发测试是通过的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock tip&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-tip&quot; title=&quot;Tip&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+并发测试是跟常规测试分开的, 通常进行构建前检测的时候是不执行的, 因为太费时间.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_总结&quot;&gt;7. 总结&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;以上就是我对写项目测试的经验.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;提出了测试的两个核心要求: 可重复执行, 易书写. 以及为了达到这两个要求, 采取的可实施的方案.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;将测试内容划分为两大类: 业务逻辑, 对外接口. 两类的测试重点也是不一样的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;最后又介绍了异步, 并发这种比较复杂测试场景的测试方式.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;欢迎提出宝贵意见, 期待您的交流.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+	</description>
+    </item>
     <item>
       <title>日常体会(更新至 2019-05-06)</title>
       <link>http://blog.yangxiaochen.com/blog/设计思想/daily-experience.html</link>
       <pubDate>星期一, 6 五月 2019 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/设计思想/daily-experience.html</guid>
       	<description>
-	&lt;div class=&quot;quoteblock&quot;&gt;
+	&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot; class=&quot;bare&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
 &lt;blockquote&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;当你对未来的需求有预见性, 能够估计出现在的设计如何改动, 老数据如何迁移, 就能够接受当前的并不完善的设计. 重要的是设定概念, 或者叫领域模型, 只要老的模型和新的模型都是清晰地, 就不怕从老的模型迁移到新的模型.&lt;/p&gt;
@@ -751,6 +1417,22 @@ sout.eachLine { line -&amp;gt;
 &lt;li&gt;&lt;a href=&quot;#_解决&quot;&gt;解决&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#_后记&quot;&gt;后记&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&quot;preamble&quot;&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot; class=&quot;bare&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
 &lt;h2 id=&quot;_现象&quot;&gt;现象&lt;/h2&gt;
@@ -2440,7 +3122,8 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
       <pubDate>星期二, 5 九月 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/spring-mvc-multipart-error.html</guid>
       	<description>
-	&lt;h2&gt;现象&lt;/h2&gt;
+	&lt;p&gt;NOTE: 本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/p&gt;
+&lt;h2&gt;现象&lt;/h2&gt;
 &lt;p&gt;今天有一个项目，是从 tomcat 迁移到 spring boot 的。&lt;/p&gt;
 &lt;p&gt;实测中发现，文件上传不进来&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-java&quot;&gt;public JsonResult createBpmn(@RequestParam Long businessId, @RequestParam(value = &amp;quot;file&amp;quot;, required = false) MultipartsFile bpnmFile) {
@@ -3039,7 +3722,8 @@ idea {
       <pubDate>星期四, 30 三月 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/spring+%26+spring+mvc+%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BB%8B%E7%BB%8D.html</guid>
       	<description>
-	&lt;!-- # spring &amp; spring mvc 初始化介绍 --&gt;
+	&lt;p&gt;NOTE: 本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/p&gt;
+&lt;!-- # spring &amp; spring mvc 初始化介绍 --&gt;
 &lt;h2&gt;web项目的结构&lt;/h2&gt;
 &lt;h3&gt;java servlet 技术&lt;/h3&gt;
 &lt;p&gt;java servlet 技术是 java 的一个 web 服务规范, 提供了统一的 servlet api 供各个容器厂商实现, 以保证一个 java web 项目可以运行在不同厂商的服务器下.&lt;/p&gt;
