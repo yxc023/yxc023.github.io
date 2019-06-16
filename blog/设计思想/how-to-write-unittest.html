@@ -64,9 +64,43 @@
 		<h1>如何有效的书写项目单元测试</h1>
 	</div>
 
-	<p><em>09 五月 2019</em></p>
+	<p><em>17 六月 2019</em></p>
 
-	<p><div id="preamble">
+	<p><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_前言">1. 前言</a></li>
+<li><a href="#_如何开始写单测的">2. 如何开始写单测的</a></li>
+<li><a href="#_测试带来的好处">3. 测试带来的好处</a></li>
+<li><a href="#_如何写业务单元测试">4. 如何写业务单元测试</a>
+<ul class="sectlevel2">
+<li><a href="#_为单测准备独立的环境_可重复执行">4.1. 为单测准备独立的环境 [可重复执行]</a></li>
+<li><a href="#_使用表达力更强的语言来书写测试_易书写">4.2. 使用表达力更强的语言来书写测试 [易书写]</a></li>
+<li><a href="#_创建单元测试基础类_易书写">4.3. 创建单元测试基础类 [易书写]</a>
+<ul class="sectlevel3">
+<li><a href="#_数据模板">4.3.1. 数据模板</a></li>
+<li><a href="#_业务操作便捷方法">4.3.2. 业务操作便捷方法</a></li>
+<li><a href="#_mock_方法">4.3.3. mock 方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_测试哪些代码">5. 测试哪些代码</a>
+<ul class="sectlevel2">
+<li><a href="#_业务逻辑层">5.1. 业务逻辑层</a></li>
+<li><a href="#_对外接口层">5.2. 对外接口层</a></li>
+</ul>
+</li>
+<li><a href="#_其他场景的测试">6. 其他场景的测试</a>
+<ul class="sectlevel3">
+<li><a href="#_异步逻辑测试">6.1. 异步逻辑测试</a></li>
+<li><a href="#_并发逻辑测试">6.2. 并发逻辑测试</a></li>
+</ul>
+</li>
+<li><a href="#_总结">7. 总结</a></li>
+</ul>
+</div>
+<div id="preamble">
 <div class="sectionbody">
 <div class="admonitionblock note">
 <table>
