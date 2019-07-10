@@ -13,6 +13,11 @@ plugins {
 
 jbake {
     version  = '2.6.4'
+    srcDirName  = 'src/jbake'
+    destDirName = "$buildDir/jabke"
+}
+bakePreview {
+    input = project.file('src/jbake/jbake/content')
 }
 
 
