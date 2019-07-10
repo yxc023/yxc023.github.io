@@ -64,7 +64,7 @@
 		<h1>如何有效的书写项目单元测试</h1>
 	</div>
 
-	<p><em>17 六月 2019</em></p>
+	<p><em>17 June 2019</em></p>
 
 	<p><div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -733,7 +733,49 @@ template = saveTemplate(template) <i class="conum" data-value="3"></i><b>(3)</b>
 <p>以上就是我对写项目测试的经验.</p>
 </div>
 <div class="paragraph">
-<p>提出了测试的两个核心要求: 可重复执行, 易书写. 以及为了达到这两个要求, 采取的可实施的方案.</p>
+<p>提出了测试的两个核心要求:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>可重复执行</p>
+</li>
+<li>
+<p>易书写.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>为了达到这两个要求, 采取的可实施的方案:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>为单测准备独立的环境 - 可重复执行</p>
+</li>
+<li>
+<p>使用表达力更强的语言来书写测试 - 易书写</p>
+</li>
+<li>
+<p>创建单元测试的基础类 - 易书写</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>其中, 在<strong>创建单元测试的基础类时</strong>, 主要做三件事情:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>数据模板</p>
+</li>
+<li>
+<p>业务操作的便捷方法</p>
+</li>
+<li>
+<p>mock 方法</p>
+</li>
+</ol>
 </div>
 <div class="paragraph">
 <p>将测试内容划分为两大类: 业务逻辑, 对外接口. 两类的测试重点也是不一样的.</p>
@@ -760,6 +802,7 @@ template = saveTemplate(template) <i class="conum" data-value="3"></i><b>(3)</b>
 	});
 	</script>
 
+	<script src="https://darshandsoni.com/asciidoctor-skins/switcher.js" type="text/javascript"></script>
 	<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
 	<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysiPXECq"></script>
 	
