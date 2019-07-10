@@ -23,6 +23,7 @@
 	});
 	</script>
 
+	<script src="https://darshandsoni.com/asciidoctor-skins/switcher.js" type="text/javascript"></script>
 	<script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>
 	<script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysiPXECq"></script>
 	

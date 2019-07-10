@@ -1,8 +1,8 @@
 pluginManagement {
     repositories {
         maven {
-        url "http://maven.aliyun.com/nexus/content/groups/public"
-      }
-      gradlePluginPortal()
+          url "http://maven.aliyun.com/nexus/content/groups/public"
+        }
+        gradlePluginPortal()
     }
 }

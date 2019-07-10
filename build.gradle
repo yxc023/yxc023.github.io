@@ -17,7 +17,7 @@ jbake {
     destDirName = "$buildDir/jabke"
 }
 bakePreview {
-    input = project.file('src/jbake/jbake/content')
+    input = project.file('build/gitPublish')
 }
 
 
