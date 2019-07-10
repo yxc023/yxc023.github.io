@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期一, 17 六月 2019 01:26:10 +0800</pubDate>
-    <lastBuildDate>星期一, 17 六月 2019 01:26:10 +0800</lastBuildDate>
+    <pubDate>星期三, 10 七月 2019 16:59:52 +0800</pubDate>
+    <lastBuildDate>星期三, 10 七月 2019 16:59:52 +0800</lastBuildDate>
 
     <item>
       <title>如何有效的书写项目单元测试</title>
@@ -2038,9 +2038,9 @@ sout.eachLine { line -&amp;gt;
     </item>
     <item>
       <title>pac4j 简介</title>
-      <link>http://blog.yangxiaochen.com/blog/java/pac4j%E7%AE%80%E4%BB%8B.html</link>
+      <link>http://blog.yangxiaochen.com/blog/java/pac4j-introduction.html</link>
       <pubDate>星期日, 15 四月 2018 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/java/pac4j%E7%AE%80%E4%BB%8B.html</guid>
+      <guid isPermaLink="false">blog/java/pac4j-introduction.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
 &lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
@@ -3239,9 +3239,9 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
     </item>
     <item>
       <title>gradle简明教程</title>
-      <link>http://blog.yangxiaochen.com/blog/java/gradle%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B.html</link>
+      <link>http://blog.yangxiaochen.com/blog/java/gradle-simple-introduction.html</link>
       <pubDate>星期一, 24 七月 2017 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/java/gradle%E7%AE%80%E6%98%8E%E6%95%99%E7%A8%8B.html</guid>
+      <guid isPermaLink="false">blog/java/gradle-simple-introduction.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
 &lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
@@ -3685,9 +3685,9 @@ idea {
     </item>
     <item>
       <title>Java web 项目异常设计实践</title>
-      <link>http://blog.yangxiaochen.com/blog/java/%E5%BC%82%E5%B8%B8%E5%AE%9E%E8%B7%B5.html</link>
+      <link>http://blog.yangxiaochen.com/blog/java/exception-in-action.html</link>
       <pubDate>星期一, 10 七月 2017 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/java/%E5%BC%82%E5%B8%B8%E5%AE%9E%E8%B7%B5.html</guid>
+      <guid isPermaLink="false">blog/java/exception-in-action.html</guid>
       	<description>
 	&lt;h1&gt;异常实践&lt;/h1&gt;
 &lt;h2&gt;前言&lt;/h2&gt;
@@ -3752,9 +3752,9 @@ idea {
     </item>
     <item>
       <title>spring &amp; spring mvc 初始化介绍</title>
-      <link>http://blog.yangxiaochen.com/blog/java/spring+%26+spring+mvc+%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BB%8B%E7%BB%8D.html</link>
+      <link>http://blog.yangxiaochen.com/blog/java/spring-spring-mvc-initalize.html</link>
       <pubDate>星期四, 30 三月 2017 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/java/spring+%26+spring+mvc+%E5%88%9D%E5%A7%8B%E5%8C%96%E4%BB%8B%E7%BB%8D.html</guid>
+      <guid isPermaLink="false">blog/java/spring-spring-mvc-initalize.html</guid>
       	<description>
 	&lt;p&gt;NOTE: 本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/p&gt;
 &lt;!-- # spring &amp; spring mvc 初始化介绍 --&gt;
@@ -3897,9 +3897,9 @@ public static final String DEFAULT_CONFIG_LOCATION_SUFFIX = &amp;quot;.xml&amp;q
     </item>
     <item>
       <title>Java异常规范</title>
-      <link>http://blog.yangxiaochen.com/blog/java/%E5%BC%82%E5%B8%B8%E8%A7%84%E8%8C%83.html</link>
+      <link>http://blog.yangxiaochen.com/blog/java/exception-pattern.html</link>
       <pubDate>星期四, 29 九月 2016 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/java/%E5%BC%82%E5%B8%B8%E8%A7%84%E8%8C%83.html</guid>
+      <guid isPermaLink="false">blog/java/exception-pattern.html</guid>
       	<description>
 	&lt;h1&gt;异常规范&lt;/h1&gt;
 &lt;h2&gt;异常介绍&lt;/h2&gt;
