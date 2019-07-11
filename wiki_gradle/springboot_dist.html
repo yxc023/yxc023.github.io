@@ -64,35 +64,36 @@
 		<h1>springboot 项目 distribution 打包脚本</h1>
 	</div>
 
-	<p><pre><code class="language-java">task(dist, type: Zip, dependsOn: bootRepackage) {
-    description = &quot;Bundles the project as a distribution.&quot;
-    group = &quot;distribution&quot;
+	<p><div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">task(dist, type: Zip, dependsOn: bootRepackage) {
+    description = "Bundles the project as a distribution."
+    group = "distribution"
 
     CopySpec binCopySpec = project.copySpec()
-    binCopySpec.from(&quot;dist/bin&quot;)
-    binCopySpec.into(&quot;bin&quot;)
+    binCopySpec.from("dist/bin")
+    binCopySpec.into("bin")
     binCopySpec.setFileMode(0775)
 
 
     CopySpec jarChildSpec = project.copySpec();
-    jarChildSpec.into(&quot;lib&quot;);
-    jarChildSpec.from(file(&quot;$buildDir/libs&quot;))
-    jarChildSpec.include(&quot;*.jar&quot;)
-    jarChildSpec.rename(/.*\.jar/, project.name + &quot;.jar&quot;)
+    jarChildSpec.into("lib");
+    jarChildSpec.from(file("$buildDir/libs"))
+    jarChildSpec.include("*.jar")
+    jarChildSpec.rename(/.*\.jar/, project.name + ".jar")
 
 
     CopySpec distCopySpec = project.copySpec();
-    distCopySpec.into(TextUtil.minus(archiveName, &quot;.&quot; + extension))
-    distCopySpec.from(&quot;dist&quot;)
-    distCopySpec.exclude(&quot;bin/*&quot;)
+    distCopySpec.into(TextUtil.minus(archiveName, "." + extension))
+    distCopySpec.from("dist")
+    distCopySpec.exclude("bin/*")
     distCopySpec.with(jarChildSpec)
     distCopySpec.with(binCopySpec)
 
     with(distCopySpec)
-}
-
-</code></pre>
-</p>
+}</code></pre>
+</div>
+</div></p>
 
 	<hr />
 
