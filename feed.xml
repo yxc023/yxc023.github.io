@@ -6,11 +6,11 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>Thu, 11 Jul 2019 17:36:39 +0000</pubDate>
-    <lastBuildDate>Thu, 11 Jul 2019 17:36:39 +0000</lastBuildDate>
+    <pubDate>Thu, 11 Jul 2019 17:40:57 +0000</pubDate>
+    <lastBuildDate>Thu, 11 Jul 2019 17:40:57 +0000</lastBuildDate>
 
     <item>
-      <title>&lt;a href=&quot;#企业应用架构模式&quot;&gt;[企业应用架构模式]&lt;/a&gt;读书笔记与思考</title>
+      <title>「企业应用架构模式」读书笔记与思考</title>
       <link>http://blog.yangxiaochen.com/blog/设计思想/reading-notes-for-PoEAA.html</link>
       <pubDate>Fri, 12 Jul 2019 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/设计思想/reading-notes-for-PoEAA.html</guid>
