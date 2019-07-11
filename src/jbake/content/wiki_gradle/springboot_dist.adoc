@@ -1,10 +1,17 @@
-title=springboot 项目 distribution 打包脚本
-date=2017-07-24
-type=wiki_gradle
-status=published
-~~~~~~
+= springboot 项目 distribution 打包脚本
+杨晓辰
+2017-07-24
+:toc: left
+:toclevels: 4
+:icons: font
+:sectnums:
+:jbake-type: wiki_gradle
+:jbake-tags: gradle, java
+:jbake-status: published
 
-```java
+
+[source, groovy]
+----
 task(dist, type: Zip, dependsOn: bootRepackage) {
     description = "Bundles the project as a distribution."
     group = "distribution"
@@ -31,5 +38,4 @@ task(dist, type: Zip, dependsOn: bootRepackage) {
 
     with(distCopySpec)
 }
-
-```
+----
