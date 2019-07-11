@@ -67,9 +67,9 @@
             head.appendChild(script);
         };
 
-        // var ver = +new Date() + window.Math.random().toFixed(16);
+        var ver = +new Date() + window.Math.random().toFixed(16);
         var protocol = (('https:' == window.document.location.protocol) ? "https://" : "http://");
-        var url = '/js/version-v3.js';
+        var url = 'https://www.cgtblog.com/skin/default/js/changyan/version-v3.js?' + ver;
         loadJs(url);
     };
 
