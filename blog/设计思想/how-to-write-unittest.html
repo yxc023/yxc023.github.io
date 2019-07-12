@@ -67,7 +67,7 @@
 		<h1>如何有效的书写项目单元测试</h1>
 	</div>
 
-	<p><em>17 June 2019</em></p>
+	<p><em>17 六月 2019</em></p>
 
 	<p><div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -307,22 +307,42 @@
 @SpringBootTest(
         classes = TestBoot,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        properties = ["spring.profiles.active=local,unittest"])
-@ContextConfiguration(initializers = [TestZookeeperServerInitializer, TestDBinitializer, TestRedisinitializer])
+        properties = ["spring.profiles.active=local,unittest"]) <i class="conum" data-value="1"></i><b>(1)</b>
+@ContextConfiguration(initializers = [TestZookeeperServerInitializer, TestDBinitializer, TestRedisinitializer]) <i class="conum" data-value="2"></i><b>(2)</b>
 abstract class AbstractTest {
 
     @LocalServerPort
-    Integer port
+    Integer port <i class="conum" data-value="3"></i><b>(3)</b>
 
     @Autowired
     Environment environment
 
     ObjectMapper objectMapper = new ObjectMapper()
 
-    static User USER1 = new User(10000001, "user1's name", "18812388888", "org101")
+    static User USER1 = new User(10000001, "user1's name", "18812388888", "org101") <i class="conum" data-value="4"></i><b>(4)</b>
 
     ...</code></pre>
 </div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>加载测试时加载 <code>unittest</code> 配置文件</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>用于环境初始化的组件</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>项目使用的随机端口</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>通用的用户</td>
+</tr>
+</table>
 </div>
 <div class="sect3">
 <h4 id="_数据模板">4.3.1. 数据模板</h4>
