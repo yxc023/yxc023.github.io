@@ -10,3 +10,64 @@
 :jbake-status: published
 
 TBD.
+
+== 前言
+最近读了 Martin Fowler 的[企业应用架构模式](Pattern of Enterprise Application Architecture), 记一些笔记和思考.
+
+全书讲了几十个"企业应用架构"的模式. 区别于我们常说的设计模式, 这里的设计模式是描述`项目整体结构和业务组织结构`, 而不单单是`代码结构`.
+
+而且多种模式通常是糅合在在一起, 
+
+之所以要抽象出这些模式和概念, 就是为了简化之后的思考, 给之后遇到的问题奠定几个思考方向. 相当于把设计和思考的成果固化, 提高思维熟练度, 而不是每次都重头来想一边.
+
+== 笔记
+=== 领域逻辑模式
+==== 事务脚本模式
+
+将一个完整的业务请求使用一个方法完成, 整个方法处于一个事务之中. 
+
+通过过程来组织逻辑, 每个过程来自表现层的一个请求
+
+比如 `创建订单` 这个请求, 就是由 `OrderFlowService.createOrder()` 方法完成. 过程中执行 `接收参数`, `新建订单`, `校验`, `保存订单`, `库存扣减` 等逻辑代码.
+
+==== 领域模型模式
+
+如果用领域模型来描述 `创建订单` 的逻辑, 大概是这样:
+
+----
+OrderDomain order = new OrderDomain(createOrderParams)
+
+order.doCreate()
+----
+
+而在 `order.doCreate()` 里:
+
+----
+order.validate() // <1>
+order.lockSaleInventory() // <2>
+order.create() // <3>
+----
+<1> 校验
+<2> 锁定订单中商品的销售库存, 等到支付完成后进行扣除
+<3> 创建订单
+
+什么意思呢, 具体逻辑由领域对象来完成.
+
+
+==== 表模块模式
+
+这个 java 中很少见, 作者例举了一个 .NET 框架中的例子. 为了方便说明, 我还用上面的 java 的例子来说.
+
+_表模块模式_ 是指业务中操作的对象背后关联着一个数据表. 
+
+----
+Order order = new Order(datasource) // <1>
+
+validate(createOrderParams)
+order.
+----
+
+
+
+
+== 整体思考
