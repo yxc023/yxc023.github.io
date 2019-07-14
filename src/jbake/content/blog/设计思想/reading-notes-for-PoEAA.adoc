@@ -61,13 +61,44 @@ order.create() // <3>
 _表模块模式_ 是指业务中操作的对象背后关联着一个数据表. 
 
 ----
-Order order = new Order(datasource) // <1>
+Order order = new Order(dataSource) // <1>
+SaleInventory saleInventory = new SaleInventory(dataSource) // <2>
 
 validate(createOrderParams)
-order.
+
+createOrderParams.products.each { productToBuy ->
+    saleInventory.updateLock(productToBuy.id, productToBuy.count)
+}
+
+order.insert(extractDataFromParams(createOrderParams))
+----
+<1> 订单的表模块对象
+<2> 销售库存的表模块对象
+
+看上去很像 DAO. 使用跟数据库表完全对应的数据访问对象来完成业务逻辑.
+
+==== 服务层模式
+
+图 TBD.
+
+服务层定义了应用边界, **从接口客户层角度所能看到的可用操作集合**. 它封装了应用的业务逻辑, 事务控制, 及其操作实现中的响应协调.
+
+比如定一个了一个 `OrderFlowBiz` 的服务层对象, 包含了对订单流程的操作集合.
+
+----
+createOrder()
+pay()
+payComplete()
+delivery()
+receive()
 ----
 
+而不是传统的写 service 层, 各种操作混在一起.
 
+这个模式中, 服务层通常很像事务脚本, 需要明确的针对特定请求, 而 service 层是领域模型, 要考虑通用性. 
 
+=== 数据源架构模式
+
+====表数据入口
 
 == 整体思考

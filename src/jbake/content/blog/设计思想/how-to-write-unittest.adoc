@@ -133,22 +133,26 @@ zk 可以用单独的服务或者更换节点域. 更简单是使用 zk 的 test
 @SpringBootTest(
         classes = TestBoot,
         webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
-        properties = ["spring.profiles.active=local,unittest"])
-@ContextConfiguration(initializers = [TestZookeeperServerInitializer, TestDBinitializer, TestRedisinitializer])
+        properties = ["spring.profiles.active=local,unittest"]) // <1>
+@ContextConfiguration(initializers = [TestZookeeperServerInitializer, TestDBinitializer, TestRedisinitializer]) // <2>
 abstract class AbstractTest {
 
     @LocalServerPort
-    Integer port
+    Integer port // <3>
 
     @Autowired
     Environment environment
 
     ObjectMapper objectMapper = new ObjectMapper()
 
-    static User USER1 = new User(10000001, "user1's name", "18812388888", "org101")
+    static User USER1 = new User(10000001, "user1's name", "18812388888", "org101") // <4>
 
     ...
 ----
+<1> 加载测试时加载 `unittest` 配置文件
+<2> 用于环境初始化的组件
+<3> 项目使用的随机端口
+<4> 通用的用户
 
 ==== 数据模板
 
