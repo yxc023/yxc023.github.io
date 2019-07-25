@@ -13,7 +13,7 @@
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/asciidoctor.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
-    <link href="https://cdn.bootcss.com/highlight.js/9.15.5/styles/tomorrow.min.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -29,9 +29,8 @@
 
     <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
 	  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-    <script src="https://cdn.bootcss.com/highlight.js/9.15.8/highlight.min.js"></script>
   </head>
-  <body>
+  <body onload="prettyPrint()">
     <div id="wrap">
 	
 	<!-- Fixed navbar -->
@@ -244,7 +243,7 @@ public static final String DEFAULT_CONFIG_LOCATION_SUFFIX = &quot;.xml&quot;;
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../../js/jquery-1.11.1.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
-    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="../../js/prettify.js"></script>
     
   </body>
 </html>
