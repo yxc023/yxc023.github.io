@@ -13,7 +13,7 @@
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/asciidoctor.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
-    <link href="../../css/prettify.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.5/styles/tomorrow.min.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -67,7 +67,7 @@
 		<h1>java 多线程同步的几种写法</h1>
 	</div>
 
-	<p><em>14 四月 2016</em></p>
+	<p><em>14 April 2016</em></p>
 
 	<p><div class="quoteblock">
 <blockquote>
@@ -394,7 +394,7 @@ ForkJoinTask&lt;Integer&gt; f3 = ForkJoinTask.adapt(() -&gt; test.m3()).fork();<
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../../js/jquery-1.11.1.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/prettify.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     
   </body>
 </html>

@@ -13,7 +13,7 @@
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/asciidoctor.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
-    <link href="../../css/prettify.css" rel="stylesheet">
+    <link href="https://cdn.bootcss.com/highlight.js/9.15.5/styles/tomorrow.min.css" rel="stylesheet">
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -67,7 +67,7 @@
 		<h1>项目接口设计实践</h1>
 	</div>
 
-	<p><em>25 七月 2019</em></p>
+	<p><em>25 July 2019</em></p>
 
 	<p><div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -168,20 +168,48 @@
 |   |   \-- product
 |   +-- page                    // 页面请求接口
 |   +-- manage                  // 管理用的 ajax 和 页面接口.
-|   |   +-- web
-|   |   \-- page
-|   \-- callback                // 接收回调的接口</code></pre>
+|       +-- web
+|       \-- page
+\-- callback                    // 接收回调的接口</code></pre>
 </div>
 </div>
-<div class="olist arabic">
-<ol class="arabic">
+<div class="ulist">
+<ul>
 <li>
 <p>首先按照面向服务, 面向前端进行化分.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>验证方式不同. 面向前端的接口通常要认证登录状态; 面向服务的接口通常是接入验证.</p>
 </li>
-</ol>
+<li>
+<p>使用者不同. 前端接口调用者是用户, 请求的数据通常更贴近展示, 面向展示设计接口, 当发生异常时, 需要返回一些用户可读的信息; 服务接口使用者是系统代码, 请求的数据更贴近领域模型, 根据自身领域来暴露服务, 发生异常时, 需要返回明确的状态码, 来供调用方程序判断.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>在面向服务的接口中, 提供了不同协议的接口. 不同协议的接口中, 又按照不同的模块化分.</p>
+</li>
+<li>
+<p>在面向前端的接口中, 分为 <code>web</code> 和 <code>page</code> 两种, 分别应对 ajax 请求和页面请求.</p>
+</li>
+<li>
+<p>在面向前端的接口中, <code>manage</code> 包里为管理后台的接口. 因为管理后台通常跟前台的请求要求的身份权限不同.</p>
+</li>
+<li>
+<p>独立出 <code>callback</code> 类型的接口, 这种接口往往按照回调发起方的接口规范来.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>两种接口的验证方式通常不同</p>
+<p>以上, 我们通过接口的受众和类型, 制定了一套接口的组织形式.</p>
+</div>
+<div class="paragraph">
+<p>目的是保持清晰, 避免混用. 因为我们经常会在接口层做一些通用的操作, 比如日志, 性能打点, 认证等, 对于不同的功能和作用的接口是不同的, 做划分之后, 我们可以分别处理.</p>
+</div>
+<div class="paragraph">
+<p>上面的目录划分, 可以在(<a href="http://github)" class="bare">http://github)</a></p>
 </div>
 </div>
 </div>
@@ -194,7 +222,9 @@
 <div class="sect1">
 <h2 id="_文档">3. 文档</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>``</p>
+</div>
 </div>
 </div></p>
 
@@ -234,7 +264,7 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="../../js/jquery-1.11.1.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
-    <script src="../../js/prettify.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     
   </body>
 </html>
