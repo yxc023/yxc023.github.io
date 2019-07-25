@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>项目接口设计实践</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="yxc023@qq.com">
+    <meta name="keywords" content="">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+	  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+	
+	<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Michael的文档</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+             <li><a href="../../index.html">首页</a></li> 
+            <li><a href="../../wiki_gradle_index.html">gradle</a></li>
+            <li><a href="../../tags/git.html">git</a></li>
+            <li><a href="../../tags/spring.html">spring</a></li>
+            <li><a href="../../archive.html">archive</a></li>
+
+            <li><a href="https://github.com/yxc023/jbake">my jbake</a></li>
+
+            <li><a href="../../about.html">关于</a></li>
+
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">	
+	<div class="page-header">
+		<h1>项目接口设计实践</h1>
+	</div>
+
+	<p><em>25 七月 2019</em></p>
+
+	<p><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_前言">1. 前言</a></li>
+<li><a href="#_接口">2. 接口</a>
+<ul class="sectlevel2">
+<li><a href="#_宏观战略">2.1. 宏观战略</a>
+<ul class="sectlevel3">
+<li><a href="#_接口组织结构">2.1.1. 接口组织结构</a></li>
+</ul>
+</li>
+<li><a href="#_细节战术">2.2. 细节战术</a></li>
+</ul>
+</li>
+<li><a href="#_文档">3. 文档</a></li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="_前言">1. 前言</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>项目不同, 项目提供的接口功能也不同, 能否有一套比较通用切良好的规则, 来指导我们对项目接口的宏观设计和细节设计?</p>
+</div>
+<div class="paragraph">
+<p>本文是我在项目中设计 api 接口的一些实践经验.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_接口">2. 接口</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_宏观战略">2.1. 宏观战略</h3>
+<div class="sect3">
+<h4 id="_接口组织结构">2.1.1. 接口组织结构</h4>
+<div class="paragraph">
+<p>一个项目中, 接口组织结构应该是良好干净的. 接口不是想写哪里写哪里, 接口需要有功能分类, 业务分类, 协议分类, 然后分门别类的组织在不同的文件夹里.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">按照功能作用分</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>系统间服务接口</p>
+</li>
+<li>
+<p>前端接口</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">按照业务分</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>业务模块 A</p>
+</li>
+<li>
+<p>业务模块 B</p>
+</li>
+</ul>
+</div>
+</dd>
+<dt class="hdlist1">按照协议分</dt>
+<dd>
+<div class="ulist">
+<ul>
+<li>
+<p>dubbo</p>
+</li>
+<li>
+<p>http</p>
+</li>
+</ul>
+</div>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>很多人多多少少想过这些分类, 但很少想过要把接口按照这些组织好. 我给出一个接口的组织目录</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-java" data-lang="java">application
++-- api                         // 面向服务的接口
+|   +-- dubbo                   // dubbo 协议的接口
+|   |   +-- order               // 按照业务化分, order 模块的接口
+|   |   +-- product
+|   |   \-- module C
+|   \-- http                    // http 协议的接口
++-- controller                  // 面向前端的接口
+|   +-- web                     // ajax 请求接口
+|   |   +-- order               // 按照业务化分
+|   |   \-- product
+|   +-- page                    // 页面请求接口
+|   +-- manage                  // 管理用的 ajax 和 页面接口.
+|   |   +-- web
+|   |   \-- page
+|   \-- callback                // 接收回调的接口</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>首先按照面向服务, 面向前端进行化分.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>两种接口的验证方式通常不同</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_细节战术">2.2. 细节战术</h3>
+
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_文档">3. 文档</h2>
+<div class="sectionbody">
+
+</div>
+</div></p>
+
+	<hr />
+
+
+	<div id="gitalk-container"></div>
+	<script>
+		const gitalk = new Gitalk({
+		clientID: '9fda08d9f8fbe4a76212',
+		clientSecret: '9a91a6260819f30af5d9c4534815493865d409a7',
+		repo: 'yxc023.github.io',
+		owner: 'yxc023',
+		admin: ['yxc023'],
+		id: "项目接口设计实践",      // Ensure uniqueness and length less than 50
+		distractionFreeMode: false  // Facebook-like distraction free mode
+		})
+
+		gitalk.render('gitalk-container')
+
+	</script>
+
+
+	
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">&copy; 2019 | Michael Yang</p>
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    
+  </body>
+</html>

@@ -69,8 +69,193 @@
 
 	<p><em>12 七月 2019</em></p>
 
-	<p><div class="paragraph">
+	<p><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_前言">1. 前言</a></li>
+<li><a href="#_笔记">2. 笔记</a>
+<ul class="sectlevel2">
+<li><a href="#_领域逻辑模式">2.1. 领域逻辑模式</a>
+<ul class="sectlevel3">
+<li><a href="#_事务脚本模式">2.1.1. 事务脚本模式</a></li>
+<li><a href="#_领域模型模式">2.1.2. 领域模型模式</a></li>
+<li><a href="#_表模块模式">2.1.3. 表模块模式</a></li>
+<li><a href="#_服务层模式">2.1.4. 服务层模式</a></li>
+</ul>
+</li>
+<li><a href="#_数据源架构模式">2.2. 数据源架构模式</a>
+<ul class="sectlevel3">
+<li><a href="#_表数据入口">2.2.1. 表数据入口</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#_整体思考">3. 整体思考</a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
 <p>TBD.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_前言">1. 前言</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>最近读了 Martin Fowler 的[企业应用架构模式](Pattern of Enterprise Application Architecture), 记一些笔记和思考.</p>
+</div>
+<div class="paragraph">
+<p>全书讲了几十个"企业应用架构"的模式. 区别于我们常说的设计模式, 这里的设计模式是描述`项目整体结构和业务组织结构`, 而不单单是`代码结构`.</p>
+</div>
+<div class="paragraph">
+<p>而且多种模式通常是糅合在在一起,</p>
+</div>
+<div class="paragraph">
+<p>之所以要抽象出这些模式和概念, 就是为了简化之后的思考, 给之后遇到的问题奠定几个思考方向. 相当于把设计和思考的成果固化, 提高思维熟练度, 而不是每次都重头来想一边.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_笔记">2. 笔记</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_领域逻辑模式">2.1. 领域逻辑模式</h3>
+<div class="sect3">
+<h4 id="_事务脚本模式">2.1.1. 事务脚本模式</h4>
+<div class="paragraph">
+<p>将一个完整的业务请求使用一个方法完成, 整个方法处于一个事务之中.</p>
+</div>
+<div class="paragraph">
+<p>通过过程来组织逻辑, 每个过程来自表现层的一个请求</p>
+</div>
+<div class="paragraph">
+<p>比如 <code>创建订单</code> 这个请求, 就是由 <code>OrderFlowService.createOrder()</code> 方法完成. 过程中执行 <code>接收参数</code>, <code>新建订单</code>, <code>校验</code>, <code>保存订单</code>, <code>库存扣减</code> 等逻辑代码.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_领域模型模式">2.1.2. 领域模型模式</h4>
+<div class="paragraph">
+<p>如果用领域模型来描述 <code>创建订单</code> 的逻辑, 大概是这样:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>OrderDomain order = new OrderDomain(createOrderParams)
+
+order.doCreate()</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>而在 <code>order.doCreate()</code> 里:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>order.validate() <i class="conum" data-value="1"></i><b>(1)</b>
+order.lockSaleInventory() <i class="conum" data-value="2"></i><b>(2)</b>
+order.create() <i class="conum" data-value="3"></i><b>(3)</b></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>校验</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>锁定订单中商品的销售库存, 等到支付完成后进行扣除</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>创建订单</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>什么意思呢, 具体逻辑由领域对象来完成.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_表模块模式">2.1.3. 表模块模式</h4>
+<div class="paragraph">
+<p>这个 java 中很少见, 作者例举了一个 .NET 框架中的例子. 为了方便说明, 我还用上面的 java 的例子来说.</p>
+</div>
+<div class="paragraph">
+<p><em>表模块模式</em> 是指业务中操作的对象背后关联着一个数据表.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Order order = new Order(dataSource) <i class="conum" data-value="1"></i><b>(1)</b>
+SaleInventory saleInventory = new SaleInventory(dataSource) <i class="conum" data-value="2"></i><b>(2)</b>
+
+validate(createOrderParams)
+
+createOrderParams.products.each { productToBuy -&gt;
+    saleInventory.updateLock(productToBuy.id, productToBuy.count)
+}
+
+order.insert(extractDataFromParams(createOrderParams))</pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>订单的表模块对象</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>销售库存的表模块对象</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>看上去很像 DAO. 使用跟数据库表完全对应的数据访问对象来完成业务逻辑.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_服务层模式">2.1.4. 服务层模式</h4>
+<div class="paragraph">
+<p>图 TBD.</p>
+</div>
+<div class="paragraph">
+<p>服务层定义了应用边界, <strong>从接口客户层角度所能看到的可用操作集合</strong>. 它封装了应用的业务逻辑, 事务控制, 及其操作实现中的响应协调.</p>
+</div>
+<div class="paragraph">
+<p>比如定一个了一个 <code>OrderFlowBiz</code> 的服务层对象, 包含了对订单流程的操作集合.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>createOrder()
+pay()
+payComplete()
+delivery()
+receive()</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>而不是传统的写 service 层, 各种操作混在一起.</p>
+</div>
+<div class="paragraph">
+<p>这个模式中, 服务层通常很像事务脚本, 需要明确的针对特定请求, 而 service 层是领域模型, 要考虑通用性.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_数据源架构模式">2.2. 数据源架构模式</h3>
+<div class="sect3">
+<h4 id="_表数据入口">2.2.1. 表数据入口</h4>
+
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_整体思考">3. 整体思考</h2>
+<div class="sectionbody">
+
+</div>
 </div></p>
 
 	<hr />
