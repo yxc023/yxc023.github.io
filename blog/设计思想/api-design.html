@@ -67,7 +67,7 @@
 		<h1>项目接口设计实践</h1>
 	</div>
 
-	<p><em>25 July 2019</em></p>
+	<p><em>25 七月 2019</em></p>
 
 	<p><div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -80,7 +80,19 @@
 <li><a href="#_接口组织结构">2.1.1. 接口组织结构</a></li>
 </ul>
 </li>
-<li><a href="#_细节战术">2.2. 细节战术</a></li>
+<li><a href="#_细节战术">2.2. 细节战术</a>
+<ul class="sectlevel3">
+<li><a href="#_通用">2.2.1. 通用</a></li>
+<li><a href="#_http">2.2.2. http</a>
+<ul class="sectlevel4">
+<li><a href="#_面向服务">面向服务</a></li>
+<li><a href="#_dubbo">dubbo</a></li>
+</ul>
+</li>
+<li><a href="#_面向前端">2.2.3. 面向前端</a></li>
+<li><a href="#_callback">2.2.4. callback</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href="#_文档">3. 文档</a></li>
@@ -215,16 +227,176 @@
 </div>
 <div class="sect2">
 <h3 id="_细节战术">2.2. 细节战术</h3>
-
+<div class="sect3">
+<h4 id="_通用">2.2.1. 通用</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>读接口无副作用, 不要返回异常或错误码</p>
+</li>
+<li>
+<p>面向服务的写接口声明会发生的各种异常和错误码</p>
+</li>
+<li>
+<p>面向服务的接口设计应该以自身业务另约需要暴露的功能为出发点, 而不是尊奉需求方的要求.</p>
+</li>
+<li>
+<p>设计完之后, 要站在使用者的角度试用自己的接口, 看是否有问题.</p>
+</li>
+<li>
+<p>接口给出粗粒度的数据</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_http">2.2.2. http</h4>
+<div class="sect4">
+<h5 id="_面向服务">面向服务</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>服务接口 path 为 <code>/api/**</code></p>
+</li>
+<li>
+<p>通过 header 传递额外信息. 比如 appId, timestamp, 签名信息等.</p>
+</li>
+<li>
+<p>写接口使用 <code>POST</code>, 接收参数类型为 <code>application/json</code>.</p>
+</li>
+<li>
+<p>对 <code>POST</code> 的写接口进行验签时, 由于 content 是 json 类型, 格式层次复杂, 不能把每个字段拿出来加入到签名中做校验, 所以把 content 的内容做哈希算法签名, 来做为一个校验字段, 而不用使用 content 里单独的字段来做.</p>
+</li>
+<li>
+<p>使用统一的 <code>ApiResult</code> 对象封装结果返回. <code>ApiResult</code> 包含 <code>code</code>, <code>message</code>, <code>tip</code>, <code>data</code> 等字段.</p>
+</li>
+<li>
+<p>写接口的返回值中的 <code>code</code> 应为字符串类型, 用于更有表达力的表明各种异常状态.</p>
+</li>
+<li>
+<p>response status code 使用. 参考 <a href="https://tools.ietf.org/html/rfc7231#section-6.1">RFC 7231</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p>正常和业务异常 - 200</p>
+</li>
+<li>
+<p>参数校验错误 - 400</p>
+</li>
+<li>
+<p>验签未通过 - 401</p>
+</li>
+<li>
+<p>验签通过但是无权限使用接口 - 403</p>
+</li>
+<li>
+<p>意料外异常 - 500</p>
+</li>
+<li>
+<p>限流, 熔断, 拒绝服务 - 503</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_dubbo">dubbo</h5>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>dubbo 接口的设计理念: 尽量使 rpc 调用看上去跟调用本地方法一样.</p>
+</li>
+<li>
+<p>读接口直接返回数据, 无需额外封装. 读接口不抛业务异常, 有异常就认为 bug.</p>
+</li>
+<li>
+<p>写接口返回数据无需额外封装. 业务异常信息通过 <code>Exception</code> 抛出, 并包含异常 <code>code</code>.</p>
+</li>
+<li>
+<p>dubbo 接口实现中, 要做异常全局处理, 转化为 <code>ApiException</code>. 并将 <code>ApiException</code> 放到发布的 api 包中. 否则无法在 dubbo 客户端对异常反序列化.</p>
+</li>
+<li>
+<p>dubbo 接口不应返回枚举类型以及包含枚举类型的对象. 应该转成字符串或数字常量返回. 避免客户端因为服务端枚举类变化导致反序列化的失败.</p>
+</li>
+<li>
+<p>dubbo 发布的 api 包中, 应包含接口用到的<strong>常量</strong>, <strong>数据对象</strong>, <strong>异常 code 常量</strong>.</p>
+</li>
+<li>
+<p>dubbo 发布的 api 包中, 应该配套 source 包. 源码中应该有足够的注释.</p>
+</li>
+<li>
+<p>dubbo 的认证信息可以包含在 <code>attachment</code> 里.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_面向前端">2.2.3. 面向前端</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>前端接口 path 为 <code>/web/**</code>.</p>
+</li>
+<li>
+<p>前端接口的设计理念: 为展示而生, 能够为让前端直接做显示而不用做一些逻辑判断. 但是不能完全脱离业务模型.</p>
+</li>
+<li>
+<p>使用统一的 <code>Result</code> 对象封装结果返回. <code>Result</code> 包含 <code>code</code>, <code>message</code>, <code>tip</code>, <code>data</code> 等字段.</p>
+</li>
+<li>
+<p>异常要统一包装成数据返回, 需要返回人类可读的 tip. 绝大多数异常情况接口不需要返回特定错误码.</p>
+</li>
+<li>
+<p>response status code 使用. 参考 <a href="https://tools.ietf.org/html/rfc7231#section-6.1">RFC 7231</a></p>
+<div class="ulist">
+<ul>
+<li>
+<p>正常和业务异常 - 200</p>
+</li>
+<li>
+<p>参数校验错误 - 200 - tip: 参数错误:</p>
+</li>
+<li>
+<p>验签未通过 - 401 - 且返回 header 中包含重定向 location, 供前端同学跳转登录.</p>
+</li>
+<li>
+<p>验签通过但是无权限使用接口 - 403 - tip: 你没有相关权限.</p>
+</li>
+<li>
+<p>意料外异常 - 200 - tip: 发生内部错误, 工程师已经收到正在修复. 有问题请联系 XXX.</p>
+</li>
+<li>
+<p>限流, 熔断, 拒绝服务 - 200 - tip: 当前系统繁忙, 请稍候再试</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_callback">2.2.4. callback</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>callback 接口 path 为 <code>/callback/**</code></p>
+</li>
+<li>
+<p>callback 接口尊奉回调发起方的接口格式要求.</p>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_文档">3. 文档</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>``</p>
-</div>
+
 </div>
 </div></p>
 
