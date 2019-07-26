@@ -72,5 +72,59 @@ application
 上面的目录划分的真实代码示例, 可以在 https://github.com/yxc023/blueprint/tree/master/blueprint-application/src/main/java/com/yangxiaochen/blueprint[blueprint project] 找到.
 
 === 细节战术
+
+==== 通用
+. 读接口无副作用, 不要返回异常或错误码
+
+. 面向服务的写接口声明会发生的各种异常和错误码
+
+. 面向服务的接口设计应该以自身业务另约需要暴露的功能为出发点, 而不是尊奉需求方的要求.
+
+. 设计完之后, 要站在使用者的角度试用自己的接口, 看是否有问题.
+
+. 接口给出粗粒度的数据
+
+==== 面向服务
+===== http
+. 服务接口 path 为 `/api/**`
+. 通过 header 传递额外信息. 比如 appId, timestamp, 签名信息等. 
+. 写接口使用 `POST`, 接收参数类型为 `application/json`.
+. 对 `POST` 的写接口进行验签时, 由于 content 是 json 类型, 格式层次复杂, 不能把每个字段拿出来加入到签名中做校验, 所以把 content 的内容做哈希算法签名, 来做为一个校验字段, 而不用使用 content 里单独的字段来做.
+. 使用统一的 `ApiResult` 对象封装结果返回. `ApiResult` 包含 `code`, `message`, `tip`, `data` 等字段.
+. 写接口的返回值中的 `code` 应为字符串类型, 用于更有表达力的表明各种异常状态.
+. response status code 使用. 参考 https://tools.ietf.org/html/rfc7231#section-6.1[RFC 7231]
+** 正常和业务异常 - 200
+** 参数校验错误 - 400
+** 验签未通过 - 401
+** 验签通过但是无权限使用接口 - 403
+** 意料外异常 - 500
+** 限流, 熔断, 拒绝服务 - 503
+
+===== dubbo
+. dubbo 接口的设计理念: 尽量使 rpc 调用看上去跟调用本地方法一样.
+. 读接口直接返回数据, 无需额外封装. 读接口不抛业务异常, 有异常就认为 bug.
+. 写接口返回数据无需额外封装. 业务异常信息通过 `Exception` 抛出, 并包含异常 `code`.
+. dubbo 接口实现中, 要做异常全局处理, 转化为 `ApiException`. 并将 `ApiException` 放到发布的 api 包中. 否则无法在 dubbo 客户端对异常反序列化.
+. dubbo 接口不应返回枚举类型以及包含枚举类型的对象. 应该转成字符串或数字常量返回. 避免客户端因为服务端枚举类变化导致反序列化的失败.
+. dubbo 发布的 api 包中, 应包含接口用到的**常量**, **数据对象**, **异常 code 常量**.
+. dubbo 发布的 api 包中, 应该配套 source 包. 源码中应该有足够的注释.
+. dubbo 的认证信息可以包含在 `attachment` 里.
+
+==== 面向前端
+. 前端接口 path 为 `/web/**`.
+. 前端接口的设计理念: 为展示而生, 能够为让前端直接做显示而不用做一些逻辑判断. 但是不能完全脱离业务模型.
+. 使用统一的 `Result` 对象封装结果返回. `Result` 包含 `code`, `message`, `tip`, `data` 等字段.
+. 异常要统一包装成数据返回, 需要返回人类可读的 tip. 绝大多数异常情况接口不需要返回特定错误码.
+. response status code 使用. 参考 https://tools.ietf.org/html/rfc7231#section-6.1[RFC 7231]
+** 正常和业务异常 - 200  
+** 参数校验错误 - 200 - tip: 参数错误: 
+** 验签未通过 - 401 - 且返回 header 中包含重定向 location, 供前端同学跳转登录.
+** 验签通过但是无权限使用接口 - 403 - tip: 你没有相关权限.
+** 意料外异常 - 200 - tip: 发生内部错误, 工程师已经收到正在修复. 有问题请联系 XXX.
+** 限流, 熔断, 拒绝服务 - 200 - tip: 当前系统繁忙, 请稍候再试
+
+==== callback
+. callback 接口 path 为 `/callback/**`
+. callback 接口尊奉回调发起方的接口格式要求.
+
 == 文档
-``
