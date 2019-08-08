@@ -49,6 +49,13 @@ println("haha")
 println "haha" 
 ----
 
+=== null check
+
+----
+person.name ?: 'default name'
+
+person.school?.name ?: 'null school or null name'
+----
 
 === 字符串
 groovy 中字符串字面量有两种: 
@@ -191,6 +198,12 @@ new File("a.txt").eachLine { line ->
 def out = new File("out.txt")
 out << "hello world\n"
 out << "something"
+
+
+File data = new File(fileName)
+data.newReader("GBK").lines().skip(1).each { line ->
+    out << line << "\n"
+}
 ----
 
 
