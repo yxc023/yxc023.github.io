@@ -2,7 +2,7 @@
 杨晓辰
 2019-07-25
 :toc: left
-:toclevels: 4
+:toclevels: 5
 :icons: font
 :sectnums:
 :jbake-type: post
@@ -75,15 +75,45 @@ application
 
 ==== 通用
 . 读接口无副作用, 不要返回业务异常或错误码
-获取信息的时候, 有就是有, 没有就是没有. 比如, 当调用 `getOrder(orderId)` 接口时, 没有数据就返回 `null`, 而不要返回一个错误叫做 `订单不存在`.
++
+====
+获取信息的时候, 有就是有, 没有就是没有. 比如, 当调用 `getOrder(orderId)` 接口时, 没有数据就返回 `null`.
+
+而不要返回一个错误叫做 `订单不存在`.
+====
 
 . 面向服务的写接口声明会发生的各种异常和错误码
++
+====
+
+让异常类型中包含 `code`, `message`, `tip`, `level`, `data`. 让异常能够传递更多信息.
+
+see link:https://github.com/yxc023/expressive-exception[A More Expressive Exception Library, 更有表达力的异常类库]
+====
 
 . 面向服务的接口设计应该以自身业务另约需要暴露的功能为出发点, 而不是尊奉需求方的要求.
++
+====
+站在自身角度来思考我能够提供什么服务, 标准能力.
+
+比如作为订单管理系统, 提供 `创建订单`, `通用查询订单` 的 api 接口.
+
+但是对于使用方想要 `查询女性用户创建的订单`, 这种显然就不是一种标准能力.
+====
 
 . 设计完之后, 要站在使用者的角度试用自己的接口, 看是否有问题.
++
+====
+为了保证自己设计和提供的标准服务 api 不是闭门造车, 能够符合使用者的要求, 要站在使用者角度, 来尝试使用自己的接口, 看是否符合预期.
+====
 
 . 接口给出粗粒度的数据
++
+====
+跟项目里的方法接口不同, 在对外服务接口上要提供粗粒度的数据. 有时我们的数据模型存放在多个表里, 或者多个实体形成了一个聚合. 那么在返回数据时, 要想想一下使用者拿到数据后的使用, 提供足够的数据, 避免接口太零碎需要多次访问.
+
+通过 `GraphQl` 可以一定程度解决一些接口数据层复杂度的问题.
+====
 
 ==== 面向服务
 ===== http
@@ -111,21 +141,67 @@ application
 . 读接口直接返回数据, 无需额外封装. 读接口不抛业务异常, 有异常就认为 bug.
 +
 ====
-link:https://github.com/yxc023/blueprint/blob/master/blueprint-application/src/main/java/com/yangxiaochen/blueprint/api/dubbo/order/OrderFacade.java[OrderFacade#getByOrderId]
+[source, java]
+----
+OrderDTO getByOrderId(Long orderId);
+----
+
+see link:https://github.com/yxc023/blueprint/blob/master/blueprint-api-dubbo/src/main/java/com/yangxiaochen/blueprint/api/dubbo/order/OrderFacade.java[OrderFacade#getByOrderId]
 ====
 
 . 写接口返回数据无需额外封装. 业务异常信息通过 `Exception` 抛出, 并包含异常 `code`.
++
+====
+[source, java]
+----
+Long createOrder(OrderCreateParam orderCreateParam) throws ApiException;
+----
 
+声明要抛出的异常.
 
+see link:https://github.com/yxc023/blueprint/blob/master/blueprint-api-dubbo/src/main/java/com/yangxiaochen/blueprint/api/dubbo/order/OrderFacade.java[OrderFacade#createOrder]
+====
 
 . dubbo 接口实现中, 要做异常全局处理, 转化为 `ApiException`. 并将 `ApiException` 放到发布的 api 包中. 否则无法在 dubbo 客户端对异常反序列化.
-. dubbo 接口不应返回枚举类型以及包含枚举类型的对象. 应该转成字符串或数字常量返回. 避免客户端因为服务端枚举类变化导致反序列化的失败.
++
+====
+实现 dubbo 的 filter 来做全局的异常处理, 将系统内的异常, 转化为 api 包中的 `ApiException`.
+
+see link:https://github.com/yxc023/blueprint/blob/master/blueprint-application/src/main/java/com/yangxiaochen/blueprint/api/dubbo/DubboExceptionHandler.java[DubboExceptionHandler]
+
+====
+
 . dubbo 发布的 api 包中, 应包含接口用到的**常量**, **数据对象**, **异常 code 常量**.
++
+====
+下面的例子中这个 module 就要作为一个 api jar 包发布出去.
+
+see link:https://github.com/yxc023/blueprint/tree/master/blueprint-api-dubbo/src/main/java/com/yangxiaochen/blueprint/api/dubbo[api jar]
+
+包含了 `ExceptionCodes`, `constant`, `dto` 等对象. 
+====
+
+. dubbo 接口不应返回枚举类型以及包含枚举类型的对象. 应该转成字符串或数字常量返回. 避免客户端因为服务端枚举类变化导致反序列化的失败.
++
+====
+比如在项目业务逻辑中, `Order` 中的 `orderStatus` 字段是 `OrderStatusEnum` 类型.
+
+那么在接口输出时, `OrderDTO` 中要变为 `orderStatus: Integer|String` 和 `orderStatusName: String`.
+====
 . dubbo 发布的 api 包中, 应该配套 source 包. 源码中应该有足够的注释.
++
+====
+在使用者最容易看到的地方提供足够的说明.
+====
 . dubbo 的认证信息可以包含在 `attachment` 里.
++
+====
+和诸多协议一样, dubbo 协议也有自己的 "header", 那就是 `attachment`, 请求附加信息可以使用 `attachment` 传输.
+====
 
 ==== 面向前端
 . 前端接口 path 为 `/web/**`.
+. 前端页面 path 为 `/page/**`
 . 前端接口的设计理念: 为展示而生, 能够为让前端直接做显示而不用做一些逻辑判断. 但是不能完全脱离业务模型.
 . 使用统一的 `Result` 对象封装结果返回. `Result` 包含 `code`, `message`, `tip`, `data` 等字段.
 . 异常要统一包装成数据返回, 需要返回人类可读的 tip. 绝大多数异常情况接口不需要返回特定错误码.
