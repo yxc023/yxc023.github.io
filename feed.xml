@@ -6,13 +6,13 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期五, 26 七月 2019 15:51:52 +0800</pubDate>
-    <lastBuildDate>星期五, 26 七月 2019 15:51:52 +0800</lastBuildDate>
+    <pubDate>Thu, 8 Aug 2019 17:53:59 +0000</pubDate>
+    <lastBuildDate>Thu, 8 Aug 2019 17:53:59 +0000</lastBuildDate>
 
     <item>
       <title>项目接口设计实践</title>
       <link>http://blog.yangxiaochen.com/blog/设计思想/api-design.html</link>
-      <pubDate>星期四, 25 七月 2019 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 25 Jul 2019 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/设计思想/api-design.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -178,19 +178,69 @@
 &lt;div class=&quot;olist arabic&quot;&gt;
 &lt;ol class=&quot;arabic&quot;&gt;
 &lt;li&gt;
-&lt;p&gt;读接口无副作用, 不要返回异常或错误码&lt;/p&gt;
+&lt;p&gt;读接口无副作用, 不要返回业务异常或错误码&lt;/p&gt;
+&lt;div class=&quot;exampleblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;获取信息的时候, 有就是有, 没有就是没有. 比如, 当调用 &lt;code&gt;getOrder(orderId)&lt;/code&gt; 接口时, 没有数据就返回 &lt;code&gt;null&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;而不要返回一个错误叫做 &lt;code&gt;订单不存在&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;面向服务的写接口声明会发生的各种异常和错误码&lt;/p&gt;
+&lt;div class=&quot;exampleblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;让异常类型中包含 &lt;code&gt;code&lt;/code&gt;, &lt;code&gt;message&lt;/code&gt;, &lt;code&gt;tip&lt;/code&gt;, &lt;code&gt;level&lt;/code&gt;, &lt;code&gt;data&lt;/code&gt;. 让异常能够传递更多信息.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;see &lt;a href=&quot;https://github.com/yxc023/expressive-exception&quot;&gt;A More Expressive Exception Library, 更有表达力的异常类库&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;面向服务的接口设计应该以自身业务另约需要暴露的功能为出发点, 而不是尊奉需求方的要求.&lt;/p&gt;
+&lt;div class=&quot;exampleblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;站在自身角度来思考我能够提供什么服务, 标准能力.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;比如作为订单管理系统, 提供 &lt;code&gt;创建订单&lt;/code&gt;, &lt;code&gt;通用查询订单&lt;/code&gt; 的 api 接口.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;但是对于使用方想要 &lt;code&gt;查询女性用户创建的订单&lt;/code&gt;, 这种显然就不是一种标准能力.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;设计完之后, 要站在使用者的角度试用自己的接口, 看是否有问题.&lt;/p&gt;
+&lt;div class=&quot;exampleblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;为了保证自己设计和提供的标准服务 api 不是闭门造车, 能够符合使用者的要求, 要站在使用者角度, 来尝试使用自己的接口, 看是否符合预期.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;接口给出粗粒度的数据&lt;/p&gt;
+&lt;div class=&quot;exampleblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;跟项目里的方法接口不同, 在对外服务接口上要提供粗粒度的数据. 有时我们的数据模型存放在多个表里, 或者多个实体形成了一个聚合. 那么在返回数据时, 要想想一下使用者拿到数据后的使用, 提供足够的数据, 避免接口太零碎需要多次访问.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;通过 &lt;code&gt;GraphQl&lt;/code&gt; 可以一定程度解决一些接口数据层复杂度的问题.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
@@ -253,27 +303,108 @@
 &lt;ol class=&quot;arabic&quot;&gt;
 &lt;li&gt;
 &lt;p&gt;dubbo 接口的设计理念: 尽量使 rpc 调用看上去跟调用本地方法一样.&lt;/p&gt;
+&lt;div class=&quot;exampleblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;结果无需再做封装, 成功就是成功了, 失败通过异常类传递.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;读接口直接返回数据, 无需额外封装. 读接口不抛业务异常, 有异常就认为 bug.&lt;/p&gt;
+&lt;div class=&quot;exampleblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;OrderDTO getByOrderId(Long orderId);&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;see &lt;a href=&quot;https://github.com/yxc023/blueprint/blob/master/blueprint-api-dubbo/src/main/java/com/yangxiaochen/blueprint/api/dubbo/order/OrderFacade.java&quot;&gt;OrderFacade#getByOrderId&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;写接口返回数据无需额外封装. 业务异常信息通过 &lt;code&gt;Exception&lt;/code&gt; 抛出, 并包含异常 &lt;code&gt;code&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;exampleblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;Long createOrder(OrderCreateParam orderCreateParam) throws ApiException;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;声明要抛出的异常.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;see &lt;a href=&quot;https://github.com/yxc023/blueprint/blob/master/blueprint-api-dubbo/src/main/java/com/yangxiaochen/blueprint/api/dubbo/order/OrderFacade.java&quot;&gt;OrderFacade#createOrder&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;dubbo 接口实现中, 要做异常全局处理, 转化为 &lt;code&gt;ApiException&lt;/code&gt;. 并将 &lt;code&gt;ApiException&lt;/code&gt; 放到发布的 api 包中. 否则无法在 dubbo 客户端对异常反序列化.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;dubbo 接口不应返回枚举类型以及包含枚举类型的对象. 应该转成字符串或数字常量返回. 避免客户端因为服务端枚举类变化导致反序列化的失败.&lt;/p&gt;
+&lt;div class=&quot;exampleblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;实现 dubbo 的 filter 来做全局的异常处理, 将系统内的异常, 转化为 api 包中的 &lt;code&gt;ApiException&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;see &lt;a href=&quot;https://github.com/yxc023/blueprint/blob/master/blueprint-application/src/main/java/com/yangxiaochen/blueprint/api/dubbo/DubboExceptionHandler.java&quot;&gt;DubboExceptionHandler&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;dubbo 发布的 api 包中, 应包含接口用到的&lt;strong&gt;常量&lt;/strong&gt;, &lt;strong&gt;数据对象&lt;/strong&gt;, &lt;strong&gt;异常 code 常量&lt;/strong&gt;.&lt;/p&gt;
+&lt;div class=&quot;exampleblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;下面的例子中这个 module 就要作为一个 api jar 包发布出去.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;see &lt;a href=&quot;https://github.com/yxc023/blueprint/tree/master/blueprint-api-dubbo/src/main/java/com/yangxiaochen/blueprint/api/dubbo&quot;&gt;api jar&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;包含了 &lt;code&gt;ExceptionCodes&lt;/code&gt;, &lt;code&gt;constant&lt;/code&gt;, &lt;code&gt;dto&lt;/code&gt; 等对象.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;dubbo 接口不应返回枚举类型以及包含枚举类型的对象. 应该转成字符串或数字常量返回. 避免客户端因为服务端枚举类变化导致反序列化的失败.&lt;/p&gt;
+&lt;div class=&quot;exampleblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;比如在项目业务逻辑中, &lt;code&gt;Order&lt;/code&gt; 中的 &lt;code&gt;orderStatus&lt;/code&gt; 字段是 &lt;code&gt;OrderStatusEnum&lt;/code&gt; 类型.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;那么在接口输出时, &lt;code&gt;OrderDTO&lt;/code&gt; 中要变为 &lt;code&gt;orderStatus: Integer|String&lt;/code&gt; 和 &lt;code&gt;orderStatusName: String&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;dubbo 发布的 api 包中, 应该配套 source 包. 源码中应该有足够的注释.&lt;/p&gt;
+&lt;div class=&quot;exampleblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;在使用者最容易看到的地方提供足够的说明.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;dubbo 的认证信息可以包含在 &lt;code&gt;attachment&lt;/code&gt; 里.&lt;/p&gt;
+&lt;div class=&quot;exampleblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;和诸多协议一样, dubbo 协议也有自己的 &quot;header&quot;, 那就是 &lt;code&gt;attachment&lt;/code&gt;, 请求附加信息可以使用 &lt;code&gt;attachment&lt;/code&gt; 传输.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;/div&gt;
@@ -285,6 +416,9 @@
 &lt;ol class=&quot;arabic&quot;&gt;
 &lt;li&gt;
 &lt;p&gt;前端接口 path 为 &lt;code&gt;/web/**&lt;/code&gt;.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;前端页面 path 为 &lt;code&gt;/page/**&lt;/code&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
 &lt;p&gt;前端接口的设计理念: 为展示而生, 能够为让前端直接做显示而不用做一些逻辑判断. 但是不能完全脱离业务模型.&lt;/p&gt;
@@ -350,7 +484,7 @@
     <item>
       <title>「企业应用架构模式」读书笔记与思考</title>
       <link>http://blog.yangxiaochen.com/blog/设计思想/reading-notes-for-PoEAA.html</link>
-      <pubDate>星期五, 12 七月 2019 00:00:00 +0800</pubDate>
+      <pubDate>Fri, 12 Jul 2019 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/设计思想/reading-notes-for-PoEAA.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -546,7 +680,7 @@ receive()&lt;/pre&gt;
     <item>
       <title>如何有效的书写项目单元测试</title>
       <link>http://blog.yangxiaochen.com/blog/设计思想/how-to-write-unittest.html</link>
-      <pubDate>星期一, 17 六月 2019 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 17 Jun 2019 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/设计思想/how-to-write-unittest.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -1307,7 +1441,7 @@ template = saveTemplate(template) &lt;i class=&quot;conum&quot; data-value=&quot
     <item>
       <title>日常体会(更新至 2019-05-06)</title>
       <link>http://blog.yangxiaochen.com/blog/设计思想/daily-experience.html</link>
-      <pubDate>星期一, 6 五月 2019 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 6 May 2019 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/设计思想/daily-experience.html</guid>
       	<description>
 	&lt;div class=&quot;admonitionblock note&quot;&gt;
@@ -1569,7 +1703,7 @@ template = saveTemplate(template) &lt;i class=&quot;conum&quot; data-value=&quot
     <item>
       <title>在 windows 系统下使用 linux 命令行做开发</title>
       <link>http://blog.yangxiaochen.com/blog/tools/linux-in-windows.html</link>
-      <pubDate>星期一, 11 二月 2019 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 11 Feb 2019 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/tools/linux-in-windows.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -1674,7 +1808,7 @@ template = saveTemplate(template) &lt;i class=&quot;conum&quot; data-value=&quot
     <item>
       <title>groovy技巧 for java 开发者</title>
       <link>http://blog.yangxiaochen.com/blog/groovy/groovy-tips-for-javaer.html</link>
-      <pubDate>星期六, 5 五月 2018 00:00:00 +0800</pubDate>
+      <pubDate>Sat, 5 May 2018 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/groovy/groovy-tips-for-javaer.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -1686,6 +1820,7 @@ template = saveTemplate(template) &lt;i class=&quot;conum&quot; data-value=&quot
 &lt;li&gt;&lt;a href=&quot;#_基础&quot;&gt;基础&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#_对象&quot;&gt;对象&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#_方法调用&quot;&gt;方法调用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_null_check&quot;&gt;null check&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#_字符串&quot;&gt;字符串&lt;/a&gt;
 &lt;ul class=&quot;sectlevel3&quot;&gt;
 &lt;li&gt;&lt;a href=&quot;#_引号&quot;&gt;引号&lt;/a&gt;&lt;/li&gt;
@@ -1779,6 +1914,16 @@ template = saveTemplate(template) &lt;i class=&quot;conum&quot; data-value=&quot
 &lt;div class=&quot;content&quot;&gt;
 &lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;println(&quot;haha&quot;)
 println &quot;haha&quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_null_check&quot;&gt;null check&lt;/h3&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;person.name ?: &apos;default name&apos;
+
+person.school?.name ?: &apos;null school or null name&apos;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -1965,7 +2110,13 @@ assert [
 
 def out = new File(&quot;out.txt&quot;)
 out &amp;lt;&amp;lt; &quot;hello world\n&quot;
-out &amp;lt;&amp;lt; &quot;something&quot;&lt;/code&gt;&lt;/pre&gt;
+out &amp;lt;&amp;lt; &quot;something&quot;
+
+
+File data = new File(fileName)
+data.newReader(&quot;GBK&quot;).lines().skip(1).each { line -&amp;gt;
+    out &amp;lt;&amp;lt; line &amp;lt;&amp;lt; &quot;\n&quot;
+}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -2047,7 +2198,7 @@ sout.eachLine { line -&amp;gt;
     <item>
       <title>spring 中 aspectj 扫描内容太多导致的启动时加载缓慢</title>
       <link>http://blog.yangxiaochen.com/blog/stackoverflow/spring-aspectj-slow.html</link>
-      <pubDate>星期四, 3 五月 2018 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 3 May 2018 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/stackoverflow/spring-aspectj-slow.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -2212,7 +2363,7 @@ sout.eachLine { line -&amp;gt;
     <item>
       <title>2018 北京 qcon 大会笔记</title>
       <link>http://blog.yangxiaochen.com/blog/设计思想/2018-beijing-qcon.html</link>
-      <pubDate>星期二, 24 四月 2018 00:00:00 +0800</pubDate>
+      <pubDate>Tue, 24 Apr 2018 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/设计思想/2018-beijing-qcon.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -2646,7 +2797,7 @@ sout.eachLine { line -&amp;gt;
     <item>
       <title>pac4j 简介</title>
       <link>http://blog.yangxiaochen.com/blog/java/pac4j-introduction.html</link>
-      <pubDate>星期日, 15 四月 2018 00:00:00 +0800</pubDate>
+      <pubDate>Sun, 15 Apr 2018 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/java/pac4j-introduction.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -2918,7 +3069,7 @@ public ShiroFilterFactoryBean shiroFilterFactoryBean() {
     <item>
       <title>jooq 介绍</title>
       <link>http://blog.yangxiaochen.com/blog/db/jooq-intro.html</link>
-      <pubDate>星期三, 4 四月 2018 00:00:00 +0800</pubDate>
+      <pubDate>Wed, 4 Apr 2018 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/db/jooq-intro.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -3605,7 +3756,7 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
     <item>
       <title>方法论总结</title>
       <link>http://blog.yangxiaochen.com/blog/设计思想/methodology.html</link>
-      <pubDate>星期日, 5 十一月 2017 00:00:00 +0800</pubDate>
+      <pubDate>Sun, 5 Nov 2017 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/设计思想/methodology.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -3760,7 +3911,7 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
     <item>
       <title>spring boot mvc 文件上传错误</title>
       <link>http://blog.yangxiaochen.com/blog/java/spring-mvc-multipart-error.html</link>
-      <pubDate>星期二, 5 九月 2017 00:00:00 +0800</pubDate>
+      <pubDate>Tue, 5 Sep 2017 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/java/spring-mvc-multipart-error.html</guid>
       	<description>
 	&lt;p&gt;NOTE: 本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/p&gt;
@@ -3847,7 +3998,7 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
     <item>
       <title>gradle简明教程</title>
       <link>http://blog.yangxiaochen.com/blog/java/gradle-simple-introduction.html</link>
-      <pubDate>星期一, 24 七月 2017 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 24 Jul 2017 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/java/gradle-simple-introduction.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -4293,7 +4444,7 @@ idea {
     <item>
       <title>Java web 项目异常设计实践</title>
       <link>http://blog.yangxiaochen.com/blog/java/exception-in-action.html</link>
-      <pubDate>星期一, 10 七月 2017 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 10 Jul 2017 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/java/exception-in-action.html</guid>
       	<description>
 	&lt;h1&gt;异常实践&lt;/h1&gt;
@@ -4360,7 +4511,7 @@ idea {
     <item>
       <title>spring &amp; spring mvc 初始化介绍</title>
       <link>http://blog.yangxiaochen.com/blog/java/spring-spring-mvc-initalize.html</link>
-      <pubDate>星期四, 30 三月 2017 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 30 Mar 2017 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/java/spring-spring-mvc-initalize.html</guid>
       	<description>
 	&lt;p&gt;NOTE: 本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/p&gt;
@@ -4505,7 +4656,7 @@ public static final String DEFAULT_CONFIG_LOCATION_SUFFIX = &amp;quot;.xml&amp;q
     <item>
       <title>Java异常规范</title>
       <link>http://blog.yangxiaochen.com/blog/java/exception-pattern.html</link>
-      <pubDate>星期四, 29 九月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 29 Sep 2016 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/java/exception-pattern.html</guid>
       	<description>
 	&lt;h1&gt;异常规范&lt;/h1&gt;
@@ -4648,7 +4799,7 @@ public static final String DEFAULT_CONFIG_LOCATION_SUFFIX = &amp;quot;.xml&amp;q
     <item>
       <title>git实际开发语句</title>
       <link>http://blog.yangxiaochen.com/blog/git/git-in-use.html</link>
-      <pubDate>星期一, 4 七月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 4 Jul 2016 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/git/git-in-use.html</guid>
       	<description>
 	&lt;!-- # git实际使用指南 --&gt;
@@ -4760,7 +4911,7 @@ git commit
     <item>
       <title>git分支管理与使用规范</title>
       <link>http://blog.yangxiaochen.com/blog/git/git-in-action.html</link>
-      <pubDate>星期二, 21 六月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Tue, 21 Jun 2016 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/git/git-in-action.html</guid>
       	<description>
 	&lt;!-- # git分支管理与使用规范 --&gt;
@@ -4955,7 +5106,7 @@ git reset --soft [version]  // 保留版本后的所有已提交修改到commit 
     <item>
       <title>git-flow实践</title>
       <link>http://blog.yangxiaochen.com/blog/git/git-flow-in-action.html</link>
-      <pubDate>星期日, 12 六月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Sun, 12 Jun 2016 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/git/git-flow-in-action.html</guid>
       	<description>
 	&lt;!-- # git-flow 操作实践 --&gt;
@@ -5125,7 +5276,7 @@ Summary of actions:
     <item>
       <title>java 多线程同步的几种写法</title>
       <link>http://blog.yangxiaochen.com/blog/java/thread-coordinate-n-methods.html</link>
-      <pubDate>星期四, 14 四月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 14 Apr 2016 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/java/thread-coordinate-n-methods.html</guid>
       	<description>
 	&lt;div class=&quot;quoteblock&quot;&gt;
@@ -5421,7 +5572,7 @@ ForkJoinTask&amp;lt;Integer&amp;gt; f3 = ForkJoinTask.adapt(() -&amp;gt; test.m3
     <item>
       <title>从一个丢失的iphone看互联网信息安全</title>
       <link>http://blog.yangxiaochen.com/blog/secure/a-lost-iphone-secure.html</link>
-      <pubDate>星期一, 4 四月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 4 Apr 2016 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/secure/a-lost-iphone-secure.html</guid>
       	<description>
 	&lt;!-- # 一个真实故事 --&gt;
@@ -5542,7 +5693,7 @@ ForkJoinTask&amp;lt;Integer&amp;gt; f3 = ForkJoinTask.adapt(() -&amp;gt; test.m3
     <item>
       <title>定位占用cpu的java线程</title>
       <link>http://blog.yangxiaochen.com/blog/linux/top-thread.html</link>
-      <pubDate>星期五, 1 四月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Fri, 1 Apr 2016 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/linux/top-thread.html</guid>
       	<description>
 	&lt;div class=&quot;paragraph&quot;&gt;
@@ -5611,7 +5762,7 @@ sout.eachLine { line -&amp;gt;
     <item>
       <title>mkdir在/home目录下新建文件夹 for mac</title>
       <link>http://blog.yangxiaochen.com/blog/mac/create-dir-home.html</link>
-      <pubDate>星期四, 31 三月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 31 Mar 2016 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/mac/create-dir-home.html</guid>
       	<description>
 	&lt;div class=&quot;paragraph&quot;&gt;
@@ -5696,7 +5847,7 @@ I wouldn&amp;#8217;t do anything &apos;important&apos; with this directory as it
     <item>
       <title>homebrew安装旧版本软件</title>
       <link>http://blog.yangxiaochen.com/blog/mac/homebrew-install-old-version-soft.html</link>
-      <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Tue, 9 Feb 2016 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/mac/homebrew-install-old-version-soft.html</guid>
       	<description>
 	&lt;div class=&quot;paragraph&quot;&gt;
@@ -5726,7 +5877,7 @@ leafnode node node010 node04 node06 node08 nodebrew nodenv&lt;/pre&gt;
     <item>
       <title>python入门</title>
       <link>http://blog.yangxiaochen.com/blog/develop/python-starter.html</link>
-      <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Tue, 9 Feb 2016 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/develop/python-starter.html</guid>
       	<description>
 	&lt;h4&gt;原创, 转载请注明出处&lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/h4&gt;
@@ -5751,7 +5902,7 @@ leafnode node node010 node04 node06 node08 nodebrew nodenv&lt;/pre&gt;
     <item>
       <title>rabbitmq管理使用实践</title>
       <link>http://blog.yangxiaochen.com/blog/develop/rabbitmq-in-action.html</link>
-      <pubDate>星期一, 8 二月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 8 Feb 2016 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/develop/rabbitmq-in-action.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -5990,7 +6141,7 @@ durableQueues.txt&lt;/pre&gt;
     <item>
       <title>css 定位指南</title>
       <link>http://blog.yangxiaochen.com/blog/frontend/css-position.html</link>
-      <pubDate>星期二, 8 十一月 2011 00:00:00 +0800</pubDate>
+      <pubDate>Tue, 8 Nov 2011 00:00:00 +0000</pubDate>
       <guid isPermaLink="false">blog/frontend/css-position.html</guid>
       	<description>
 	&lt;h4&gt;原创, 转载请注明出处&lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/h4&gt;

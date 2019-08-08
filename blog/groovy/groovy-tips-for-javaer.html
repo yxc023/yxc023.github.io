@@ -67,7 +67,7 @@
 		<h1>groovy技巧 for java 开发者</h1>
 	</div>
 
-	<p><em>05 五月 2018</em></p>
+	<p><em>05 May 2018</em></p>
 
 	<p><div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -78,6 +78,7 @@
 <li><a href="#_基础">基础</a></li>
 <li><a href="#_对象">对象</a></li>
 <li><a href="#_方法调用">方法调用</a></li>
+<li><a href="#_null_check">null check</a></li>
 <li><a href="#_字符串">字符串</a>
 <ul class="sectlevel3">
 <li><a href="#_引号">引号</a></li>
@@ -171,6 +172,16 @@
 <div class="content">
 <pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">println("haha")
 println "haha"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_null_check">null check</h3>
+<div class="listingblock">
+<div class="content">
+<pre>person.name ?: 'default name'
+
+person.school?.name ?: 'null school or null name'</pre>
 </div>
 </div>
 </div>
@@ -357,7 +368,13 @@ assert [
 
 def out = new File("out.txt")
 out &lt;&lt; "hello world\n"
-out &lt;&lt; "something"</code></pre>
+out &lt;&lt; "something"
+
+
+File data = new File(fileName)
+data.newReader("GBK").lines().skip(1).each { line -&gt;
+    out &lt;&lt; line &lt;&lt; "\n"
+}</code></pre>
 </div>
 </div>
 </div>
