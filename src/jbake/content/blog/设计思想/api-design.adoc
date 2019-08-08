@@ -104,11 +104,15 @@ application
 ===== dubbo
 . dubbo 接口的设计理念: 尽量使 rpc 调用看上去跟调用本地方法一样.
 +
+====
 结果无需再做封装, 成功就是成功了, 失败通过异常类传递.
+====
 
 . 读接口直接返回数据, 无需额外封装. 读接口不抛业务异常, 有异常就认为 bug.
 +
-TIP: link:https://github.com/yxc023/blueprint/blob/master/blueprint-application/src/main/java/com/yangxiaochen/blueprint/api/dubbo/order/OrderFacade.java[OrderFacade#getByOrderId]
+====
+link:https://github.com/yxc023/blueprint/blob/master/blueprint-application/src/main/java/com/yangxiaochen/blueprint/api/dubbo/order/OrderFacade.java[OrderFacade#getByOrderId]
+====
 
 . 写接口返回数据无需额外封装. 业务异常信息通过 `Exception` 抛出, 并包含异常 `code`.
 
