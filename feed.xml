@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>Mon, 28 Oct 2019 17:14:42 +0000</pubDate>
-    <lastBuildDate>Mon, 28 Oct 2019 17:14:42 +0000</lastBuildDate>
+    <pubDate>Mon, 28 Oct 2019 17:32:27 +0000</pubDate>
+    <lastBuildDate>Mon, 28 Oct 2019 17:32:27 +0000</lastBuildDate>
 
     <item>
       <title>项目接口设计实践</title>
@@ -501,35 +501,9 @@
 &lt;li&gt;&lt;a href=&quot;#_服务层&quot;&gt;2.1.4. 服务层&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_数据源架构模式&quot;&gt;2.2. 数据源架构模式&lt;/a&gt;
-&lt;ul class=&quot;sectlevel3&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_表数据入口&quot;&gt;2.2.1. 表数据入口&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_对象_关系行为模式&quot;&gt;2.3. 对象 - 关系行为模式&lt;/a&gt;
-&lt;ul class=&quot;sectlevel3&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_工作单元&quot;&gt;2.3.1. 工作单元&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_标识映射&quot;&gt;2.3.2. 标识映射&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_延迟加载&quot;&gt;2.3.3. 延迟加载&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_对象_关系结构模式&quot;&gt;2.4. 对象 - 关系结构模式&lt;/a&gt;
-&lt;ul class=&quot;sectlevel3&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_标识域&quot;&gt;2.4.1. 标识域&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_外键映射&quot;&gt;2.4.2. 外键映射&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_关联表映射&quot;&gt;2.4.3. 关联表映射&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_依赖映射&quot;&gt;2.4.4. 依赖映射&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_嵌入值&quot;&gt;2.4.5. 嵌入值&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_序列化_lob&quot;&gt;2.4.6. 序列化 LOB&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_单表继承&quot;&gt;2.4.7. 单表继承&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_类表继承&quot;&gt;2.4.8. 类表继承&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_具体表继承&quot;&gt;2.4.9. 具体表继承&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_继承映射器&quot;&gt;2.4.10. 继承映射器&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_对象_关系元数据映射模式&quot;&gt;2.5. 对象 - 关系元数据映射模式&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_总结&quot;&gt;3. 总结&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div id=&quot;preamble&quot;&gt;
@@ -621,7 +595,7 @@ order.create() &lt;i class=&quot;conum&quot; data-value=&quot;3&quot;&gt;&lt;/i&
 &lt;div class=&quot;sect3&quot;&gt;
 &lt;h4 id=&quot;_表模块&quot;&gt;2.1.3. 表模块&lt;/h4&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;这个 java 中很少见, 作者例举了一个 .NET 框架中的例子. 为了方便说明, 我还用上面的 java 的例子来说.&lt;/p&gt;
+&lt;p&gt;作者例举了一个 .NET 框架中的例子. 为了方便说明, 我还用上面的 java 的例子来说.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;&lt;em&gt;表模块模式&lt;/em&gt; 是指业务中操作的对象背后关联着一个数据表. 以表为维度描述逻辑.&lt;/p&gt;
@@ -655,6 +629,12 @@ order.insert(extractDataFromParams(createOrderParams))&lt;/pre&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;看上去很像 DAO. 使用跟数据库表完全对应的数据访问对象来完成业务逻辑.&lt;/p&gt;
 &lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;其实很多 java 程序员所写的大概是这种面向对象的业务逻辑, 面向的对象其实是数据库表.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;与其说做了业务抽象, 不如说只是把事务脚本中访问数据库的代码按照不同的表进行了封装罢了.&lt;/p&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect3&quot;&gt;
 &lt;h4 id=&quot;_服务层&quot;&gt;2.1.4. 服务层&lt;/h4&gt;
@@ -662,7 +642,7 @@ order.insert(extractDataFromParams(createOrderParams))&lt;/pre&gt;
 &lt;p&gt;图 TBD.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;服务层定义了应用边界, &lt;strong&gt;从接口客户层角度所能看到的可用操作集合&lt;/strong&gt;. 它封装了应用的业务逻辑, 事务控制, 及其操作实现中的响应协调.&lt;/p&gt;
+&lt;p&gt;服务层定义了应用边界和标准能力, &lt;strong&gt;从接口客户层角度所能看到的可用操作集合&lt;/strong&gt;. 它封装了应用的业务逻辑, 事务控制, 及其操作实现中的响应协调.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;比如定一个了一个 &lt;code&gt;OrderFlowBiz&lt;/code&gt; 的服务层对象, 包含了对订单流程的操作集合.&lt;/p&gt;
@@ -677,81 +657,40 @@ receive()&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;而不是传统的写 service 层, 各种操作混在一起.&lt;/p&gt;
+&lt;p&gt;这个模式中, 服务层通常很像事务脚本, 需要明确的针对特定业务请求.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;这个模式中, 服务层通常很像事务脚本, 需要明确的针对特定请求, 而 service 层是领域模型, 要考虑通用性.&lt;/p&gt;
+&lt;p&gt;通常, 服务层会在领域逻辑层之上, 作为领域逻辑的操作门面. 因为领域层的细节操作太多, 不要暴露给接口层.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_数据源架构模式&quot;&gt;2.2. 数据源架构模式&lt;/h3&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_表数据入口&quot;&gt;2.2.1. 表数据入口&lt;/h4&gt;
-
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_对象_关系行为模式&quot;&gt;2.3. 对象 - 关系行为模式&lt;/h3&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_工作单元&quot;&gt;2.3.1. 工作单元&lt;/h4&gt;
-
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_总结&quot;&gt;3. 总结&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;复杂度和业务抽象程度: 事务脚本 &amp;lt; 表模块 &amp;lt; 领域模型&lt;/p&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;事务脚本最简单, 我也很喜欢, 应对任务型工作, 事务脚本很好用.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;表模块是对事务脚本进行的面向对象的抽象, 把访问数据库的代码抽象到了对象里. 甚至不能叫面向对象, 而只是在事务脚本的基础上引入了一些对象, 方便数据库访问. 可能我们多数程序员都是在写这种代码.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;领域模型是回到面向对象第一节课上所讲的, 让对象有生命力, 不仅有自己的属性, 还有自己的行为.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 &lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_标识映射&quot;&gt;2.3.2. 标识映射&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_延迟加载&quot;&gt;2.3.3. 延迟加载&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_对象_关系结构模式&quot;&gt;2.4. 对象 - 关系结构模式&lt;/h3&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_标识域&quot;&gt;2.4.1. 标识域&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_外键映射&quot;&gt;2.4.2. 外键映射&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_关联表映射&quot;&gt;2.4.3. 关联表映射&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_依赖映射&quot;&gt;2.4.4. 依赖映射&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_嵌入值&quot;&gt;2.4.5. 嵌入值&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_序列化_lob&quot;&gt;2.4.6. 序列化 LOB&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_单表继承&quot;&gt;2.4.7. 单表继承&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_类表继承&quot;&gt;2.4.8. 类表继承&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_具体表继承&quot;&gt;2.4.9. 具体表继承&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_继承映射器&quot;&gt;2.4.10. 继承映射器&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_对象_关系元数据映射模式&quot;&gt;2.5. 对象 - 关系元数据映射模式&lt;/h3&gt;
-
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;服务层通常在表模块或者领域模型之上一层, 作为业务能力暴露&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
