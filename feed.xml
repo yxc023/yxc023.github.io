@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>Mon, 28 Oct 2019 17:32:27 +0000</pubDate>
-    <lastBuildDate>Mon, 28 Oct 2019 17:32:27 +0000</lastBuildDate>
+    <pubDate>Mon, 28 Oct 2019 17:35:46 +0000</pubDate>
+    <lastBuildDate>Mon, 28 Oct 2019 17:35:46 +0000</lastBuildDate>
 
     <item>
       <title>项目接口设计实践</title>
@@ -693,115 +693,6 @@ receive()&lt;/pre&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-	</description>
-    </item>
-    <item>
-      <title>「企业应用架构模式」读书笔记与思考 - 2 - 数据源架构模式</title>
-      <link>http://blog.yangxiaochen.com/blog/设计思想/reading-notes-for-PoEAA2.html</link>
-      <pubDate>Fri, 12 Jul 2019 00:00:00 +0000</pubDate>
-      <guid isPermaLink="false">blog/设计思想/reading-notes-for-PoEAA2.html</guid>
-      	<description>
-	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
-&lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
-&lt;ul class=&quot;sectlevel2&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_数据源架构模式&quot;&gt;1. 数据源架构模式&lt;/a&gt;
-&lt;ul class=&quot;sectlevel3&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_表数据入口&quot;&gt;1.1. 表数据入口&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_对象_关系行为模式&quot;&gt;2. 对象 - 关系行为模式&lt;/a&gt;
-&lt;ul class=&quot;sectlevel3&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_工作单元&quot;&gt;2.1. 工作单元&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_标识映射&quot;&gt;2.2. 标识映射&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_延迟加载&quot;&gt;2.3. 延迟加载&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_对象_关系结构模式&quot;&gt;3. 对象 - 关系结构模式&lt;/a&gt;
-&lt;ul class=&quot;sectlevel3&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_标识域&quot;&gt;3.1. 标识域&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_外键映射&quot;&gt;3.2. 外键映射&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_关联表映射&quot;&gt;3.3. 关联表映射&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_依赖映射&quot;&gt;3.4. 依赖映射&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_嵌入值&quot;&gt;3.5. 嵌入值&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_序列化_lob&quot;&gt;3.6. 序列化 LOB&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_单表继承&quot;&gt;3.7. 单表继承&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_类表继承&quot;&gt;3.8. 类表继承&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_具体表继承&quot;&gt;3.9. 具体表继承&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_继承映射器&quot;&gt;3.10. 继承映射器&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_对象_关系元数据映射模式&quot;&gt;4. 对象 - 关系元数据映射模式&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_数据源架构模式&quot;&gt;1. 数据源架构模式&lt;/h3&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_表数据入口&quot;&gt;1.1. 表数据入口&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_对象_关系行为模式&quot;&gt;2. 对象 - 关系行为模式&lt;/h3&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_工作单元&quot;&gt;2.1. 工作单元&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_标识映射&quot;&gt;2.2. 标识映射&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_延迟加载&quot;&gt;2.3. 延迟加载&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_对象_关系结构模式&quot;&gt;3. 对象 - 关系结构模式&lt;/h3&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_标识域&quot;&gt;3.1. 标识域&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_外键映射&quot;&gt;3.2. 外键映射&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_关联表映射&quot;&gt;3.3. 关联表映射&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_依赖映射&quot;&gt;3.4. 依赖映射&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_嵌入值&quot;&gt;3.5. 嵌入值&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_序列化_lob&quot;&gt;3.6. 序列化 LOB&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_单表继承&quot;&gt;3.7. 单表继承&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_类表继承&quot;&gt;3.8. 类表继承&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_具体表继承&quot;&gt;3.9. 具体表继承&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect3&quot;&gt;
-&lt;h4 id=&quot;_继承映射器&quot;&gt;3.10. 继承映射器&lt;/h4&gt;
-
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_对象_关系元数据映射模式&quot;&gt;4. 对象 - 关系元数据映射模式&lt;/h3&gt;
-
 &lt;/div&gt;
 	</description>
     </item>
