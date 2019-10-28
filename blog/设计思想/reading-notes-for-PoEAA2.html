@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>「企业应用架构模式」读书笔记与思考 - 2 - 数据源架构模式</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="yxc023@qq.com">
+    <meta name="keywords" content="">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+	  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+	
+	<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Michael的文档</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+             <li><a href="../../index.html">首页</a></li> 
+            <li><a href="../../wiki_gradle_index.html">gradle</a></li>
+            <li><a href="../../tags/git.html">git</a></li>
+            <li><a href="../../tags/spring.html">spring</a></li>
+            <li><a href="../../archive.html">archive</a></li>
+
+            <li><a href="https://github.com/yxc023/jbake">my jbake</a></li>
+
+            <li><a href="../../about.html">关于</a></li>
+
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">	
+	<div class="page-header">
+		<h1>「企业应用架构模式」读书笔记与思考 - 2 - 数据源架构模式</h1>
+	</div>
+
+	<p><em>12 July 2019</em></p>
+
+	<p><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel2">
+<li><a href="#_数据源架构模式">1. 数据源架构模式</a>
+<ul class="sectlevel3">
+<li><a href="#_表数据入口">1.1. 表数据入口</a></li>
+</ul>
+</li>
+<li><a href="#_对象_关系行为模式">2. 对象 - 关系行为模式</a>
+<ul class="sectlevel3">
+<li><a href="#_工作单元">2.1. 工作单元</a></li>
+<li><a href="#_标识映射">2.2. 标识映射</a></li>
+<li><a href="#_延迟加载">2.3. 延迟加载</a></li>
+</ul>
+</li>
+<li><a href="#_对象_关系结构模式">3. 对象 - 关系结构模式</a>
+<ul class="sectlevel3">
+<li><a href="#_标识域">3.1. 标识域</a></li>
+<li><a href="#_外键映射">3.2. 外键映射</a></li>
+<li><a href="#_关联表映射">3.3. 关联表映射</a></li>
+<li><a href="#_依赖映射">3.4. 依赖映射</a></li>
+<li><a href="#_嵌入值">3.5. 嵌入值</a></li>
+<li><a href="#_序列化_lob">3.6. 序列化 LOB</a></li>
+<li><a href="#_单表继承">3.7. 单表继承</a></li>
+<li><a href="#_类表继承">3.8. 类表继承</a></li>
+<li><a href="#_具体表继承">3.9. 具体表继承</a></li>
+<li><a href="#_继承映射器">3.10. 继承映射器</a></li>
+</ul>
+</li>
+<li><a href="#_对象_关系元数据映射模式">4. 对象 - 关系元数据映射模式</a></li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_数据源架构模式">1. 数据源架构模式</h3>
+<div class="sect3">
+<h4 id="_表数据入口">1.1. 表数据入口</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="_对象_关系行为模式">2. 对象 - 关系行为模式</h3>
+<div class="sect3">
+<h4 id="_工作单元">2.1. 工作单元</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_标识映射">2.2. 标识映射</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_延迟加载">2.3. 延迟加载</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="_对象_关系结构模式">3. 对象 - 关系结构模式</h3>
+<div class="sect3">
+<h4 id="_标识域">3.1. 标识域</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_外键映射">3.2. 外键映射</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_关联表映射">3.3. 关联表映射</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_依赖映射">3.4. 依赖映射</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_嵌入值">3.5. 嵌入值</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_序列化_lob">3.6. 序列化 LOB</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_单表继承">3.7. 单表继承</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_类表继承">3.8. 类表继承</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_具体表继承">3.9. 具体表继承</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_继承映射器">3.10. 继承映射器</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="_对象_关系元数据映射模式">4. 对象 - 关系元数据映射模式</h3>
+
+</div></p>
+
+	<hr />
+
+
+	<div id="gitalk-container"></div>
+	<script>
+		const gitalk = new Gitalk({
+		clientID: '9fda08d9f8fbe4a76212',
+		clientSecret: '9a91a6260819f30af5d9c4534815493865d409a7',
+		repo: 'yxc023.github.io',
+		owner: 'yxc023',
+		admin: ['yxc023'],
+		id: "「企业应用架构模式」读书笔记与思考 - 2 - 数据源架构模式",      // Ensure uniqueness and length less than 50
+		distractionFreeMode: false  // Facebook-like distraction free mode
+		})
+
+		gitalk.render('gitalk-container')
+
+	</script>
+
+
+	
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">&copy; 2019 | Michael Yang</p>
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    
+  </body>
+</html>

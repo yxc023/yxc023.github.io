@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8"/>
-    <title>「企业应用架构模式」读书笔记与思考</title>
+    <title>「企业应用架构模式」读书笔记与思考 - 1 - 领域逻辑模式</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="yxc023@qq.com">
@@ -64,7 +64,7 @@
     </div>
     <div class="container">	
 	<div class="page-header">
-		<h1>「企业应用架构模式」读书笔记与思考</h1>
+		<h1>「企业应用架构模式」读书笔记与思考 - 1 - 领域逻辑模式</h1>
 	</div>
 
 	<p><em>12 July 2019</em></p>
@@ -77,10 +77,10 @@
 <ul class="sectlevel2">
 <li><a href="#_领域逻辑模式">2.1. 领域逻辑模式</a>
 <ul class="sectlevel3">
-<li><a href="#_事务脚本模式">2.1.1. 事务脚本模式</a></li>
-<li><a href="#_领域模型模式">2.1.2. 领域模型模式</a></li>
-<li><a href="#_表模块模式">2.1.3. 表模块模式</a></li>
-<li><a href="#_服务层模式">2.1.4. 服务层模式</a></li>
+<li><a href="#_事务脚本">2.1.1. 事务脚本</a></li>
+<li><a href="#_领域模型">2.1.2. 领域模型</a></li>
+<li><a href="#_表模块">2.1.3. 表模块</a></li>
+<li><a href="#_服务层">2.1.4. 服务层</a></li>
 </ul>
 </li>
 <li><a href="#_数据源架构模式">2.2. 数据源架构模式</a>
@@ -88,9 +88,30 @@
 <li><a href="#_表数据入口">2.2.1. 表数据入口</a></li>
 </ul>
 </li>
+<li><a href="#_对象_关系行为模式">2.3. 对象 - 关系行为模式</a>
+<ul class="sectlevel3">
+<li><a href="#_工作单元">2.3.1. 工作单元</a></li>
+<li><a href="#_标识映射">2.3.2. 标识映射</a></li>
+<li><a href="#_延迟加载">2.3.3. 延迟加载</a></li>
 </ul>
 </li>
-<li><a href="#_整体思考">3. 整体思考</a></li>
+<li><a href="#_对象_关系结构模式">2.4. 对象 - 关系结构模式</a>
+<ul class="sectlevel3">
+<li><a href="#_标识域">2.4.1. 标识域</a></li>
+<li><a href="#_外键映射">2.4.2. 外键映射</a></li>
+<li><a href="#_关联表映射">2.4.3. 关联表映射</a></li>
+<li><a href="#_依赖映射">2.4.4. 依赖映射</a></li>
+<li><a href="#_嵌入值">2.4.5. 嵌入值</a></li>
+<li><a href="#_序列化_lob">2.4.6. 序列化 LOB</a></li>
+<li><a href="#_单表继承">2.4.7. 单表继承</a></li>
+<li><a href="#_类表继承">2.4.8. 类表继承</a></li>
+<li><a href="#_具体表继承">2.4.9. 具体表继承</a></li>
+<li><a href="#_继承映射器">2.4.10. 继承映射器</a></li>
+</ul>
+</li>
+<li><a href="#_对象_关系元数据映射模式">2.5. 对象 - 关系元数据映射模式</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div id="preamble">
@@ -122,8 +143,11 @@
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_领域逻辑模式">2.1. 领域逻辑模式</h3>
+<div class="paragraph">
+<p>领域逻辑模式主要解决了 "核心业务逻辑如何组织" 这一问题.</p>
+</div>
 <div class="sect3">
-<h4 id="_事务脚本模式">2.1.1. 事务脚本模式</h4>
+<h4 id="_事务脚本">2.1.1. 事务脚本</h4>
 <div class="paragraph">
 <p>将一个完整的业务请求使用一个方法完成, 整个方法处于一个事务之中.</p>
 </div>
@@ -135,7 +159,7 @@
 </div>
 </div>
 <div class="sect3">
-<h4 id="_领域模型模式">2.1.2. 领域模型模式</h4>
+<h4 id="_领域模型">2.1.2. 领域模型</h4>
 <div class="paragraph">
 <p>如果用领域模型来描述 <code>创建订单</code> 的逻辑, 大概是这样:</p>
 </div>
@@ -177,12 +201,12 @@ order.create() <i class="conum" data-value="3"></i><b>(3)</b></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_表模块模式">2.1.3. 表模块模式</h4>
+<h4 id="_表模块">2.1.3. 表模块</h4>
 <div class="paragraph">
 <p>这个 java 中很少见, 作者例举了一个 .NET 框架中的例子. 为了方便说明, 我还用上面的 java 的例子来说.</p>
 </div>
 <div class="paragraph">
-<p><em>表模块模式</em> 是指业务中操作的对象背后关联着一个数据表.</p>
+<p><em>表模块模式</em> 是指业务中操作的对象背后关联着一个数据表. 以表为维度描述逻辑.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -215,7 +239,7 @@ order.insert(extractDataFromParams(createOrderParams))</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_服务层模式">2.1.4. 服务层模式</h4>
+<h4 id="_服务层">2.1.4. 服务层</h4>
 <div class="paragraph">
 <p>图 TBD.</p>
 </div>
@@ -249,12 +273,68 @@ receive()</pre>
 
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_整体思考">3. 整体思考</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_对象_关系行为模式">2.3. 对象 - 关系行为模式</h3>
+<div class="sect3">
+<h4 id="_工作单元">2.3.1. 工作单元</h4>
 
+</div>
+<div class="sect3">
+<h4 id="_标识映射">2.3.2. 标识映射</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_延迟加载">2.3.3. 延迟加载</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="_对象_关系结构模式">2.4. 对象 - 关系结构模式</h3>
+<div class="sect3">
+<h4 id="_标识域">2.4.1. 标识域</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_外键映射">2.4.2. 外键映射</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_关联表映射">2.4.3. 关联表映射</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_依赖映射">2.4.4. 依赖映射</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_嵌入值">2.4.5. 嵌入值</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_序列化_lob">2.4.6. 序列化 LOB</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_单表继承">2.4.7. 单表继承</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_类表继承">2.4.8. 类表继承</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_具体表继承">2.4.9. 具体表继承</h4>
+
+</div>
+<div class="sect3">
+<h4 id="_继承映射器">2.4.10. 继承映射器</h4>
+
+</div>
+</div>
+<div class="sect2">
+<h3 id="_对象_关系元数据映射模式">2.5. 对象 - 关系元数据映射模式</h3>
+
+</div>
 </div>
 </div></p>
 
@@ -269,7 +349,7 @@ receive()</pre>
 		repo: 'yxc023.github.io',
 		owner: 'yxc023',
 		admin: ['yxc023'],
-		id: "「企业应用架构模式」读书笔记与思考",      // Ensure uniqueness and length less than 50
+		id: "「企业应用架构模式」读书笔记与思考 - 1 - 领域逻辑模式",      // Ensure uniqueness and length less than 50
 		distractionFreeMode: false  // Facebook-like distraction free mode
 		})
 
