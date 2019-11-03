@@ -51,6 +51,6 @@ gitPublish {
 bake {
     output gitPublish.repoDir
     dependsOn gitPublishReset
-    // jvmArgs "-XX:MaxMetaspaceSize=1g"
+    // jvmArgs = ["-XX:MaxMetaspaceSize=1g"]
 }
 gitPublishCommit.dependsOn bake

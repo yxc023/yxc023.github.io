@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="utf-8"/>
     <title><#if (content.title)??><#escape x as x?xml>${content.title}</#escape><#else>Michael的博客</#if></title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
+    <meta name="description" content="<#if (content.title)??><#escape x as x?xml>${content.title}</#escape><#else>Michael的博客</#if>">
     <meta name="author" content="yxc023@qq.com">
-    <meta name="keywords" content="">
+    <meta name="keywords" content="<#if (content.tags)??><#list content.tags as tag>${tag},</#list></#if>技术,java,设计模式,spring,软件开发,杨晓辰,yxc023">
     <meta name="generator" content="JBake">
 
     <!-- Le styles -->
