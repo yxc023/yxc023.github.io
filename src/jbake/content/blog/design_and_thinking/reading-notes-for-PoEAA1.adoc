@@ -1,0 +1,115 @@
+= 「企业应用架构模式」读书笔记与思考 - 1 - 领域逻辑模式
+杨晓辰
+2019-07-12
+:toc: top
+:toclevels: 4
+:icons: font
+:sectnums:
+:jbake-type: post
+:jbake-tags: code_and_think, java
+:jbake-status: published
+
+TBD.
+
+== 前言
+最近读了 Martin Fowler 的[企业应用架构模式](Pattern of Enterprise Application Architecture), 记一些笔记和思考.
+
+全书讲了几十个"企业应用架构"的模式. 区别于我们常说的设计模式, 这里的设计模式是描述`项目整体结构和业务组织结构`, 而不单单是`代码结构`.
+
+而且多种模式通常是糅合在在一起, 
+
+之所以要抽象出这些模式和概念, 就是为了简化之后的思考, 给之后遇到的问题奠定几个思考方向. 相当于把设计和思考的成果固化, 提高思维熟练度, 而不是每次都重头来想一边.
+
+== 笔记
+=== 领域逻辑模式
+
+领域逻辑模式主要解决了 "核心业务逻辑如何组织" 这一问题.
+
+==== 事务脚本
+
+将一个完整的业务请求使用一个方法完成, 整个方法处于一个事务之中. 
+
+通过过程来组织逻辑, 每个过程来自表现层的一个请求
+
+比如 `创建订单` 这个请求, 就是由 `OrderFlowService.createOrder()` 方法完成. 过程中执行 `接收参数`, `新建订单`, `校验`, `保存订单`, `库存扣减` 等逻辑代码.
+
+==== 领域模型
+
+如果用领域模型来描述 `创建订单` 的逻辑, 大概是这样:
+
+----
+OrderDomain order = new OrderDomain(createOrderParams)
+
+order.doCreate()
+----
+
+而在 `order.doCreate()` 里:
+
+----
+order.validate() // <1>
+order.lockSaleInventory() // <2>
+order.create() // <3>
+----
+<1> 校验
+<2> 锁定订单中商品的销售库存, 等到支付完成后进行扣除
+<3> 创建订单
+
+什么意思呢, 具体逻辑由领域对象来完成.
+
+
+==== 表模块
+
+作者例举了一个 .NET 框架中的例子. 为了方便说明, 我还用上面的 java 的例子来说.
+
+_表模块模式_ 是指业务中操作的对象背后关联着一个数据表. 以表为维度描述逻辑.
+
+----
+Order order = new Order(dataSource) // <1>
+SaleInventory saleInventory = new SaleInventory(dataSource) // <2>
+
+validate(createOrderParams)
+
+createOrderParams.products.each { productToBuy ->
+    saleInventory.updateLock(productToBuy.id, productToBuy.count)
+}
+
+order.insert(extractDataFromParams(createOrderParams))
+----
+<1> 订单的表模块对象
+<2> 销售库存的表模块对象
+
+看上去很像 DAO. 使用跟数据库表完全对应的数据访问对象来完成业务逻辑.
+
+其实很多 java 程序员所写的大概是这种面向对象的业务逻辑, 面向的对象其实是数据库表. 
+
+与其说做了业务抽象, 不如说只是把事务脚本中访问数据库的代码按照不同的表进行了封装罢了.
+
+==== 服务层
+
+图 TBD.
+
+服务层定义了应用边界和标准能力, **从接口客户层角度所能看到的可用操作集合**. 它封装了应用的业务逻辑, 事务控制, 及其操作实现中的响应协调.
+
+比如定一个了一个 `OrderFlowBiz` 的服务层对象, 包含了对订单流程的操作集合.
+
+----
+createOrder()
+pay()
+payComplete()
+delivery()
+receive()
+----
+
+这个模式中, 服务层通常很像事务脚本, 需要明确的针对特定业务请求.
+
+通常, 服务层会在领域逻辑层之上, 作为领域逻辑的操作门面. 因为领域层的细节操作太多, 不要暴露给接口层.
+
+== 总结
+* 复杂度和业务抽象程度: 事务脚本 < 表模块 < 领域模型
+    1. 事务脚本最简单, 我也很喜欢, 应对任务型工作, 事务脚本很好用.
+    2. 表模块是对事务脚本进行的面向对象的抽象, 把访问数据库的代码抽象到了对象里. 甚至不能叫面向对象, 而只是在事务脚本的基础上引入了一些对象, 方便数据库访问. 可能我们多数程序员都是在写这种代码.
+    3. 领域模型是回到面向对象第一节课上所讲的, 让对象有生命力, 不仅有自己的属性, 还有自己的行为.
+
+* 服务层通常在表模块或者领域模型之上一层, 作为业务能力暴露
+
+
