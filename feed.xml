@@ -6,14 +6,14 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期一, 4 十一月 2019 13:01:06 +0800</pubDate>
-    <lastBuildDate>星期一, 4 十一月 2019 13:01:06 +0800</lastBuildDate>
+    <pubDate>星期一, 4 十一月 2019 21:48:24 +0800</pubDate>
+    <lastBuildDate>星期一, 4 十一月 2019 21:48:24 +0800</lastBuildDate>
 
     <item>
       <title>项目接口设计实践</title>
-      <link>http://blog.yangxiaochen.com/blog/design_and_thinking/api-design.html</link>
+      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/api-design.html</link>
       <pubDate>星期四, 25 七月 2019 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/design_and_thinking/api-design.html</guid>
+      <guid isPermaLink="false">blog/design-and-thinking/api-design.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
 &lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
@@ -483,9 +483,9 @@
     </item>
     <item>
       <title>「企业应用架构模式」读书笔记与思考 - 1 - 领域逻辑模式</title>
-      <link>http://blog.yangxiaochen.com/blog/design_and_thinking/reading-notes-for-PoEAA1.html</link>
+      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/reading-notes-for-PoEAA1.html</link>
       <pubDate>星期五, 12 七月 2019 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/design_and_thinking/reading-notes-for-PoEAA1.html</guid>
+      <guid isPermaLink="false">blog/design-and-thinking/reading-notes-for-PoEAA1.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
 &lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
@@ -698,9 +698,9 @@ receive()&lt;/pre&gt;
     </item>
     <item>
       <title>如何有效的书写项目单元测试</title>
-      <link>http://blog.yangxiaochen.com/blog/design_and_thinking/how-to-write-unittest.html</link>
+      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/how-to-write-unittest.html</link>
       <pubDate>星期一, 17 六月 2019 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/design_and_thinking/how-to-write-unittest.html</guid>
+      <guid isPermaLink="false">blog/design-and-thinking/how-to-write-unittest.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
 &lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
@@ -1459,9 +1459,9 @@ template = saveTemplate(template) &lt;i class=&quot;conum&quot; data-value=&quot
     </item>
     <item>
       <title>日常体会(更新至 2019-05-06)</title>
-      <link>http://blog.yangxiaochen.com/blog/design_and_thinking/daily-experience.html</link>
+      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/daily-experience.html</link>
       <pubDate>星期一, 6 五月 2019 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/design_and_thinking/daily-experience.html</guid>
+      <guid isPermaLink="false">blog/design-and-thinking/daily-experience.html</guid>
       	<description>
 	&lt;div class=&quot;admonitionblock note&quot;&gt;
 &lt;table&gt;
@@ -2403,9 +2403,9 @@ sout.eachLine { line -&amp;gt;
     </item>
     <item>
       <title>2018 北京 qcon 大会笔记</title>
-      <link>http://blog.yangxiaochen.com/blog/design_and_thinking/2018-beijing-qcon.html</link>
+      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/2018-beijing-qcon.html</link>
       <pubDate>星期二, 24 四月 2018 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/design_and_thinking/2018-beijing-qcon.html</guid>
+      <guid isPermaLink="false">blog/design-and-thinking/2018-beijing-qcon.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
 &lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
@@ -3796,9 +3796,9 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
     </item>
     <item>
       <title>方法论总结</title>
-      <link>http://blog.yangxiaochen.com/blog/design_and_thinking/methodology.html</link>
+      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/methodology.html</link>
       <pubDate>星期日, 5 十一月 2017 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/design_and_thinking/methodology.html</guid>
+      <guid isPermaLink="false">blog/design-and-thinking/methodology.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
 &lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
