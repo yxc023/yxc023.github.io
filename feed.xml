@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期一, 4 十一月 2019 21:48:24 +0800</pubDate>
-    <lastBuildDate>星期一, 4 十一月 2019 21:48:24 +0800</lastBuildDate>
+    <pubDate>星期一, 4 十一月 2019 21:51:45 +0800</pubDate>
+    <lastBuildDate>星期一, 4 十一月 2019 21:51:45 +0800</lastBuildDate>
 
     <item>
       <title>项目接口设计实践</title>
@@ -706,7 +706,7 @@ receive()&lt;/pre&gt;
 &lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
 &lt;ul class=&quot;sectlevel1&quot;&gt;
 &lt;li&gt;&lt;a href=&quot;#_前言&quot;&gt;1. 前言&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_如何开始写单测的&quot;&gt;2. 如何开始写单测的&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_如何开始写单测&quot;&gt;2. 如何开始写单测&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#_测试带来的好处&quot;&gt;3. 测试带来的好处&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#_如何写业务单元测试&quot;&gt;4. 如何写业务单元测试&lt;/a&gt;
 &lt;ul class=&quot;sectlevel2&quot;&gt;
@@ -767,7 +767,7 @@ receive()&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_如何开始写单测的&quot;&gt;2. 如何开始写单测的&lt;/h2&gt;
+&lt;h2 id=&quot;_如何开始写单测&quot;&gt;2. 如何开始写单测&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;第一次写单测, 是一个审批流业务相关的项目, 内部业务逻辑很复杂, 分支判断多. 不同的审批流配置, 最终审批流运行时的表现是不一样的. 在当时的开发和测试过程中, 就遇到了问题:&lt;/p&gt;
