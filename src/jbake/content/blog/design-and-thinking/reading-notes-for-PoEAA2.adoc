@@ -6,7 +6,7 @@
 :icons: font
 :sectnums:
 :jbake-type: post
-:jbake-tags: code_and_think, java
+:jbake-tags: code-and-thinking, java
 :jbake-status: draft
 
 

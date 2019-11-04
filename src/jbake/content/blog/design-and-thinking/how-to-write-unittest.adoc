@@ -6,7 +6,7 @@
 :icons: font
 :sectnums:
 :jbake-type: post
-:jbake-tags: code_and_think, java, test
+:jbake-tags: code-and-thinking, java, test
 :jbake-status: published
 
 NOTE: 本文为原创, 转载请注明出处 https://blog.yangxiaochen.com
@@ -30,7 +30,7 @@ NOTE: 本文为原创, 转载请注明出处 https://blog.yangxiaochen.com
 
 在这个过程中, 遇到了很多问题, 也总结了一些经验, 所以写下了这篇文章, 感觉是一套比较有效和有参照意义的方法论.  
 
-== 如何开始写单测的
+== 如何开始写单测
 
 第一次写单测, 是一个审批流业务相关的项目, 内部业务逻辑很复杂, 分支判断多. 不同的审批流配置, 最终审批流运行时的表现是不一样的. 在当时的开发和测试过程中, 就遇到了问题:
 
