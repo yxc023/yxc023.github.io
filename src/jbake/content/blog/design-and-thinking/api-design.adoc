@@ -6,7 +6,7 @@
 :icons: font
 :sectnums:
 :jbake-type: post
-:jbake-tags: code-and-thinking, java, api
+:jbake-tags: code-and-thinking, java, api, 接口设计
 :jbake-status: published
 
 == 前言

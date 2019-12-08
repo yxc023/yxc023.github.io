@@ -6,7 +6,7 @@
 :icons: font
 :sectnums:
 :jbake-type: post
-:jbake-tags: code-and-thinking, java, test
+:jbake-tags: code-and-thinking, java, test, 单测, 单元测试
 :jbake-status: published
 
 NOTE: 本文为原创, 转载请注明出处 https://blog.yangxiaochen.com
