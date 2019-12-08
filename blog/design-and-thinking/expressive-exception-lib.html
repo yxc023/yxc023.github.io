@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8"/>
+    <title>A More Expressive Exception Library</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A More Expressive Exception Library">
+    <meta name="author" content="yxc023@qq.com">
+    <meta name="keywords" content="code-and-thinking,java,api,exception,技术,java,设计模式,spring,软件开发,杨晓辰,yxc023">
+    <meta name="generator" content="JBake">
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+	  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+	
+	<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Michael的文档</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+             <li><a href="../../index.html">首页</a></li> 
+            <li><a href="../../wiki_gradle_index.html">gradle</a></li>
+            <li><a href="../../tags/git.html">git</a></li>
+            <li><a href="../../tags/spring.html">spring</a></li>
+            <li><a href="../../archive.html">archive</a></li>
+
+            <li><a href="https://github.com/yxc023/jbake">my jbake</a></li>
+
+            <li><a href="../../about.html">关于</a></li>
+
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">	
+	<div class="page-header">
+		<h1>A More Expressive Exception Library</h1>
+	</div>
+
+	<p><em>09 十二月 2019</em></p>
+
+	<p><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_动机">1. 动机</a></li>
+<li><a href="#_设计意图">2. 设计意图</a>
+<ul class="sectlevel2">
+<li><a href="#_message">2.1. message</a></li>
+<li><a href="#_code">2.2. code</a></li>
+<li><a href="#_tip">2.3. tip</a></li>
+<li><a href="#_data">2.4. data</a></li>
+<li><a href="#_level">2.5. level</a></li>
+</ul>
+</li>
+<li><a href="#_usage">3. USAGE</a>
+<ul class="sectlevel2">
+<li><a href="#_引入">3.1. 引入</a></li>
+<li><a href="#_使用">3.2. 使用</a></li>
+<li><a href="#_拓展异常_level">3.3. 拓展异常 level</a></li>
+</ul>
+</li>
+<li><a href="#_如何处理异常">4. 如何处理异常</a>
+<ul class="sectlevel2">
+<li><a href="#_spring_mvc">4.1. spring mvc</a></li>
+<li><a href="#_dubbo">4.2. dubbo</a></li>
+</ul>
+</li>
+<li><a href="#_意见收集">5. 意见收集</a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>A More Expressive Exception Library.</p>
+</div>
+<div class="paragraph">
+<p>Build an exception with optional fields: <code>code</code>, <code>message</code>, <code>tip</code>, <code>level</code>, <code>data</code>.</p>
+</div>
+<div class="paragraph">
+<p>一个能够包含更多信息的异常基础库. 是一套异常设计和处理的方法论的落地.</p>
+</div>
+<div class="paragraph">
+<p>git 地址: <a href="https://github.com/yxc023/expressive-exception" class="bare">https://github.com/yxc023/expressive-exception</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_动机">1. 动机</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在业务项目实践中, 异常经常用来传递一些业务错误或者警告.</p>
+</div>
+<div class="paragraph">
+<p>通常, 这些业务错误和警告, 经常要包含更多的信息, 比如错误编码, 错误消息. 有时为了给用户更好体验, 还会放入一些便于用户阅读的消息. 甚至, 还会需要一些数据.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_设计意图">2. 设计意图</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在多个业务系统实践中, 我做了一个总结, 一个好用的异常, 要包含以下几个数据:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>message</code> - 异常都会包含的消息</p>
+</li>
+<li>
+<p><code>code</code> - 异常编码</p>
+</li>
+<li>
+<p><code>tip</code> - 异常提示</p>
+</li>
+<li>
+<p><code>data</code> - 可选, 异常携带的数据</p>
+</li>
+<li>
+<p><code>level</code> - 可选, 异常级别</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>下面对每一项进行详细说明.</p>
+</div>
+<div class="sect2">
+<h3 id="_message">2.1. message</h3>
+<div class="paragraph">
+<p>通常意义下的 exception message, 通常是对异常的描述. 比如当要删除一个订单, 但给的订单号并不存在时:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Order not found, id: 1001</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>通常是英文, 且格式标准专业, 包含了异常相关足够的信息.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_code">2.2. code</h3>
+<div class="paragraph">
+<p>因为业务比较复杂, 异常情况也很多, 我们基本不会对每一种异常设计一个异常类型. 比如在处理订单操作时, 我们只定义一种异常类型: <code>OrderOperationException</code>.</p>
+</div>
+<div class="paragraph">
+<p>那么更细节的异常我们可以通过编码来表示:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>SUCCESS - 成功都是相同的
+
+// 而失败各有不同
+FAILURE - 通用的失败编码
+ORDER_NOT_FOUND - 订单不存在
+ORDER_HAD_PAYED - 订单状态异常: 已经支付过了
+...</pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>code</code> 使用字符串, 好处是更易读.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tip">2.3. tip</h3>
+<div class="paragraph">
+<p><code>tip</code> 和 <code>message</code> 很像, 都是用来表达异常的信息. <code>tip</code> 的设计意图在于<mark>提供用户可读的异常信息</mark>. 比如</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>要操作的订单号[1001]不存在.
+订单[1001]已经支付过了.</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_data">2.4. data</h3>
+<div class="paragraph">
+<p><code>data</code> 的作用是与请求成功响应时返回的数据项对齐.</p>
+</div>
+<div class="paragraph">
+<p>在发生异常时, <code>data</code> 其实并不常用, 场景比较少. 只是在发生异常时需要返回一些关联数据. 举一个场景:</p>
+</div>
+<div class="paragraph">
+<p>当用户购买一个比较抢手的产品时, 有一个购买限制: 一个用户下单后必须支付才能下第二单.</p>
+</div>
+<div class="paragraph">
+<p>那么, 当用户触发这个限制时, 返回的异常中要包含未支付的订单号, 再由统一的异常处理转换成带有 data 的异常返回信息.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_level">2.5. level</h3>
+<div class="paragraph">
+<p>异常为什么要分级? 因为我在业务逻辑中, 所有不符合最常规业务逻辑流程的, 都使用异常来返回.</p>
+</div>
+<div class="paragraph">
+<p>那么有的异常可能并不算是错误. 比如登录时账号密码不匹配, 这并不是系统 bug 引起的错误, 也不需要记录 error 日志, 甚至报警.</p>
+</div>
+<div class="paragraph">
+<p>而有的, 比如逻辑执行中, 某个数据一定应该存在的, 结果没有查询到, 代表着数据完整性异常, 那么这是真真正正的 error.</p>
+</div>
+<div class="paragraph">
+<p>而其他的, 甚至还有说偶尔异常没问题, 大量异常有问题的. 比如客户端断开连接, 偶尔出现很正常, 但大量出现就是有问题的.</p>
+</div>
+<div class="paragraph">
+<p>所以在设计中, 默认将异常 level 分为了两类:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>SERVICE_LEVEL</p>
+</li>
+<li>
+<p>ERROR_LEVEL</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_usage">3. USAGE</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_引入">3.1. 引入</h3>
+<div class="listingblock">
+<div class="content">
+<pre>dependencies {
+    compile 'com.yangxiaochen:expressive-exception-core:1.2.1-RELEASE'
+}</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_使用">3.2. 使用</h3>
+<div class="paragraph">
+<p>在 <code>exception-core</code> 中, 提供了 <code>HasTip</code>, <code>HasCode</code>, <code>HasData</code>, <code>HasLevel</code> 几个接口, 你需要定义自己的异常类时:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>public class MyException extends Exception implements HasTip, HasCode, HasData, HasLevel {
+    ...
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>为了方便定义异常类, 提供了两个抽象类 <code>BaseExprException</code>, <code>BaseExprRuntimeException</code>, 可以直接继承这两个类:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>public class MyException extends BaseExprException {
+    ...
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>打印出的异常 log 例子:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>com.yangxiaochen.exception.test.application.exception.ServiceRuntimeException: [SERVICE_EXCEPTION] default service exception, tip: 默认业务异常, ctxVars: {fooId=1002, time=Wed Aug 21 18:17:26 CST 2019}
+...</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_拓展异常_level">3.3. 拓展异常 level</h3>
+<div class="paragraph">
+<p>可以通过实现 <code>ExceptionLevel</code> 来定义新的异常 level.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_如何处理异常">4. 如何处理异常</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><mark>异常定义只是一个方面,  如何看待, 解释, 处理我们定义的异常是另一个方面.</mark></p>
+</div>
+<div class="sect2">
+<h3 id="_spring_mvc">4.1. spring mvc</h3>
+<div class="paragraph">
+<p>see <a href="expressive-exception-spring-mvc/src/main/java/com/yangxiaochen/exception/spring/ExceptionHandler.java">spring mvc exception handler</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>dependencies {
+    compile 'com.yangxiaochen:expressive-exception-spring-mvc:1.2.1-RELEASE'
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>提供了一个默认的 <code>ExceptionHandler</code>, 来统一处理异常, 其核心异常处理方法实现如下:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+    if (pathPrefixs.stream().noneMatch(prefix -&gt; request.getRequestURI().startsWith(prefix))) {
+        return null;
+    }
+
+    ex = translateException(ex, request);
+    if (ex == null) {
+        return null;
+    }
+    logAction.log(request, ex);
+
+    return errorViewResolver.resolve(request, response, ex);
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>加入到 spring mvc 框架中实现异常的统一处理:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>@Configuration
+public class MvcConfig implements WebMvcConfigurer {
+
+    private boolean printStack = false;
+    private MappingJackson2JsonView view = new MappingJackson2JsonView();
+
+    @Override
+    public void extendHandlerExceptionResolvers(List&lt;HandlerExceptionResolver&gt; resolvers) {
+        ExceptionHandler exceptionHandler = new ExceptionHandler();
+        resolvers.add(0, exceptionHandler);
+    }
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>可以对 <code>ExceptionHandler</code> 的处理行为进行定制:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>exceptionHandler.setPathPrefixs(Arrays.asList("/web/", "/api/"));
+exceptionHandler.setErrorViewResolver((request, response, ex) -&gt; {
+    ModelAndView mv = new ModelAndView();
+    mv.addObject("msg", ex.getMessage());
+    mv.addObject("success", false);
+    if (ex instanceof HasCode) {
+        mv.addObject("code", ((HasCode) ex).getCode());
+        if (((HasCode) ex).getCode() == null) {
+            mv.addObject("code", 0);
+        }
+    }
+    if (ex instanceof HasTip) {
+        mv.addObject("tip", ((HasTip) ex).getTip());
+        if (ex.getMessage() == null) {
+            mv.addObject("msg", ((HasTip) ex).getTip());
+            mv.addObject("message", ((HasTip) ex).getTip());
+        }
+    }
+    if (ex instanceof HasData) {
+        mv.addObject("data", ((HasData) ex).getData());
+    }
+    if (printStack) {
+        mv.addObject("stackTrace", getStackFrames(ex));
+    }
+    mv.setView(view);
+    return mv;
+});</pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dubbo">4.2. dubbo</h3>
+<div class="paragraph">
+<p>see <a href="expressive-exception-dubbo/src/main/java/com/yangxiaochen/exception/dubbo/GlobalExceptionFilter.java">dubbo filter</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_意见收集">5. 意见收集</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>这个项目即是一个类库, 更是一个异常设计和处理的方法论, 类库是方便方法论落地的措施.</p>
+</div>
+<div class="paragraph">
+<p>如果你有不同的想法和意见, 欢迎 issue 交流.</p>
+</div>
+</div>
+</div></p>
+
+	<hr />
+
+
+	<div id="gitalk-container"></div>
+	<script>
+		const gitalk = new Gitalk({
+		clientID: '9fda08d9f8fbe4a76212',
+		clientSecret: '9a91a6260819f30af5d9c4534815493865d409a7',
+		repo: 'yxc023.github.io',
+		owner: 'yxc023',
+		admin: ['yxc023'],
+		id: "A More Expressive Exception Library",      // Ensure uniqueness and length less than 50
+		distractionFreeMode: false  // Facebook-like distraction free mode
+		})
+
+		gitalk.render('gitalk-container')
+
+	</script>
+
+
+	
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">&copy; 2019 | Michael Yang</p>
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?0201e463306e04cc395b38bcff45333e";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+    <script>
+      (function(){
+          var bp = document.createElement('script');
+          var curProtocol = window.location.protocol.split(':')[0];
+          if (curProtocol === 'https') {
+              bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+          }
+          else {
+              bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+          }
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(bp, s);
+      })();
+    </script>
+
+    
+  </body>
+</html>
