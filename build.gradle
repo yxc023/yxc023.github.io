@@ -23,8 +23,8 @@ bakePreview {
 
 gitPublish {
     // where to publish to (repo must exist)
-    repoUri = 'git@github.com:yxc023/yxc023.github.io.git'
-    // repoUri = 'git@e.coding.net:yxc023/blog.yangxiaochen.com.git'
+    // repoUri = 'git@github.com:yxc023/yxc023.github.io.git'
+    repoUri = 'git@e.coding.net:yxc023/blog.yangxiaochen.com.git'
     // (or 'https://github.com/ajoberstar/test-repo.git', depending on authentication)
 
     // branch will be created if it doesn't exist

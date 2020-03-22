@@ -1,0 +1,52 @@
+= spring 中一个 alias 别名导致的 bean 无法找到问题
+杨晓辰
+2020-03-22
+:toc: left
+:toclevels: 4
+:icons: font
+:jbake-type: post
+:jbake-tags: stackoverflow, bean, spring, debug
+:jbake-status: published
+
+NOTE: 本文为原创, 转载请注明出处 https://blog.yangxiaochen.com
+
+== 起因
+前几天遇到一个奇怪的问题, spring boot 升级坂本后, 项目中定义的一个 bean 无法被 autowired 获得, 这个 beanName 是 `taskExecutor`, 是一个项目内自定义的类, 姑且叫 `com.a.b.TaskExecutor`.
+
+仔细检查了 scanPackage 的路径, 发现没有问题, 按道理肯定能加载到才对, 统计目录下的其他 bean 都能扫描到.
+
+== 初步排查
+找到抛出异常的地方, 打个断点, 往前跟踪了几行代码, 确实是 spring 的 beanFactory 在找类型为 `com.a.b.TaskExecutor` 的 bean 时找不到.
+
+我调用了一下 `getBeanDefinitionByName("taskExecutor")`, 发现存在一个 beanDefinition, 并且能看到它的 `beanClassName = "com.a.b.TaskExecutor"`
+
+我又调用了下 `getBeanNamesByType(com.a.b.TaskExecutor.class)`, 居然返回 `null`
+
+又是"灵异事件"... 我通常把很奇怪的问题叫做灵异事件...
+
+== 进一步排查
+
+这里绕了一些弯路, 一直在找这个 bean definition 跟其他的 **bean definition (后面简称 bd)** 有什么区别, 造成这两个方法获取时的不同. 发现这个 taskExecutor 的 bd 中, 只有字符串类型的 `beanClassName`, 没有真正可以标明类型的 `resolvedType`.
+
+那么 `resolvedType` 是什么时候产生的呢, 发现在 `getBeanNameForType()` 的过程中, 会便利所有的 bd, 其中有一步, 如果没有 `resolvedType`, 会进行类型的 resolve.
+
+这就奇怪了, 我明明调用了 `getBeanNamesByType(com.a.b.TaskExecutor.class)`, 为啥还会获取不到.
+
+聚焦跟踪 `getBeanNamesByType(com.a.b.TaskExecutor.class)` 的运行代码.
+
+发现在 `doGetBeanNameForType()` 的方法中, 会对每一个 bd 进行判断, 但是在每个 bd 判断之前, 有一句 `if(!isAlias(beanName))`, 只有当不是 alias 时, 才做判断. 否则就指向 alias 关联的 bean 的 bd.
+
+也就是说, 当一个 bean 由 a, b, c 三个名字时, b 和 c 都是 a 的 alias 别名. 当 `doGetBeanNameForType()` 中发现 b 是别名, 则使用 a 的 bd 来做类型检测.
+
+回到我们的例子中, `taskExecutor` 被判断是一个别名, 在 aliasMap 里有一个键值对, 指向 `applicationTaskExecutor`.
+
+破案了, 一个名字为 `applicationTaskExecutor` 的 bean, 用了两个名字, 第二个名字是`taskExecutor`. 这个关系被维护到了一个 aliasMap 中. 这个 bean 的定义位置也在一个 autoconfiguration 的 bean 里找到了, 确实如上所说.
+
+而我们自己定义的 `taskExecutor`, 虽然也添加到了 bdMap 中, 但是在 `getBean` 的过程中会先检测 aliasMap. 所以即使在 bdMap 中有定义, 也拿不到..
+
+== 后记
+我还没有对比两版 spring 这里的处理, 旧版的 spring boot 框架是没啥问题的. 顺便一提原版本是 2.1.0, 新版本是 2.1.9
+
+感觉可以有一个断言, 凡是在 aliasMap 里的别名, 均不应该在 bdMap 里有 bean definition 定义.
+
+NOTE: 写的时候没有再翻代码, 都是记忆, 以上内容方法名字可能略有出入.
