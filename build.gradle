@@ -8,7 +8,7 @@ buildscript {
 
 plugins {
     id 'org.jbake.site' version '5.0.0'
-    id 'org.ajoberstar.git-publish' version '0.3.3'
+    id 'org.ajoberstar.git-publish' version '2.1.3'
 }
 
 jbake {
@@ -34,9 +34,9 @@ gitPublish {
     // repoDir = file("$buildDir/jbake") // defaults to $buildDir/gitPublish
 
     // what to publish, this is a standard CopySpec
-    contents {
-        from "$buildDir/jabke"
-    }
+    // contents {
+    //     from "$buildDir/jabke"
+    // }
 
     // what to keep in the existing branch (include=keep)
     preserve {
@@ -50,7 +50,7 @@ gitPublish {
 
 
 bake {
-    output gitPublish.repoDir
+    output file("$buildDir/gitPublish")
     dependsOn gitPublishReset
     // jvmArgs = ["-XX:MaxMetaspaceSize=1g"]
 }
