@@ -1,13 +1,19 @@
 = mkdir在/home目录下新建文件夹 for mac
 杨晓辰
 2016-03-31
-:toc: left
+// :toc: left
 :toclevels: 4
 :icons: font
 :jbake-sid: create-dir-home-on-mac
 :jbake-type: post
 :jbake-tags: mac
 :jbake-status: published
+
+**这个文章比较老了, 针对最新的创建文件夹无权权限的问题**
+
+**查看: link:/blog/mac/mkdir-read-only-file-system.html[苹果系统 macOS 创建文件夹遇到 Read-only file system 解决]**
+
+----------------2020.03.27 更新----------------
 
 Hmmm, trying to create a directory under '/home' on a Mac?
 

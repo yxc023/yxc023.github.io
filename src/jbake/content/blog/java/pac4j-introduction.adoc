@@ -8,17 +8,20 @@
 :jbake-type: post
 :jbake-tags: java, shiro, cas, pac4j
 :jbake-status: published
+:jbake-description: pac4j 是一个 java 的安全引擎
 
 == 什么是 pac4j
 pac4j 是一个 java 的安全引擎. 
 
-在一套 api 下,
+在一套标准的 interface 下,
 
-* 提供了很多种认证机制: form 表单登录, JWS, cas, OAuth 等等.
-* 提供了很多收授权和权限检查机制: role/permissions, CORS, CSRF, HTTP Security headers
-* 提供了跟很多框架的整合和工具方式: springboot, play, shiro, spring security
+1. 提供了很多种**认证机制**: form 表单登录, JWS, cas, OAuth 等等.
+2. 提供了很多收**授权和权限检查机制**: role/permissions, CORS, CSRF, HTTP Security headers
+3. 提供了**跟很多框架的集成方式**: springboot, play, shiro, spring security
 
 这些认证方式都是可插拔的, 你可以同时使用其中的一种或几种.
+
+比如, 最常见的情况, 就是我们用 spring boot + cas 单点登录 + role/permissions
 
 == 重要组件和概念
 

@@ -42,6 +42,9 @@ gitPublish {
     preserve {
         // include '1.0.0/**'
         include 'CNAME'
+        include 'bdunion.txt'
+        include 'ads.txt'
+        include 'jd_root.txt'
     }
 
     // message used when committing changes

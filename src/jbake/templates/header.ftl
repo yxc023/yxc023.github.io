@@ -2,12 +2,13 @@
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8"/>
-    <title><#if (content.title)??><#escape x as x?xml>${content.title}</#escape><#else>Michael的博客</#if></title>
+    <title><#if (content.title)??><#escape x as x?xml>${content.title}</#escape></#if> - Michael的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<#if (content.title)??><#escape x as x?xml>${content.title}</#escape><#else>Michael的博客</#if>">
+    <meta name="description" content="<#if (content.description)??><#escape x as x?xml>${content.description}</#escape><#elseif (content.title)??><#escape x as x?xml>${content.title}</#escape><#else>Michael的博客</#if>">
     <meta name="author" content="yxc023@qq.com">
     <meta name="keywords" content="<#if (content.tags)??><#list content.tags as tag>${tag},</#list></#if>技术,java,设计模式,spring,软件开发,杨晓辰,yxc023">
     <meta name="generator" content="JBake">
+    <script data-ad-client="ca-pub-5626174695342369" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
     <!-- Le styles -->
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/bootstrap.min.css" rel="stylesheet">

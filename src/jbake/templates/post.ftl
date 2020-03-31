@@ -8,6 +8,18 @@
 
 	<p><em>${content.date?string("dd MMMM yyyy")}</em></p>
 
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- 文章页头部 -->
+	<ins class="adsbygoogle"
+		style="display:block"
+		data-ad-client="ca-pub-5626174695342369"
+		data-ad-slot="6236256935"
+		data-ad-format="auto"
+		data-full-width-responsive="true"></ins>
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
+
 	<p>${content.body}</p>
 
 	<hr />
@@ -22,6 +34,18 @@
 	conf: 'prod_ae8c2fcf65d92ee749cc9cf448e5b285'
 	});
 	</script>  -->
+
+	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<!-- 文章页底部 -->
+	<ins class="adsbygoogle"
+		style="display:block"
+		data-ad-client="ca-pub-5626174695342369"
+		data-ad-slot="1538394215"
+		data-ad-format="auto"
+		data-full-width-responsive="true"></ins>
+	<script>
+		(adsbygoogle = window.adsbygoogle || []).push({});
+	</script>
 
 	<div id="gitalk-container"></div>
 	<script>
