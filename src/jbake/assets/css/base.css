@@ -62,3 +62,16 @@ pre > code, code {
           transform: scale(0);
 }
 /*# sourceMappingURL=base.css.map */
+
+.rightSideAd {
+  height: 600px;
+  width: 160px;
+  position: fixed;
+  right: 0px;
+}
+
+@media not screen and (min-width: 1280px) {
+  .rightSideAd {
+    display: none;
+  }
+}

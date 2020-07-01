@@ -8,9 +8,9 @@
 
 	<p><em>${content.date?string("dd MMMM yyyy")}</em></p>
 
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+	<#--  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  -->
 	<!-- 文章页头部 -->
-	<ins class="adsbygoogle"
+	<#--  <ins class="adsbygoogle"
 		style="display:block"
 		data-ad-client="ca-pub-5626174695342369"
 		data-ad-slot="6236256935"
@@ -18,11 +18,16 @@
 		data-full-width-responsive="true"></ins>
 	<script>
 		(adsbygoogle = window.adsbygoogle || []).push({});
-	</script>
+	</script>  -->
+
+	<div class="rightSideAd">
+	<script type="text/javascript">var jd_union_unid="1002591316",jd_ad_ids="511:6",jd_union_pid="CMbagPGULhDUqIneAxoAIKL955YLKgA=";var jd_width=160;var jd_height=600;var jd_union_euid="";var p="ABMGVBxbEQURDmVEH0hfIlgRRgYlXVZaCCsfSlpMWGVEH0hfIgQnbRlrV0JZNlxYcFd1TA99ElRQT0FZF2sXAxMGUBJbHQUXN1UaWhYGGgdXG1wlMk1DCEZrXmwTNwpfBkgyEgNcHFsRABUAVxJbEzITN2Ur";</script><script type="text/javascript" charset="utf-8" src="//u-x.jd.com/static/js/auto.js"></script>
+	</div>
 
 	<p>${content.body}</p>
 
 	<hr />
+
 
 	<#--  <div id="cyReward" role="cylabs" data-use="reward"></div>
 	<!--PC版-->
@@ -31,13 +36,14 @@
 	<script type="text/javascript">
 	window.changyan.api.config({
 	appid: 'cysiPXECq',
-	conf: 'prod_ae8c2fcf65d92ee749cc9cf448e5b285'
+	conf: 'prod_ae8c2fcf65d92ee749cc9cf448e5b285' 
 	});
 	</script>  -->
 
-	<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+	<#--  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  -->
 	<!-- 文章页底部 -->
-	<ins class="adsbygoogle"
+	<#--  <ins class="adsbygoogle"
 		style="display:block"
 		data-ad-client="ca-pub-5626174695342369"
 		data-ad-slot="1538394215"
@@ -45,7 +51,7 @@
 		data-full-width-responsive="true"></ins>
 	<script>
 		(adsbygoogle = window.adsbygoogle || []).push({});
-	</script>
+	</script>  -->
 
 	<div id="gitalk-container"></div>
 	<script>
