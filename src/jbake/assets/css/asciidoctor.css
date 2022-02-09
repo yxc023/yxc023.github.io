@@ -226,7 +226,7 @@ abbr, acronym { text-transform: uppercase; font-size: 90%; color: black; border-
 abbr { text-transform: none; }
 
 /* Blockquotes */
-blockquote { margin: 0 0 0.75em; padding: 0.5625em 1.25em 0 1.1875em; border-left: 1px solid #dddddd; }
+blockquote { margin: 0.75em 0 0.75em; padding: 0.5625em 1.25em 0 1.1875em; border-left: 3px solid #dddddd; }
 blockquote cite { display: block; font-size: 0.8125em; color: #e15200; }
 blockquote cite:before { content: "\2014 \0020"; }
 blockquote cite a, blockquote cite a:visited { color: #e15200; }
@@ -418,7 +418,7 @@ table.pyhltable td.code { padding-left: .75em; padding-right: 0; }
 
 table.pyhltable .linenodiv { background-color: transparent !important; padding-right: 0 !important; }
 
-.quoteblock { margin: 0 0 0.75em; padding: 0.5625em 1.25em 0 1.1875em; border-left: 1px solid #dddddd; }
+.quoteblock { margin: 0.75em 0 0.75em; padding: 0.5625em 1.25em 0 1.1875em; border-left: 3px solid #dddddd; }
 .quoteblock blockquote { margin: 0 0 0.75em 0; padding: 0 0 0.5625em 0; border: 0; }
 .quoteblock blockquote > .paragraph:last-child p { margin-bottom: 0; }
 .quoteblock .attribution { margin-top: -.25em; padding-bottom: 0.5625em; font-size: 0.8125em; color: #e15200; }
