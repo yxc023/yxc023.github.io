@@ -2,12 +2,13 @@
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8"/>
-    <title>pac4j 简介</title>
+    <title>pac4j 简介 - Michael的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="pac4j 简介">
+    <meta name="description" content="pac4j 是一个 java 的安全引擎">
     <meta name="author" content="yxc023@qq.com">
     <meta name="keywords" content="java,shiro,cas,pac4j,技术,java,设计模式,spring,软件开发,杨晓辰,yxc023">
     <meta name="generator" content="JBake">
+    <script data-ad-client="ca-pub-5626174695342369" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
 
     <!-- Le styles -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
@@ -67,7 +68,13 @@
 		<h1>pac4j 简介</h1>
 	</div>
 
-	<p><em>15 四月 2018</em></p>
+	<p><em>15 April 2018</em></p>
+
+	<!-- 文章页头部 -->
+
+	<div class="rightSideAd">
+	<script type="text/javascript">var jd_union_unid="1002591316",jd_ad_ids="511:6",jd_union_pid="CMbagPGULhDUqIneAxoAIKL955YLKgA=";var jd_width=160;var jd_height=600;var jd_union_euid="";var p="ABMGVBxbEQURDmVEH0hfIlgRRgYlXVZaCCsfSlpMWGVEH0hfIgQnbRlrV0JZNlxYcFd1TA99ElRQT0FZF2sXAxMGUBJbHQUXN1UaWhYGGgdXG1wlMk1DCEZrXmwTNwpfBkgyEgNcHFsRABUAVxJbEzITN2Ur";</script><script type="text/javascript" charset="utf-8" src="//u-x.jd.com/static/js/auto.js"></script>
+	</div>
 
 	<p><div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
@@ -103,23 +110,26 @@
 <p>pac4j 是一个 java 的安全引擎.</p>
 </div>
 <div class="paragraph">
-<p>在一套 api 下,</p>
+<p>在一套标准的 interface 下,</p>
 </div>
-<div class="ulist">
-<ul>
+<div class="olist arabic">
+<ol class="arabic">
 <li>
-<p>提供了很多种认证机制: form 表单登录, JWS, cas, OAuth 等等.</p>
+<p>提供了很多种<strong>认证机制</strong>: form 表单登录, JWS, cas, OAuth 等等.</p>
 </li>
 <li>
-<p>提供了很多收授权和权限检查机制: role/permissions, CORS, CSRF, HTTP Security headers</p>
+<p>提供了很多收<strong>授权和权限检查机制</strong>: role/permissions, CORS, CSRF, HTTP Security headers</p>
 </li>
 <li>
-<p>提供了跟很多框架的整合和工具方式: springboot, play, shiro, spring security</p>
+<p>提供了<strong>跟很多框架的集成方式</strong>: springboot, play, shiro, spring security</p>
 </li>
-</ul>
+</ol>
 </div>
 <div class="paragraph">
 <p>这些认证方式都是可插拔的, 你可以同时使用其中的一种或几种.</p>
+</div>
+<div class="paragraph">
+<p>比如, 最常见的情况, 就是我们用 spring boot + cas 单点登录 + role/permissions</p>
 </div>
 </div>
 </div>
@@ -337,6 +347,8 @@ public ShiroFilterFactoryBean shiroFilterFactoryBean() {
 	<hr />
 
 
+	<!-- 文章页底部 -->
+
 	<div id="gitalk-container"></div>
 	<script>
 		const gitalk = new Gitalk({
@@ -361,7 +373,7 @@ public ShiroFilterFactoryBean shiroFilterFactoryBean() {
     
     <div id="footer">
       <div class="container">
-        <p class="muted credit">&copy; 2019 | Michael Yang</p>
+        <p class="muted credit">&copy; 2020 | Michael Yang | 备案: <a href="http://www.beian.miit.gov.cn">京ICP备13041693号</a></p>
       </div>
     </div>
     

@@ -5,8 +5,24 @@
         <lastmod>2013-09-24</lastmod>
     </url>
     <url>
+        <loc>http://blog.yangxiaochen.com/blog/design-and-thinking/daily-experience.html</loc>
+        <lastmod>2021-08-08</lastmod>
+    </url>
+    <url>
         <loc>http://blog.yangxiaochen.com/blog/design-and-thinking/expressive-exception-lib.html</loc>
-        <lastmod>2019-12-09</lastmod>
+        <lastmod>2020-04-06</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.yangxiaochen.com/blog/mac/mkdir-read-only-file-system.html</loc>
+        <lastmod>2020-03-24</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.yangxiaochen.com/blog/stackoverflow/bean-not-found-becauseof-alias.html</loc>
+        <lastmod>2020-03-22</lastmod>
+    </url>
+    <url>
+        <loc>http://blog.yangxiaochen.com/blog/java/how-to-deal-with-java-exception.html</loc>
+        <lastmod>2020-01-17</lastmod>
     </url>
     <url>
         <loc>http://blog.yangxiaochen.com/blog/design-and-thinking/api-design.html</loc>
@@ -19,10 +35,6 @@
     <url>
         <loc>http://blog.yangxiaochen.com/blog/design-and-thinking/how-to-write-unittest.html</loc>
         <lastmod>2019-06-17</lastmod>
-    </url>
-    <url>
-        <loc>http://blog.yangxiaochen.com/blog/design-and-thinking/daily-experience.html</loc>
-        <lastmod>2019-05-06</lastmod>
     </url>
     <url>
         <loc>http://blog.yangxiaochen.com/blog/tools/linux-in-windows.html</loc>
@@ -101,11 +113,11 @@
         <lastmod>2016-03-31</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/mac/homebrew-install-old-version-soft.html</loc>
+        <loc>http://blog.yangxiaochen.com/blog/develop/python-starter.html</loc>
         <lastmod>2016-02-09</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/develop/python-starter.html</loc>
+        <loc>http://blog.yangxiaochen.com/blog/mac/homebrew-install-old-version-soft.html</loc>
         <lastmod>2016-02-09</lastmod>
     </url>
     <url>

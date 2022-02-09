@@ -6,13 +6,409 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期一, 9 十二月 2019 01:10:40 +0800</pubDate>
-    <lastBuildDate>星期一, 9 十二月 2019 01:10:40 +0800</lastBuildDate>
+    <pubDate>Thu, 10 Feb 2022 01:40:07 +0800</pubDate>
+    <lastBuildDate>Thu, 10 Feb 2022 01:40:07 +0800</lastBuildDate>
 
+    <item>
+      <title>日常体会(更新至 2021-08-08)</title>
+      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/daily-experience.html</link>
+      <pubDate>Sun, 8 Aug 2021 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/design-and-thinking/daily-experience.html</guid>
+      	<description>
+	&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot; class=&quot;bare&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;当你对未来的需求有预见性, 能够估计出现在的设计如何改动, 老数据如何迁移, 就能够接受当前的并不完善的设计. 重要的是设定概念, 或者叫领域模型, 只要老的模型和新的模型都是清晰地, 就不怕从老的模型迁移到新的模型.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;为什么有时候重构困难, 不是无法找到一个新模型, 而是老模型混乱, 细节上二义性多, 每一次模型的更新都没有对数据全面处理, 造成数据的历史版本多.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;一个模型内部的各种字段的业务场景都要明确, 各司其职. 讲模型就是树立概念. 应该是自冾的, 能够演绎的, 能说服自己的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-02-21 在讨论需求实现时一定程度的妥协&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;工程师怎么才会想着要做到更专业? 一个工程师在觉得专业的东西离自己比较远时, 通常不会要求自己作的很专业.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;但当一个工程师看到了写的很专业的代码, 文档, 就在自己身边, 并被专业性所打动时, 肯定会自己也想要做到这样.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;当花费了些功夫, 自己也模仿专业的方式来要求自己, 产出成果后, 会产生很大满足感, 这样一个工程师今后都会更高要求自己.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;一个同事, 之前不写测试, 或者说对写测试不感冒, 在一个优秀的测试代码上尝到甜头, 给自己的项目补充了非常整齐的测试用例.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-03-08 如何让自己趋向专业&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;新项目真的能给人带来很大的提升, 尤其在一个严格要求下的新项目.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;代码书写的传授在新项目里是非常高效的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;大概是自己在一个干净的环境, 也会尽力来保持整洁.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;当然, 前提是这个项目由一个作为经验丰富的实践家的高级别工程师把控.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;话外之意, 有一些高级工程师, 在真正的业务开发中实践较少, 在实践中总结的方法论不足, 不够优秀.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;人家都转管理了, 哪有功夫跟着你泥塘里打滚.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-03-08 新项目对同学们提升很大&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;整体大局观, 怎么才能考虑全面, 怎么才能有高度.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;一个很重要的一点是获取更多信息, 从业务上来讲, 产品的远期规划, 近期变动, 公司对现有业务的新的思考. 其他部门的业务现状. 最后行业现状等等.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;从技术上来讲, op 的职责划分, 网络线路, 机房现状.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;总之, 获取的信息越多, 越有利于做判断, 下结论, 以上只是这个规则在软件开发上的应用, 在其他领域, 也是吃的开的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;但是反过来讲, 要求开发人员做到这些, 要求太高了. 明明应该是各司其职, 结果让开发人员全包. 就因为开发同学是最接近真实实现的. 无法调和.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-03-08 提升整体大局观&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;写代码优雅果然不是一蹴而就的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;没有亲身体会是不行的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-03-26 review 代码有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;写代码时要告诉自己, 代码是给别人读的, 换位思考, 把自己的意图展示出来, 把自己的意图展示出来, 把自己的意图展示出来.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-04-10 review 代码有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;找到一个合适的设计很重要, 但是知道当前的设计不合适更重要. 只有指导不合适, 才会抓耳挠腮, 辗转反侧, 去找到一个合适的设计.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-04-16 杂乱业务设计有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;一个复杂多变的业务一定要进行抽象梳理, 找出不变的东西, 核心的流程. 流程上的细节处理通过各种策略模式来实现.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-04-25 杂乱业务设计有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;一个事情没想清楚, 不要往大了做, 拆系统&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-04-26 杂乱业务设计有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;不要以程序不报错为目标写代码, 要以逻辑正确为目标写代码.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-04-26 杂乱业务设计有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;写代码决不能只看自己这一块, 要往上游多看, 往下游多看, 才能写的正确.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-04-30 杂乱业务设计有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;创建请求凭证跟发起请求不要在同一个事务中.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;可能需要一个全局的异步补偿逻辑注册中心.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-05-05 杂乱业务设计有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;写单测是对系统逻辑的 review&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;能顺利写出单测, 说明开发对系统逻辑了解, 业务逻辑设计的时候就想好了怎么用.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-05-06 杂乱业务设计有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;写代码要让别人知道自己在做什么, 而不是怎么做. 不要让别人通过复杂的逻辑代码, 猜测你在做什么.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;举个例子:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;if (time == null || time.notAfter(&apos;1970-01-02 00:00:00&apos;)) {
+    time = newTime
+}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;项目中有个 &lt;code&gt;time&lt;/code&gt; 字段, 要求如果没有设置过值, 则这设置为当前时间. 如果改为&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;if (isInitialTime(time)) {
+    time = newTime
+}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;当别人读到下面这段代码时, 就知道你在做什么, 而不是通过复杂的判断来推断.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-05-06 杂乱业务设计有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;一个项目, 从产品到开发都没有一个有能力把产品, 业务, 概念, 抽象好的人, 这个产品就没啥可维护性可言了.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;最后造成产品各种变动, 开发疲于奔命.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-05-06 杂乱业务设计有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;我们总是想封装, 自动化配置, 让他人更少的了解细节. 但同时我们又要求了解实现, 以完成更优的使用.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-08-09 封装&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;为什么总是强调字段和方法命名? 为了统一语言和概念, 为了表达意图. Name things 是软件开发中最难得两个事情之一.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-10-23 字段命名&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;最开始没有订好概念, 没有想清楚, 不坚持原则, 为实现而实现, 后面迭代重构就会连本带利还回来.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-05-06 杂乱业务设计有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;流程需要更高一层的人来梳理, 更高一层的人深入下层&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-05-06 杂乱业务设计有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;PM 出需求, 要有文档, 原型, user case. user case 可以有 rd 来出.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2019-12-20 杂乱业务设计有感&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;下定义本身就是件非常要动脑的事; 把定义写出来做好解释更是费劲. 只有写下来, 才能不被大脑欺骗, 才是把事情真正的想清楚了.
+写出来才是想清楚, 才能把概念传播. 避免陷入系统一的陷阱.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2020-01-06 下定义&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;传递思想, 对齐认知. 是一件难而正确的事.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;一个项目上, 要有能去想这个事情的人, 能持续培养, 纠正一个项目的人, 投入感情的人, 而不仅仅是让一个项目或者. 带着感情编程.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;写清楚目标, 就是为了避免做着做着不知道自己要干啥. 或者不知道让下属干啥.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2020-05-15 管理工作中的几个想法&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;临时方案总是不可避免的, 但是临时方案也要遵循一些原则:
+1. 尽量在外部看起来, 不像一个临时方案. [optional]
+2. 一定要思考过完整方案, 或者完整方案的方向. [required]
+3. 尽量让临时方案和预期的完整方案在一个方向上. [optional]
+3. 一定要思考将临时方案改成完整方案的成本. [required]
+最终我们会得到一个容易拆除, 容易替换, 对本体基本无害的方案.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2020-05-15 临时方案&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;好的设计，代码千篇一律。坏的设计就是人类思维精华大赏
+所以我不喜欢去总结和报告一个项目里各种各样的问题及影响，我只想推出我认为合理的设计&lt;/p&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2021-08-13&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;quoteblock&quot;&gt;
+&lt;blockquote&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;对于 saas 平台而言，不一定非要对业务了解的面面俱到，
+一个业务进来之后可能自己也都没想好，然后在运行时慢慢完善。我们能够支持他们做这个优化完善的过程即可。
+&lt;em&gt;_&lt;/em&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;抽象存储层，强行进行抽象，提升业务拓展性。 低代码、无代码。&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;attribution&quot;&gt;
+&amp;#8212; 杨晓辰&lt;br&gt;
+&lt;cite&gt;2021-08-13&lt;/cite&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+	</description>
+    </item>
     <item>
       <title>一个更有表现力的异常设计</title>
       <link>http://blog.yangxiaochen.com/blog/design-and-thinking/expressive-exception-lib.html</link>
-      <pubDate>星期一, 9 十二月 2019 00:54:57 +0800</pubDate>
+      <pubDate>Mon, 6 Apr 2020 12:24:11 +0800</pubDate>
       <guid isPermaLink="false">blog/design-and-thinking/expressive-exception-lib.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -357,9 +753,390 @@ exceptionHandler.setErrorViewResolver((request, response, ex) -&amp;gt; {
 	</description>
     </item>
     <item>
+      <title>苹果系统 macOS 创建文件夹遇到 Read-only file system 解决</title>
+      <link>http://blog.yangxiaochen.com/blog/mac/mkdir-read-only-file-system.html</link>
+      <pubDate>Tue, 24 Mar 2020 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/mac/mkdir-read-only-file-system.html</guid>
+      	<description>
+	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
+&lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
+&lt;ul class=&quot;sectlevel1&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_问题&quot;&gt;问题&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_解决&quot;&gt;解决&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&quot;preamble&quot;&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot; class=&quot;bare&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_问题&quot;&gt;问题&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;升级完 macbook pro 的系统后, 发现无法在根目录创建文件夹了.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;$ mkdir /data
+mkdir: /data: Read-only file system&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_解决&quot;&gt;解决&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;关机按 &lt;code&gt;cmd+R&lt;/code&gt; 重启进入恢复模式, 关闭SIP: 打开终端小工具, 输入命令 &lt;code&gt;csrutil disable&lt;/code&gt;, 正常重启&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;重新挂载根目录: 输入命令 &lt;code&gt;sudo mount -uw /&lt;/code&gt;, 在你喜欢的地方建立data目录, 比如: &lt;code&gt;mkdir /Users/xxx/data&lt;/code&gt;, 然后建立软连接: &lt;code&gt;sudo ln -s /Users/xxx/data /data&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;关机按 &lt;code&gt;cmd+R&lt;/code&gt; 重启进入恢复模式, 重新打开SIP: 在终端输入命令 &lt;code&gt;csrutil enable&lt;/code&gt;, 正常重启&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;现在可以正常使用 /data 目录了&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+	</description>
+    </item>
+    <item>
+      <title>spring 中一个 alias 别名导致的 bean 无法找到问题</title>
+      <link>http://blog.yangxiaochen.com/blog/stackoverflow/bean-not-found-becauseof-alias.html</link>
+      <pubDate>Sun, 22 Mar 2020 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/stackoverflow/bean-not-found-becauseof-alias.html</guid>
+      	<description>
+	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
+&lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
+&lt;ul class=&quot;sectlevel1&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_起因&quot;&gt;起因&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_初步排查&quot;&gt;初步排查&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_进一步排查&quot;&gt;进一步排查&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_后记&quot;&gt;后记&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&quot;preamble&quot;&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot; class=&quot;bare&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_起因&quot;&gt;起因&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;前几天遇到一个奇怪的问题, spring boot 升级坂本后, 项目中定义的一个 bean 无法被 autowired 获得, 这个 beanName 是 &lt;code&gt;taskExecutor&lt;/code&gt;, 是一个项目内自定义的类, 姑且叫 &lt;code&gt;com.a.b.TaskExecutor&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;仔细检查了 scanPackage 的路径, 发现没有问题, 按道理肯定能加载到才对, 统计目录下的其他 bean 都能扫描到.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_初步排查&quot;&gt;初步排查&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;找到抛出异常的地方, 打个断点, 往前跟踪了几行代码, 确实是 spring 的 beanFactory 在找类型为 &lt;code&gt;com.a.b.TaskExecutor&lt;/code&gt; 的 bean 时找不到.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;我调用了一下 &lt;code&gt;getBeanDefinitionByName(&quot;taskExecutor&quot;)&lt;/code&gt;, 发现存在一个 beanDefinition, 并且能看到它的 &lt;code&gt;beanClassName = &quot;com.a.b.TaskExecutor&quot;&lt;/code&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;我又调用了下 &lt;code&gt;getBeanNamesByType(com.a.b.TaskExecutor.class)&lt;/code&gt;, 居然返回 &lt;code&gt;null&lt;/code&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;又是&quot;灵异事件&quot;&amp;#8230;&amp;#8203; 我通常把很奇怪的问题叫做灵异事件&amp;#8230;&amp;#8203;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_进一步排查&quot;&gt;进一步排查&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;这里绕了一些弯路, 一直在找这个 bean definition 跟其他的 &lt;strong&gt;bean definition (后面简称 bd)&lt;/strong&gt; 有什么区别, 造成这两个方法获取时的不同. 发现这个 taskExecutor 的 bd 中, 只有字符串类型的 &lt;code&gt;beanClassName&lt;/code&gt;, 没有真正可以标明类型的 &lt;code&gt;resolvedType&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;那么 &lt;code&gt;resolvedType&lt;/code&gt; 是什么时候产生的呢, 发现在 &lt;code&gt;getBeanNameForType()&lt;/code&gt; 的过程中, 会便利所有的 bd, 其中有一步, 如果没有 &lt;code&gt;resolvedType&lt;/code&gt;, 会进行类型的 resolve.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;这就奇怪了, 我明明调用了 &lt;code&gt;getBeanNamesByType(com.a.b.TaskExecutor.class)&lt;/code&gt;, 为啥还会获取不到.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;聚焦跟踪 &lt;code&gt;getBeanNamesByType(com.a.b.TaskExecutor.class)&lt;/code&gt; 的运行代码.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;发现在 &lt;code&gt;doGetBeanNameForType()&lt;/code&gt; 的方法中, 会对每一个 bd 进行判断, 但是在每个 bd 判断之前, 有一句 &lt;code&gt;if(!isAlias(beanName))&lt;/code&gt;, 只有当不是 alias 时, 才做判断. 否则就指向 alias 关联的 bean 的 bd.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;也就是说, 当一个 bean 由 a, b, c 三个名字时, b 和 c 都是 a 的 alias 别名. 当 &lt;code&gt;doGetBeanNameForType()&lt;/code&gt; 中发现 b 是别名, 则使用 a 的 bd 来做类型检测.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;回到我们的例子中, &lt;code&gt;taskExecutor&lt;/code&gt; 被判断是一个别名, 在 aliasMap 里有一个键值对, 指向 &lt;code&gt;applicationTaskExecutor&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;破案了, 一个名字为 &lt;code&gt;applicationTaskExecutor&lt;/code&gt; 的 bean, 用了两个名字, 第二个名字是`taskExecutor`. 这个关系被维护到了一个 aliasMap 中. 这个 bean 的定义位置也在一个 autoconfiguration 的 bean 里找到了, 确实如上所说.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;而我们自己定义的 &lt;code&gt;taskExecutor&lt;/code&gt;, 虽然也添加到了 bdMap 中, 但是在 &lt;code&gt;getBean&lt;/code&gt; 的过程中会先检测 aliasMap. 所以即使在 bdMap 中有定义, 也拿不到..&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_后记&quot;&gt;后记&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;我还没有对比两版 spring 这里的处理, 旧版的 spring boot 框架是没啥问题的. 顺便一提原版本是 2.1.0, 新版本是 2.1.9&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;感觉可以有一个断言, 凡是在 aliasMap 里的别名, 均不应该在 bdMap 里有 bean definition 定义.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;admonitionblock note&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td class=&quot;icon&quot;&gt;
+&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
+&lt;/td&gt;
+&lt;td class=&quot;content&quot;&gt;
+写的时候没有再翻代码, 都是记忆, 以上内容方法名字可能略有出入.
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+	</description>
+    </item>
+    <item>
+      <title>如何处理 java 代码中的异常</title>
+      <link>http://blog.yangxiaochen.com/blog/java/how-to-deal-with-java-exception.html</link>
+      <pubDate>Fri, 17 Jan 2020 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/java/how-to-deal-with-java-exception.html</guid>
+      	<description>
+	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
+&lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
+&lt;ul class=&quot;sectlevel1&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_前言&quot;&gt;前言&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_如何判断是否要处理异常&quot;&gt;如何判断是否要处理异常&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_如何处理异常&quot;&gt;如何处理异常&lt;/a&gt;
+&lt;ul class=&quot;sectlevel2&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_处理非业务异常&quot;&gt;处理非业务异常&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_处理业务异常&quot;&gt;处理业务异常&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_前言&quot;&gt;前言&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;对异常我们一般有这么几个处理方式:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;我处理掉, 让上层无感知.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对异常进行封装, 封装成一个新的异常, 加入我的解释, 帮上层理解异常.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;不做处理.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_如何判断是否要处理异常&quot;&gt;如何判断是否要处理异常&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;if (当前代码在抛出可预期异常) { &lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;(1)&lt;/b&gt;
+    处理异常()
+} else if (根据我的分析, 这段代码会发生潜在异常) { &lt;i class=&quot;conum&quot; data-value=&quot;2&quot;&gt;&lt;/i&gt;&lt;b&gt;(2)&lt;/b&gt;
+    if (需要关心这种异常) { &lt;i class=&quot;conum&quot; data-value=&quot;3&quot;&gt;&lt;/i&gt;&lt;b&gt;(3)&lt;/b&gt;
+        处理异常()
+    }
+} else {
+    // 再发生异常时就是我预测不到的, 我统称为 bug.  &lt;i class=&quot;conum&quot; data-value=&quot;4&quot;&gt;&lt;/i&gt;&lt;b&gt;(4)&lt;/b&gt;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;colist arabic&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;1&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;众所周知, java 中异常分为可预期(excepted)异常和 runtime 异常. 为什么会有&lt;strong&gt;可预期异常&lt;/strong&gt;这种东西? 帮助经验不足 java 程序员知道这段代码有发生哪些异常&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;2&quot;&gt;&lt;/i&gt;&lt;b&gt;2&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;比如有网络请求, 有参数校验等, 我知道这段代码可能会在某种可以想到的情况下发生异常&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;3&quot;&gt;&lt;/i&gt;&lt;b&gt;3&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;&lt;strong&gt;如何判断是否需要关心?&lt;/strong&gt; 我当前的程序不需要较好的健壮性, 这个异常也不会影响到别人, &lt;strong&gt;没有人因为这个异常没处理会感到疑惑或者背地里骂我&lt;/strong&gt;, 那么我就可以不关心&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;4&quot;&gt;&lt;/i&gt;&lt;b&gt;4&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;我想象到不到会出现什么异常. 当然, 如果发生线上问题, 就要背锅交学费了&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_如何处理异常&quot;&gt;如何处理异常&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;判断完是否要处理异常, 如果需要处理, 就要看看如何处理异常:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;function 处理异常(ex) {
+    if (我在非业务逻辑中) { &lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;(1)&lt;/b&gt;
+        pass:q[**处理非业务异常(ex)**]
+    } else if (我在业务逻辑中) {
+        处理业务异常(ex)
+    }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;colist arabic&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;1&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;什么叫非业务异常? 跟业务逻辑无关的中立代码. 比如 &lt;code&gt;发送 HTTP 请求的工具类&lt;/code&gt;, &lt;code&gt;初始化项目基础设施的代码&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_处理非业务异常&quot;&gt;处理非业务异常&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;非业务代码中的异常, 一般是无法原地处理的, 都是要抛给上层, 让真正知道业务的地方去判断出了这种问题该如何处理.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;function 处理非业务异常(ex) {
+
+        if (我很确定重试后成功的概率很高) { &lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;(1)&lt;/b&gt;
+            do: 考虑尝试 1-2 次
+            如果成功就 ok, return
+        }
+
+        do: 抛出特定异常, 说明错误原因, 带上原始异常. 最好带上特定 异常 code, 带有结构化的数据能够对异常做详细说明 &lt;i class=&quot;conum&quot; data-value=&quot;2&quot;&gt;&lt;/i&gt;&lt;b&gt;(2)&lt;/b&gt;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;colist arabic&quot;&gt;
+&lt;table&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;1&quot;&gt;&lt;/i&gt;&lt;b&gt;1&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;一般都是不能抢救的. 例外的, 比如创建链接超时这种不确定异常, 可以重试下, 很多 HTTP 请求框架也是有这么做的.&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;i class=&quot;conum&quot; data-value=&quot;2&quot;&gt;&lt;/i&gt;&lt;b&gt;2&lt;/b&gt;&lt;/td&gt;
+&lt;td&gt;一个包含了足够信息的异常. &lt;a href=&quot;http://blog.yangxiaochen.com/blog/design-and-thinking/expressive-exception-lib.html&quot;&gt;一个更有表现里的异常&lt;/a&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_处理业务异常&quot;&gt;处理业务异常&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;业务逻辑中处理异常会稍微复杂一些, 到这里已经不是一个技术问题, 而是个业务思维问题了.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;先看流程吧:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;function 处理异常(ex) {
+    if (业务逻辑不需要回滚) {
+        if (这种异常不需要处理, 或者可以被自动处理) {
+            do: warn 日志|错误计数
+            return
+        } else {
+            do: error 日志
+            return
+        }
+    }
+
+    if (不符合业务逻辑规则, 我可以抛给用户, 可以让用户知道发生了什么, 并且能够理解的) { // 非 bug
+        do: 抛出 ServiceException, 带上错误 tip. 在用户接口层对这个错误进行处理, 返回提示, 打印 warn 日志, 或进行审计计数.
+        return
+    } else if (不符合业务逻辑规则, 但是也没有办法通知用户到用户的) {
+        return
+    } else if (系统内部运行不符合预期的) { // bug 或 问题
+        do: 抛出 ServiceErrorException, tip: 系统错误. 统一 catch 输出异常提示, 打 error 日志
+        return
+    }
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&amp;lt;1&amp;gt;
+&amp;lt;2&amp;gt; 通常是我不能处理的, 因为我不知道这个异常对于整个业务逻辑有着什么影响, 所以一般都是不能抢救的. 例外的, 对于创建链接超时这种不确定异常, 可以重试下, 很多 HTTP 请求框架也是有这么做的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;warn 日志 - 不太需要关注, 通常可以自动恢复&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;error 日志 - 错误, 需要报警关注&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;异常收集计数 report&lt;/p&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;通常不太需要关注, 但是达到某种阈值会变成问题.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;需要定期例行关注下.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+	</description>
+    </item>
+    <item>
       <title>项目接口设计实践</title>
       <link>http://blog.yangxiaochen.com/blog/design-and-thinking/api-design.html</link>
-      <pubDate>星期四, 25 七月 2019 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 25 Jul 2019 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/design-and-thinking/api-design.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -831,7 +1608,7 @@ exceptionHandler.setErrorViewResolver((request, response, ex) -&amp;gt; {
     <item>
       <title>「企业应用架构模式」读书笔记与思考 - 1 - 领域逻辑模式</title>
       <link>http://blog.yangxiaochen.com/blog/design-and-thinking/reading-notes-for-PoEAA1.html</link>
-      <pubDate>星期五, 12 七月 2019 00:00:00 +0800</pubDate>
+      <pubDate>Fri, 12 Jul 2019 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/design-and-thinking/reading-notes-for-PoEAA1.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -1046,7 +1823,7 @@ receive()&lt;/pre&gt;
     <item>
       <title>如何有效的书写项目单元测试</title>
       <link>http://blog.yangxiaochen.com/blog/design-and-thinking/how-to-write-unittest.html</link>
-      <pubDate>星期一, 17 六月 2019 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 17 Jun 2019 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/design-and-thinking/how-to-write-unittest.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -1805,293 +2582,9 @@ template = saveTemplate(template) &lt;i class=&quot;conum&quot; data-value=&quot
 	</description>
     </item>
     <item>
-      <title>日常体会(更新至 2019-05-06)</title>
-      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/daily-experience.html</link>
-      <pubDate>星期一, 6 五月 2019 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/design-and-thinking/daily-experience.html</guid>
-      	<description>
-	&lt;div class=&quot;admonitionblock note&quot;&gt;
-&lt;table&gt;
-&lt;tr&gt;
-&lt;td class=&quot;icon&quot;&gt;
-&lt;i class=&quot;fa icon-note&quot; title=&quot;Note&quot;&gt;&lt;/i&gt;
-&lt;/td&gt;
-&lt;td class=&quot;content&quot;&gt;
-本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot; class=&quot;bare&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;当你对未来的需求有预见性, 能够估计出现在的设计如何改动, 老数据如何迁移, 就能够接受当前的并不完善的设计. 重要的是设定概念, 或者叫领域模型, 只要老的模型和新的模型都是清晰地, 就不怕从老的模型迁移到新的模型.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;为什么有时候重构困难, 不是无法找到一个新模型, 而是老模型混乱, 细节上二义性多, 每一次模型的更新都没有对数据全面处理, 造成数据的历史版本多.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;一个模型内部的各种字段的业务场景都要明确, 各司其职. 讲模型就是树立概念. 应该是自冾的, 能够演绎的, 能说服自己的.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-02-21 在讨论需求实现时一定程度的妥协&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;工程师怎么才会想着要做到更专业? 一个工程师在觉得专业的东西离自己比较远时, 通常不会要求自己作的很专业.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;但当一个工程师看到了写的很专业的代码, 文档, 就在自己身边, 并被专业性所打动时, 肯定会自己也想要做到这样.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;当花费了些功夫, 自己也模仿专业的方式来要求自己, 产出成果后, 会产生很大满足感, 这样一个工程师今后都会更高要求自己.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;一个同事, 之前不写测试, 或者说对写测试不感冒, 在一个优秀的测试代码上尝到甜头, 给自己的项目补充了非常整齐的测试用例.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-03-08 如何让自己趋向专业&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;新项目真的能给人带来很大的提升, 尤其在一个严格要求下的新项目.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;代码书写的传授在新项目里是非常高效的.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;大概是自己在一个干净的环境, 也会尽力来保持整洁.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;当然, 前提是这个项目由一个作为经验丰富的实践家的高级别工程师把控.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;话外之意, 有一些高级工程师, 在真正的业务开发中实践较少, 在实践中总结的方法论不足, 不够优秀.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;人家都转管理了, 哪有功夫跟着你泥塘里打滚.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-03-08 新项目对同学们提升很大&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;整体大局观, 怎么才能考虑全面, 怎么才能有高度.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;一个很重要的一点是获取更多信息, 从业务上来讲, 产品的远期规划, 近期变动, 公司对现有业务的新的思考. 其他部门的业务现状. 最后行业现状等等.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;从技术上来讲, op 的职责划分, 网络线路, 机房现状.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;总之, 获取的信息越多, 越有利于做判断, 下结论, 以上只是这个规则在软件开发上的应用, 在其他领域, 也是吃的开的.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;但是反过来讲, 要求开发人员做到这些, 要求太高了. 明明应该是各司其职, 结果让开发人员全包. 就因为开发同学是最接近真实实现的. 无法调和.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-03-08 提升整体大局观&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;写代码优雅果然不是一蹴而就的.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;没有亲身体会是不行的.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-03-26 review 代码有感&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;写代码时要告诉自己, 代码是给别人读的, 换位思考, 把自己的意图展示出来, 把自己的意图展示出来, 把自己的意图展示出来.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-04-10 review 代码有感&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;找到一个合适的设计很重要, 但是知道当前的设计不合适更重要. 只有指导不合适, 才会抓耳挠腮, 辗转反侧, 去找到一个合适的设计.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-04-16 杂乱业务设计有感&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;一个复杂多变的业务一定要进行抽象梳理, 找出不变的东西, 核心的流程. 流程上的细节处理通过各种策略模式来实现.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-04-25 杂乱业务设计有感&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;一个事情没想清楚, 不要往大了做, 拆系统&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-04-26 杂乱业务设计有感&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;不要以程序不报错为目标写代码, 要以逻辑正确为目标写代码.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-04-26 杂乱业务设计有感&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;写代码决不能只看自己这一块, 要往上游多看, 往下游多看, 才能写的正确.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-04-30 杂乱业务设计有感&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;创建请求凭证跟发起请求不要在同一个事务中.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;可能需要一个全局的异步补偿逻辑注册中心.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-05-05 杂乱业务设计有感&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;写单测是对系统逻辑的 review&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;能顺利写出单测, 说明开发对系统逻辑了解, 业务逻辑设计的时候就想好了怎么用.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-05-06 杂乱业务设计有感&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;写代码要让别人知道自己在做什么, 而不是怎么做. 不要让别人通过复杂的逻辑代码, 猜测你在做什么.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;举个例子:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;if (time == null || time.notAfter(&apos;1970-01-02 00:00:00&apos;)) {
-    time = newTime
-}&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;项目中有个 &lt;code&gt;time&lt;/code&gt; 字段, 要求如果没有设置过值, 则这设置为当前时间. 如果改为&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;if (isInitialTime(time)) {
-    time = newTime
-}&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;当别人读到下面这段代码时, 就知道你在做什么, 而不是通过复杂的判断来推断.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-05-06 杂乱业务设计有感&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;一个项目, 从产品到开发都没有一个有能力把产品, 业务, 概念, 抽象好的人, 这个产品就没啥可维护性可言了.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;最后造成产品各种变动, 开发疲于奔命.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-05-06 杂乱业务设计有感&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;我们总是想封装, 自动化配置, 让他人更少的了解细节. 但同时我们又要求了解实现, 以完成更优的使用.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-08-09 封装&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;quoteblock&quot;&gt;
-&lt;blockquote&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;为什么总是强调字段和方法命名? 为了统一语言和概念, 为了表达意图. Name things 是软件开发中最难得两个事情之一.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;attribution&quot;&gt;
-&amp;#8212; 杨晓辰&lt;br&gt;
-&lt;cite&gt;2019-10-23 字段命名&lt;/cite&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-	</description>
-    </item>
-    <item>
       <title>在 windows 系统下使用 linux 命令行做开发</title>
       <link>http://blog.yangxiaochen.com/blog/tools/linux-in-windows.html</link>
-      <pubDate>星期一, 11 二月 2019 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 11 Feb 2019 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/tools/linux-in-windows.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -2196,7 +2689,7 @@ template = saveTemplate(template) &lt;i class=&quot;conum&quot; data-value=&quot
     <item>
       <title>groovy技巧 for java 开发者</title>
       <link>http://blog.yangxiaochen.com/blog/groovy/groovy-tips-for-javaer.html</link>
-      <pubDate>星期六, 5 五月 2018 00:00:00 +0800</pubDate>
+      <pubDate>Sat, 5 May 2018 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/groovy/groovy-tips-for-javaer.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -2586,7 +3079,7 @@ sout.eachLine { line -&amp;gt;
     <item>
       <title>spring 中 aspectj 扫描内容太多导致的启动时加载缓慢</title>
       <link>http://blog.yangxiaochen.com/blog/stackoverflow/spring-aspectj-slow.html</link>
-      <pubDate>星期四, 3 五月 2018 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 3 May 2018 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/stackoverflow/spring-aspectj-slow.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -2751,7 +3244,7 @@ sout.eachLine { line -&amp;gt;
     <item>
       <title>2018 北京 qcon 大会笔记</title>
       <link>http://blog.yangxiaochen.com/blog/design-and-thinking/2018-beijing-qcon.html</link>
-      <pubDate>星期二, 24 四月 2018 00:00:00 +0800</pubDate>
+      <pubDate>Tue, 24 Apr 2018 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/design-and-thinking/2018-beijing-qcon.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -3185,7 +3678,7 @@ sout.eachLine { line -&amp;gt;
     <item>
       <title>pac4j 简介</title>
       <link>http://blog.yangxiaochen.com/blog/java/pac4j-introduction.html</link>
-      <pubDate>星期日, 15 四月 2018 00:00:00 +0800</pubDate>
+      <pubDate>Sun, 15 Apr 2018 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/pac4j-introduction.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -3222,23 +3715,26 @@ sout.eachLine { line -&amp;gt;
 &lt;p&gt;pac4j 是一个 java 的安全引擎.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;在一套 api 下,&lt;/p&gt;
+&lt;p&gt;在一套标准的 interface 下,&lt;/p&gt;
 &lt;/div&gt;
-&lt;div class=&quot;ulist&quot;&gt;
-&lt;ul&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
 &lt;li&gt;
-&lt;p&gt;提供了很多种认证机制: form 表单登录, JWS, cas, OAuth 等等.&lt;/p&gt;
+&lt;p&gt;提供了很多种&lt;strong&gt;认证机制&lt;/strong&gt;: form 表单登录, JWS, cas, OAuth 等等.&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;提供了很多收授权和权限检查机制: role/permissions, CORS, CSRF, HTTP Security headers&lt;/p&gt;
+&lt;p&gt;提供了很多收&lt;strong&gt;授权和权限检查机制&lt;/strong&gt;: role/permissions, CORS, CSRF, HTTP Security headers&lt;/p&gt;
 &lt;/li&gt;
 &lt;li&gt;
-&lt;p&gt;提供了跟很多框架的整合和工具方式: springboot, play, shiro, spring security&lt;/p&gt;
+&lt;p&gt;提供了&lt;strong&gt;跟很多框架的集成方式&lt;/strong&gt;: springboot, play, shiro, spring security&lt;/p&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
+&lt;/ol&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;这些认证方式都是可插拔的, 你可以同时使用其中的一种或几种.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;比如, 最常见的情况, 就是我们用 spring boot + cas 单点登录 + role/permissions&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -3457,7 +3953,7 @@ public ShiroFilterFactoryBean shiroFilterFactoryBean() {
     <item>
       <title>jooq 介绍</title>
       <link>http://blog.yangxiaochen.com/blog/db/jooq-intro.html</link>
-      <pubDate>星期三, 4 四月 2018 00:00:00 +0800</pubDate>
+      <pubDate>Wed, 4 Apr 2018 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/db/jooq-intro.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -4144,7 +4640,7 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
     <item>
       <title>方法论总结</title>
       <link>http://blog.yangxiaochen.com/blog/design-and-thinking/methodology.html</link>
-      <pubDate>星期日, 5 十一月 2017 00:00:00 +0800</pubDate>
+      <pubDate>Sun, 5 Nov 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/design-and-thinking/methodology.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -4299,7 +4795,7 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
     <item>
       <title>spring boot mvc 文件上传错误</title>
       <link>http://blog.yangxiaochen.com/blog/java/spring-mvc-multipart-error.html</link>
-      <pubDate>星期二, 5 九月 2017 00:00:00 +0800</pubDate>
+      <pubDate>Tue, 5 Sep 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/spring-mvc-multipart-error.html</guid>
       	<description>
 	&lt;p&gt;NOTE: 本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/p&gt;
@@ -4386,7 +4882,7 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
     <item>
       <title>gradle简明教程</title>
       <link>http://blog.yangxiaochen.com/blog/java/gradle-simple-introduction.html</link>
-      <pubDate>星期一, 24 七月 2017 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 24 Jul 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/gradle-simple-introduction.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -4832,7 +5328,7 @@ idea {
     <item>
       <title>Java web 项目异常设计实践</title>
       <link>http://blog.yangxiaochen.com/blog/java/exception-in-action.html</link>
-      <pubDate>星期一, 10 七月 2017 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 10 Jul 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/exception-in-action.html</guid>
       	<description>
 	&lt;h1&gt;异常实践&lt;/h1&gt;
@@ -4899,7 +5395,7 @@ idea {
     <item>
       <title>spring &amp; spring mvc 初始化介绍</title>
       <link>http://blog.yangxiaochen.com/blog/java/spring-spring-mvc-initalize.html</link>
-      <pubDate>星期四, 30 三月 2017 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 30 Mar 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/spring-spring-mvc-initalize.html</guid>
       	<description>
 	&lt;p&gt;NOTE: 本文为原创, 转载请注明出处 &lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/p&gt;
@@ -5044,7 +5540,7 @@ public static final String DEFAULT_CONFIG_LOCATION_SUFFIX = &amp;quot;.xml&amp;q
     <item>
       <title>Java异常规范</title>
       <link>http://blog.yangxiaochen.com/blog/java/exception-pattern.html</link>
-      <pubDate>星期四, 29 九月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 29 Sep 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/exception-pattern.html</guid>
       	<description>
 	&lt;h1&gt;异常规范&lt;/h1&gt;
@@ -5187,7 +5683,7 @@ public static final String DEFAULT_CONFIG_LOCATION_SUFFIX = &amp;quot;.xml&amp;q
     <item>
       <title>git实际开发语句</title>
       <link>http://blog.yangxiaochen.com/blog/git/git-in-use.html</link>
-      <pubDate>星期一, 4 七月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 4 Jul 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/git/git-in-use.html</guid>
       	<description>
 	&lt;!-- # git实际使用指南 --&gt;
@@ -5299,7 +5795,7 @@ git commit
     <item>
       <title>git分支管理与使用规范</title>
       <link>http://blog.yangxiaochen.com/blog/git/git-in-action.html</link>
-      <pubDate>星期二, 21 六月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Tue, 21 Jun 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/git/git-in-action.html</guid>
       	<description>
 	&lt;!-- # git分支管理与使用规范 --&gt;
@@ -5494,7 +5990,7 @@ git reset --soft [version]  // 保留版本后的所有已提交修改到commit 
     <item>
       <title>git-flow实践</title>
       <link>http://blog.yangxiaochen.com/blog/git/git-flow-in-action.html</link>
-      <pubDate>星期日, 12 六月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Sun, 12 Jun 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/git/git-flow-in-action.html</guid>
       	<description>
 	&lt;!-- # git-flow 操作实践 --&gt;
@@ -5664,7 +6160,7 @@ Summary of actions:
     <item>
       <title>java 多线程同步的几种写法</title>
       <link>http://blog.yangxiaochen.com/blog/java/thread-coordinate-n-methods.html</link>
-      <pubDate>星期四, 14 四月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 14 Apr 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/thread-coordinate-n-methods.html</guid>
       	<description>
 	&lt;div class=&quot;quoteblock&quot;&gt;
@@ -5960,7 +6456,7 @@ ForkJoinTask&amp;lt;Integer&amp;gt; f3 = ForkJoinTask.adapt(() -&amp;gt; test.m3
     <item>
       <title>从一个丢失的iphone看互联网信息安全</title>
       <link>http://blog.yangxiaochen.com/blog/secure/a-lost-iphone-secure.html</link>
-      <pubDate>星期一, 4 四月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 4 Apr 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/secure/a-lost-iphone-secure.html</guid>
       	<description>
 	&lt;!-- # 一个真实故事 --&gt;
@@ -6081,7 +6577,7 @@ ForkJoinTask&amp;lt;Integer&amp;gt; f3 = ForkJoinTask.adapt(() -&amp;gt; test.m3
     <item>
       <title>定位占用cpu的java线程</title>
       <link>http://blog.yangxiaochen.com/blog/linux/top-thread.html</link>
-      <pubDate>星期五, 1 四月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Fri, 1 Apr 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/linux/top-thread.html</guid>
       	<description>
 	&lt;div class=&quot;paragraph&quot;&gt;
@@ -6150,10 +6646,19 @@ sout.eachLine { line -&amp;gt;
     <item>
       <title>mkdir在/home目录下新建文件夹 for mac</title>
       <link>http://blog.yangxiaochen.com/blog/mac/create-dir-home.html</link>
-      <pubDate>星期四, 31 三月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Thu, 31 Mar 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/mac/create-dir-home.html</guid>
       	<description>
 	&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;strong&gt;这个文章比较老了, 针对最新的创建文件夹无权权限的问题&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;strong&gt;查看: &lt;a href=&quot;/blog/mac/mkdir-read-only-file-system.html&quot;&gt;苹果系统 macOS 创建文件夹遇到 Read-only file system 解决&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;----------------2020.03.27 更新----------------&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;Hmmm, trying to create a directory under &apos;/home&apos; on a Mac?&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
@@ -6233,9 +6738,34 @@ I wouldn&amp;#8217;t do anything &apos;important&apos; with this directory as it
 	</description>
     </item>
     <item>
+      <title>python入门</title>
+      <link>http://blog.yangxiaochen.com/blog/develop/python-starter.html</link>
+      <pubDate>Tue, 9 Feb 2016 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/develop/python-starter.html</guid>
+      	<description>
+	&lt;h4&gt;原创, 转载请注明出处&lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;本文不讲python语法, 因为语法手册到处都有, 而且也不难, 本文旨在介绍python的生态环境和开发环境搭建.&lt;/p&gt;
+&lt;h2&gt;生态&lt;/h2&gt;
+&lt;h3&gt;包管理工具 pip&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;python 3.*版本自带&lt;/li&gt;
+&lt;li&gt;python 2.*须另外安装&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;pip 文档地址&lt;a href=&quot;https://pip.pypa.io/en/latest/&quot;&gt;pip文档&lt;/a&gt;&lt;/p&gt;
+&lt;h3&gt;虚拟环境 Virtualenv&lt;/h3&gt;
+&lt;p&gt;python安装类库为全局安装, 在一台机器上一个用户安装一个类库, 对该机器上所有用户和项目有效. 所以为了解决这个问题, 引入了虚拟环境, 使依赖类库管理编程项目范围.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;python 3.*版本自带&lt;/li&gt;
+&lt;li&gt;python 2.*须另外安装&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Virtualenv 文档地址&lt;a href=&quot;https://virtualenv.pypa.io/en/latest/&quot;&gt;Virtualenv文档&lt;/a&gt;&lt;/p&gt;
+
+	</description>
+    </item>
+    <item>
       <title>homebrew安装旧版本软件</title>
       <link>http://blog.yangxiaochen.com/blog/mac/homebrew-install-old-version-soft.html</link>
-      <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Tue, 9 Feb 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/mac/homebrew-install-old-version-soft.html</guid>
       	<description>
 	&lt;div class=&quot;paragraph&quot;&gt;
@@ -6263,34 +6793,9 @@ leafnode node node010 node04 node06 node08 nodebrew nodenv&lt;/pre&gt;
 	</description>
     </item>
     <item>
-      <title>python入门</title>
-      <link>http://blog.yangxiaochen.com/blog/develop/python-starter.html</link>
-      <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/develop/python-starter.html</guid>
-      	<description>
-	&lt;h4&gt;原创, 转载请注明出处&lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/h4&gt;
-&lt;p&gt;本文不讲python语法, 因为语法手册到处都有, 而且也不难, 本文旨在介绍python的生态环境和开发环境搭建.&lt;/p&gt;
-&lt;h2&gt;生态&lt;/h2&gt;
-&lt;h3&gt;包管理工具 pip&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;python 3.*版本自带&lt;/li&gt;
-&lt;li&gt;python 2.*须另外安装&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;pip 文档地址&lt;a href=&quot;https://pip.pypa.io/en/latest/&quot;&gt;pip文档&lt;/a&gt;&lt;/p&gt;
-&lt;h3&gt;虚拟环境 Virtualenv&lt;/h3&gt;
-&lt;p&gt;python安装类库为全局安装, 在一台机器上一个用户安装一个类库, 对该机器上所有用户和项目有效. 所以为了解决这个问题, 引入了虚拟环境, 使依赖类库管理编程项目范围.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;python 3.*版本自带&lt;/li&gt;
-&lt;li&gt;python 2.*须另外安装&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Virtualenv 文档地址&lt;a href=&quot;https://virtualenv.pypa.io/en/latest/&quot;&gt;Virtualenv文档&lt;/a&gt;&lt;/p&gt;
-
-	</description>
-    </item>
-    <item>
       <title>rabbitmq管理使用实践</title>
       <link>http://blog.yangxiaochen.com/blog/develop/rabbitmq-in-action.html</link>
-      <pubDate>星期一, 8 二月 2016 00:00:00 +0800</pubDate>
+      <pubDate>Mon, 8 Feb 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/develop/rabbitmq-in-action.html</guid>
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
@@ -6529,7 +7034,7 @@ durableQueues.txt&lt;/pre&gt;
     <item>
       <title>css 定位指南</title>
       <link>http://blog.yangxiaochen.com/blog/frontend/css-position.html</link>
-      <pubDate>星期二, 8 十一月 2011 00:00:00 +0800</pubDate>
+      <pubDate>Tue, 8 Nov 2011 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/frontend/css-position.html</guid>
       	<description>
 	&lt;h4&gt;原创, 转载请注明出处&lt;a href=&quot;https://blog.yangxiaochen.com&quot;&gt;https://blog.yangxiaochen.com&lt;/a&gt;&lt;/h4&gt;

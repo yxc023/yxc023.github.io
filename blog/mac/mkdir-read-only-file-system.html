@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8"/>
+    <title>苹果系统 macOS 创建文件夹遇到 Read-only file system 解决 - Michael的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="升级完 macbook pro 的系统后, 发现无法在根目录创建文件夹了.">
+    <meta name="author" content="yxc023@qq.com">
+    <meta name="keywords" content="stackoverflow,macbook,macOS,苹果,home,mkdir,文件夹,技术,java,设计模式,spring,软件开发,杨晓辰,yxc023">
+    <meta name="generator" content="JBake">
+    <script data-ad-client="ca-pub-5626174695342369" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+	  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+	
+	<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Michael的文档</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+             <li><a href="../../index.html">首页</a></li> 
+            <li><a href="../../wiki_gradle_index.html">gradle</a></li>
+            <li><a href="../../tags/git.html">git</a></li>
+            <li><a href="../../tags/spring.html">spring</a></li>
+            <li><a href="../../archive.html">archive</a></li>
+
+            <li><a href="https://github.com/yxc023/jbake">my jbake</a></li>
+
+            <li><a href="../../about.html">关于</a></li>
+
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">	
+	<div class="page-header">
+		<h1>苹果系统 macOS 创建文件夹遇到 Read-only file system 解决</h1>
+	</div>
+
+	<p><em>24 March 2020</em></p>
+
+	<!-- 文章页头部 -->
+
+	<div class="rightSideAd">
+	<script type="text/javascript">var jd_union_unid="1002591316",jd_ad_ids="511:6",jd_union_pid="CMbagPGULhDUqIneAxoAIKL955YLKgA=";var jd_width=160;var jd_height=600;var jd_union_euid="";var p="ABMGVBxbEQURDmVEH0hfIlgRRgYlXVZaCCsfSlpMWGVEH0hfIgQnbRlrV0JZNlxYcFd1TA99ElRQT0FZF2sXAxMGUBJbHQUXN1UaWhYGGgdXG1wlMk1DCEZrXmwTNwpfBkgyEgNcHFsRABUAVxJbEzITN2Ur";</script><script type="text/javascript" charset="utf-8" src="//u-x.jd.com/static/js/auto.js"></script>
+	</div>
+
+	<p><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_问题">问题</a></li>
+<li><a href="#_解决">解决</a></li>
+</ul>
+</div>
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+本文为原创, 转载请注明出处 <a href="https://blog.yangxiaochen.com" class="bare">https://blog.yangxiaochen.com</a>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_问题">问题</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>升级完 macbook pro 的系统后, 发现无法在根目录创建文件夹了.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ mkdir /data
+mkdir: /data: Read-only file system</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_解决">解决</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>关机按 <code>cmd+R</code> 重启进入恢复模式, 关闭SIP: 打开终端小工具, 输入命令 <code>csrutil disable</code>, 正常重启</p>
+</li>
+<li>
+<p>重新挂载根目录: 输入命令 <code>sudo mount -uw /</code>, 在你喜欢的地方建立data目录, 比如: <code>mkdir /Users/xxx/data</code>, 然后建立软连接: <code>sudo ln -s /Users/xxx/data /data</code></p>
+</li>
+<li>
+<p>关机按 <code>cmd+R</code> 重启进入恢复模式, 重新打开SIP: 在终端输入命令 <code>csrutil enable</code>, 正常重启</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>现在可以正常使用 /data 目录了</p>
+</div>
+</div>
+</div></p>
+
+	<hr />
+
+
+	<!-- 文章页底部 -->
+
+	<div id="gitalk-container"></div>
+	<script>
+		const gitalk = new Gitalk({
+		clientID: '9fda08d9f8fbe4a76212',
+		clientSecret: '9a91a6260819f30af5d9c4534815493865d409a7',
+		repo: 'yxc023.github.io',
+		owner: 'yxc023',
+		admin: ['yxc023'],
+		id: "苹果系统 macOS 创建文件夹遇到 Read-only file system 解决",      // Ensure uniqueness and length less than 50
+		distractionFreeMode: false  // Facebook-like distraction free mode
+		})
+
+		gitalk.render('gitalk-container')
+
+	</script>
+
+
+	
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">&copy; 2020 | Michael Yang | 备案: <a href="http://www.beian.miit.gov.cn">京ICP备13041693号</a></p>
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?0201e463306e04cc395b38bcff45333e";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+    <script>
+      (function(){
+          var bp = document.createElement('script');
+          var curProtocol = window.location.protocol.split(':')[0];
+          if (curProtocol === 'https') {
+              bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+          }
+          else {
+              bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+          }
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(bp, s);
+      })();
+    </script>
+
+    
+  </body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8"/>
+    <title>如何处理 java 代码中的异常 - Michael的博客</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="如何处理 java 代码中的异常">
+    <meta name="author" content="yxc023@qq.com">
+    <meta name="keywords" content="java,exception,异常,技术,java,设计模式,spring,软件开发,杨晓辰,yxc023">
+    <meta name="generator" content="JBake">
+    <script data-ad-client="ca-pub-5626174695342369" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+    <!-- Le styles -->
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/asciidoctor.css" rel="stylesheet">
+    <link href="../../css/base.css" rel="stylesheet">
+    <link href="../../css/prettify.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <!--<link rel="apple-touch-icon-precomposed" sizes="144x144" href="../assets/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="../assets/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
+    <link rel="shortcut icon" href="../../favicon.ico">
+
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+	  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  </head>
+  <body onload="prettyPrint()">
+    <div id="wrap">
+	
+	<!-- Fixed navbar -->
+    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Michael的文档</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+             <li><a href="../../index.html">首页</a></li> 
+            <li><a href="../../wiki_gradle_index.html">gradle</a></li>
+            <li><a href="../../tags/git.html">git</a></li>
+            <li><a href="../../tags/spring.html">spring</a></li>
+            <li><a href="../../archive.html">archive</a></li>
+
+            <li><a href="https://github.com/yxc023/jbake">my jbake</a></li>
+
+            <li><a href="../../about.html">关于</a></li>
+
+
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div class="container">	
+	<div class="page-header">
+		<h1>如何处理 java 代码中的异常</h1>
+	</div>
+
+	<p><em>17 January 2020</em></p>
+
+	<!-- 文章页头部 -->
+
+	<div class="rightSideAd">
+	<script type="text/javascript">var jd_union_unid="1002591316",jd_ad_ids="511:6",jd_union_pid="CMbagPGULhDUqIneAxoAIKL955YLKgA=";var jd_width=160;var jd_height=600;var jd_union_euid="";var p="ABMGVBxbEQURDmVEH0hfIlgRRgYlXVZaCCsfSlpMWGVEH0hfIgQnbRlrV0JZNlxYcFd1TA99ElRQT0FZF2sXAxMGUBJbHQUXN1UaWhYGGgdXG1wlMk1DCEZrXmwTNwpfBkgyEgNcHFsRABUAVxJbEzITN2Ur";</script><script type="text/javascript" charset="utf-8" src="//u-x.jd.com/static/js/auto.js"></script>
+	</div>
+
+	<p><div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_前言">前言</a></li>
+<li><a href="#_如何判断是否要处理异常">如何判断是否要处理异常</a></li>
+<li><a href="#_如何处理异常">如何处理异常</a>
+<ul class="sectlevel2">
+<li><a href="#_处理非业务异常">处理非业务异常</a></li>
+<li><a href="#_处理业务异常">处理业务异常</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="sect1">
+<h2 id="_前言">前言</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>对异常我们一般有这么几个处理方式:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>我处理掉, 让上层无感知.</p>
+</li>
+<li>
+<p>对异常进行封装, 封装成一个新的异常, 加入我的解释, 帮上层理解异常.</p>
+</li>
+<li>
+<p>不做处理.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_如何判断是否要处理异常">如何判断是否要处理异常</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-java" data-lang="java">if (当前代码在抛出可预期异常) { <i class="conum" data-value="1"></i><b>(1)</b>
+    处理异常()
+} else if (根据我的分析, 这段代码会发生潜在异常) { <i class="conum" data-value="2"></i><b>(2)</b>
+    if (需要关心这种异常) { <i class="conum" data-value="3"></i><b>(3)</b>
+        处理异常()
+    }
+} else {
+    // 再发生异常时就是我预测不到的, 我统称为 bug.  <i class="conum" data-value="4"></i><b>(4)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>众所周知, java 中异常分为可预期(excepted)异常和 runtime 异常. 为什么会有<strong>可预期异常</strong>这种东西? 帮助经验不足 java 程序员知道这段代码有发生哪些异常</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>比如有网络请求, 有参数校验等, 我知道这段代码可能会在某种可以想到的情况下发生异常</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td><strong>如何判断是否需要关心?</strong> 我当前的程序不需要较好的健壮性, 这个异常也不会影响到别人, <strong>没有人因为这个异常没处理会感到疑惑或者背地里骂我</strong>, 那么我就可以不关心</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>我想象到不到会出现什么异常. 当然, 如果发生线上问题, 就要背锅交学费了</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_如何处理异常">如何处理异常</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>判断完是否要处理异常, 如果需要处理, 就要看看如何处理异常:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-java" data-lang="java">function 处理异常(ex) {
+    if (我在非业务逻辑中) { <i class="conum" data-value="1"></i><b>(1)</b>
+        pass:q[**处理非业务异常(ex)**]
+    } else if (我在业务逻辑中) {
+        处理业务异常(ex)
+    }
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>什么叫非业务异常? 跟业务逻辑无关的中立代码. 比如 <code>发送 HTTP 请求的工具类</code>, <code>初始化项目基础设施的代码</code></td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_处理非业务异常">处理非业务异常</h3>
+<div class="paragraph">
+<p>非业务代码中的异常, 一般是无法原地处理的, 都是要抛给上层, 让真正知道业务的地方去判断出了这种问题该如何处理.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-java" data-lang="java">function 处理非业务异常(ex) {
+
+        if (我很确定重试后成功的概率很高) { <i class="conum" data-value="1"></i><b>(1)</b>
+            do: 考虑尝试 1-2 次
+            如果成功就 ok, return
+        }
+
+        do: 抛出特定异常, 说明错误原因, 带上原始异常. 最好带上特定 异常 code, 带有结构化的数据能够对异常做详细说明 <i class="conum" data-value="2"></i><b>(2)</b>
+}</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>一般都是不能抢救的. 例外的, 比如创建链接超时这种不确定异常, 可以重试下, 很多 HTTP 请求框架也是有这么做的.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>一个包含了足够信息的异常. <a href="http://blog.yangxiaochen.com/blog/design-and-thinking/expressive-exception-lib.html">一个更有表现里的异常</a></td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_处理业务异常">处理业务异常</h3>
+<div class="paragraph">
+<p>业务逻辑中处理异常会稍微复杂一些, 到这里已经不是一个技术问题, 而是个业务思维问题了.</p>
+</div>
+<div class="paragraph">
+<p>先看流程吧:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-java" data-lang="java">function 处理异常(ex) {
+    if (业务逻辑不需要回滚) {
+        if (这种异常不需要处理, 或者可以被自动处理) {
+            do: warn 日志|错误计数
+            return
+        } else {
+            do: error 日志
+            return
+        }
+    }
+
+    if (不符合业务逻辑规则, 我可以抛给用户, 可以让用户知道发生了什么, 并且能够理解的) { // 非 bug
+        do: 抛出 ServiceException, 带上错误 tip. 在用户接口层对这个错误进行处理, 返回提示, 打印 warn 日志, 或进行审计计数.
+        return
+    } else if (不符合业务逻辑规则, 但是也没有办法通知用户到用户的) {
+        return
+    } else if (系统内部运行不符合预期的) { // bug 或 问题
+        do: 抛出 ServiceErrorException, tip: 系统错误. 统一 catch 输出异常提示, 打 error 日志
+        return
+    }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&lt;1&gt;
+&lt;2&gt; 通常是我不能处理的, 因为我不知道这个异常对于整个业务逻辑有着什么影响, 所以一般都是不能抢救的. 例外的, 对于创建链接超时这种不确定异常, 可以重试下, 很多 HTTP 请求框架也是有这么做的.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>warn 日志 - 不太需要关注, 通常可以自动恢复</p>
+</li>
+<li>
+<p>error 日志 - 错误, 需要报警关注</p>
+</li>
+<li>
+<p>异常收集计数 report</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>通常不太需要关注, 但是达到某种阈值会变成问题.</p>
+</li>
+<li>
+<p>需要定期例行关注下.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div></p>
+
+	<hr />
+
+
+	<!-- 文章页底部 -->
+
+	<div id="gitalk-container"></div>
+	<script>
+		const gitalk = new Gitalk({
+		clientID: '9fda08d9f8fbe4a76212',
+		clientSecret: '9a91a6260819f30af5d9c4534815493865d409a7',
+		repo: 'yxc023.github.io',
+		owner: 'yxc023',
+		admin: ['yxc023'],
+		id: "how-to-deal-with-java-exception",      // Ensure uniqueness and length less than 50
+		distractionFreeMode: false  // Facebook-like distraction free mode
+		})
+
+		gitalk.render('gitalk-container')
+
+	</script>
+
+
+	
+		</div>
+		<div id="push"></div>
+    </div>
+    
+    <div id="footer">
+      <div class="container">
+        <p class="muted credit">&copy; 2020 | Michael Yang | 备案: <a href="http://www.beian.miit.gov.cn">京ICP备13041693号</a></p>
+      </div>
+    </div>
+    
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="../../js/jquery-1.11.1.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/prettify.js"></script>
+    <script>
+      var _hmt = _hmt || [];
+      (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?0201e463306e04cc395b38bcff45333e";
+        var s = document.getElementsByTagName("script")[0]; 
+        s.parentNode.insertBefore(hm, s);
+      })();
+    </script>
+
+    <script>
+      (function(){
+          var bp = document.createElement('script');
+          var curProtocol = window.location.protocol.split(':')[0];
+          if (curProtocol === 'https') {
+              bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+          }
+          else {
+              bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+          }
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(bp, s);
+      })();
+    </script>
+
+    
+  </body>
+</html>

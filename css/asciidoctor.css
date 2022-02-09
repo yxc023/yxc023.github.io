@@ -177,17 +177,17 @@ p aside { font-size: 0.875em; line-height: 1.35; font-style: italic; }
 h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { font-family: Arial, sans-serif; font-weight: normal; font-style: normal; color: #7b2d00; text-rendering: optimizeLegibility; margin-top: 0.5em; margin-bottom: 0.5em; line-height: 1.2125em; }
 h1 small, h2 small, h3 small, #toctitle small, .sidebarblock > .content > .title small, h4 small, h5 small, h6 small { font-size: 60%; color: #ff6b15; line-height: 0; }
 
-h1 { font-size: 2.125em; }
+h1 { font-size: 1.425em; }
 
-h2 { font-size: 1.6875em; }
+h2 { font-size: 1.2875em; }
 
-h3, #toctitle, .sidebarblock > .content > .title { font-size: 1.375em; }
+h3, #toctitle, .sidebarblock > .content > .title { font-size: 1.075em; }
 
-h4 { font-size: 1.125em; }
+h4 { font-size: 0.825em; }
 
-h5 { font-size: 1.125em; }
+h5 { font-size: 0.625em; }
 
-h6 { font-size: 1em; }
+h6 { font-size: 0.5em; }
 
 hr { border: solid #dddddd; border-width: 1px 0 0; clear: both; margin: 1.25em 0 1.1875em; height: 0; }
 
@@ -242,10 +242,10 @@ blockquote, blockquote p { line-height: 1.6; color: #333333; }
 .vevent abbr { cursor: auto; text-decoration: none; font-weight: bold; border: none; padding: 0 0.0625em; }
 
 @media only screen and (min-width: 768px) { h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { line-height: 1.4; }
-  h1 { font-size: 2.75em; }
-  h2 { font-size: 2.3125em; }
-  h3, #toctitle, .sidebarblock > .content > .title { font-size: 1.6875em; }
-  h4 { font-size: 1.4375em; } }
+  h1 { font-size: 1.75em; }
+  h2 { font-size: 1.3125em; }
+  h3, #toctitle, .sidebarblock > .content > .title { font-size: 1.1875em; }
+  h4 { font-size: 0.9375em; } }
 /* Print styles.  Inlined to avoid required HTTP connection: www.phpied.com/delay-loading-your-print-css/ Credit to Paul Irish and HTML5 Boilerplate (html5boilerplate.com)
 */
 .print-only { display: none !important; }
