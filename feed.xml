@@ -6,356 +6,9 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期四, 3 三月 2022 16:51:55 +0800</pubDate>
-    <lastBuildDate>星期四, 3 三月 2022 16:51:55 +0800</lastBuildDate>
+    <pubDate>星期四, 3 三月 2022 16:54:52 +0800</pubDate>
+    <lastBuildDate>星期四, 3 三月 2022 16:54:52 +0800</lastBuildDate>
 
-    <item>
-      <title>一个更有表现力的异常设计</title>
-      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/expressive-exception-lib.html</link>
-      <pubDate>星期四, 3 三月 2022 16:05:11 +0800</pubDate>
-      <guid isPermaLink="false">blog/design-and-thinking/expressive-exception-lib.html</guid>
-      	<description>
-	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
-&lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
-&lt;ul class=&quot;sectlevel1&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_动机&quot;&gt;1. 动机&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_设计意图&quot;&gt;2. 设计意图&lt;/a&gt;
-&lt;ul class=&quot;sectlevel2&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_message&quot;&gt;2.1. message&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_code&quot;&gt;2.2. code&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_tip&quot;&gt;2.3. tip&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_data&quot;&gt;2.4. data&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_level&quot;&gt;2.5. level&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_usage&quot;&gt;3. USAGE&lt;/a&gt;
-&lt;ul class=&quot;sectlevel2&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_引入&quot;&gt;3.1. 引入&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_使用&quot;&gt;3.2. 使用&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_拓展异常_level&quot;&gt;3.3. 拓展异常 level&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_如何处理异常&quot;&gt;4. 如何处理异常&lt;/a&gt;
-&lt;ul class=&quot;sectlevel2&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_spring_mvc&quot;&gt;4.1. spring mvc&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_dubbo&quot;&gt;4.2. dubbo&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_意见收集&quot;&gt;5. 意见收集&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div id=&quot;preamble&quot;&gt;
-&lt;div class=&quot;sectionbody&quot;&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;Build an exception with optional fields: &lt;code&gt;code&lt;/code&gt;, &lt;code&gt;message&lt;/code&gt;, &lt;code&gt;tip&lt;/code&gt;, &lt;code&gt;level&lt;/code&gt;, &lt;code&gt;data&lt;/code&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;一个能够包含更多信息的异常基础库. 是一套异常设计和处理的方法论的落地.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;git 地址: &lt;a href=&quot;https://github.com/yxc023/expressive-exception&quot; class=&quot;bare&quot;&gt;https://github.com/yxc023/expressive-exception&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_动机&quot;&gt;1. 动机&lt;/h2&gt;
-&lt;div class=&quot;sectionbody&quot;&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;在业务项目实践中, 异常经常用来传递一些业务错误或者警告.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;通常, 这些业务错误和警告, 经常要包含更多的信息, 比如错误编码, 错误消息. 有时为了给用户更好体验, 还会放入一些便于用户阅读的消息. 甚至, 还会需要一些数据.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_设计意图&quot;&gt;2. 设计意图&lt;/h2&gt;
-&lt;div class=&quot;sectionbody&quot;&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;在多个业务系统实践中, 我做了一个总结, 一个好用的异常, 要包含以下几个数据:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;ulist&quot;&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;message&lt;/code&gt; - 异常都会包含的消息&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;code&lt;/code&gt; - 异常编码&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;tip&lt;/code&gt; - 异常提示&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;data&lt;/code&gt; - 可选, 异常携带的数据&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;&lt;code&gt;level&lt;/code&gt; - 可选, 异常级别&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;下面对每一项进行详细说明.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_message&quot;&gt;2.1. message&lt;/h3&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;通常意义下的 exception message, 通常是对异常的描述. 比如当要删除一个订单, 但给的订单号并不存在时:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;Order not found, id: 1001&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;通常是英文, 且格式标准专业, 包含了异常相关足够的信息.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_code&quot;&gt;2.2. code&lt;/h3&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;因为业务比较复杂, 异常情况也很多, 我们基本不会对每一种异常设计一个异常类型. 比如在处理订单操作时, 我们只定义一种异常类型: &lt;code&gt;OrderOperationException&lt;/code&gt;.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;那么更细节的异常我们可以通过编码来表示:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;SUCCESS - 成功都是相同的
-
-// 而失败各有不同
-FAILURE - 通用的失败编码
-ORDER_NOT_FOUND - 订单不存在
-ORDER_HAD_PAYED - 订单状态异常: 已经支付过了
-...&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;&lt;code&gt;code&lt;/code&gt; 使用字符串, 好处是更易读.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_tip&quot;&gt;2.3. tip&lt;/h3&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;&lt;code&gt;tip&lt;/code&gt; 和 &lt;code&gt;message&lt;/code&gt; 很像, 都是用来表达异常的信息. &lt;code&gt;tip&lt;/code&gt; 的设计意图在于&lt;mark&gt;提供用户可读的异常信息&lt;/mark&gt;. 比如&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;要操作的订单号[1001]不存在.
-订单[1001]已经支付过了.&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_data&quot;&gt;2.4. data&lt;/h3&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;&lt;code&gt;data&lt;/code&gt; 的作用是与请求成功响应时返回的数据项对齐.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;在发生异常时, &lt;code&gt;data&lt;/code&gt; 其实并不常用, 场景比较少. 只是在发生异常时需要返回一些关联数据. 举一个场景:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;当用户购买一个比较抢手的产品时, 有一个购买限制: 一个用户下单后必须支付才能下第二单.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;那么, 当用户触发这个限制时, 返回的异常中要包含未支付的订单号, 再由统一的异常处理转换成带有 data 的异常返回信息.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_level&quot;&gt;2.5. level&lt;/h3&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;异常为什么要分级? 因为我在业务逻辑中, 所有不符合最常规业务逻辑流程的, 都使用异常来返回.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;那么有的异常可能并不算是错误. 比如登录时账号密码不匹配, 这并不是系统 bug 引起的错误, 也不需要记录 error 日志, 甚至报警.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;而有的, 比如逻辑执行中, 某个数据一定应该存在的, 结果没有查询到, 代表着数据完整性异常, 那么这是真真正正的 error.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;而其他的, 甚至还有说偶尔异常没问题, 大量异常有问题的. 比如客户端断开连接, 偶尔出现很正常, 但大量出现就是有问题的.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;所以在设计中, 默认将异常 level 分为了两类:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;ulist&quot;&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;SERVICE_LEVEL&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;ERROR_LEVEL&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_usage&quot;&gt;3. USAGE&lt;/h2&gt;
-&lt;div class=&quot;sectionbody&quot;&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_引入&quot;&gt;3.1. 引入&lt;/h3&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;dependencies {
-    compile &apos;com.yangxiaochen:expressive-exception-core:1.2.1-RELEASE&apos;
-}&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_使用&quot;&gt;3.2. 使用&lt;/h3&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;在 &lt;code&gt;exception-core&lt;/code&gt; 中, 提供了 &lt;code&gt;HasTip&lt;/code&gt;, &lt;code&gt;HasCode&lt;/code&gt;, &lt;code&gt;HasData&lt;/code&gt;, &lt;code&gt;HasLevel&lt;/code&gt; 几个接口, 你需要定义自己的异常类时:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;public class MyException extends Exception implements HasTip, HasCode, HasData, HasLevel {
-    ...
-}&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;为了方便定义异常类, 提供了两个抽象类 &lt;code&gt;BaseExprException&lt;/code&gt;, &lt;code&gt;BaseExprRuntimeException&lt;/code&gt;, 可以直接继承这两个类:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;public class MyException extends BaseExprException {
-    ...
-}&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;打印出的异常 log 例子:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;com.yangxiaochen.exception.test.application.exception.ServiceRuntimeException: [SERVICE_EXCEPTION] default service exception, tip: 默认业务异常, ctxVars: {fooId=1002, time=Wed Aug 21 18:17:26 CST 2019}
-...&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_拓展异常_level&quot;&gt;3.3. 拓展异常 level&lt;/h3&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;可以通过实现 &lt;code&gt;ExceptionLevel&lt;/code&gt; 来定义新的异常 level.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_如何处理异常&quot;&gt;4. 如何处理异常&lt;/h2&gt;
-&lt;div class=&quot;sectionbody&quot;&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;&lt;mark&gt;异常定义只是一个方面,  如何看待, 解释, 处理我们定义的异常是另一个方面.&lt;/mark&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_spring_mvc&quot;&gt;4.1. spring mvc&lt;/h3&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;see &lt;a href=&quot;expressive-exception-spring-mvc/src/main/java/com/yangxiaochen/exception/spring/ExceptionHandler.java&quot;&gt;spring mvc exception handler&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;dependencies {
-    compile &apos;com.yangxiaochen:expressive-exception-spring-mvc:1.2.1-RELEASE&apos;
-}&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;提供了一个默认的 &lt;code&gt;ExceptionHandler&lt;/code&gt;, 来统一处理异常, 其核心异常处理方法实现如下:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
-    if (pathPrefixs.stream().noneMatch(prefix -&amp;gt; request.getRequestURI().startsWith(prefix))) {
-        return null;
-    }
-
-    ex = translateException(ex, request);
-    if (ex == null) {
-        return null;
-    }
-    logAction.log(request, ex);
-
-    return errorViewResolver.resolve(request, response, ex);
-}&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;加入到 spring mvc 框架中实现异常的统一处理:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;@Configuration
-public class MvcConfig implements WebMvcConfigurer {
-
-    private boolean printStack = false;
-    private MappingJackson2JsonView view = new MappingJackson2JsonView();
-
-    @Override
-    public void extendHandlerExceptionResolvers(List&amp;lt;HandlerExceptionResolver&amp;gt; resolvers) {
-        ExceptionHandler exceptionHandler = new ExceptionHandler();
-        resolvers.add(0, exceptionHandler);
-    }
-}&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;可以对 &lt;code&gt;ExceptionHandler&lt;/code&gt; 的处理行为进行定制:&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;exceptionHandler.setPathPrefixs(Arrays.asList(&quot;/web/&quot;, &quot;/api/&quot;));
-exceptionHandler.setErrorViewResolver((request, response, ex) -&amp;gt; {
-    ModelAndView mv = new ModelAndView();
-    mv.addObject(&quot;msg&quot;, ex.getMessage());
-    mv.addObject(&quot;success&quot;, false);
-    if (ex instanceof HasCode) {
-        mv.addObject(&quot;code&quot;, ((HasCode) ex).getCode());
-        if (((HasCode) ex).getCode() == null) {
-            mv.addObject(&quot;code&quot;, 0);
-        }
-    }
-    if (ex instanceof HasTip) {
-        mv.addObject(&quot;tip&quot;, ((HasTip) ex).getTip());
-        if (ex.getMessage() == null) {
-            mv.addObject(&quot;msg&quot;, ((HasTip) ex).getTip());
-            mv.addObject(&quot;message&quot;, ((HasTip) ex).getTip());
-        }
-    }
-    if (ex instanceof HasData) {
-        mv.addObject(&quot;data&quot;, ((HasData) ex).getData());
-    }
-    if (printStack) {
-        mv.addObject(&quot;stackTrace&quot;, getStackFrames(ex));
-    }
-    mv.setView(view);
-    return mv;
-});&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_dubbo&quot;&gt;4.2. dubbo&lt;/h3&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;see &lt;a href=&quot;expressive-exception-dubbo/src/main/java/com/yangxiaochen/exception/dubbo/GlobalExceptionFilter.java&quot;&gt;dubbo filter&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_意见收集&quot;&gt;5. 意见收集&lt;/h2&gt;
-&lt;div class=&quot;sectionbody&quot;&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;这个项目即是一个类库, 更是一个异常设计和处理的方法论, 类库是方便方法论落地的措施.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;如果你有不同的想法和意见, 欢迎 issue 交流.&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-	</description>
-    </item>
     <item>
       <title>日常体会(更新至 2021-08-08)</title>
       <link>http://blog.yangxiaochen.com/blog/design-and-thinking/daily-experience.html</link>
@@ -1133,6 +786,353 @@ mkdir: /data: Read-only file system&lt;/pre&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+	</description>
+    </item>
+    <item>
+      <title>一个更有表现力的异常设计</title>
+      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/expressive-exception-lib.html</link>
+      <pubDate>星期日, 8 十二月 2019 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/design-and-thinking/expressive-exception-lib.html</guid>
+      	<description>
+	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
+&lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
+&lt;ul class=&quot;sectlevel1&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_动机&quot;&gt;1. 动机&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_设计意图&quot;&gt;2. 设计意图&lt;/a&gt;
+&lt;ul class=&quot;sectlevel2&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_message&quot;&gt;2.1. message&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_code&quot;&gt;2.2. code&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_tip&quot;&gt;2.3. tip&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_data&quot;&gt;2.4. data&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_level&quot;&gt;2.5. level&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_usage&quot;&gt;3. USAGE&lt;/a&gt;
+&lt;ul class=&quot;sectlevel2&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_引入&quot;&gt;3.1. 引入&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_使用&quot;&gt;3.2. 使用&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_拓展异常_level&quot;&gt;3.3. 拓展异常 level&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_如何处理异常&quot;&gt;4. 如何处理异常&lt;/a&gt;
+&lt;ul class=&quot;sectlevel2&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_spring_mvc&quot;&gt;4.1. spring mvc&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_dubbo&quot;&gt;4.2. dubbo&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_意见收集&quot;&gt;5. 意见收集&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&quot;preamble&quot;&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Build an exception with optional fields: &lt;code&gt;code&lt;/code&gt;, &lt;code&gt;message&lt;/code&gt;, &lt;code&gt;tip&lt;/code&gt;, &lt;code&gt;level&lt;/code&gt;, &lt;code&gt;data&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;一个能够包含更多信息的异常基础库. 是一套异常设计和处理的方法论的落地.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;git 地址: &lt;a href=&quot;https://github.com/yxc023/expressive-exception&quot; class=&quot;bare&quot;&gt;https://github.com/yxc023/expressive-exception&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_动机&quot;&gt;1. 动机&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;在业务项目实践中, 异常经常用来传递一些业务错误或者警告.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;通常, 这些业务错误和警告, 经常要包含更多的信息, 比如错误编码, 错误消息. 有时为了给用户更好体验, 还会放入一些便于用户阅读的消息. 甚至, 还会需要一些数据.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_设计意图&quot;&gt;2. 设计意图&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;在多个业务系统实践中, 我做了一个总结, 一个好用的异常, 要包含以下几个数据:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;message&lt;/code&gt; - 异常都会包含的消息&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;code&lt;/code&gt; - 异常编码&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;tip&lt;/code&gt; - 异常提示&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;data&lt;/code&gt; - 可选, 异常携带的数据&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;level&lt;/code&gt; - 可选, 异常级别&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;下面对每一项进行详细说明.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_message&quot;&gt;2.1. message&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;通常意义下的 exception message, 通常是对异常的描述. 比如当要删除一个订单, 但给的订单号并不存在时:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;Order not found, id: 1001&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;通常是英文, 且格式标准专业, 包含了异常相关足够的信息.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_code&quot;&gt;2.2. code&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;因为业务比较复杂, 异常情况也很多, 我们基本不会对每一种异常设计一个异常类型. 比如在处理订单操作时, 我们只定义一种异常类型: &lt;code&gt;OrderOperationException&lt;/code&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;那么更细节的异常我们可以通过编码来表示:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;SUCCESS - 成功都是相同的
+
+// 而失败各有不同
+FAILURE - 通用的失败编码
+ORDER_NOT_FOUND - 订单不存在
+ORDER_HAD_PAYED - 订单状态异常: 已经支付过了
+...&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;code&gt;code&lt;/code&gt; 使用字符串, 好处是更易读.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_tip&quot;&gt;2.3. tip&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;code&gt;tip&lt;/code&gt; 和 &lt;code&gt;message&lt;/code&gt; 很像, 都是用来表达异常的信息. &lt;code&gt;tip&lt;/code&gt; 的设计意图在于&lt;mark&gt;提供用户可读的异常信息&lt;/mark&gt;. 比如&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;要操作的订单号[1001]不存在.
+订单[1001]已经支付过了.&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_data&quot;&gt;2.4. data&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;code&gt;data&lt;/code&gt; 的作用是与请求成功响应时返回的数据项对齐.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;在发生异常时, &lt;code&gt;data&lt;/code&gt; 其实并不常用, 场景比较少. 只是在发生异常时需要返回一些关联数据. 举一个场景:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;当用户购买一个比较抢手的产品时, 有一个购买限制: 一个用户下单后必须支付才能下第二单.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;那么, 当用户触发这个限制时, 返回的异常中要包含未支付的订单号, 再由统一的异常处理转换成带有 data 的异常返回信息.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_level&quot;&gt;2.5. level&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;异常为什么要分级? 因为我在业务逻辑中, 所有不符合最常规业务逻辑流程的, 都使用异常来返回.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;那么有的异常可能并不算是错误. 比如登录时账号密码不匹配, 这并不是系统 bug 引起的错误, 也不需要记录 error 日志, 甚至报警.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;而有的, 比如逻辑执行中, 某个数据一定应该存在的, 结果没有查询到, 代表着数据完整性异常, 那么这是真真正正的 error.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;而其他的, 甚至还有说偶尔异常没问题, 大量异常有问题的. 比如客户端断开连接, 偶尔出现很正常, 但大量出现就是有问题的.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;所以在设计中, 默认将异常 level 分为了两类:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;ulist&quot;&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;SERVICE_LEVEL&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;ERROR_LEVEL&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_usage&quot;&gt;3. USAGE&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_引入&quot;&gt;3.1. 引入&lt;/h3&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;dependencies {
+    compile &apos;com.yangxiaochen:expressive-exception-core:1.2.1-RELEASE&apos;
+}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_使用&quot;&gt;3.2. 使用&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;在 &lt;code&gt;exception-core&lt;/code&gt; 中, 提供了 &lt;code&gt;HasTip&lt;/code&gt;, &lt;code&gt;HasCode&lt;/code&gt;, &lt;code&gt;HasData&lt;/code&gt;, &lt;code&gt;HasLevel&lt;/code&gt; 几个接口, 你需要定义自己的异常类时:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;public class MyException extends Exception implements HasTip, HasCode, HasData, HasLevel {
+    ...
+}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;为了方便定义异常类, 提供了两个抽象类 &lt;code&gt;BaseExprException&lt;/code&gt;, &lt;code&gt;BaseExprRuntimeException&lt;/code&gt;, 可以直接继承这两个类:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;public class MyException extends BaseExprException {
+    ...
+}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;打印出的异常 log 例子:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;com.yangxiaochen.exception.test.application.exception.ServiceRuntimeException: [SERVICE_EXCEPTION] default service exception, tip: 默认业务异常, ctxVars: {fooId=1002, time=Wed Aug 21 18:17:26 CST 2019}
+...&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_拓展异常_level&quot;&gt;3.3. 拓展异常 level&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;可以通过实现 &lt;code&gt;ExceptionLevel&lt;/code&gt; 来定义新的异常 level.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_如何处理异常&quot;&gt;4. 如何处理异常&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;mark&gt;异常定义只是一个方面,  如何看待, 解释, 处理我们定义的异常是另一个方面.&lt;/mark&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_spring_mvc&quot;&gt;4.1. spring mvc&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;see &lt;a href=&quot;expressive-exception-spring-mvc/src/main/java/com/yangxiaochen/exception/spring/ExceptionHandler.java&quot;&gt;spring mvc exception handler&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;dependencies {
+    compile &apos;com.yangxiaochen:expressive-exception-spring-mvc:1.2.1-RELEASE&apos;
+}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;提供了一个默认的 &lt;code&gt;ExceptionHandler&lt;/code&gt;, 来统一处理异常, 其核心异常处理方法实现如下:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+    if (pathPrefixs.stream().noneMatch(prefix -&amp;gt; request.getRequestURI().startsWith(prefix))) {
+        return null;
+    }
+
+    ex = translateException(ex, request);
+    if (ex == null) {
+        return null;
+    }
+    logAction.log(request, ex);
+
+    return errorViewResolver.resolve(request, response, ex);
+}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;加入到 spring mvc 框架中实现异常的统一处理:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;@Configuration
+public class MvcConfig implements WebMvcConfigurer {
+
+    private boolean printStack = false;
+    private MappingJackson2JsonView view = new MappingJackson2JsonView();
+
+    @Override
+    public void extendHandlerExceptionResolvers(List&amp;lt;HandlerExceptionResolver&amp;gt; resolvers) {
+        ExceptionHandler exceptionHandler = new ExceptionHandler();
+        resolvers.add(0, exceptionHandler);
+    }
+}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;可以对 &lt;code&gt;ExceptionHandler&lt;/code&gt; 的处理行为进行定制:&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;exceptionHandler.setPathPrefixs(Arrays.asList(&quot;/web/&quot;, &quot;/api/&quot;));
+exceptionHandler.setErrorViewResolver((request, response, ex) -&amp;gt; {
+    ModelAndView mv = new ModelAndView();
+    mv.addObject(&quot;msg&quot;, ex.getMessage());
+    mv.addObject(&quot;success&quot;, false);
+    if (ex instanceof HasCode) {
+        mv.addObject(&quot;code&quot;, ((HasCode) ex).getCode());
+        if (((HasCode) ex).getCode() == null) {
+            mv.addObject(&quot;code&quot;, 0);
+        }
+    }
+    if (ex instanceof HasTip) {
+        mv.addObject(&quot;tip&quot;, ((HasTip) ex).getTip());
+        if (ex.getMessage() == null) {
+            mv.addObject(&quot;msg&quot;, ((HasTip) ex).getTip());
+            mv.addObject(&quot;message&quot;, ((HasTip) ex).getTip());
+        }
+    }
+    if (ex instanceof HasData) {
+        mv.addObject(&quot;data&quot;, ((HasData) ex).getData());
+    }
+    if (printStack) {
+        mv.addObject(&quot;stackTrace&quot;, getStackFrames(ex));
+    }
+    mv.setView(view);
+    return mv;
+});&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_dubbo&quot;&gt;4.2. dubbo&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;see &lt;a href=&quot;expressive-exception-dubbo/src/main/java/com/yangxiaochen/exception/dubbo/GlobalExceptionFilter.java&quot;&gt;dubbo filter&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_意见收集&quot;&gt;5. 意见收集&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;这个项目即是一个类库, 更是一个异常设计和处理的方法论, 类库是方便方法论落地的措施.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;如果你有不同的想法和意见, 欢迎 issue 交流.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
