@@ -622,7 +622,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 .conum:after { content: attr(data-value); }
 .conum:not([data-value]):empty { display: none; }
 
-h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { border-bottom: 1px solid #dddddd; }
+/* h1, h2, h3, #toctitle, .sidebarblock > .content > .title, h4, h5, h6 { border-bottom: 1px solid #dddddd; } */
 
 #toctitle { color: #00406F; font-weight: normal; margin-top: 1.5em; }
 

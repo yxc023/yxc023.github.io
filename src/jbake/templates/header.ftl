@@ -8,7 +8,7 @@
     <meta name="author" content="yxc023@qq.com">
     <meta name="keywords" content="<#if (content.tags)??><#list content.tags as tag>${tag},</#list></#if>技术,java,设计模式,spring,软件开发,杨晓辰,yxc023">
     <meta name="generator" content="JBake">
-    <script data-ad-client="ca-pub-5626174695342369" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <!--  <script data-ad-client="ca-pub-5626174695342369" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  -->
 
     <!-- Le styles -->
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/bootstrap.min.css" rel="stylesheet">

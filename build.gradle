@@ -58,3 +58,5 @@ bake {
     // jvmArgs = ["-XX:MaxMetaspaceSize=1g"]
 }
 gitPublishCommit.dependsOn bake
+
+// ./gradlew gitPublishPush --no-daemon
