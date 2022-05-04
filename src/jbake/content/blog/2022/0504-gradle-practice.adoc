@@ -1,0 +1,142 @@
+= Gradle 使用实践
+杨晓辰
+2022-05-04
+:toc: top
+:toclevels: 5
+:icons: font
+// :sectnums:
+:jbake-type: post
+:jbake-tags: gradle, java
+:jbake-status: published
+
+== 前言
+Gradle 是一个第一眼看上去比较简单，实则有一定入门门槛的构建工具。
+
+在配置仓库，引入依赖这种基本操作之外，想做一些其他的个性化配置，经常无处下手。
+
+官方文档，虽然很详实，但是对于没有进行系统学习的人，看起来还挺费劲。而且，文档中给出的例子，跟实际情况脱离较远，不是很好参照。
+
+gradle 的配置文件，大多使用 groovy 来进行，弱类型的语言，dsl 和 closures 的表达方式，都会让很多 java 程序员摸不着头脑。
+
+虽然我们有对 gradle 进行特别系统的学习，但是也是一直在应用。简单的配置语法、极度灵活的自定义构建配置是我一直喜欢的地方。
+
+当然，过程中也遇到了不少问题，翻过文档和源码。
+
+在这里记录一些实践，算是对 Gradle 使用的一些觉得不错的经验积累。
+
+== 构建脚本实例解读
+这些文件来自项目： https://github.com/yxc023/gradle-practice
+
+----
+gradle-practice
+├── build.gradle
+├── gp-api
+│   ├── build.gradle
+├── gp-app
+│   ├── build.gradle
+├── gp-db
+│   ├── build.gradle
+├── gp-service
+│   ├── build.gradle
+├── gradle
+│   ├── jooq.gradle
+│   ├── publish.gradle
+│   └── wrapper
+├── gradlew
+├── gradlew.bat
+└── settings.gradle
+----
+
+1. 这是一个多模块的项目，通过根项目下的 `build.gradle` 文件，做好全局配置，让每个子模块中的 `build.gradle` 足够简单
+2. 子项目中的 `build.gradle` 文件，一般只需要定义 Dependencies
+3. 抽离一些可服用的构建脚本，放到 `gradle` 文件夹下
+4. 先看 `settings.gradle``, 再看 rootProject 的 `build.gradle`
+
+
+== 常见问题
+=== 构建脚本里面都有啥
+
+
+每一个 project 下都有一个名为 `build.gradle` 的构建脚本。
+
+每一个 `build.gradle` 构建脚本背后，都隐含了一个 `Project` 对象。这个构建脚本中定义的各种属性或者方法，基本都是这个 project 中包含的。比如你可以在脚本中直接使用 `Project` 接口中定义好的变量和方法。
+
+project 中包含了这些重要的东西：
+
+1. 自身的属性和方法
+2. tasks - 当前 project 中包含的任务实例。引入一些 plugin 时，也会向 project 中添加 task
++
+[source, groovy]
+----
+// 创建一个名字为 `jooqTask`，类型为 `JooqTask` 的 task
+project.tasks.create("jooqTask", JooqTask.class)
+----
+
+3. extra property - 通过 ext block 声明的额外变量
++
+[source, groovy]
+----
+ext {
+    mysqlVersion = '8.0.18'
+    jooqVersion = '3.13.1'
+    jooqGenDataSourceDriver = 'com.mysql.jdbc.Driver'
+    jooqGenDataSourceUrl = 'jdbc:mysql://127.0.0.1:3306/gp_database'
+    jooqGenDataSourceUrlUser = 'gp_database_user'
+    jooqGenDataSourceUrlPassword = 'test'
+    jooqGenDataSourceInputSchema = 'gp_database'
+}
+----
+
+4. extensions - 引入一些 plugin 时， 会向 project 中添加一些 extension 对象，并命名。
++
+[source, groovy]
+----
+// 创建一个名字为 `$JOOQ_EXTENSION_NAME`，类型为 `JooqExtension` 的 extension。后面两个参数是 `JooqExtension` 的构造参数
+project.extensions.create('jooq', JooqExtension.class, whenConfigurationAdded, 'jooq')
+----
++
+加入 extension 后，就可以在构建脚本中定义
++
+----
+jooq {
+    version = jooqVersion
+    edition = 'OSS'
+    generateSchemaSourceOnCompilation = false
+}
+----
+
+5. convention - 引入一些 plugin 时，会加入一些 convention object，翻译过来叫‘约定’，‘预定大于配置’的‘约定’。convention object 通常是 POJO，为 project 提供一些拓展属性。
++
+----
+// 这两个变量，在引入 java plugin 之后，就能在构建脚本里够直接定义下面的变量。
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+----
+
+总之，这些 project 中包含的重要信息的作用，它们定义了 `build.gradle` 中可以写什么 property 或者 block
+
+当 `build.gradle` 中使用了一个 property 或者 block，他的查找顺序是：
+
+1. 是否是 project 中的属性和方法
++
+----
+// version 这个变量，即是 project.version
+version = '1.0.0'
+----
+2. 是否是 `ext` 定义的属性
+3. 是否是 extensions 中的 extension 的名字
+4. 是否是 convention 中定义的 pojo 中的变量
+5. 是否是 task 的名字
+6. 是否在上层 project 的 ext 和 convention 中
+
+
+=== 构建脚本的执行顺序
+
+1. setting.gradle
+2. rootProject build.gradle
+3. subProject build.gradle
+
+=== 如何引用文件
+=== 依赖查看与版本设置
+=== implementation, compileOnly 等依赖「标识」是啥意思
+=== TBD.

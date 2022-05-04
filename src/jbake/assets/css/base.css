@@ -1,6 +1,6 @@
 /* Sticky footer styles
 -------------------------------------------------- */
-@import url('https://fonts.googleapis.com/css?family=Noto+Sans+SC|Noto+Serif+SC|PT+Mono&display=swap&subset=chinese-simplified');
+/* @import url('https://fonts.googleapis.com/css?family=Noto+Sans+SC|Noto+Serif+SC|PT+Mono&display=swap&subset=chinese-simplified');
 html,
 body {
   font-family: 'PT Mono','Noto Sans SC', 'Noto Serif SC',Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;
@@ -10,6 +10,10 @@ body {
 
 pre > code, code {
   font-family: 'PT Mono','Noto Sans SC','Noto Serif SC';
+} */
+
+a {
+  text-decoration: none;
 }
 
 /* Wrapper for page content to push down footer */
