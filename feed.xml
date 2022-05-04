@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期四, 5 五月 2022 03:30:25 +0800</pubDate>
-    <lastBuildDate>星期四, 5 五月 2022 03:30:25 +0800</lastBuildDate>
+    <pubDate>星期四, 5 五月 2022 03:33:19 +0800</pubDate>
+    <lastBuildDate>星期四, 5 五月 2022 03:33:19 +0800</lastBuildDate>
 
     <item>
       <title>Gradle 使用实践</title>
@@ -19,18 +19,14 @@
 &lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
 &lt;ul class=&quot;sectlevel1&quot;&gt;
 &lt;li&gt;&lt;a href=&quot;#_前言&quot;&gt;前言&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_一个项目中的构建脚本的解释&quot;&gt;一个项目中的构建脚本的解释&lt;/a&gt;
+&lt;li&gt;&lt;a href=&quot;#_构建脚本实例解读&quot;&gt;构建脚本实例解读&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_常见问题&quot;&gt;常见问题&lt;/a&gt;
 &lt;ul class=&quot;sectlevel2&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_导读&quot;&gt;导读&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_一些常见问题&quot;&gt;一些常见问题&lt;/a&gt;
-&lt;ul class=&quot;sectlevel2&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_build_gradle_里面都可以有啥&quot;&gt;&lt;code&gt;build.gradle&lt;/code&gt; 里面都可以有啥&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_构建脚本里面都有啥&quot;&gt;构建脚本里面都有啥&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#_构建脚本的执行顺序&quot;&gt;构建脚本的执行顺序&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#_如何引用文件&quot;&gt;如何引用文件&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#_依赖查看与版本设置&quot;&gt;依赖查看与版本设置&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_implementation_compileonly_等依赖标识是啥意思&quot;&gt;&lt;code&gt;implementation&lt;/code&gt;, &lt;code&gt;compileOnly&lt;/code&gt; 等依赖「标识」是啥意思&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_implementation_compileonly_等依赖标识是啥意思&quot;&gt;implementation, compileOnly 等依赖「标识」是啥意思&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#_tbd&quot;&gt;TBD.&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
@@ -63,13 +59,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_一个项目中的构建脚本的解释&quot;&gt;一个项目中的构建脚本的解释&lt;/h2&gt;
+&lt;h2 id=&quot;_构建脚本实例解读&quot;&gt;构建脚本实例解读&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;这些文件来自项目： &lt;a href=&quot;https://github.com/yxc023/gradle-practice&quot; class=&quot;bare&quot;&gt;https://github.com/yxc023/gradle-practice&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_导读&quot;&gt;导读&lt;/h3&gt;
 &lt;div class=&quot;listingblock&quot;&gt;
 &lt;div class=&quot;content&quot;&gt;
 &lt;pre&gt;gradle-practice
@@ -109,12 +103,11 @@
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_一些常见问题&quot;&gt;一些常见问题&lt;/h2&gt;
+&lt;h2 id=&quot;_常见问题&quot;&gt;常见问题&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
 &lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_build_gradle_里面都可以有啥&quot;&gt;&lt;code&gt;build.gradle&lt;/code&gt; 里面都可以有啥&lt;/h3&gt;
+&lt;h3 id=&quot;_构建脚本里面都有啥&quot;&gt;构建脚本里面都有啥&lt;/h3&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;每一个 project 下都有一个名为 &lt;code&gt;build.gradle&lt;/code&gt; 的构建脚本。&lt;/p&gt;
 &lt;/div&gt;
@@ -247,7 +240,7 @@ version = &apos;1.0.0&apos;&lt;/pre&gt;
 
 &lt;/div&gt;
 &lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_implementation_compileonly_等依赖标识是啥意思&quot;&gt;&lt;code&gt;implementation&lt;/code&gt;, &lt;code&gt;compileOnly&lt;/code&gt; 等依赖「标识」是啥意思&lt;/h3&gt;
+&lt;h3 id=&quot;_implementation_compileonly_等依赖标识是啥意思&quot;&gt;implementation, compileOnly 等依赖「标识」是啥意思&lt;/h3&gt;
 
 &lt;/div&gt;
 &lt;div class=&quot;sect2&quot;&gt;
