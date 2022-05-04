@@ -12,8 +12,7 @@
 
     <!-- Le styles -->
     <link href="../../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../css/asciidoctor.css" rel="stylesheet">
-    <link href="../../css/ubuntu.css" rel="stylesheet">
+    <link href="../../css/adoc-golo.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
     <link href="../../css/prettify.css" rel="stylesheet">
 
@@ -79,15 +78,15 @@
 
 	<p><div id="toc" class="toc">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel0">
+<ul class="sectlevel1">
 <li><a href="#_前言">前言</a></li>
 <li><a href="#_一个项目中的构建脚本的解释">一个项目中的构建脚本的解释</a>
-<ul class="sectlevel1">
+<ul class="sectlevel2">
 <li><a href="#_导读">导读</a></li>
 </ul>
 </li>
 <li><a href="#_一些常见问题">一些常见问题</a>
-<ul class="sectlevel1">
+<ul class="sectlevel2">
 <li><a href="#_build_gradle_里面都可以有啥"><code>build.gradle</code> 里面都可以有啥</a></li>
 <li><a href="#_构建脚本的执行顺序">构建脚本的执行顺序</a></li>
 <li><a href="#_如何引用文件">如何引用文件</a></li>
@@ -98,7 +97,9 @@
 </li>
 </ul>
 </div>
-<h1 id="_前言" class="sect0">前言</h1>
+<div class="sect1">
+<h2 id="_前言">前言</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>Gradle 是一个第一眼看上去比较简单，实则有一定入门门槛的构建工具。</p>
 </div>
@@ -120,13 +121,16 @@
 <div class="paragraph">
 <p>在这里记录一些实践，算是对 Gradle 使用的一些觉得不错的经验积累。</p>
 </div>
-<h1 id="_一个项目中的构建脚本的解释" class="sect0">一个项目中的构建脚本的解释</h1>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_一个项目中的构建脚本的解释">一个项目中的构建脚本的解释</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>这些文件来自项目： <a href="https://github.com/yxc023/gradle-practice" class="bare">https://github.com/yxc023/gradle-practice</a></p>
 </div>
-<div class="sect1">
-<h2 id="_导读">导读</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_导读">导读</h3>
 <div class="listingblock">
 <div class="content">
 <pre>gradle-practice
@@ -166,10 +170,12 @@
 </div>
 </div>
 </div>
-<h1 id="_一些常见问题" class="sect0">一些常见问题</h1>
+</div>
 <div class="sect1">
-<h2 id="_build_gradle_里面都可以有啥"><code>build.gradle</code> 里面都可以有啥</h2>
+<h2 id="_一些常见问题">一些常见问题</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_build_gradle_里面都可以有啥"><code>build.gradle</code> 里面都可以有啥</h3>
 <div class="paragraph">
 <p>每一个 project 下都有一个名为 <code>build.gradle</code> 的构建脚本。</p>
 </div>
@@ -277,10 +283,8 @@ version = '1.0.0'</pre>
 </ol>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_构建脚本的执行顺序">构建脚本的执行顺序</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_构建脚本的执行顺序">构建脚本的执行顺序</h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -295,29 +299,22 @@ version = '1.0.0'</pre>
 </ol>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_如何引用文件">如何引用文件</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_如何引用文件">如何引用文件</h3>
 
 </div>
-</div>
-<div class="sect1">
-<h2 id="_依赖查看与版本设置">依赖查看与版本设置</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_依赖查看与版本设置">依赖查看与版本设置</h3>
 
 </div>
-</div>
-<div class="sect1">
-<h2 id="_implementation_compileonly_等依赖标识是啥意思"><code>implementation</code>, <code>compileOnly</code> 等依赖「标识」是啥意思</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_implementation_compileonly_等依赖标识是啥意思"><code>implementation</code>, <code>compileOnly</code> 等依赖「标识」是啥意思</h3>
 
 </div>
-</div>
-<div class="sect1">
-<h2 id="_tbd">TBD.</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_tbd">TBD.</h3>
 
+</div>
 </div>
 </div></p>
 
