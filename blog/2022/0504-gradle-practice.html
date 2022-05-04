@@ -88,10 +88,11 @@
 <li><a href="#_一些常见问题">一些常见问题</a>
 <ul class="sectlevel1">
 <li><a href="#_build_gradle_里面都可以有啥">1. <code>build.gradle</code> 里面都可以有啥</a></li>
-<li><a href="#_如何引用文件">2. 如何引用文件</a></li>
-<li><a href="#_依赖查看与版本设置">3. 依赖查看与版本设置</a></li>
-<li><a href="#_implementation_compileonly_等依赖标识是啥意思">4. <code>implementation</code>, <code>compileOnly</code> 等依赖「标识」是啥意思</a></li>
-<li><a href="#_tbd">5. TBD.</a></li>
+<li><a href="#_构建脚本的执行顺序">2. 构建脚本的执行顺序</a></li>
+<li><a href="#_如何引用文件">3. 如何引用文件</a></li>
+<li><a href="#_依赖查看与版本设置">4. 依赖查看与版本设置</a></li>
+<li><a href="#_implementation_compileonly_等依赖标识是啥意思">5. <code>implementation</code>, <code>compileOnly</code> 等依赖「标识」是啥意思</a></li>
+<li><a href="#_tbd">6. TBD.</a></li>
 </ul>
 </li>
 </ul>
@@ -125,8 +126,42 @@
 <div class="sect1">
 <h2 id="_导读">1. 导读</h2>
 <div class="sectionbody">
-<div class="paragraph">
+<div class="listingblock">
+<div class="content">
+<pre>gradle-practice
+├── build.gradle
+├── gp-api
+│   ├── build.gradle
+├── gp-app
+│   ├── build.gradle
+├── gp-db
+│   ├── build.gradle
+├── gp-service
+│   ├── build.gradle
+├── gradle
+│   ├── jooq.gradle
+│   ├── publish.gradle
+│   └── wrapper
+├── gradlew
+├── gradlew.bat
+└── settings.gradle</pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
 <p>这是一个多模块的项目，通过根项目下的 <code>build.gradle</code> 文件，做好全局配置，让每个子模块中的 <code>build.gradle</code> 足够简单</p>
+</li>
+<li>
+<p>子项目中的 <code>build.gradle</code> 文件，一般只需要定义 Dependencies</p>
+</li>
+<li>
+<p>抽离一些可服用的构建脚本，放到 <code>gradle</code> 文件夹下</p>
+</li>
+<li>
+<p>先看 <code>settings.gradle`</code>, 再看 rootProject 的 <code>build.gradle</code></p>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -134,29 +169,152 @@
 <div class="sect1">
 <h2 id="_build_gradle_里面都可以有啥">1. <code>build.gradle</code> 里面都可以有啥</h2>
 <div class="sectionbody">
-
+<div class="paragraph">
+<p>每一个 project 下都有一个名为 <code>build.gradle</code> 的构建脚本。</p>
+</div>
+<div class="paragraph">
+<p>每一个 <code>build.gradle</code> 构建脚本背后，都隐含了一个 <code>Project</code> 对象。这个构建脚本中定义的各种属性或者方法，基本都是这个 project 中包含的。比如你可以在脚本中直接使用 <code>Project</code> 接口中定义好的变量和方法。</p>
+</div>
+<div class="paragraph">
+<p>project 中包含了这些重要的东西：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>自身的属性和方法</p>
+</li>
+<li>
+<p>tasks - 当前 project 中包含的任务实例。引入一些 plugin 时，也会向 project 中添加 task</p>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">// 创建一个名字为 `jooqTask`，类型为 `JooqTask` 的 task
+project.tasks.create("jooqTask", JooqTask.class)</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>extra property - 通过 ext block 声明的额外变量</p>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">ext {
+    mysqlVersion = '8.0.18'
+    jooqVersion = '3.13.1'
+    jooqGenDataSourceDriver = 'com.mysql.jdbc.Driver'
+    jooqGenDataSourceUrl = 'jdbc:mysql://127.0.0.1:3306/gp_database'
+    jooqGenDataSourceUrlUser = 'gp_database_user'
+    jooqGenDataSourceUrlPassword = 'test'
+    jooqGenDataSourceInputSchema = 'gp_database'
+}</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>extensions - 引入一些 plugin 时， 会向 project 中添加一些 extension 对象，并命名。</p>
+<div class="listingblock">
+<div class="content">
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">// 创建一个名字为 `$JOOQ_EXTENSION_NAME`，类型为 `JooqExtension` 的 extension。后面两个参数是 `JooqExtension` 的构造参数
+project.extensions.create('jooq', JooqExtension.class, whenConfigurationAdded, 'jooq')</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>加入 extension 后，就可以在构建脚本中定义</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>jooq {
+    version = jooqVersion
+    edition = 'OSS'
+    generateSchemaSourceOnCompilation = false
+}</pre>
+</div>
+</div>
+</li>
+<li>
+<p>convention - 引入一些 plugin 时，会加入一些 convention object，翻译过来叫‘约定’，‘预定大于配置’的‘约定’。convention object 通常是 POJO，为 project 提供一些拓展属性。</p>
+<div class="listingblock">
+<div class="content">
+<pre>// 这两个变量，在引入 java plugin 之后，就能在构建脚本里够直接定义下面的变量。
+sourceCompatibility = 1.8
+targetCompatibility = 1.8</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>总之，这些 project 中包含的重要信息的作用，它们定义了 <code>build.gradle</code> 中可以写什么 property 或者 block</p>
+</div>
+<div class="paragraph">
+<p>当 <code>build.gradle</code> 中使用了一个 property 或者 block，他的查找顺序是：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>是否是 project 中的属性和方法</p>
+<div class="listingblock">
+<div class="content">
+<pre>// version 这个变量，即是 project.version
+version = '1.0.0'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>是否是 <code>ext</code> 定义的属性</p>
+</li>
+<li>
+<p>是否是 extensions 中的 extension 的名字</p>
+</li>
+<li>
+<p>是否是 convention 中定义的 pojo 中的变量</p>
+</li>
+<li>
+<p>是否是 task 的名字</p>
+</li>
+<li>
+<p>是否在上层 project 的 ext 和 convention 中</p>
+</li>
+</ol>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_如何引用文件">2. 如何引用文件</h2>
+<h2 id="_构建脚本的执行顺序">2. 构建脚本的执行顺序</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>setting.gradle</p>
+</li>
+<li>
+<p>rootProject build.gradle</p>
+</li>
+<li>
+<p>subProject build.gradle</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_如何引用文件">3. 如何引用文件</h2>
 <div class="sectionbody">
 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_依赖查看与版本设置">3. 依赖查看与版本设置</h2>
+<h2 id="_依赖查看与版本设置">4. 依赖查看与版本设置</h2>
 <div class="sectionbody">
 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_implementation_compileonly_等依赖标识是啥意思">4. <code>implementation</code>, <code>compileOnly</code> 等依赖「标识」是啥意思</h2>
+<h2 id="_implementation_compileonly_等依赖标识是啥意思">5. <code>implementation</code>, <code>compileOnly</code> 等依赖「标识」是啥意思</h2>
 <div class="sectionbody">
 
 </div>
 </div>
 <div class="sect1">
-<h2 id="_tbd">5. TBD.</h2>
+<h2 id="_tbd">6. TBD.</h2>
 <div class="sectionbody">
 
 </div>

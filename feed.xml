@@ -6,8 +6,8 @@
     <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期三, 4 五月 2022 02:48:14 +0800</pubDate>
-    <lastBuildDate>星期三, 4 五月 2022 02:48:14 +0800</lastBuildDate>
+    <pubDate>星期四, 5 五月 2022 02:37:33 +0800</pubDate>
+    <lastBuildDate>星期四, 5 五月 2022 02:37:33 +0800</lastBuildDate>
 
     <item>
       <title>Gradle 使用实践</title>
@@ -27,10 +27,11 @@
 &lt;li&gt;&lt;a href=&quot;#_一些常见问题&quot;&gt;一些常见问题&lt;/a&gt;
 &lt;ul class=&quot;sectlevel1&quot;&gt;
 &lt;li&gt;&lt;a href=&quot;#_build_gradle_里面都可以有啥&quot;&gt;1. &lt;code&gt;build.gradle&lt;/code&gt; 里面都可以有啥&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_如何引用文件&quot;&gt;2. 如何引用文件&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_依赖查看与版本设置&quot;&gt;3. 依赖查看与版本设置&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_implementation_compileonly_等依赖标识是啥意思&quot;&gt;4. &lt;code&gt;implementation&lt;/code&gt;, &lt;code&gt;compileOnly&lt;/code&gt; 等依赖「标识」是啥意思&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_tbd&quot;&gt;5. TBD.&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_构建脚本的执行顺序&quot;&gt;2. 构建脚本的执行顺序&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_如何引用文件&quot;&gt;3. 如何引用文件&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_依赖查看与版本设置&quot;&gt;4. 依赖查看与版本设置&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_implementation_compileonly_等依赖标识是啥意思&quot;&gt;5. &lt;code&gt;implementation&lt;/code&gt;, &lt;code&gt;compileOnly&lt;/code&gt; 等依赖「标识」是啥意思&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_tbd&quot;&gt;6. TBD.&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -64,8 +65,42 @@
 &lt;div class=&quot;sect1&quot;&gt;
 &lt;h2 id=&quot;_导读&quot;&gt;1. 导读&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;gradle-practice
+├── build.gradle
+├── gp-api
+│   ├── build.gradle
+├── gp-app
+│   ├── build.gradle
+├── gp-db
+│   ├── build.gradle
+├── gp-service
+│   ├── build.gradle
+├── gradle
+│   ├── jooq.gradle
+│   ├── publish.gradle
+│   └── wrapper
+├── gradlew
+├── gradlew.bat
+└── settings.gradle&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
 &lt;p&gt;这是一个多模块的项目，通过根项目下的 &lt;code&gt;build.gradle&lt;/code&gt; 文件，做好全局配置，让每个子模块中的 &lt;code&gt;build.gradle&lt;/code&gt; 足够简单&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;子项目中的 &lt;code&gt;build.gradle&lt;/code&gt; 文件，一般只需要定义 Dependencies&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;抽离一些可服用的构建脚本，放到 &lt;code&gt;gradle&lt;/code&gt; 文件夹下&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;先看 &lt;code&gt;settings.gradle`&lt;/code&gt;, 再看 rootProject 的 &lt;code&gt;build.gradle&lt;/code&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -73,29 +108,152 @@
 &lt;div class=&quot;sect1&quot;&gt;
 &lt;h2 id=&quot;_build_gradle_里面都可以有啥&quot;&gt;1. &lt;code&gt;build.gradle&lt;/code&gt; 里面都可以有啥&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
-
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;每一个 project 下都有一个名为 &lt;code&gt;build.gradle&lt;/code&gt; 的构建脚本。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;每一个 &lt;code&gt;build.gradle&lt;/code&gt; 构建脚本背后，都隐含了一个 &lt;code&gt;Project&lt;/code&gt; 对象。这个构建脚本中定义的各种属性或者方法，基本都是这个 project 中包含的。比如你可以在脚本中直接使用 &lt;code&gt;Project&lt;/code&gt; 接口中定义好的变量和方法。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;project 中包含了这些重要的东西：&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;自身的属性和方法&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;tasks - 当前 project 中包含的任务实例。引入一些 plugin 时，也会向 project 中添加 task&lt;/p&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;// 创建一个名字为 `jooqTask`，类型为 `JooqTask` 的 task
+project.tasks.create(&quot;jooqTask&quot;, JooqTask.class)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;extra property - 通过 ext block 声明的额外变量&lt;/p&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;ext {
+    mysqlVersion = &apos;8.0.18&apos;
+    jooqVersion = &apos;3.13.1&apos;
+    jooqGenDataSourceDriver = &apos;com.mysql.jdbc.Driver&apos;
+    jooqGenDataSourceUrl = &apos;jdbc:mysql://127.0.0.1:3306/gp_database&apos;
+    jooqGenDataSourceUrlUser = &apos;gp_database_user&apos;
+    jooqGenDataSourceUrlPassword = &apos;test&apos;
+    jooqGenDataSourceInputSchema = &apos;gp_database&apos;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;extensions - 引入一些 plugin 时， 会向 project 中添加一些 extension 对象，并命名。&lt;/p&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;// 创建一个名字为 `$JOOQ_EXTENSION_NAME`，类型为 `JooqExtension` 的 extension。后面两个参数是 `JooqExtension` 的构造参数
+project.extensions.create(&apos;jooq&apos;, JooqExtension.class, whenConfigurationAdded, &apos;jooq&apos;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;加入 extension 后，就可以在构建脚本中定义&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;jooq {
+    version = jooqVersion
+    edition = &apos;OSS&apos;
+    generateSchemaSourceOnCompilation = false
+}&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;convention - 引入一些 plugin 时，会加入一些 convention object，翻译过来叫‘约定’，‘预定大于配置’的‘约定’。convention object 通常是 POJO，为 project 提供一些拓展属性。&lt;/p&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;// 这两个变量，在引入 java plugin 之后，就能在构建脚本里够直接定义下面的变量。
+sourceCompatibility = 1.8
+targetCompatibility = 1.8&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;总之，这些 project 中包含的重要信息的作用，它们定义了 &lt;code&gt;build.gradle&lt;/code&gt; 中可以写什么 property 或者 block&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;当 &lt;code&gt;build.gradle&lt;/code&gt; 中使用了一个 property 或者 block，他的查找顺序是：&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;是否是 project 中的属性和方法&lt;/p&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;// version 这个变量，即是 project.version
+version = &apos;1.0.0&apos;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;是否是 &lt;code&gt;ext&lt;/code&gt; 定义的属性&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;是否是 extensions 中的 extension 的名字&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;是否是 convention 中定义的 pojo 中的变量&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;是否是 task 的名字&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;是否在上层 project 的 ext 和 convention 中&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_如何引用文件&quot;&gt;2. 如何引用文件&lt;/h2&gt;
+&lt;h2 id=&quot;_构建脚本的执行顺序&quot;&gt;2. 构建脚本的执行顺序&lt;/h2&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;setting.gradle&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;rootProject build.gradle&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;subProject build.gradle&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_如何引用文件&quot;&gt;3. 如何引用文件&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_依赖查看与版本设置&quot;&gt;3. 依赖查看与版本设置&lt;/h2&gt;
+&lt;h2 id=&quot;_依赖查看与版本设置&quot;&gt;4. 依赖查看与版本设置&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_implementation_compileonly_等依赖标识是啥意思&quot;&gt;4. &lt;code&gt;implementation&lt;/code&gt;, &lt;code&gt;compileOnly&lt;/code&gt; 等依赖「标识」是啥意思&lt;/h2&gt;
+&lt;h2 id=&quot;_implementation_compileonly_等依赖标识是啥意思&quot;&gt;5. &lt;code&gt;implementation&lt;/code&gt;, &lt;code&gt;compileOnly&lt;/code&gt; 等依赖「标识」是啥意思&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_tbd&quot;&gt;5. TBD.&lt;/h2&gt;
+&lt;h2 id=&quot;_tbd&quot;&gt;6. TBD.&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
 
 &lt;/div&gt;
