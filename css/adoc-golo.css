@@ -17,8 +17,7 @@ audio:not([controls]) { display: none; height: 0; }
 
 /* ========================================================================== Base ========================================================================== */
 /** 1. Prevent system color scheme's background color being used in Firefox, IE, and Opera. 2. Prevent system color scheme's text color being used in Firefox, IE, and Opera. 3. Set default font family to sans-serif. 4. Prevent iOS text size adjust after orientation change, without disabling user zoom. */
-html { background: #fff; /* 1 */ color: #000; /* 2 */ font-family: 'Noto Sans Mono', monospace;
-    font-family: 'Noto Serif SC', serif; /* 3 */ -ms-text-size-adjust: 100%; /* 4 */ -webkit-text-size-adjust: 100%; /* 4 */ }
+html { background: #fff; /* 1 */ color: #000; /* 2 */ font-family: 'Noto Sans Mono', monospace, 'Noto Serif SC', serif; /* 3 */ -ms-text-size-adjust: 100%; /* 4 */ -webkit-text-size-adjust: 100%; /* 4 */ }
 
 /** Remove default margin. */
 body { margin: 0; }
@@ -50,7 +49,7 @@ hr { -moz-box-sizing: content-box; box-sizing: content-box; height: 0; }
 mark { background: #ff0; color: #000; }
 
 /** Correct font family set oddly in Safari 5 and Chrome. */
-code, kbd, pre, samp { font-family: monospace, serif; font-size: 1em; }
+code, kbd, pre, samp { font-family: 'Noto Sans Mono', monospace, 'Noto Serif SC', serif; font-size: 1em; }
 
 /** Improve readability of pre-formatted text in all browsers. */
 pre { white-space: pre-wrap; }
@@ -124,7 +123,7 @@ table { border-collapse: collapse; border-spacing: 0; }
 
 html, body { font-size: 100%; }
 
-body { color: #222222; padding: 0; margin: 0; font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif; font-weight: normal; font-style: normal; line-height: 1; position: relative; cursor: auto; }
+body { color: #222222; padding: 0; margin: 0; font-family: 'Noto Sans Mono', monospace, 'Noto Serif SC', serif; font-style: normal; line-height: 1; position: relative; cursor: auto; }
 
 a:hover { cursor: pointer; }
 
@@ -201,7 +200,7 @@ strong, b { font-weight: bold; line-height: inherit; }
 
 small { font-size: 60%; line-height: inherit; }
 
-code { font-family: Consolas, "Liberation Mono", Courier, monospace; font-weight: bold; color: #691816; }
+code { font-family: 'Noto Sans Mono', monospace, 'Noto Serif SC', serif; font-weight: bold; color: #691816; }
 
 /* Lists */
 ul, ol, dl { font-size: 1em; line-height: 1.6; margin-bottom: 1.25em; list-style-position: outside; font-family: inherit; }
@@ -282,7 +281,7 @@ table thead tr th, table tfoot tr th, table tbody tr td, table tr td, table tfoo
 
 *:not(pre) > code { font-size: inherit; padding: 0; white-space: nowrap; background-color: inherit; border: 0 solid #dddddd; -webkit-border-radius: 6px; border-radius: 6px; text-shadow: none; }
 
-pre, pre > code { line-height: 1.4; color: black; font-family: monospace, serif; font-weight: normal; }
+pre, pre > code { line-height: 1.4; color: black; font-family: 'Noto Sans Mono', monospace, 'Noto Serif SC', serif; font-weight: normal; }
 
 kbd.keyseq { color: #774417; }
 
@@ -331,7 +330,7 @@ p a > code:hover { color: #541312; }
 #content #toc > :last-child { margin-bottom: 0; }
 #content #toc a { text-decoration: none; }
 
-#content #toctitle { font-weight: bold; font-family: "Open Sans", Arial, sans-serif; font-size: 1em; padding-left: 0.125em; }
+#content #toctitle { font-weight: bold; font-family: 'Noto Sans Mono', monospace, 'Noto Serif SC', serif; font-size: 1em; padding-left: 0.125em; }
 
 #footer { max-width: 100%; background-color: #23160c; padding: 1.25em; }
 
@@ -619,7 +618,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 .admonitionblock td.icon .icon-caution:before { content: "\f06d"; color: #bf3400; }
 .admonitionblock td.icon .icon-important:before { content: "\f06a"; color: #bf0000; }
 
-.conum { display: inline-block; color: white !important; background-color: #211306; -webkit-border-radius: 100px; border-radius: 100px; text-align: center; width: 20px; height: 20px; font-size: 12px; font-weight: bold; line-height: 20px; font-family: Arial, sans-serif; font-style: normal; position: relative; top: -2px; letter-spacing: -1px; }
+.conum { display: inline-block; color: white !important; background-color: #211306; -webkit-border-radius: 100px; border-radius: 100px; text-align: center; width: 20px; height: 20px; font-size: 12px; font-weight: bold; line-height: 20px; font-family: 'Noto Sans Mono', monospace, 'Noto Serif SC', serif; font-style: normal; position: relative; top: -2px; letter-spacing: -1px; }
 .conum * { color: white !important; }
 .conum + b { display: none; }
 .conum:after { content: attr(data-value); }
