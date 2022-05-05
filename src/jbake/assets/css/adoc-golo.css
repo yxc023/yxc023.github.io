@@ -381,7 +381,7 @@ table.tableblock #preamble > .sectionbody > .paragraph:first-of-type p { font-si
 
 .exampleblock > .content > :last-child > :last-child, .exampleblock > .content .olist > ol > li:last-child > :last-child, .exampleblock > .content .ulist > ul > li:last-child > :last-child, .exampleblock > .content .qlist > ol > li:last-child > :last-child, .sidebarblock > .content > :last-child > :last-child, .sidebarblock > .content .olist > ol > li:last-child > :last-child, .sidebarblock > .content .ulist > ul > li:last-child > :last-child, .sidebarblock > .content .qlist > ol > li:last-child > :last-child { margin-bottom: 0; }
 
-.literalblock > .content pre, .listingblock > .content pre { background: url('../images/golo/pre-bg.png?1364898676'); border-width: 1px; border-style: solid; border-color: rgba(21, 35, 71, 0.1); -webkit-border-radius: 6px; border-radius: 6px; padding: 0.8em; word-wrap: break-word; }
+.literalblock > .content pre, .listingblock > .content pre {border-width: 1px; border-style: solid; border-color: rgba(21, 35, 71, 0.1); -webkit-border-radius: 6px; border-radius: 6px; padding: 0.8em; word-wrap: break-word; }
 .literalblock > .content pre.nowrap, .listingblock > .content pre.nowrap { overflow-x: auto; white-space: pre; word-wrap: normal; }
 .literalblock > .content pre > code, .listingblock > .content pre > code { display: block; }
 @media only screen { .literalblock > .content pre, .listingblock > .content pre { font-size: 0.72em; } }
@@ -424,7 +424,7 @@ table.pyhltable .linenodiv { background-color: transparent !important; padding-r
 .quoteblock { margin: 0 0 1.25em; padding: 0.5625em 1.25em 0 1.1875em; border-left: 1px solid #dddddd; }
 .quoteblock blockquote { margin: 0 0 1.25em 0; padding: 0 0 0.5625em 0; border: 0; }
 .quoteblock blockquote > .paragraph:last-child p { margin-bottom: 0; }
-.quoteblock .attribution { margin-top: -.25em; padding-bottom: 0.5625em; font-size: 0.8125em; color: #655241; }
+.quoteblock .attribution { margin-top: -.25em; padding-bottom: 0.5625em; font-size: 0.8125em; color: #655241;text-align: right; line-height: 1.2em; }
 .quoteblock .attribution br { display: none; }
 .quoteblock .attribution cite { display: block; margin-bottom: 0.625em; }
 
@@ -625,7 +625,7 @@ span.icon > [class^="icon-"], span.icon > [class*=" icon-"] { cursor: default; }
 .conum:after { content: attr(data-value); }
 .conum:not([data-value]):empty { display: none; }
 
-html { background: url('../images/golo/body-bg.png?1364899918') #fdfaf7 repeat; }
+html { background: #fdfaf7 repeat; }
 
 #toc.toc2 ol ol { list-style-type: circle; padding-left: 1.75em; }
 

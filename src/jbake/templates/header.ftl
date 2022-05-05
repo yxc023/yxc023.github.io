@@ -2,7 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8"/>
-    <title><#if (content.title)??><#escape x as x?xml>${content.title}</#escape></#if> - Michael的博客</title>
+    <title><#if (content.title)??><#escape x as x?xml>${content.title} - </#escape></#if>Michael的博客</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<#if (content.description)??><#escape x as x?xml>${content.description}</#escape><#elseif (content.title)??><#escape x as x?xml>${content.title}</#escape><#else>Michael的博客</#if>">
     <meta name="author" content="yxc023@qq.com">
@@ -11,11 +11,13 @@
     <!--  <script data-ad-client="ca-pub-5626174695342369" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  -->
 
     <!-- Le styles -->
-    <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.jsdelivr.net/npm/bootstrap@3.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <#--  <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/asciidoctor.css" rel="stylesheet">  -->
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/adoc-golo.css" rel="stylesheet">
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/base.css" rel="stylesheet">
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/prettify.css" rel="stylesheet">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -29,8 +31,8 @@
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
     <link rel="shortcut icon" href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>favicon.ico">
 
-    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-	  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <#--  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">  -->
+	  <#--  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>  -->
   </head>
   <body onload="prettyPrint()">
     <div id="wrap">

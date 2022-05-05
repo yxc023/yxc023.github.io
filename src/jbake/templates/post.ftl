@@ -20,10 +20,6 @@
 		(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>  -->
 
-	<div class="rightSideAd">
-	<script type="text/javascript">var jd_union_unid="1002591316",jd_ad_ids="511:6",jd_union_pid="CMbagPGULhDUqIneAxoAIKL955YLKgA=";var jd_width=160;var jd_height=600;var jd_union_euid="";var p="ABMGVBxbEQURDmVEH0hfIlgRRgYlXVZaCCsfSlpMWGVEH0hfIgQnbRlrV0JZNlxYcFd1TA99ElRQT0FZF2sXAxMGUBJbHQUXN1UaWhYGGgdXG1wlMk1DCEZrXmwTNwpfBkgyEgNcHFsRABUAVxJbEzITN2Ur";</script><script type="text/javascript" charset="utf-8" src="//u-x.jd.com/static/js/auto.js"></script>
-	</div>
-
 	<p>${content.body}</p>
 
 	<hr />
@@ -53,6 +49,7 @@
 		(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>  -->
 
+  	<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
 	<div id="gitalk-container"></div>
 	<script>
 		const gitalk = new Gitalk({
@@ -64,14 +61,18 @@
 		id: "${content.sid!content.title}",      // Ensure uniqueness and length less than 50
 		distractionFreeMode: false  // Facebook-like distraction free mode
 		})
-
 		gitalk.render('gitalk-container')
-
 	</script>
 
-
-	<#--  <script src="https://darshandsoni.com/asciidoctor-skins/switcher.js" type="text/javascript"></script>  -->
-	<#--  <script type="text/javascript" charset="utf-8" src="https://changyan.itc.cn/js/lib/jquery.js"></script>  -->
-	<#--  <script type="text/javascript" charset="utf-8" src="https://changyan.sohu.com/js/changyan.labs.https.js?appid=cysiPXECq"></script>  -->
+	<!--PC打分版-->
+	<#--  <div id="SOHUCS" sid="${content.title}"></div>
+	<script charset="utf-8" type="text/javascript" src="https://cy-cdn.kuaizhan.com/upload/changyan.js" ></script>
+	<script type="text/javascript">
+	window._config = { showScore: true };
+	window.changyan.api.config({
+	appid: 'cysiPXECq',
+	conf: 'prod_ae8c2fcf65d92ee749cc9cf448e5b285'
+	});
+	</script>  -->
 	
 <#include "footer.ftl">
