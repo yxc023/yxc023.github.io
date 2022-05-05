@@ -15,6 +15,8 @@
     <link href="../../css/adoc-golo.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
     <link href="../../css/prettify.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -28,8 +30,6 @@
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">-->
     <link rel="shortcut icon" href="../../favicon.ico">
 
-    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-	  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
   </head>
   <body onload="prettyPrint()">
     <div id="wrap">
@@ -345,16 +345,22 @@ public ShiroFilterFactoryBean shiroFilterFactoryBean() {
 
 	<!-- 文章页底部 -->
 
-	<!--PC打分版-->
-	<div id="SOHUCS" sid="pac4j 简介"></div>
-	<script charset="utf-8" type="text/javascript" src="https://cy-cdn.kuaizhan.com/upload/changyan.js" ></script>
-	<script type="text/javascript">
-	window._config = { showScore: true };
-	window.changyan.api.config({
-	appid: 'cysiPXECq',
-	conf: 'prod_ae8c2fcf65d92ee749cc9cf448e5b285'
-	});
+  	<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+	<div id="gitalk-container"></div>
+	<script>
+		const gitalk = new Gitalk({
+		clientID: '9fda08d9f8fbe4a76212',
+		clientSecret: '9a91a6260819f30af5d9c4534815493865d409a7',
+		repo: 'yxc023.github.io',
+		owner: 'yxc023',
+		admin: ['yxc023'],
+		id: "pac4j-intro",      // Ensure uniqueness and length less than 50
+		distractionFreeMode: false  // Facebook-like distraction free mode
+		})
+		gitalk.render('gitalk-container')
 	</script>
+
+	<!--PC打分版-->
 	
 		</div>
 		<div id="push"></div>
