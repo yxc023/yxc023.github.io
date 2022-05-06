@@ -1,31 +1,35 @@
-title=spring boot mvc 文件上传错误
-date=2017-09-05T19:03:32+08:00
-type=post
-tags=java, spring
-status=published
-~~~~~~
+= spring boot mvc 文件上传上来为 null
+杨晓辰
+2017-09-05
+:toc: left
+:toclevels: 4
+:icons: font
+:jbake-sid: 20170905-spring-boot-upload-null-error
+:jbake-type: post
+:jbake-tags: java, spring, spring mvc, upload, 上传, debug
+:jbake-status: published
 
 NOTE: 本文为原创, 转载请注明出处 https://blog.yangxiaochen.com
 
 
-## 现象
+== 现象
 
 今天有一个项目，是从 tomcat 迁移到 spring boot 的。
 
 实测中发现，文件上传不进来
 
-```java
+----
 public JsonResult createBpmn(@RequestParam Long businessId, @RequestParam(value = "file", required = false) MultipartsFile bpnmFile) {
   // 此时 bpmnFile == null 
   
 }
-```
+----
 
-## 排查
+== 排查
 
 文件上传的处理逻辑是在 `DispatherServlet.checkMultipart()` 方法
 
-```java
+----
 protected HttpServletRequest checkMultipart(HttpServletRequest request) throws MultipartException {
 		if (this.multipartResolver != null && this.multipartResolver.isMultipart(request)) {
 			if (WebUtils.getNativeRequest(request, MultipartHttpServletRequest.class) != null) {
@@ -54,7 +58,7 @@ protected HttpServletRequest checkMultipart(HttpServletRequest request) throws M
 		// If not returned before: return original request.
 		return request;
 	}
-```
+----
 
 debug 可以看到当前项目中使用的用来支持上传的组件 `multipartResolver`  是 `CommonsMultipartResolver` 类型
 
@@ -64,7 +68,7 @@ debug 可以看到当前项目中使用的用来支持上传的组件 `multipart
 
 在 `DispatherServlet.doDispatch()` 方法开头，也就是所有请求要进行 contoller 分发时，request 的 inputStream 也就已经空了
 
-```java
+----
 protected void doDispatch(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HttpServletRequest processedRequest = request;
 		HandlerExecutionChain mappedHandler = null;
@@ -72,7 +76,7 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
 
 // 此时有断点，使用 IDEA 的 debug 工具 执行 IOUtil.toString(request.getInputStream)
 // 发现输出为空
-```
+----
 
 这说明 inputStream 被读过了
 
@@ -88,9 +92,9 @@ protected void doDispatch(HttpServletRequest request, HttpServletResponse respon
 
 这个 filter 的 doc 中有一段
 
-```java
+----
 NOTE: This filter needs to run after multipart processing in case of a multipart POST request, due to its inherent need for checking a POST body parameter. So typically, put a Spring org.springframework.web.multipart.support.MultipartFilter before this HiddenHttpMethodFilter in your web.xml filter chain.
-```
+----
 
  说我们要把 `MultipartFilter` 写在前面，前置执行。
 
@@ -106,7 +110,7 @@ NOTE: This filter needs to run after multipart processing in case of a multipart
 
 是在项目迁移的过程中遗留了 mvc 的 xml 配置，里面配置了 multipartResolver，类型指定为 `CommonsMultipartResolver` , 去掉后就ok了。
 
-## 结论
+== 结论
 
 spring mvc 提供了两种 multipartResolver：
 
@@ -115,4 +119,4 @@ spring mvc 提供了两种 multipartResolver：
 
 spring boot 使用的自动配置的一个 filter `HiddenHttpMethodFilter` 会比较早的时候读取 request 的 inputStream，导致 `CommonsMultipartResolver` 无法在获取到数据。所以 spring boot mvc 默认是用 `StandardServletMultipartResolver`，用错 resolver 会导至上传文件读不到。
 
->`HttpServletRequest.getParts()` 方法是 servlet 3.0 之后获取  `multipart/form-data` 类型的请求数据的一个标准方法，凡是实现了 servlet 3.0 的服务器都支持，可以尽量使用 StandardServletMultipartResolver
+NOTE: `HttpServletRequest.getParts()` 方法是 servlet 3.0 之后获取  `multipart/form-data` 类型的请求数据的一个标准方法，凡是实现了 servlet 3.0 的服务器都支持，可以尽量使用 StandardServletMultipartResolver

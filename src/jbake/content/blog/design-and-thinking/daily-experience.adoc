@@ -4,7 +4,7 @@
 :icons: font
 :jbake-type: post
 :jbake-tags: code-and-thinking
-:jbake-status: published
+:jbake-status: draft
 
 NOTE: 本文为原创, 转载请注明出处 https://blog.yangxiaochen.com
 

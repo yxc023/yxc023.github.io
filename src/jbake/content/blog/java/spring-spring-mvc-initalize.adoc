@@ -1,18 +1,22 @@
-title=spring & spring mvc 初始化介绍
-date=2017-03-30T19:19:32+08:00
-type=post
-tags=java, spring
-status=published
-~~~~~~
+= spring & spring mvc 初始化介绍
+杨晓辰
+2017-03-30
+:toc: left
+:toclevels: 4
+:icons: font
+:jbake-sid: 20170330-spring-initialization-intro
+:jbake-type: post
+:jbake-tags: java, spring, init, 初始化
+:jbake-status: published
 
 NOTE: 本文为原创, 转载请注明出处 https://blog.yangxiaochen.com
 
 
 <!-- # spring & spring mvc 初始化介绍 -->
 
-## web项目的结构
+== web项目的结构
 
-### java servlet 技术
+=== java servlet 技术
 
 java servlet 技术是 java 的一个 web 服务规范, 提供了统一的 servlet api 供各个容器厂商实现, 以保证一个 java web 项目可以运行在不同厂商的服务器下.
 
@@ -24,21 +28,21 @@ servlet 会在第一次访问时进行初始化. 当然也可以设置 init on s
 <!-- more -->
 
 
-### 非 servlet 规范的 java web 项目
+=== 非 servlet 规范的 java web 项目
 
 使用netty作为服务器lib, 加入 http 协议的处理层,  自行完成处理 http 请求读写
 
-### spring mvc 的的封装
+=== spring mvc 的的封装
 
 我们最常用到的 spring mvc 框架就是对 servlet 技术的封装, 在 web.xml 中加入实现 `Listenner` 的 `SpringContextListener` 和实现了 `Servlet` 的 `DispatcherServlet`, 来对spring 和 spring mvc 进行初始化. 
 
-## spring context 结构
+== spring context 结构
 
 spring context 是整个 spring 的核心, 通常也被叫做 spring 容器. 通常讲的 spring 初始化过程, 就是初始化 spring context 的过程.
 
 根据应用不同, 使用的 spring  context 类型也不同
 
-### 继承树
+=== 继承树
 
 ![context继承.png](http://img.yangxiaochen.com/image/blog/context继承.png)
 
@@ -48,7 +52,7 @@ spring context 是整个 spring 的核心, 通常也被叫做 spring 容器. 通
 
 spring boot 默认使用的是 `AnnotationConfigEmbeddedWebApplicationContext`
 
-### 重要组件
+=== 重要组件
 
 * `BeanFactory` 通用组件, 负责 bean 注册和初始化
 * `Environment` 通用组件 , 包含系统参数, 启动参数等. 还有对启动参数解析后的属性, 比如 profile
@@ -72,7 +76,7 @@ public static final String DEFAULT_CONFIG_LOCATION_SUFFIX = ".xml";
 
 
 
-## spring context 初始化过程概念概览
+== spring context 初始化过程概念概览
 
 一个 spring context 的初始化过程大致分为以下几个阶段:
 
@@ -97,9 +101,9 @@ public static final String DEFAULT_CONFIG_LOCATION_SUFFIX = ".xml";
    包括分门别类的加载各种特殊的 bean, 然后加载普通的ben 
 
 
-## spring 初始化过程实例概览(非 spring boot 的传统war包)
+== spring 初始化过程实例概览(非 spring boot 的传统war包)
 
-### ContextLoaderListener
+=== ContextLoaderListener
 
 `ContextLoaderListener` 配置在 web.xml 中, 在容器启动时初始化.
 
@@ -141,7 +145,7 @@ public static final String DEFAULT_CONFIG_LOCATION_SUFFIX = ".xml";
 
 > *以上说的 bean 均为 singleton 的 scope
 
-### DispatcherServlet
+=== DispatcherServlet
 
 `DispatcherServlet` 配置在 web.xml 中, 在第一次访问时初始化.
 
@@ -154,33 +158,33 @@ public static final String DEFAULT_CONFIG_LOCATION_SUFFIX = ".xml";
 * 9) refresh 过程跟`ContextLoaderListener` 一样, 不同的是在查找 bean 时, 能够查到 parent context 的 bean, 供新的 context 初始化使用.
 * 10) 触发  `ContextRefreshedEvent` , 初始化 spring mvc 的组件, 添加到 `DispatcherServlet` 中.
 
-## 一些特殊类型Bean的初始化时机 (待完善, 请持续补充)
+== 一些特殊类型Bean的初始化时机 (待完善, 请持续补充)
 
-### BeanFactoryPostProccesor
+=== BeanFactoryPostProccesor
 
 context refresh 之后, 初始化好 factory 之后, 会先执行 context 自身的 factory post 操作, 然后就会执行  `BeanFactoryPostProccesor`  这种类型 bean 所定义的 factory post 操作.
 
-### BeanDefinitionRegistryPostProcessor
+=== BeanDefinitionRegistryPostProcessor
 
 `BeanFactoryPostProccesor` 的子类, 执行优先级比 `BeanFactoryPostProccesor` 要高. 通常可以通过 order 来控制`BeanDefinitionRegistryPostProcessor` 类型的执行顺序, 还跟这个 bean 定义的时机有关, 在 prepare context 阶段定义的总会最先执行.
 
 通常自定义的 xml 和 bean 配置 会在这个阶段被定义到 factory.  
 
-### BeanPostProccesor
+=== BeanPostProccesor
 
 在 `BeanFactoryPostProccesor` 都执行完之后实例化, 并 apply 到 factory ,  在一个 bean 初始化之后会被调用.
 
-### Aware
+=== Aware
 
 如 `ApplicationContextAware` , 实现这个接口的 bean 会由一个 `BeanPostProccesor` 类型的  `ApplicationContextAwareProcessor` 在初始化之后 set 一个 application context
 
 Aware 相关类的很多, 都类似
 
-### ApplicationListener
+=== ApplicationListener
 
 用来监听 context 生命周期中各个事件的类, 可以在 prepare 和 refresh 阶段注入
 
-### ApplicationContextInitializer
+=== ApplicationContextInitializer
 
 prepare context 阶段执行, 在 context refresh之前执行. 可以对 context 注入 `BeanFactoryPostProccesor` 和 `ApplicationListener`
 
