@@ -1,0 +1,12 @@
+= 原则
+杨晓辰
+:toc: top
+:toclevels: 5
+:icons: font
+// :sectnums:
+:jbake-type: page
+:jbake-tags: design, ddd, 领域驱动设计
+:jbake-status: published
+
+
+TBD.

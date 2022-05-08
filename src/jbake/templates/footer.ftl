@@ -4,7 +4,7 @@
     
     <div id="footer">
       <div class="container">
-        <p class="muted credit">&copy; 2020 | Michael Yang | 备案: <a href="http://www.beian.miit.gov.cn">京ICP备13041693号</a></p>
+        <p class="muted credit">&copy; 2022 | Michael Yang | 备案: <a href="http://www.beian.miit.gov.cn">京ICP备13041693号</a></p>
       </div>
     </div>
     

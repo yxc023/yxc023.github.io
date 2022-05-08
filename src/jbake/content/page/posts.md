@@ -1,6 +1,5 @@
 title=post_index
 date=2017-07-24
-type=post_index
+type=page_posts_index
 status=published
 ~~~~~~
-11

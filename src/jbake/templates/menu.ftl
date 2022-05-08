@@ -13,17 +13,21 @@
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
              <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>index.html">首页</a></li> 
+             <#--  <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>posts.html">文章</a></li>  -->
+             <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>page/design-practices.html">设计实践</a></li>
+             <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>page/projects.html">项目</a></li>
+             <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>page/principles.html">原则</a></li>
             <#--  <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>post_index.html">blog</a></li>  -->
 
-            <#--  <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>posts.html">博客</a></li>  -->
-            <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>wiki_gradle_index.html">gradle</a></li>
-            <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>tags/git.html">git</a></li>
-            <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>tags/spring.html">spring</a></li>
-            <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>${config.archive_file}">archive</a></li>
+            
+            <#--  <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>wiki_gradle_index.html">gradle</a></li>  -->
+            <#--  <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>tags/git.html">git</a></li>  -->
+            <#--  <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>tags/spring.html">spring</a></li>  -->
+            <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>${config.archive_file}">Archive</a></li>
 
-            <li><a href="https://github.com/yxc023/jbake">my jbake</a></li>
+            <#--  <li><a href="https://github.com/yxc023/jbake">my jbake</a></li>  -->
 
-            <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>about.html">关于</a></li>
+            <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>page/about.html">About</a></li>
 
 
              <#--  <li><a href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>${config.feed_file}">Subscribe</a></li>  -->

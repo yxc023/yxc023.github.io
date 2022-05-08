@@ -2,7 +2,7 @@
 	<#include "menu.ftl">
 	<#list posts as post>
   		<#if (post.status == "published")>
-  			<a href="${post.uri}"><h2><#escape x as x?xml>${post.title}</#escape></h2></a>
+  			<a href="${post.uri}"><h3><#escape x as x?xml>${post.title}</#escape></h3></a>
   			<p>${post.date?string("yyyy-MM-dd")}
 				<span> tags: </span>
 				<#list post.tags as tag>
