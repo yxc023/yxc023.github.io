@@ -11,12 +11,12 @@
     <!--  <script data-ad-client="ca-pub-5626174695342369" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  -->
 
     <!-- Le styles -->
-    <link href="//cdn.jsdelivr.net/npm/bootstrap@3.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.staticfile.org/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
     <#--  <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/asciidoctor.css" rel="stylesheet">  -->
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/adoc-golo.css" rel="stylesheet">
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/base.css" rel="stylesheet">
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/prettify.css" rel="stylesheet">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="//cdn.staticfile.org/gitalk/1.0.0/gitalk.min.css">
 
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->

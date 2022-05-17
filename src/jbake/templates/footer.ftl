@@ -11,9 +11,9 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="//cdn.jsdelivr.net/npm/jquery@1.11.1/dist/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/bootstrap@3.1.1/dist/js/bootstrap.min.js"></script>
-    <script src="<#if (content.rootpath)??>${content.rootpath}<#else></#if>js/prettify.js"></script>
+    <script src="//cdn.staticfile.org/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//cdn.staticfile.org/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+    <script src="//cdn.staticfile.org/prettify/188.0.0/prettify.min.js"></script>
     <script>
       var _hmt = _hmt || [];
       (function() {

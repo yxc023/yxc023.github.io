@@ -94,6 +94,7 @@ project.extensions.create('jooq', JooqExtension.class, whenConfigurationAdded, '
 +
 加入 extension 后，就可以在构建脚本中定义
 +
+[source]
 ----
 jooq {
     version = jooqVersion
@@ -104,6 +105,7 @@ jooq {
 
 5. convention - 引入一些 plugin 时，会加入一些 convention object，翻译过来叫‘约定’，‘预定大于配置’的‘约定’。convention object 通常是 POJO，为 project 提供一些拓展属性。
 +
+[source, groovy]
 ----
 // 这两个变量，在引入 java plugin 之后，就能在构建脚本里够直接定义下面的变量。
 sourceCompatibility = 1.8
