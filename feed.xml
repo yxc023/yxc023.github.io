@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>JBake</title>
-    <link>http://blog.yangxiaochen.com</link>
-    <atom:link href="http://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
+    <link>https://blog.yangxiaochen.com</link>
+    <atom:link href="https://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期一, 9 五月 2022 01:52:29 +0800</pubDate>
-    <lastBuildDate>星期一, 9 五月 2022 01:52:29 +0800</lastBuildDate>
+    <pubDate>星期二, 17 五月 2022 13:43:50 +0800</pubDate>
+    <lastBuildDate>星期二, 17 五月 2022 13:43:50 +0800</lastBuildDate>
 
     <item>
       <title>Gradle 使用实践</title>
-      <link>http://blog.yangxiaochen.com/blog/2022/0504-gradle-practice.html</link>
+      <link>https://blog.yangxiaochen.com/blog/2022/0504-gradle-practice.html</link>
       <pubDate>星期三, 4 五月 2022 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/2022/0504-gradle-practice.html</guid>
       	<description>
@@ -155,11 +155,11 @@ project.extensions.create(&apos;jooq&apos;, JooqExtension.class, whenConfigurati
 &lt;/div&gt;
 &lt;div class=&quot;listingblock&quot;&gt;
 &lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;jooq {
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code&gt;jooq {
     version = jooqVersion
     edition = &apos;OSS&apos;
     generateSchemaSourceOnCompilation = false
-}&lt;/pre&gt;
+}&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/li&gt;
@@ -167,9 +167,9 @@ project.extensions.create(&apos;jooq&apos;, JooqExtension.class, whenConfigurati
 &lt;p&gt;convention - 引入一些 plugin 时，会加入一些 convention object，翻译过来叫‘约定’，‘预定大于配置’的‘约定’。convention object 通常是 POJO，为 project 提供一些拓展属性。&lt;/p&gt;
 &lt;div class=&quot;listingblock&quot;&gt;
 &lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;// 这两个变量，在引入 java plugin 之后，就能在构建脚本里够直接定义下面的变量。
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;// 这两个变量，在引入 java plugin 之后，就能在构建脚本里够直接定义下面的变量。
 sourceCompatibility = 1.8
-targetCompatibility = 1.8&lt;/pre&gt;
+targetCompatibility = 1.8&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/li&gt;
@@ -248,7 +248,7 @@ version = &apos;1.0.0&apos;&lt;/pre&gt;
     </item>
     <item>
       <title>spring 中一个 alias 别名导致的 bean 无法找到问题</title>
-      <link>http://blog.yangxiaochen.com/blog/stackoverflow/bean-not-found-becauseof-alias.html</link>
+      <link>https://blog.yangxiaochen.com/blog/stackoverflow/bean-not-found-becauseof-alias.html</link>
       <pubDate>星期日, 22 三月 2020 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/stackoverflow/bean-not-found-becauseof-alias.html</guid>
       	<description>
@@ -364,7 +364,7 @@ version = &apos;1.0.0&apos;&lt;/pre&gt;
     </item>
     <item>
       <title>如何处理 java 代码中的异常</title>
-      <link>http://blog.yangxiaochen.com/blog/java/how-to-deal-with-java-exception.html</link>
+      <link>https://blog.yangxiaochen.com/blog/java/how-to-deal-with-java-exception.html</link>
       <pubDate>星期五, 17 一月 2020 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/how-to-deal-with-java-exception.html</guid>
       	<description>
@@ -563,7 +563,7 @@ version = &apos;1.0.0&apos;&lt;/pre&gt;
     </item>
     <item>
       <title>一个更有表现力的异常设计</title>
-      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/expressive-exception-lib.html</link>
+      <link>https://blog.yangxiaochen.com/blog/design-and-thinking/expressive-exception-lib.html</link>
       <pubDate>星期日, 8 十二月 2019 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/design-and-thinking/expressive-exception-lib.html</guid>
       	<description>
@@ -910,7 +910,7 @@ exceptionHandler.setErrorViewResolver((request, response, ex) -&amp;gt; {
     </item>
     <item>
       <title>项目接口设计实践</title>
-      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/api-design.html</link>
+      <link>https://blog.yangxiaochen.com/blog/design-and-thinking/api-design.html</link>
       <pubDate>星期四, 25 七月 2019 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/design-and-thinking/api-design.html</guid>
       	<description>
@@ -1382,7 +1382,7 @@ exceptionHandler.setErrorViewResolver((request, response, ex) -&amp;gt; {
     </item>
     <item>
       <title>「企业应用架构模式」读书笔记与思考 - 1 - 领域逻辑模式</title>
-      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/reading-notes-for-PoEAA1.html</link>
+      <link>https://blog.yangxiaochen.com/blog/design-and-thinking/reading-notes-for-PoEAA1.html</link>
       <pubDate>星期五, 12 七月 2019 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/design-and-thinking/reading-notes-for-PoEAA1.html</guid>
       	<description>
@@ -1597,7 +1597,7 @@ receive()&lt;/pre&gt;
     </item>
     <item>
       <title>如何有效的书写项目单元测试</title>
-      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/how-to-write-unittest.html</link>
+      <link>https://blog.yangxiaochen.com/blog/design-and-thinking/how-to-write-unittest.html</link>
       <pubDate>星期一, 17 六月 2019 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/design-and-thinking/how-to-write-unittest.html</guid>
       	<description>
@@ -2358,7 +2358,7 @@ template = saveTemplate(template) &lt;i class=&quot;conum&quot; data-value=&quot
     </item>
     <item>
       <title>在 windows 系统下使用 linux 命令行做开发</title>
-      <link>http://blog.yangxiaochen.com/blog/tools/linux-in-windows.html</link>
+      <link>https://blog.yangxiaochen.com/blog/tools/linux-in-windows.html</link>
       <pubDate>星期一, 11 二月 2019 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/tools/linux-in-windows.html</guid>
       	<description>
@@ -2463,7 +2463,7 @@ template = saveTemplate(template) &lt;i class=&quot;conum&quot; data-value=&quot
     </item>
     <item>
       <title>groovy技巧 for java 开发者</title>
-      <link>http://blog.yangxiaochen.com/blog/groovy/groovy-tips-for-javaer.html</link>
+      <link>https://blog.yangxiaochen.com/blog/groovy/groovy-tips-for-javaer.html</link>
       <pubDate>星期六, 5 五月 2018 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/groovy/groovy-tips-for-javaer.html</guid>
       	<description>
@@ -2853,7 +2853,7 @@ sout.eachLine { line -&amp;gt;
     </item>
     <item>
       <title>spring 中 aspectj 扫描内容太多导致的启动时加载缓慢</title>
-      <link>http://blog.yangxiaochen.com/blog/stackoverflow/spring-aspectj-slow.html</link>
+      <link>https://blog.yangxiaochen.com/blog/stackoverflow/spring-aspectj-slow.html</link>
       <pubDate>星期四, 3 五月 2018 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/stackoverflow/spring-aspectj-slow.html</guid>
       	<description>
@@ -3018,7 +3018,7 @@ sout.eachLine { line -&amp;gt;
     </item>
     <item>
       <title>2018 北京 qcon 大会笔记</title>
-      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/2018-beijing-qcon.html</link>
+      <link>https://blog.yangxiaochen.com/blog/design-and-thinking/2018-beijing-qcon.html</link>
       <pubDate>星期二, 24 四月 2018 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/design-and-thinking/2018-beijing-qcon.html</guid>
       	<description>
@@ -3452,7 +3452,7 @@ sout.eachLine { line -&amp;gt;
     </item>
     <item>
       <title>pac4j 简介</title>
-      <link>http://blog.yangxiaochen.com/blog/java/pac4j-introduction.html</link>
+      <link>https://blog.yangxiaochen.com/blog/java/pac4j-introduction.html</link>
       <pubDate>星期日, 15 四月 2018 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/pac4j-introduction.html</guid>
       	<description>
@@ -3727,7 +3727,7 @@ public ShiroFilterFactoryBean shiroFilterFactoryBean() {
     </item>
     <item>
       <title>jooq 介绍</title>
-      <link>http://blog.yangxiaochen.com/blog/db/jooq-intro.html</link>
+      <link>https://blog.yangxiaochen.com/blog/db/jooq-intro.html</link>
       <pubDate>星期三, 4 四月 2018 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/db/jooq-intro.html</guid>
       	<description>
@@ -4414,7 +4414,7 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
     </item>
     <item>
       <title>方法论总结</title>
-      <link>http://blog.yangxiaochen.com/blog/design-and-thinking/methodology.html</link>
+      <link>https://blog.yangxiaochen.com/blog/design-and-thinking/methodology.html</link>
       <pubDate>星期日, 5 十一月 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/design-and-thinking/methodology.html</guid>
       	<description>
@@ -4569,7 +4569,7 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
     </item>
     <item>
       <title>spring boot mvc 文件上传上来为 null</title>
-      <link>http://blog.yangxiaochen.com/blog/java/spring-mvc-multipart-error.html</link>
+      <link>https://blog.yangxiaochen.com/blog/java/spring-mvc-multipart-error.html</link>
       <pubDate>星期二, 5 九月 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/spring-mvc-multipart-error.html</guid>
       	<description>
@@ -4765,7 +4765,7 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
     </item>
     <item>
       <title>gradle简明教程</title>
-      <link>http://blog.yangxiaochen.com/blog/java/gradle-simple-introduction.html</link>
+      <link>https://blog.yangxiaochen.com/blog/java/gradle-simple-introduction.html</link>
       <pubDate>星期一, 24 七月 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/gradle-simple-introduction.html</guid>
       	<description>
@@ -5211,7 +5211,7 @@ idea {
     </item>
     <item>
       <title>Java web 项目异常设计实践</title>
-      <link>http://blog.yangxiaochen.com/blog/java/exception-in-action.html</link>
+      <link>https://blog.yangxiaochen.com/blog/java/exception-in-action.html</link>
       <pubDate>星期一, 10 七月 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/exception-in-action.html</guid>
       	<description>
@@ -5397,7 +5397,7 @@ idea {
     </item>
     <item>
       <title>spring &amp;amp; spring mvc 初始化介绍</title>
-      <link>http://blog.yangxiaochen.com/blog/java/spring-spring-mvc-initalize.html</link>
+      <link>https://blog.yangxiaochen.com/blog/java/spring-spring-mvc-initalize.html</link>
       <pubDate>星期四, 30 三月 2017 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/spring-spring-mvc-initalize.html</guid>
       	<description>
@@ -5762,7 +5762,7 @@ public static final String DEFAULT_CONFIG_LOCATION_SUFFIX = &quot;.xml&quot;;&lt
     </item>
     <item>
       <title>Java异常规范</title>
-      <link>http://blog.yangxiaochen.com/blog/java/exception-pattern.html</link>
+      <link>https://blog.yangxiaochen.com/blog/java/exception-pattern.html</link>
       <pubDate>星期四, 29 九月 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/exception-pattern.html</guid>
       	<description>
@@ -6105,7 +6105,7 @@ controller -&amp;gt; service -&amp;gt; adaptor -&amp;gt; UC dubbo
     </item>
     <item>
       <title>git实际开发语句</title>
-      <link>http://blog.yangxiaochen.com/blog/git/git-in-use.html</link>
+      <link>https://blog.yangxiaochen.com/blog/git/git-in-use.html</link>
       <pubDate>星期一, 4 七月 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/git/git-in-use.html</guid>
       	<description>
@@ -6217,7 +6217,7 @@ git commit
     </item>
     <item>
       <title>git分支管理与使用规范</title>
-      <link>http://blog.yangxiaochen.com/blog/git/git-in-action.html</link>
+      <link>https://blog.yangxiaochen.com/blog/git/git-in-action.html</link>
       <pubDate>星期二, 21 六月 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/git/git-in-action.html</guid>
       	<description>
@@ -6412,7 +6412,7 @@ git reset --soft [version]  // 保留版本后的所有已提交修改到commit 
     </item>
     <item>
       <title>git-flow实践</title>
-      <link>http://blog.yangxiaochen.com/blog/git/git-flow-in-action.html</link>
+      <link>https://blog.yangxiaochen.com/blog/git/git-flow-in-action.html</link>
       <pubDate>星期日, 12 六月 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/git/git-flow-in-action.html</guid>
       	<description>
@@ -6582,7 +6582,7 @@ Summary of actions:
     </item>
     <item>
       <title>java 多线程同步的几种写法</title>
-      <link>http://blog.yangxiaochen.com/blog/java/thread-coordinate-n-methods.html</link>
+      <link>https://blog.yangxiaochen.com/blog/java/thread-coordinate-n-methods.html</link>
       <pubDate>星期四, 14 四月 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/thread-coordinate-n-methods.html</guid>
       	<description>
@@ -6878,7 +6878,7 @@ ForkJoinTask&amp;lt;Integer&amp;gt; f3 = ForkJoinTask.adapt(() -&amp;gt; test.m3
     </item>
     <item>
       <title>从一个丢失的iphone看互联网信息安全</title>
-      <link>http://blog.yangxiaochen.com/blog/secure/a-lost-iphone-secure.html</link>
+      <link>https://blog.yangxiaochen.com/blog/secure/a-lost-iphone-secure.html</link>
       <pubDate>星期一, 4 四月 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/secure/a-lost-iphone-secure.html</guid>
       	<description>
@@ -6996,7 +6996,7 @@ ForkJoinTask&amp;lt;Integer&amp;gt; f3 = ForkJoinTask.adapt(() -&amp;gt; test.m3
     </item>
     <item>
       <title>spring servlet.xml 与 application context.xml 不同</title>
-      <link>http://blog.yangxiaochen.com/blog/java/spring-servlet-context-diffrence.html</link>
+      <link>https://blog.yangxiaochen.com/blog/java/spring-servlet-context-diffrence.html</link>
       <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/java/spring-servlet-context-diffrence.html</guid>
       	<description>
@@ -7025,7 +7025,7 @@ ForkJoinTask&amp;lt;Integer&amp;gt; f3 = ForkJoinTask.adapt(() -&amp;gt; test.m3
     </item>
     <item>
       <title>homebrew安装旧版本软件</title>
-      <link>http://blog.yangxiaochen.com/blog/mac/homebrew-install-old-version-soft.html</link>
+      <link>https://blog.yangxiaochen.com/blog/mac/homebrew-install-old-version-soft.html</link>
       <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/mac/homebrew-install-old-version-soft.html</guid>
       	<description>
@@ -7055,7 +7055,7 @@ leafnode node node010 node04 node06 node08 nodebrew nodenv&lt;/pre&gt;
     </item>
     <item>
       <title>rabbitmq管理使用实践</title>
-      <link>http://blog.yangxiaochen.com/blog/develop/rabbitmq-in-action.html</link>
+      <link>https://blog.yangxiaochen.com/blog/develop/rabbitmq-in-action.html</link>
       <pubDate>星期一, 8 二月 2016 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/develop/rabbitmq-in-action.html</guid>
       	<description>
@@ -7294,7 +7294,7 @@ durableQueues.txt&lt;/pre&gt;
     </item>
     <item>
       <title>css 定位指南</title>
-      <link>http://blog.yangxiaochen.com/blog/frontend/css-position.html</link>
+      <link>https://blog.yangxiaochen.com/blog/frontend/css-position.html</link>
       <pubDate>星期二, 8 十一月 2011 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/frontend/css-position.html</guid>
       	<description>

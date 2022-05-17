@@ -11,11 +11,11 @@
     <!--  <script data-ad-client="ca-pub-5626174695342369" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  -->
 
     <!-- Le styles -->
-    <link href="//cdn.jsdelivr.net/npm/bootstrap@3.1.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.staticfile.org/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/adoc-golo.css" rel="stylesheet">
     <link href="../../css/base.css" rel="stylesheet">
     <link href="../../css/prettify.css" rel="stylesheet">
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+    <link rel="stylesheet" href="//cdn.staticfile.org/gitalk/1.0.0/gitalk.min.css">
 
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -34,34 +34,32 @@
   <body onload="prettyPrint()">
     <div id="wrap">
 	
-	<!-- Fixed navbar -->
-    <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/">Michael的文档</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-             <li><a href="../../index.html">首页</a></li> 
-             <li><a href="../../page/design-practices.html">设计实践</a></li>
-             <li><a href="../../page/projects.html">项目</a></li>
-             <li><a href="../../page/principles.html">原则</a></li>
-            <li><a href="../../archive.html">Archive</a></li>
+
+        
+   
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container">
+            <a class="navbar-brand" href="#">Michael的文档</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+              <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="../../index.html">首页</a></li> 
+                <li class="nav-item"><a class="nav-link" href="../../page/design-practices.html">设计实践</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../page/projects.html">项目</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../page/principles.html">原则</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../archive.html">Archive</a></li>
 
 
-            <li><a href="../../page/about.html">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="../../page/about.html">About</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
 
 
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
     <div class="container">	
 	<div class="page-header">
 		<h1>Gradle 使用实践</h1>
@@ -211,11 +209,11 @@ project.extensions.create('jooq', JooqExtension.class, whenConfigurationAdded, '
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>jooq {
+<pre class="prettyprint highlight"><code>jooq {
     version = jooqVersion
     edition = 'OSS'
     generateSchemaSourceOnCompilation = false
-}</pre>
+}</code></pre>
 </div>
 </div>
 </li>
@@ -223,9 +221,9 @@ project.extensions.create('jooq', JooqExtension.class, whenConfigurationAdded, '
 <p>convention - 引入一些 plugin 时，会加入一些 convention object，翻译过来叫‘约定’，‘预定大于配置’的‘约定’。convention object 通常是 POJO，为 project 提供一些拓展属性。</p>
 <div class="listingblock">
 <div class="content">
-<pre>// 这两个变量，在引入 java plugin 之后，就能在构建脚本里够直接定义下面的变量。
+<pre class="prettyprint highlight"><code class="language-groovy" data-lang="groovy">// 这两个变量，在引入 java plugin 之后，就能在构建脚本里够直接定义下面的变量。
 sourceCompatibility = 1.8
-targetCompatibility = 1.8</pre>
+targetCompatibility = 1.8</code></pre>
 </div>
 </div>
 </li>
@@ -306,7 +304,7 @@ version = '1.0.0'</pre>
 
 	<!-- 文章页底部 -->
 
-  	<script src="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  	<script src="//cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
 	<div id="gitalk-container"></div>
 	<script>
 		const gitalk = new Gitalk({
@@ -336,9 +334,9 @@ version = '1.0.0'</pre>
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="//cdn.jsdelivr.net/npm/jquery@1.11.1/dist/jquery.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/bootstrap@3.1.1/dist/js/bootstrap.min.js"></script>
-    <script src="../../js/prettify.js"></script>
+    <script src="//cdn.staticfile.org/jquery/1.11.1/jquery.min.js"></script>
+    <script src="//cdn.staticfile.org/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+    <script src="//cdn.staticfile.org/prettify/188.0.0/prettify.min.js"></script>
     <script>
       var _hmt = _hmt || [];
       (function() {

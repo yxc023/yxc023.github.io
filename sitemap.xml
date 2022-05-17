@@ -1,131 +1,131 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
     <url>
-        <loc>http://blog.yangxiaochen.com/page/design-practices.html</loc>
+        <loc>https://blog.yangxiaochen.com/page/design-practices.html</loc>
         <lastmod>2022-05-09</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/page/principles.html</loc>
+        <loc>https://blog.yangxiaochen.com/page/principles.html</loc>
         <lastmod>2022-05-09</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/page/projects.html</loc>
+        <loc>https://blog.yangxiaochen.com/page/projects.html</loc>
         <lastmod>2022-05-09</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/page/about.html</loc>
+        <loc>https://blog.yangxiaochen.com/page/about.html</loc>
         <lastmod>2013-09-24</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/2022/0504-gradle-practice.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/2022/0504-gradle-practice.html</loc>
         <lastmod>2022-05-04</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/stackoverflow/bean-not-found-becauseof-alias.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/stackoverflow/bean-not-found-becauseof-alias.html</loc>
         <lastmod>2020-03-22</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/java/how-to-deal-with-java-exception.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/java/how-to-deal-with-java-exception.html</loc>
         <lastmod>2020-01-17</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/design-and-thinking/expressive-exception-lib.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/design-and-thinking/expressive-exception-lib.html</loc>
         <lastmod>2019-12-08</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/design-and-thinking/api-design.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/design-and-thinking/api-design.html</loc>
         <lastmod>2019-07-25</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/design-and-thinking/reading-notes-for-PoEAA1.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/design-and-thinking/reading-notes-for-PoEAA1.html</loc>
         <lastmod>2019-07-12</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/design-and-thinking/how-to-write-unittest.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/design-and-thinking/how-to-write-unittest.html</loc>
         <lastmod>2019-06-17</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/tools/linux-in-windows.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/tools/linux-in-windows.html</loc>
         <lastmod>2019-02-11</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/groovy/groovy-tips-for-javaer.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/groovy/groovy-tips-for-javaer.html</loc>
         <lastmod>2018-05-05</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/stackoverflow/spring-aspectj-slow.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/stackoverflow/spring-aspectj-slow.html</loc>
         <lastmod>2018-05-03</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/design-and-thinking/2018-beijing-qcon.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/design-and-thinking/2018-beijing-qcon.html</loc>
         <lastmod>2018-04-24</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/java/pac4j-introduction.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/java/pac4j-introduction.html</loc>
         <lastmod>2018-04-15</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/db/jooq-intro.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/db/jooq-intro.html</loc>
         <lastmod>2018-04-04</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/design-and-thinking/methodology.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/design-and-thinking/methodology.html</loc>
         <lastmod>2017-11-05</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/java/spring-mvc-multipart-error.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/java/spring-mvc-multipart-error.html</loc>
         <lastmod>2017-09-05</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/java/gradle-simple-introduction.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/java/gradle-simple-introduction.html</loc>
         <lastmod>2017-07-24</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/java/exception-in-action.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/java/exception-in-action.html</loc>
         <lastmod>2017-07-10</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/java/spring-spring-mvc-initalize.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/java/spring-spring-mvc-initalize.html</loc>
         <lastmod>2017-03-30</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/java/exception-pattern.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/java/exception-pattern.html</loc>
         <lastmod>2016-09-29</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/git/git-in-use.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/git/git-in-use.html</loc>
         <lastmod>2016-07-04</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/git/git-in-action.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/git/git-in-action.html</loc>
         <lastmod>2016-06-21</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/git/git-flow-in-action.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/git/git-flow-in-action.html</loc>
         <lastmod>2016-06-12</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/java/thread-coordinate-n-methods.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/java/thread-coordinate-n-methods.html</loc>
         <lastmod>2016-04-14</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/secure/a-lost-iphone-secure.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/secure/a-lost-iphone-secure.html</loc>
         <lastmod>2016-04-04</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/java/spring-servlet-context-diffrence.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/java/spring-servlet-context-diffrence.html</loc>
         <lastmod>2016-02-09</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/mac/homebrew-install-old-version-soft.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/mac/homebrew-install-old-version-soft.html</loc>
         <lastmod>2016-02-09</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/develop/rabbitmq-in-action.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/develop/rabbitmq-in-action.html</loc>
         <lastmod>2016-02-08</lastmod>
     </url>
     <url>
-        <loc>http://blog.yangxiaochen.com/blog/frontend/css-position.html</loc>
+        <loc>https://blog.yangxiaochen.com/blog/frontend/css-position.html</loc>
         <lastmod>2011-11-08</lastmod>
     </url>
 </urlset>
