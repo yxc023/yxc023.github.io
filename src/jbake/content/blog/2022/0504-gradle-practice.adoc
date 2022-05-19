@@ -1,4 +1,4 @@
-= Gradle 使用实践
+= Gradle多模块项目中的配置实践
 杨晓辰
 2022-05-04
 :toc: top
@@ -6,8 +6,9 @@
 :icons: font
 // :sectnums:
 :jbake-type: post
-:jbake-tags: gradle, java
+:jbake-tags: gradle, build.gradle, 多模块项目构建
 :jbake-status: published
+:description: 使用 Gradle 在多模块项目中的配置实践。Gradle 脚本文件的原理，build.gradle 文件中有什么内容
 
 == 前言
 Gradle 是一个第一眼看上去比较简单，实则有一定入门门槛的构建工具。

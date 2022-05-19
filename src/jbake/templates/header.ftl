@@ -6,7 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="<#if (content.description)??><#escape x as x?xml>${content.description}</#escape><#elseif (content.title)??><#escape x as x?xml>${content.title}</#escape><#else>Michael的博客</#if>">
     <meta name="author" content="yxc023@qq.com">
-    <meta name="keywords" content="<#if (content.tags)??><#list content.tags as tag>${tag},</#list></#if>技术,java,设计模式,spring,软件开发,杨晓辰,yxc023">
+    <meta name="keywords" content="<#if (content.tags)??><#list content.tags as tag>${tag},</#list></#if>yangxiaochen">
+    <meta name="robots" content="index, follow" />
+    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <#if (content.uri)??>
+      <link rel="canonical" href="http://blog.yangxiaochen.com/${content.uri}" />  
+    </#if>
+    
     <meta name="generator" content="JBake">
     <!--  <script data-ad-client="ca-pub-5626174695342369" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  -->
 
