@@ -11,7 +11,7 @@
     <!--  <script data-ad-client="ca-pub-5626174695342369" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  -->
 
     <!-- Le styles -->
-    <link href="//cdn.staticfile.org/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdn.staticfile.org/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <#--  <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/asciidoctor.css" rel="stylesheet">  -->
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/adoc-golo.css" rel="stylesheet">
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/base.css" rel="stylesheet">
