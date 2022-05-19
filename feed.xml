@@ -6,11 +6,11 @@
     <atom:link href="https://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期二, 17 五月 2022 13:53:48 +0800</pubDate>
-    <lastBuildDate>星期二, 17 五月 2022 13:53:48 +0800</lastBuildDate>
+    <pubDate>星期五, 20 五月 2022 01:45:14 +0800</pubDate>
+    <lastBuildDate>星期五, 20 五月 2022 01:45:14 +0800</lastBuildDate>
 
     <item>
-      <title>Gradle 使用实践</title>
+      <title>Gradle多模块项目中的配置实践</title>
       <link>https://blog.yangxiaochen.com/blog/2022/0504-gradle-practice.html</link>
       <pubDate>星期三, 4 五月 2022 00:00:00 +0800</pubDate>
       <guid isPermaLink="false">blog/2022/0504-gradle-practice.html</guid>
@@ -2943,24 +2943,18 @@ sout.eachLine { line -&amp;gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;一般来说, 切面声明有以下集中类型&lt;/p&gt;
 &lt;/div&gt;
-&lt;div class=&quot;olist arabic&quot;&gt;
-&lt;ol class=&quot;arabic&quot;&gt;
-&lt;li&gt;
-&lt;p&gt;Kinded designators, 比如 execution, get, set, call, handler. 特定类型代码的切面&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Scoping designators, 比如 within, withincode. 一组切面, 包含了多种类型的代码, 但是有一个范围.&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;Contextual designators, 比如 this, target, @annotation. 可能需要切面的上下文来帮助进行匹配检测.&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;1. Kinded designators, 比如 execution, get, set, call, handler. 特定类型代码的切面
+2. Scoping designators, 比如 within, withincode. 一组切面, 包含了多种类型的代码, 但是有一个范围.
+3. Contextual designators, 比如 this, target, @annotation. 可能需要切面的上下文来帮助进行匹配检测.&lt;/pre&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;单独使用 Kinded designators 或者 Contextual designators 都是可以完成功能的, 但可能会影响织入性能, 因为要做额外的处理和分析.&lt;/p&gt;
+&lt;p&gt;单独使用 Kinded designators 或者 Contextual designators 都是可以完成功能的, 但可能会影响织入性能, 因为要做额外的处理和分析.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;Scoping designators 可以非常快的判断目标是否在范围内, 避免不必要的分析处理.&lt;/p&gt;
+&lt;p&gt;Scoping designators 可以非常快的判断目标是否在范围内, 避免不必要的分析处理.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;所以通常写切面定义时, 最好加上 Scoping designators.&lt;/p&gt;
@@ -3000,6 +2994,9 @@ sout.eachLine { line -&amp;gt;
 &lt;div class=&quot;sect1&quot;&gt;
 &lt;h2 id=&quot;_后记&quot;&gt;后记&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;重点在于定义更清楚的切面范围，减少扫描的判断成本。一定要包含 &lt;code&gt;within, withincode&lt;/code&gt; 来快速确定扫描范围。&lt;/p&gt;
+&lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;其实 &lt;code&gt;execution(* com.lianjia.xxx.platform.&lt;strong&gt;.dao..&lt;/strong&gt;.*(..))&lt;/code&gt; 应该也是可以分析出范围的, 还没有细究是出于什么考虑没有做判断.&lt;/p&gt;
 &lt;/div&gt;
