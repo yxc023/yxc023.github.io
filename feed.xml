@@ -6,8 +6,8 @@
     <atom:link href="https://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期五, 20 五月 2022 01:45:14 +0800</pubDate>
-    <lastBuildDate>星期五, 20 五月 2022 01:45:14 +0800</lastBuildDate>
+    <pubDate>星期日, 29 五月 2022 04:42:57 +0800</pubDate>
+    <lastBuildDate>星期日, 29 五月 2022 04:42:57 +0800</lastBuildDate>
 
     <item>
       <title>Gradle多模块项目中的配置实践</title>
@@ -19,42 +19,35 @@
 &lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
 &lt;ul class=&quot;sectlevel1&quot;&gt;
 &lt;li&gt;&lt;a href=&quot;#_前言&quot;&gt;前言&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_构建脚本实例解读&quot;&gt;构建脚本实例解读&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_常见问题&quot;&gt;常见问题&lt;/a&gt;
-&lt;ul class=&quot;sectlevel2&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_构建脚本里面都有啥&quot;&gt;构建脚本里面都有啥&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_构建脚本的执行顺序&quot;&gt;构建脚本的执行顺序&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_如何引用文件&quot;&gt;如何引用文件&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_依赖查看与版本设置&quot;&gt;依赖查看与版本设置&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_implementation_compileonly_等依赖标识是啥意思&quot;&gt;implementation, compileOnly 等依赖「标识」是啥意思&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_tbd&quot;&gt;TBD.&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_一个多模块项目的构建脚本例子&quot;&gt;一个多模块项目的构建脚本例子&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_如何理解构建脚本&quot;&gt;如何理解构建脚本&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
 &lt;h2 id=&quot;_前言&quot;&gt;前言&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;Gradle 是一个第一眼看上去比较简单，实则有一定入门门槛的构建工具。&lt;/p&gt;
+&lt;p&gt;Gradle 是一个第一眼看上去比较简单，但是有一定入门门槛的构建工具。&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;在配置仓库，引入依赖这种基本操作之外，想做一些其他的个性化配置，经常无处下手。&lt;/p&gt;
+&lt;p&gt;配置仓库、引入依赖这种基本配置，是比较简单的，也有很多例子。&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;官方文档，虽然很详实，但是对于没有进行系统学习的人，看起来还挺费劲。而且，文档中给出的例子，跟实际情况脱离较远，不是很好参照。&lt;/p&gt;
+&lt;p&gt;但是想做一些其他的个性化配置，经常无处下手。官方文档，虽然很详实，但是对于没有进行系统学习的人，看起来还挺费劲。而且，文档中给出的例子，跟实际情况脱离较远，不是很好参照。&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;gradle 的配置文件，大多使用 groovy 来进行，弱类型的语言，dsl 和 closures 的表达方式，都会让很多 java 程序员摸不着头脑。
-虽然我没有对 gradle 进行特别系统的学习，但是也是一直在应用。简单的配置语法、极度灵活的自定义构建配置是我一直喜欢的地方。当然，过程中也遇到了不少问题，翻过文档和源码。&lt;/p&gt;
+&lt;p&gt;Gradle 的配置文件，大多使用 groovy 来进行书写，弱类型的语言、dsl、closures 的表达方式，都会让很多 java 程序员摸不着头脑。说是用代码来做的配置，但是这种语法缺读不明白。&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;在这里记录一些实践，算是对 Gradle 使用的一些觉得不错的经验积累。&lt;/p&gt;
+&lt;p&gt;Gradle 简单明了的配置语法、极度灵活的自定义构建配置，是我一直使用它的原因。过程中也遇到了不少问题，虽然我没有对 Gradle 进行特别系统的学习，但也翻过不少文档和源码。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;本篇文章，是对 Gradle 使用的一些实践记录。&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_构建脚本实例解读&quot;&gt;构建脚本实例解读&lt;/h2&gt;
+&lt;h2 id=&quot;_一个多模块项目的构建脚本例子&quot;&gt;一个多模块项目的构建脚本例子&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;这些文件来自项目： &lt;a href=&quot;https://github.com/yxc023/gradle-practice&quot; class=&quot;bare&quot;&gt;https://github.com/yxc023/gradle-practice&lt;/a&gt;&lt;/p&gt;
@@ -80,34 +73,190 @@
 └── settings.gradle&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;div class=&quot;olist arabic&quot;&gt;
-&lt;ol class=&quot;arabic&quot;&gt;
-&lt;li&gt;
-&lt;p&gt;这是一个多模块的项目，通过根项目下的 &lt;code&gt;build.gradle&lt;/code&gt; 文件，做好全局配置，让每个子模块中的 &lt;code&gt;build.gradle&lt;/code&gt; 足够简单&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;子项目中的 &lt;code&gt;build.gradle&lt;/code&gt; 文件，一般只需要定义 Dependencies&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;抽离一些可服用的构建脚本，放到 &lt;code&gt;gradle&lt;/code&gt; 文件夹下&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;先看 &lt;code&gt;settings.gradle`&lt;/code&gt;, 再看 rootProject 的 &lt;code&gt;build.gradle&lt;/code&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;title&quot;&gt;settings.gradle&lt;/div&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;// config plugin repositories
+pluginManagement {
+    repositories {
+        // aliyun repository for gradle plugin
+        maven { url &apos;https://maven.aliyun.com/repository/gradle-plugin&apos; }
+        // default repository
+        gradlePluginPortal()
+    }
+}
+
+// set projects, root dir is root project. Each module is a sub project
+rootProject.name = &apos;gradle-practice&apos;
+
+// include all sub projects. The name is location of the new project in the project hierarchy, for example &apos;a:b:c&apos;, not the file path
+// Sub project&apos;s default path is the &apos;${rootDir}/${projectName}&apos;.
+include &apos;gp-app&apos;
+// use &apos;:&apos; as a separator of project.
+include &apos;gp-api&apos;
+include &apos;gpService&apos;
+include &apos;gp-db&apos;
+
+// Set a custom path for a project
+project(&apos;:gpService&apos;).projectDir = new File(settingsDir, &apos;gp-service&apos;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;&lt;code&gt;settings.gradle&lt;/code&gt; 中定义所有的项目&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;title&quot;&gt;build.gradle&lt;/div&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;/*
+为构建脚本引入依赖。
+在 「模块 gp-db」 中，我们使用了 jooq 生成代码的 plugin，所以，这里，会先把这个 plugin 的 library 引入进来
+ */
+buildscript {
+    repositories {
+        maven { url &apos;https://maven.aliyun.com/repository/public&apos; }
+        mavenCentral()
+    }
+    dependencies {
+        classpath &apos;nu.studer:gradle-jooq-plugin:4.2&apos;
+    }
+}
+
+/*
+在多模块的项目中，根目录下的 build.gradle 文件，尽量把通用的全局配置都配置到这里
+
+「project」是 gradle 里的核心概念。每个 module 都是一个 project，根目录下是 rootProject
+ */
+allprojects {
+    // 定义所有项目的 group 和 version
+    group = &apos;com.yangxiaochen.gradle.practice&apos;
+    version = &apos;1.0.0-SNAPSHOT&apos;
+
+    // 为所有项目引入插件
+    apply plugin: &apos;java&apos;
+    apply plugin: &apos;pmd&apos;
+
+    // 为所有项目
+    repositories {
+        maven { url &apos;https://maven.aliyun.com/repository/public&apos; }
+        mavenCentral()
+    }
+
+    // 定义一些变量
+    ext {
+        mysqlVersion = &apos;8.0.18&apos;
+        jooqVersion = &apos;3.13.1&apos;
+        jooqGenDataSourceDriver = &apos;com.mysql.jdbc.Driver&apos;
+        jooqGenDataSourceUrl = &apos;jdbc:mysql://127.0.0.1:3306/gp_database&apos;
+        jooqGenDataSourceUrlUser = &apos;gp_database_user&apos;
+        jooqGenDataSourceUrlPassword = &apos;test&apos;
+        jooqGenDataSourceInputSchema = &apos;gp_database&apos;
+    }
+
+    // 为所有的项目设置依赖
+    dependencies {
+        pmd &apos;com.alibaba.p3c:p3c-pmd:1.3.6&apos;
+    }
+
+    // Java compiler compile java source file with utf-8 (default gbk in the Windows OS with Simplified Chinese). Java source file must be &apos;UTF-8&apos;.
+    tasks.withType(JavaCompile) {
+        options.encoding = &quot;UTF-8&quot;
+    }
+    // Set java compile version
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    // pmd config
+    pmd {
+        consoleOutput = true
+        reportsDir = file(&quot;build/reports/pmd&quot;)
+        ruleSets = [
+                &apos;java-ali-comment&apos;,
+                &apos;java-ali-concurrent&apos;,
+                &apos;java-ali-constant&apos;,
+                &apos;java-ali-exception&apos;,
+                &apos;java-ali-flowcontrol&apos;,
+                &apos;java-ali-naming&apos;,
+                &apos;java-ali-oop&apos;,
+                &apos;java-ali-orm&apos;,
+                &apos;java-ali-other&apos;,
+                &apos;java-ali-set&apos;,
+        ]
+        ignoreFailures = true
+    }
+}
+
+// Config for every subprojects
+subprojects {
+    // Project gp-api is a library, it will be published as a sdk lib. So it should define exact dependencies in project&apos;s build.gradle file
+    // Define spring framework&apos;s core dependencies for most projects.
+    if (![&apos;gp-api&apos;].contains(project.name)) {
+        dependencies {
+
+
+            // &apos;implementation platform&apos; define Spring bom
+            implementation platform(&apos;org.springframework.boot:spring-boot-dependencies:2.1.11.RELEASE&apos;)
+            implementation platform(&apos;org.springframework.cloud:spring-cloud-dependencies:Greenwich.SR3&apos;)
+
+            // Spring framework core dependencies
+            implementation(&quot;javax.annotation:javax.annotation-api&quot;)
+            implementation(&quot;org.springframework:spring-context&quot;)
+            implementation(&quot;org.springframework:spring-context-support&quot;)
+            implementation(&quot;org.springframework:spring-tx&quot;)
+            implementation &apos;org.springframework.boot:spring-boot-starter-freemarker&apos;
+            implementation &apos;org.aspectj:aspectjweaver&apos;
+
+            // Common utils dependencies
+            compileOnly &apos;org.projectlombok:lombok:1.18.22&apos;
+            annotationProcessor &apos;org.projectlombok:lombok:1.18.22&apos;
+            implementation &apos;org.mapstruct:mapstruct:1.4.2.Final&apos;
+            annotationProcessor &apos;org.mapstruct:mapstruct-processor:1.4.2.Final&apos;
+
+            implementation &apos;org.slf4j:slf4j-api&apos;
+            implementation group: &apos;org.jodd&apos;, name: &apos;jodd-bean&apos;, version: &apos;5.0.3&apos;
+            implementation group: &apos;org.apache.commons&apos;, name: &apos;commons-lang3&apos;
+            implementation &apos;com.google.guava:guava:28.2-jre&apos;
+        }
+    }
+
+    // Dependency resolve
+    configurations {
+        all {
+            resolutionStrategy {
+                force &apos;com.google.guava:guava:28.2-jre&apos;
+            }
+            exclude group: &apos;org.slf4j&apos;, module: &apos;slf4j-log4j12&apos;
+            exclude group: &apos;org.mybatis.spring.boot&apos;
+        }
+    }
+
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;这是一个多模块的项目，通过根项目下的 &lt;code&gt;build.gradle&lt;/code&gt; 文件，做好全局配置，让每个子模块中的 &lt;code&gt;build.gradle&lt;/code&gt; 足够简单。只需要配置额外的依赖即可，如&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;title&quot;&gt;gb-service/build.gradle&lt;/div&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;// 只需额外定义该模块所需的依赖
+dependencies {
+    implementation &apos;org.greenrobot:eventbus:3.1.1&apos;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_常见问题&quot;&gt;常见问题&lt;/h2&gt;
+&lt;h2 id=&quot;_如何理解构建脚本&quot;&gt;如何理解构建脚本&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_构建脚本里面都有啥&quot;&gt;构建脚本里面都有啥&lt;/h3&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;每一个 project 下都有一个名为 &lt;code&gt;build.gradle&lt;/code&gt; 的构建脚本。&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;每一个 &lt;code&gt;build.gradle&lt;/code&gt; 构建脚本背后，都隐含了一个 &lt;code&gt;Project&lt;/code&gt; 对象。这个构建脚本中定义的各种属性或者方法，基本都是这个 project 中包含的。比如你可以在脚本中直接使用 &lt;code&gt;Project&lt;/code&gt; 接口中定义好的变量和方法。&lt;/p&gt;
+&lt;p&gt;每一个 &lt;code&gt;build.gradle&lt;/code&gt; 构建脚本背后，都隐含了一个 &lt;code&gt;Project&lt;/code&gt; 对象。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;这个构建脚本中定义的各种属性或者方法，基本都是这个 project 中包含的。比如你可以在脚本中直接使用 &lt;code&gt;Project&lt;/code&gt; 接口中定义好的变量和方法。&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;project 中包含了这些重要的东西：&lt;/p&gt;
@@ -208,39 +357,6 @@ version = &apos;1.0.0&apos;&lt;/pre&gt;
 &lt;p&gt;是否在上层 project 的 ext 和 convention 中&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_构建脚本的执行顺序&quot;&gt;构建脚本的执行顺序&lt;/h3&gt;
-&lt;div class=&quot;olist arabic&quot;&gt;
-&lt;ol class=&quot;arabic&quot;&gt;
-&lt;li&gt;
-&lt;p&gt;setting.gradle&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;rootProject build.gradle&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;subProject build.gradle&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_如何引用文件&quot;&gt;如何引用文件&lt;/h3&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_依赖查看与版本设置&quot;&gt;依赖查看与版本设置&lt;/h3&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_implementation_compileonly_等依赖标识是啥意思&quot;&gt;implementation, compileOnly 等依赖「标识」是啥意思&lt;/h3&gt;
-
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_tbd&quot;&gt;TBD.&lt;/h3&gt;
-
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
