@@ -6,8 +6,8 @@
     <atom:link href="https://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期日, 29 五月 2022 04:42:57 +0800</pubDate>
-    <lastBuildDate>星期日, 29 五月 2022 04:42:57 +0800</lastBuildDate>
+    <pubDate>星期一, 30 五月 2022 02:45:32 +0800</pubDate>
+    <lastBuildDate>星期一, 30 五月 2022 02:45:32 +0800</lastBuildDate>
 
     <item>
       <title>Gradle多模块项目中的配置实践</title>
@@ -19,8 +19,21 @@
 &lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
 &lt;ul class=&quot;sectlevel1&quot;&gt;
 &lt;li&gt;&lt;a href=&quot;#_前言&quot;&gt;前言&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_一个多模块项目的构建脚本例子&quot;&gt;一个多模块项目的构建脚本例子&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_如何理解构建脚本&quot;&gt;如何理解构建脚本&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_一个多模块项目的构建脚本例子&quot;&gt;一个多模块项目的构建脚本例子&lt;/a&gt;
+&lt;ul class=&quot;sectlevel2&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_一些公共脚本&quot;&gt;一些公共脚本&lt;/a&gt;
+&lt;ul class=&quot;sectlevel3&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_发布功能gradlepublish_gradle&quot;&gt;发布功能：gradle/publish.gradle&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_数据库访问代码生成功能gradlejooq_gradle&quot;&gt;数据库访问代码生成功能：gradle/jooq.gradle&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#_如何理解构建脚本&quot;&gt;如何理解构建脚本&lt;/a&gt;
+&lt;ul class=&quot;sectlevel2&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_project_中包含哪些东西&quot;&gt;project 中包含哪些东西&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
@@ -244,6 +257,44 @@ dependencies {
 }&lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 &lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_一些公共脚本&quot;&gt;一些公共脚本&lt;/h3&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;对项目中，很多模块都会用到的功能，抽出到一个文件中，使用 include 引入&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect3&quot;&gt;
+&lt;h4 id=&quot;_发布功能gradlepublish_gradle&quot;&gt;发布功能：gradle/publish.gradle&lt;/h4&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;title&quot;&gt;gp-api/build.gradle&lt;/div&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;// 每一个需要发布的模块，可以配置这个
+apply from: &quot;${rootProject.projectDir}/gradle/publish.gradle&quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;引入后可以使用 &lt;code&gt;./gradlew :gp-api:publishAllPublicationsToSnapshotRepository&lt;/code&gt; 和 &lt;code&gt;./gradlew :gp-api:publishAllPublicationsToReleaseRepository&lt;/code&gt; 来发布 gp-api 模块。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect3&quot;&gt;
+&lt;h4 id=&quot;_数据库访问代码生成功能gradlejooq_gradle&quot;&gt;数据库访问代码生成功能：gradle/jooq.gradle&lt;/h4&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;title&quot;&gt;gp-db/build.gradle&lt;/div&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;ext {
+    // 设置 jooq 要生成的表
+    jooqGenIncludeTables = &apos;table_a|table_b|table_c_*&apos;
+    // 设置 jooq 生成代码的包
+    jooqGenPackageName = &apos;com.yangxiaochen.gradle.practice.db&apos;
+}
+// 引入 jooq 通用配置，每个需要生成数据库访问代码的模块，都可以引用这个
+apply from: &quot;${rootProject.projectDir}/gradle/jooq.gradle&quot;&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;引入后可以使用 &lt;code&gt;./gradlew generateGp-dbJooqSchemaSource&lt;/code&gt; 来生成 gp-db 模块的数据库访问代码&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
@@ -259,8 +310,62 @@ dependencies {
 &lt;p&gt;这个构建脚本中定义的各种属性或者方法，基本都是这个 project 中包含的。比如你可以在脚本中直接使用 &lt;code&gt;Project&lt;/code&gt; 接口中定义好的变量和方法。&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;project 中包含了这些重要的东西：&lt;/p&gt;
+&lt;p&gt;当在构建脚本中显示的指定类型后，可以写成下面这种写法&lt;/p&gt;
 &lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;title&quot;&gt;build.gradle&lt;/div&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;allprojects { Project p -&amp;gt;
+    p.group = &apos;com.yangxiaochen.gradle.practice&apos;
+    p.version = &apos;1.0.0-SNAPSHOT&apos;
+
+    p.apply (plugin: &apos;java&apos;)
+    p.apply (plugin: &apos;java-library&apos;)
+    p.apply plugin: &apos;eclipse&apos;
+    p.apply plugin: &apos;idea&apos;
+    apply plugin: &apos;pmd&apos;
+
+    p.repositories( { RepositoryHandler rh -&amp;gt;
+        rh.maven( { MavenArtifactRepository m -&amp;gt;
+            m.url(&apos;https://maven.aliyun.com/repository/public&apos;)
+        })
+        mavenCentral()
+    })
+
+    // 通过 ext 定义一些变量
+    p.ext {
+        mysqlVersion = &apos;8.0.18&apos;
+        jooqVersion = &apos;3.13.1&apos;
+        jooqGenDataSourceDriver = &apos;com.mysql.jdbc.Driver&apos;
+        jooqGenDataSourceUrl = &apos;jdbc:mysql://127.0.0.1:3306/gp_database&apos;
+        jooqGenDataSourceUrlUser = &apos;gp_database_user&apos;
+        jooqGenDataSourceUrlPassword = &apos;test&apos;
+        jooqGenDataSourceInputSchema = &apos;gp_database&apos;
+    }
+
+    dependencies {
+        pmd &apos;com.alibaba.p3c:p3c-pmd:1.3.6&apos;
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = &quot;UTF-8&quot;
+    }
+    p.convention.sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+
+    p.pmd( { PmdExtension pe -&amp;gt;
+        pe.consoleOutput = true
+        ...
+    })
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Gradle 目前也支持使用 kotlin 作为构建语言，构建脚本里的语句会更加显式，但我并没有怎么用过。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_project_中包含哪些东西&quot;&gt;project 中包含哪些东西&lt;/h3&gt;
 &lt;div class=&quot;olist arabic&quot;&gt;
 &lt;ol class=&quot;arabic&quot;&gt;
 &lt;li&gt;
@@ -357,6 +462,7 @@ version = &apos;1.0.0&apos;&lt;/pre&gt;
 &lt;p&gt;是否在上层 project 的 ext 和 convention 中&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
