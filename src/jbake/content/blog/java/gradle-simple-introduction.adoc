@@ -12,13 +12,9 @@
 
 本文没有 gradle 与 maven 对比，也没有深入 gradle 实现。只有 gradle 从 0 开始使用的说明。
 
-* 简介
-* 安装
-* 新建一个 gradle 项目
-* 引入一个 gradle 项目
-* 常见问题
-* 交流
-<!-- more -->
+相关文章：
+http://blog.yangxiaochen.com/blog/2022/0504-gradle-practice.html[Gradle多模块项目中的配置实践]
+http://blog.yangxiaochen.com/blog/2022/0531-understand-gradle-build-script.html[如何理解 Gradle 构建脚本]
 
 ## 简介
 
@@ -264,7 +260,3 @@ configurations {
 ## 参考资料
 
 官方文档相当的详细，且附有很多example，配合 gradle 安装包里的 example 源文件阅读
-
-## 交流
-
-欢迎加入群 661035226，gradle，spring，activiti 交流
