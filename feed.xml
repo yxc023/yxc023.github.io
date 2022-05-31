@@ -6,9 +6,194 @@
     <atom:link href="https://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期二, 31 五月 2022 16:06:17 +0800</pubDate>
-    <lastBuildDate>星期二, 31 五月 2022 16:06:17 +0800</lastBuildDate>
+    <pubDate>星期二, 31 五月 2022 16:11:20 +0800</pubDate>
+    <lastBuildDate>星期二, 31 五月 2022 16:11:20 +0800</lastBuildDate>
 
+    <item>
+      <title>如何理解 Gradle 构建脚本</title>
+      <link>https://blog.yangxiaochen.com/blog/2022/0531-understand-gradle-build-script.html</link>
+      <pubDate>星期二, 31 五月 2022 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/2022/0531-understand-gradle-build-script.html</guid>
+      	<description>
+	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
+&lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
+&lt;ul class=&quot;sectlevel2&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_project_中包含哪些东西&quot;&gt;project 中包含哪些东西&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/div&gt;
+&lt;div id=&quot;preamble&quot;&gt;
+&lt;div class=&quot;sectionbody&quot;&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;这些文件来自项目： &lt;a href=&quot;https://github.com/yxc023/gradle-practice&quot; class=&quot;bare&quot;&gt;https://github.com/yxc023/gradle-practice&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;每一个 project 下都有一个名为 &lt;code&gt;build.gradle&lt;/code&gt; 的构建脚本。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;每一个 &lt;code&gt;build.gradle&lt;/code&gt; 构建脚本背后，都隐含了一个 &lt;code&gt;Project&lt;/code&gt; 对象。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;这个构建脚本中定义的各种属性或者方法，基本都是这个 project 中包含的。比如你可以在脚本中直接使用 &lt;code&gt;Project&lt;/code&gt; 接口中定义好的变量和方法。&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;当在构建脚本中显示的指定类型后，可以写成下面这种写法&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;title&quot;&gt;build.gradle&lt;/div&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;allprojects { Project p -&amp;gt;
+    p.group = &apos;com.yangxiaochen.gradle.practice&apos;
+    p.version = &apos;1.0.0-SNAPSHOT&apos;
+
+    p.apply (plugin: &apos;java&apos;)
+    p.apply (plugin: &apos;java-library&apos;)
+    p.apply plugin: &apos;eclipse&apos;
+    p.apply plugin: &apos;idea&apos;
+    apply plugin: &apos;pmd&apos;
+
+    p.repositories( { RepositoryHandler rh -&amp;gt;
+        rh.maven( { MavenArtifactRepository m -&amp;gt;
+            m.url(&apos;https://maven.aliyun.com/repository/public&apos;)
+        })
+        mavenCentral()
+    })
+
+    // 通过 ext 定义一些变量
+    p.ext {
+        mysqlVersion = &apos;8.0.18&apos;
+        jooqVersion = &apos;3.13.1&apos;
+        jooqGenDataSourceDriver = &apos;com.mysql.jdbc.Driver&apos;
+        jooqGenDataSourceUrl = &apos;jdbc:mysql://127.0.0.1:3306/gp_database&apos;
+        jooqGenDataSourceUrlUser = &apos;gp_database_user&apos;
+        jooqGenDataSourceUrlPassword = &apos;test&apos;
+        jooqGenDataSourceInputSchema = &apos;gp_database&apos;
+    }
+
+    dependencies {
+        pmd &apos;com.alibaba.p3c:p3c-pmd:1.3.6&apos;
+    }
+
+    tasks.withType(JavaCompile) {
+        options.encoding = &quot;UTF-8&quot;
+    }
+    p.convention.sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+
+    p.pmd( { PmdExtension pe -&amp;gt;
+        pe.consoleOutput = true
+        ...
+    })
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Gradle 目前也支持使用 kotlin 作为构建语言，构建脚本里的语句会更加显式，但我并没有怎么用过。&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;sect2&quot;&gt;
+&lt;h3 id=&quot;_project_中包含哪些东西&quot;&gt;project 中包含哪些东西&lt;/h3&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;自身的属性和方法&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;tasks - 当前 project 中包含的任务实例。引入一些 plugin 时，也会向 project 中添加 task&lt;/p&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;// 创建一个名字为 `jooqTask`，类型为 `JooqTask` 的 task
+project.tasks.create(&quot;jooqTask&quot;, JooqTask.class)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;extra property - 通过 ext block 声明的额外变量&lt;/p&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;ext {
+    mysqlVersion = &apos;8.0.18&apos;
+    jooqVersion = &apos;3.13.1&apos;
+    jooqGenDataSourceDriver = &apos;com.mysql.jdbc.Driver&apos;
+    jooqGenDataSourceUrl = &apos;jdbc:mysql://127.0.0.1:3306/gp_database&apos;
+    jooqGenDataSourceUrlUser = &apos;gp_database_user&apos;
+    jooqGenDataSourceUrlPassword = &apos;test&apos;
+    jooqGenDataSourceInputSchema = &apos;gp_database&apos;
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;extensions - 引入一些 plugin 时， 会向 project 中添加一些 extension 对象，并命名。&lt;/p&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;// 创建一个名字为 `$JOOQ_EXTENSION_NAME`，类型为 `JooqExtension` 的 extension。后面两个参数是 `JooqExtension` 的构造参数
+project.extensions.create(&apos;jooq&apos;, JooqExtension.class, whenConfigurationAdded, &apos;jooq&apos;)&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;加入 extension 后，就可以在构建脚本中定义&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code&gt;jooq {
+    version = jooqVersion
+    edition = &apos;OSS&apos;
+    generateSchemaSourceOnCompilation = false
+}&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;convention - 引入一些 plugin 时，会加入一些 convention object，翻译过来叫‘约定’，‘预定大于配置’的‘约定’。convention object 通常是 POJO，为 project 提供一些拓展属性。&lt;/p&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;// 这两个变量，在引入 java plugin 之后，就能在构建脚本里够直接定义下面的变量。
+sourceCompatibility = 1.8
+targetCompatibility = 1.8&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;总之，这些 project 中包含的重要信息的作用，它们定义了 &lt;code&gt;build.gradle&lt;/code&gt; 中可以写什么 property 或者 block&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;当 &lt;code&gt;build.gradle&lt;/code&gt; 中使用了一个 property 或者 block，他的查找顺序是：&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;olist arabic&quot;&gt;
+&lt;ol class=&quot;arabic&quot;&gt;
+&lt;li&gt;
+&lt;p&gt;是否是 project 中的属性和方法&lt;/p&gt;
+&lt;div class=&quot;listingblock&quot;&gt;
+&lt;div class=&quot;content&quot;&gt;
+&lt;pre&gt;// version 这个变量，即是 project.version
+version = &apos;1.0.0&apos;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;是否是 &lt;code&gt;ext&lt;/code&gt; 定义的属性&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;是否是 extensions 中的 extension 的名字&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;是否是 convention 中定义的 pojo 中的变量&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;是否是 task 的名字&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;是否在上层 project 的 ext 和 convention 中&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+	</description>
+    </item>
     <item>
       <title>Gradle多模块项目中的配置实践</title>
       <link>https://blog.yangxiaochen.com/blog/2022/0504-gradle-practice.html</link>
@@ -27,11 +212,6 @@
 &lt;li&gt;&lt;a href=&quot;#_数据库访问代码生成功能gradlejooq_gradle&quot;&gt;数据库访问代码生成功能：gradle/jooq.gradle&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_如何理解构建脚本&quot;&gt;如何理解构建脚本&lt;/a&gt;
-&lt;ul class=&quot;sectlevel2&quot;&gt;
-&lt;li&gt;&lt;a href=&quot;#_project_中包含哪些东西&quot;&gt;project 中包含哪些东西&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
@@ -250,175 +430,6 @@ apply from: &quot;${rootProject.projectDir}/gradle/jooq.gradle&quot;&lt;/code&gt
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;引入后可以使用 &lt;code&gt;./gradlew generateGp-dbJooqSchemaSource&lt;/code&gt; 来生成 gp-db 模块的数据库访问代码&lt;/p&gt;
 &lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_如何理解构建脚本&quot;&gt;如何理解构建脚本&lt;/h2&gt;
-&lt;div class=&quot;sectionbody&quot;&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;每一个 project 下都有一个名为 &lt;code&gt;build.gradle&lt;/code&gt; 的构建脚本。&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;每一个 &lt;code&gt;build.gradle&lt;/code&gt; 构建脚本背后，都隐含了一个 &lt;code&gt;Project&lt;/code&gt; 对象。&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;这个构建脚本中定义的各种属性或者方法，基本都是这个 project 中包含的。比如你可以在脚本中直接使用 &lt;code&gt;Project&lt;/code&gt; 接口中定义好的变量和方法。&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;当在构建脚本中显示的指定类型后，可以写成下面这种写法&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;title&quot;&gt;build.gradle&lt;/div&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;allprojects { Project p -&amp;gt;
-    p.group = &apos;com.yangxiaochen.gradle.practice&apos;
-    p.version = &apos;1.0.0-SNAPSHOT&apos;
-
-    p.apply (plugin: &apos;java&apos;)
-    p.apply (plugin: &apos;java-library&apos;)
-    p.apply plugin: &apos;eclipse&apos;
-    p.apply plugin: &apos;idea&apos;
-    apply plugin: &apos;pmd&apos;
-
-    p.repositories( { RepositoryHandler rh -&amp;gt;
-        rh.maven( { MavenArtifactRepository m -&amp;gt;
-            m.url(&apos;https://maven.aliyun.com/repository/public&apos;)
-        })
-        mavenCentral()
-    })
-
-    // 通过 ext 定义一些变量
-    p.ext {
-        mysqlVersion = &apos;8.0.18&apos;
-        jooqVersion = &apos;3.13.1&apos;
-        jooqGenDataSourceDriver = &apos;com.mysql.jdbc.Driver&apos;
-        jooqGenDataSourceUrl = &apos;jdbc:mysql://127.0.0.1:3306/gp_database&apos;
-        jooqGenDataSourceUrlUser = &apos;gp_database_user&apos;
-        jooqGenDataSourceUrlPassword = &apos;test&apos;
-        jooqGenDataSourceInputSchema = &apos;gp_database&apos;
-    }
-
-    dependencies {
-        pmd &apos;com.alibaba.p3c:p3c-pmd:1.3.6&apos;
-    }
-
-    tasks.withType(JavaCompile) {
-        options.encoding = &quot;UTF-8&quot;
-    }
-    p.convention.sourceCompatibility = 1.8
-    targetCompatibility = 1.8
-
-
-    p.pmd( { PmdExtension pe -&amp;gt;
-        pe.consoleOutput = true
-        ...
-    })
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;Gradle 目前也支持使用 kotlin 作为构建语言，构建脚本里的语句会更加显式，但我并没有怎么用过。&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect2&quot;&gt;
-&lt;h3 id=&quot;_project_中包含哪些东西&quot;&gt;project 中包含哪些东西&lt;/h3&gt;
-&lt;div class=&quot;olist arabic&quot;&gt;
-&lt;ol class=&quot;arabic&quot;&gt;
-&lt;li&gt;
-&lt;p&gt;自身的属性和方法&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;tasks - 当前 project 中包含的任务实例。引入一些 plugin 时，也会向 project 中添加 task&lt;/p&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;// 创建一个名字为 `jooqTask`，类型为 `JooqTask` 的 task
-project.tasks.create(&quot;jooqTask&quot;, JooqTask.class)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;extra property - 通过 ext block 声明的额外变量&lt;/p&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;ext {
-    mysqlVersion = &apos;8.0.18&apos;
-    jooqVersion = &apos;3.13.1&apos;
-    jooqGenDataSourceDriver = &apos;com.mysql.jdbc.Driver&apos;
-    jooqGenDataSourceUrl = &apos;jdbc:mysql://127.0.0.1:3306/gp_database&apos;
-    jooqGenDataSourceUrlUser = &apos;gp_database_user&apos;
-    jooqGenDataSourceUrlPassword = &apos;test&apos;
-    jooqGenDataSourceInputSchema = &apos;gp_database&apos;
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;extensions - 引入一些 plugin 时， 会向 project 中添加一些 extension 对象，并命名。&lt;/p&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;// 创建一个名字为 `$JOOQ_EXTENSION_NAME`，类型为 `JooqExtension` 的 extension。后面两个参数是 `JooqExtension` 的构造参数
-project.extensions.create(&apos;jooq&apos;, JooqExtension.class, whenConfigurationAdded, &apos;jooq&apos;)&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;加入 extension 后，就可以在构建脚本中定义&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code&gt;jooq {
-    version = jooqVersion
-    edition = &apos;OSS&apos;
-    generateSchemaSourceOnCompilation = false
-}&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;convention - 引入一些 plugin 时，会加入一些 convention object，翻译过来叫‘约定’，‘预定大于配置’的‘约定’。convention object 通常是 POJO，为 project 提供一些拓展属性。&lt;/p&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre class=&quot;prettyprint highlight&quot;&gt;&lt;code class=&quot;language-groovy&quot; data-lang=&quot;groovy&quot;&gt;// 这两个变量，在引入 java plugin 之后，就能在构建脚本里够直接定义下面的变量。
-sourceCompatibility = 1.8
-targetCompatibility = 1.8&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;总之，这些 project 中包含的重要信息的作用，它们定义了 &lt;code&gt;build.gradle&lt;/code&gt; 中可以写什么 property 或者 block&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;当 &lt;code&gt;build.gradle&lt;/code&gt; 中使用了一个 property 或者 block，他的查找顺序是：&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;olist arabic&quot;&gt;
-&lt;ol class=&quot;arabic&quot;&gt;
-&lt;li&gt;
-&lt;p&gt;是否是 project 中的属性和方法&lt;/p&gt;
-&lt;div class=&quot;listingblock&quot;&gt;
-&lt;div class=&quot;content&quot;&gt;
-&lt;pre&gt;// version 这个变量，即是 project.version
-version = &apos;1.0.0&apos;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;是否是 &lt;code&gt;ext&lt;/code&gt; 定义的属性&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;是否是 extensions 中的 extension 的名字&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;是否是 convention 中定义的 pojo 中的变量&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;是否是 task 的名字&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;是否在上层 project 的 ext 和 convention 中&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -7171,35 +7182,6 @@ ForkJoinTask&amp;lt;Integer&amp;gt; f3 = ForkJoinTask.adapt(() -&amp;gt; test.m3
 	</description>
     </item>
     <item>
-      <title>spring servlet.xml 与 application context.xml 不同</title>
-      <link>https://blog.yangxiaochen.com/blog/java/spring-servlet-context-diffrence.html</link>
-      <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
-      <guid isPermaLink="false">blog/java/spring-servlet-context-diffrence.html</guid>
-      	<description>
-	&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;参考 &lt;a href=&quot;http://stackoverflow.com/questions/3652090/difference-between-applicationcontext-xml-and-spring-servlet-xml-in-spring&quot; class=&quot;bare&quot;&gt;http://stackoverflow.com/questions/3652090/difference-between-applicationcontext-xml-and-spring-servlet-xml-in-spring&lt;/a&gt;&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;Spring lets you define multiple contexts in a parent-child hierarchy.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;The applicationContext.xml defines the beans for the &quot;root webapp context&quot;, i.e. the context associated with the webapp.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;The spring-servlet.xml (or whatever else you call it) defines the beans for one servlet&amp;#8217;s app context. There can be many of these in a webapp, one per Spring servlet (e.g. spring1-servlet.xml for servlet spring1, spring2-servlet.xml for servlet spring2).&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;Beans in spring-servlet.xml can reference beans in applicationContext.xml, but not vice versa.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;All Spring MVC controllers must go in the spring-servlet.xml context.&lt;/p&gt;
-&lt;/div&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;In most simple cases, the applicationContext.xml context is unnecessary. It is generally used to contain beans that are shared between all servlets in a webapp. If you only have one servlet, then there&amp;#8217;s not really much point, unless you have a specific use for it.&lt;/p&gt;
-&lt;/div&gt;
-	</description>
-    </item>
-    <item>
       <title>homebrew安装旧版本软件</title>
       <link>https://blog.yangxiaochen.com/blog/mac/homebrew-install-old-version-soft.html</link>
       <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
@@ -7226,6 +7208,35 @@ leafnode node node010 node04 node06 node08 nodebrew nodenv&lt;/pre&gt;
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;同理php也是这样分php56 php55 php54 ….&lt;/p&gt;
+&lt;/div&gt;
+	</description>
+    </item>
+    <item>
+      <title>spring servlet.xml 与 application context.xml 不同</title>
+      <link>https://blog.yangxiaochen.com/blog/java/spring-servlet-context-diffrence.html</link>
+      <pubDate>星期二, 9 二月 2016 00:00:00 +0800</pubDate>
+      <guid isPermaLink="false">blog/java/spring-servlet-context-diffrence.html</guid>
+      	<description>
+	&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;参考 &lt;a href=&quot;http://stackoverflow.com/questions/3652090/difference-between-applicationcontext-xml-and-spring-servlet-xml-in-spring&quot; class=&quot;bare&quot;&gt;http://stackoverflow.com/questions/3652090/difference-between-applicationcontext-xml-and-spring-servlet-xml-in-spring&lt;/a&gt;&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Spring lets you define multiple contexts in a parent-child hierarchy.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The applicationContext.xml defines the beans for the &quot;root webapp context&quot;, i.e. the context associated with the webapp.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;The spring-servlet.xml (or whatever else you call it) defines the beans for one servlet&amp;#8217;s app context. There can be many of these in a webapp, one per Spring servlet (e.g. spring1-servlet.xml for servlet spring1, spring2-servlet.xml for servlet spring2).&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;Beans in spring-servlet.xml can reference beans in applicationContext.xml, but not vice versa.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;All Spring MVC controllers must go in the spring-servlet.xml context.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;In most simple cases, the applicationContext.xml context is unnecessary. It is generally used to contain beans that are shared between all servlets in a webapp. If you only have one servlet, then there&amp;#8217;s not really much point, unless you have a specific use for it.&lt;/p&gt;
 &lt;/div&gt;
 	</description>
     </item>
