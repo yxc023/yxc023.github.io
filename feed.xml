@@ -6,8 +6,8 @@
     <atom:link href="https://blog.yangxiaochen.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>JBake Bootstrap Template</description>
     <language>en-gb</language>
-    <pubDate>星期二, 31 五月 2022 16:11:20 +0800</pubDate>
-    <lastBuildDate>星期二, 31 五月 2022 16:11:20 +0800</lastBuildDate>
+    <pubDate>星期二, 31 五月 2022 16:23:39 +0800</pubDate>
+    <lastBuildDate>星期二, 31 五月 2022 16:23:39 +0800</lastBuildDate>
 
     <item>
       <title>如何理解 Gradle 构建脚本</title>
@@ -17,11 +17,16 @@
       	<description>
 	&lt;div id=&quot;toc&quot; class=&quot;toc&quot;&gt;
 &lt;div id=&quot;toctitle&quot;&gt;Table of Contents&lt;/div&gt;
+&lt;ul class=&quot;sectlevel1&quot;&gt;
+&lt;li&gt;&lt;a href=&quot;#_使用显式语法理解构建脚本&quot;&gt;使用显式语法理解构建脚本&lt;/a&gt;
 &lt;ul class=&quot;sectlevel2&quot;&gt;
 &lt;li&gt;&lt;a href=&quot;#_project_中包含哪些东西&quot;&gt;project 中包含哪些东西&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
 &lt;/div&gt;
-&lt;div id=&quot;preamble&quot;&gt;
+&lt;div class=&quot;sect1&quot;&gt;
+&lt;h2 id=&quot;_使用显式语法理解构建脚本&quot;&gt;使用显式语法理解构建脚本&lt;/h2&gt;
 &lt;div class=&quot;sectionbody&quot;&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;这些文件来自项目： &lt;a href=&quot;https://github.com/yxc023/gradle-practice&quot; class=&quot;bare&quot;&gt;https://github.com/yxc023/gradle-practice&lt;/a&gt;&lt;/p&gt;
@@ -89,8 +94,6 @@
 &lt;/div&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;Gradle 目前也支持使用 kotlin 作为构建语言，构建脚本里的语句会更加显式，但我并没有怎么用过。&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect2&quot;&gt;
 &lt;h3 id=&quot;_project_中包含哪些东西&quot;&gt;project 中包含哪些东西&lt;/h3&gt;
@@ -190,6 +193,8 @@ version = &apos;1.0.0&apos;&lt;/pre&gt;
 &lt;p&gt;是否在上层 project 的 ext 和 convention 中&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
+&lt;/div&gt;
+&lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 	</description>
@@ -4975,7 +4980,6 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;#_参考资料&quot;&gt;参考资料&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#_交流&quot;&gt;交流&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;/div&gt;
 &lt;div class=&quot;sect1&quot;&gt;
@@ -4984,28 +4988,10 @@ R{id=4, authorId=2, description=&apos;Deutsch&apos;}&lt;/pre&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;本文没有 gradle 与 maven 对比，也没有深入 gradle 实现。只有 gradle 从 0 开始使用的说明。&lt;/p&gt;
 &lt;/div&gt;
-&lt;div class=&quot;ulist&quot;&gt;
-&lt;ul&gt;
-&lt;li&gt;
-&lt;p&gt;简介&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;安装&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;新建一个 gradle 项目&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;引入一个 gradle 项目&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;常见问题&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;
-&lt;p&gt;交流
-&amp;lt;!-- more -&amp;#8594;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
+&lt;div class=&quot;paragraph&quot;&gt;
+&lt;p&gt;相关文章：
+&lt;a href=&quot;http://blog.yangxiaochen.com/blog/2022/0504-gradle-practice.html&quot;&gt;Gradle多模块项目中的配置实践&lt;/a&gt;
+&lt;a href=&quot;http://blog.yangxiaochen.com/blog/2022/0531-understand-gradle-build-script.html&quot;&gt;如何理解 Gradle 构建脚本&lt;/a&gt;&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
@@ -5383,14 +5369,6 @@ idea {
 &lt;div class=&quot;sectionbody&quot;&gt;
 &lt;div class=&quot;paragraph&quot;&gt;
 &lt;p&gt;官方文档相当的详细，且附有很多example，配合 gradle 安装包里的 example 源文件阅读&lt;/p&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;/div&gt;
-&lt;div class=&quot;sect1&quot;&gt;
-&lt;h2 id=&quot;_交流&quot;&gt;交流&lt;/h2&gt;
-&lt;div class=&quot;sectionbody&quot;&gt;
-&lt;div class=&quot;paragraph&quot;&gt;
-&lt;p&gt;欢迎加入群 661035226，gradle，spring，activiti 交流&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
