@@ -12,9 +12,15 @@
 
 本文没有 gradle 与 maven 对比，也没有深入 gradle 实现。只有 gradle 从 0 开始使用的说明。
 
-相关文章：
-http://blog.yangxiaochen.com/blog/2022/0504-gradle-practice.html[Gradle多模块项目中的配置实践]
-http://blog.yangxiaochen.com/blog/2022/0531-understand-gradle-build-script.html[如何理解 Gradle 构建脚本]
+近期的相关文章：
+
+一个多模块的 java 项目的配置的实践：
+
+- http://blog.yangxiaochen.com/blog/2022/0504-gradle-practice.html[Gradle多模块项目中的配置实践]
+
+如何理解一个 gradle 构建脚本
+
+- http://blog.yangxiaochen.com/blog/2022/0531-understand-gradle-build-script.html[如何理解 Gradle 构建脚本]
 
 ## 简介
 
