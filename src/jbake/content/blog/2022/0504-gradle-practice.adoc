@@ -95,7 +95,6 @@ buildscript {
 
 /*
 在多模块的项目中，根目录下的 build.gradle 文件，尽量把通用的全局配置都配置到这里
-
 「project」是 gradle 里的核心概念。每个 module 都是一个 project，根目录下是 rootProject
  */
 allprojects {
@@ -112,23 +111,16 @@ allprojects {
         maven { url 'https://maven.aliyun.com/repository/public' }
         mavenCentral()
     }
-
     // 定义一些变量
     ext {
         mysqlVersion = '8.0.18'
         jooqVersion = '3.13.1'
-        jooqGenDataSourceDriver = 'com.mysql.jdbc.Driver'
-        jooqGenDataSourceUrl = 'jdbc:mysql://127.0.0.1:3306/gp_database'
-        jooqGenDataSourceUrlUser = 'gp_database_user'
-        jooqGenDataSourceUrlPassword = 'test'
-        jooqGenDataSourceInputSchema = 'gp_database'
+        ...
     }
-
     // 为所有的项目设置依赖
     dependencies {
         pmd 'com.alibaba.p3c:p3c-pmd:1.3.6'
     }
-
     // Java compiler compile java source file with utf-8 (default gbk in the Windows OS with Simplified Chinese). Java source file must be 'UTF-8'.
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
@@ -136,60 +128,27 @@ allprojects {
     // Set java compile version
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
-
-    // pmd config
-    pmd {
-        consoleOutput = true
-        reportsDir = file("build/reports/pmd")
-        ruleSets = [
-                'java-ali-comment',
-                'java-ali-concurrent',
-                'java-ali-constant',
-                'java-ali-exception',
-                'java-ali-flowcontrol',
-                'java-ali-naming',
-                'java-ali-oop',
-                'java-ali-orm',
-                'java-ali-other',
-                'java-ali-set',
-        ]
-        ignoreFailures = true
-    }
 }
-
 // Config for every subprojects
 subprojects {
     // Project gp-api is a library, it will be published as a sdk lib. So it should define exact dependencies in project's build.gradle file
     // Define spring framework's core dependencies for most projects.
     if (!['gp-api'].contains(project.name)) {
         dependencies {
-
-
             // 'implementation platform' define Spring bom
             implementation platform('org.springframework.boot:spring-boot-dependencies:2.1.11.RELEASE')
             implementation platform('org.springframework.cloud:spring-cloud-dependencies:Greenwich.SR3')
 
             // Spring framework core dependencies
-            implementation("javax.annotation:javax.annotation-api")
             implementation("org.springframework:spring-context")
             implementation("org.springframework:spring-context-support")
-            implementation("org.springframework:spring-tx")
-            implementation 'org.springframework.boot:spring-boot-starter-freemarker'
-            implementation 'org.aspectj:aspectjweaver'
-
+            ...
             // Common utils dependencies
             compileOnly 'org.projectlombok:lombok:1.18.22'
             annotationProcessor 'org.projectlombok:lombok:1.18.22'
-            implementation 'org.mapstruct:mapstruct:1.4.2.Final'
-            annotationProcessor 'org.mapstruct:mapstruct-processor:1.4.2.Final'
-
-            implementation 'org.slf4j:slf4j-api'
-            implementation group: 'org.jodd', name: 'jodd-bean', version: '5.0.3'
-            implementation group: 'org.apache.commons', name: 'commons-lang3'
-            implementation 'com.google.guava:guava:28.2-jre'
+            ...
         }
     }
-
     // Dependency resolve
     configurations {
         all {
@@ -197,10 +156,8 @@ subprojects {
                 force 'com.google.guava:guava:28.2-jre'
             }
             exclude group: 'org.slf4j', module: 'slf4j-log4j12'
-            exclude group: 'org.mybatis.spring.boot'
         }
     }
-
 }
 ----
 这是一个多模块的项目，通过根项目下的 `build.gradle` 文件，做好全局配置，让每个子模块中的 `build.gradle` 足够简单。只需要配置额外的依赖即可，如
