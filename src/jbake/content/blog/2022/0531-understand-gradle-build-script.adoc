@@ -10,6 +10,8 @@
 :jbake-status: published
 :description: 如何理解 gradle 构建脚本，build.gradle 文件中有什么内容
 
+== 使用显式语法理解构建脚本
+
 这些文件来自项目： https://github.com/yxc023/gradle-practice
 
 每一个 project 下都有一个名为 `build.gradle` 的构建脚本。
