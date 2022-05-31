@@ -74,9 +74,9 @@ gitPublish {
 
 bake {
     output file("$buildDir/gitPublish")
-    dependsOn gitPublishReset
+    // dependsOn gitPublishReset
 }
-gitPublishCommit.dependsOn bake
+// gitPublishCommit.dependsOn bake
 
 
 task pushOSS {

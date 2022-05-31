@@ -1,0 +1,52 @@
+= 使用阿里云 OSS 进行静态网站部署
+杨晓辰
+2022-06-01
+:toc: top
+:toclevels: 5
+:icons: font
+// :sectnums:
+:jbake-type: post
+:jbake-tags: 静态网站部署,OSS
+:jbake-status: published
+:description: 一个命令将静态网站部署到阿里云OSS
+
+
+创建 OSS 就不说了，注意创建完成后设置好权限，开启静态网站托管功能。
+
+通过一个 gradle task，将静态文件推送到阿里云 OSS
+
+.build.gradle
+[source,groovy]
+----
+
+task pushOSS {
+    doLast {
+        String endpoint = project.property("aliyun.oss.endpoint")
+        String accessKeyId = project.property("aliyun.oss.accessKeyId")
+        String accessKeySecret = project.property("aliyun.oss.accessKeySecret")
+        String bucketName = project.property("aliyun.oss.bucketName")
+
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret)
+
+        def listing = ossClient.listObjects(bucketName)
+        DeleteObjectsResult deleteObjectsResult = ossClient.deleteObjects(
+                new DeleteObjectsRequest(bucketName).withKeys(listing.objectSummaries.collect { it.key }));
+        println "Delete oss: " + deleteObjectsResult.deletedObjects.size()
+
+        fileTree("$buildDir/gitPublish").each { f ->
+            def targetName = f.path.substring("$buildDir/gitPublish".size() + 1)
+            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, targetName, f);
+            def result = ossClient.putObject(putObjectRequest)
+            println "Sync oss: " + targetName
+        }
+
+        ossClient.shutdown()
+    }
+}
+----
+
+完整文件代码在：
+
+https://github.com/yxc023/yxc023.github.io/blob/source/build.gradle
+
+使用 `./gradlew bake pushOSS` 推送到 OSS
