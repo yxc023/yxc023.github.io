@@ -1,17 +1,39 @@
+buildscript {
+    repositories {
+        repositories {
+            maven { url 'https://maven.aliyun.com/repository/public' }
+            mavenCentral()
+        }
+    }
+    dependencies {
+        classpath 'com.aliyun.oss:aliyun-sdk-oss:3.8.0'
+    }
+}
+
+import com.aliyun.oss.ClientException;
+import com.aliyun.oss.OSS;
+import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.OSSException
+import com.aliyun.oss.model.DeleteObjectsRequest
+import com.aliyun.oss.model.DeleteObjectsResult;
+import com.aliyun.oss.model.PutObjectRequest;
+import java.io.File;
+
 plugins {
     id 'org.jbake.site' version '5.0.0'
     id 'org.ajoberstar.git-publish' version '3.0.1'
 }
 
+
 repositories {
-      maven {
+    maven {
         url "http://maven.aliyun.com/nexus/content/groups/public"
-      }
     }
+}
 
 jbake {
-    version  = '2.6.4'
-    srcDirName  = 'src/jbake'
+    version = '2.6.4'
+    srcDirName = 'src/jbake'
     destDirName = "$buildDir/jabke"
 }
 bakePreview {
@@ -55,6 +77,32 @@ bake {
     dependsOn gitPublishReset
 }
 gitPublishCommit.dependsOn bake
+
+
+task pushOSS {
+    doLast {
+        String endpoint = project.property("aliyun.oss.endpoint")
+        String accessKeyId = project.property("aliyun.oss.accessKeyId")
+        String accessKeySecret = project.property("aliyun.oss.accessKeySecret")
+        String bucketName = project.property("aliyun.oss.bucketName")
+
+        OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret)
+
+        def listing = ossClient.listObjects(bucketName)
+        DeleteObjectsResult deleteObjectsResult = ossClient.deleteObjects(
+                new DeleteObjectsRequest(bucketName).withKeys(listing.objectSummaries.collect { it.key }));
+        println "Delete oss: " + deleteObjectsResult.deletedObjects.size()
+
+        fileTree("$buildDir/gitPublish").each { f ->
+            def targetName = f.path.substring("$buildDir/gitPublish".size() + 1)
+            PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, targetName, f);
+            def result = ossClient.putObject(putObjectRequest)
+            println "Sync oss: " + targetName
+        }
+
+        ossClient.shutdown()
+    }
+}
 
 // ./gradlew gitPublishPush --no-daemon
 // ./gradlew bake -x gitPublishReset

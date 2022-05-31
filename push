@@ -1,3 +1,4 @@
 #!/usr/bin/env sh
 
-./gradlew gitPublishPush
+#./gradlew gitPublishPush pushOSS
+./gradlew pushOSS
