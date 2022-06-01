@@ -18,12 +18,14 @@
     <!--  <script data-ad-client="ca-pub-5626174695342369" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  -->
 
     <!-- Le styles -->
-    <link href="//cdn.staticfile.org/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css" rel="stylesheet">
     <#--  <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/asciidoctor.css" rel="stylesheet">  -->
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/adoc-golo.css" rel="stylesheet">
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/base.css" rel="stylesheet">
-    <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/prettify.css" rel="stylesheet">
-    <link rel="stylesheet" href="//cdn.staticfile.org/gitalk/1.0.0/gitalk.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
+        <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/prettify/desert.css" rel="stylesheet">
+
 
 
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->

@@ -74,7 +74,7 @@ allprojects { Project p ->
 Gradle 目前也支持使用 kotlin 作为构建语言，构建脚本里的语句会更加显式，但我并没有怎么用过。
 
 
-=== project 中包含哪些东西
+== project 中包含哪些东西
 
 1. 自身的属性和方法
 2. tasks - 当前 project 中包含的任务实例。引入一些 plugin 时，也会向 project 中添加 task

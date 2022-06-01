@@ -49,7 +49,7 @@
 		(adsbygoogle = window.adsbygoogle || []).push({});
 	</script>  -->
 
-  	<script src="//cdn.staticfile.org/gitalk/1.0.0/gitalk.min.js"></script>
+  	<script src="//cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.js"></script>
 	<div id="gitalk-container"></div>
 	<script>
 		const gitalk = new Gitalk({
