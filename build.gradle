@@ -65,6 +65,7 @@ gitPublish {
         include 'bdunion.txt'
         include 'ads.txt'
         include 'jd_root.txt'
+        include 'robots.txt'
     }
 
     // message used when committing changes

@@ -1,8 +1,6 @@
 = jooq 介绍
 杨晓辰
 2018-04-04
-:toc: left
-:toclevels: 4
 :icons: font
 :jbake-sid: jooq-intro
 :jbake-type: post
@@ -156,7 +154,7 @@ JOOQ 是要来解决上面问题的. JOOQ 通过大量的流式 API 来灵活构
 ----
 
 不需要数据源, 不需要代码生成, 使用 `org.jooq.impl.DSL` 来构建 sql 语句, 来看一下输出结果:
-[source,console]
+[source,sql]
 ----
 select id, title, published_in from book
 select * from book join language as `a` on (book.language_id = a.id)
@@ -201,7 +199,7 @@ public void before() {
 ----
 
 执行结果
-
+[source,console]
 ----
 11:44:36.067 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = ? and (published_in = 1990))
 11:44:36.068 [main] DEBUG org.jooq.tools.LoggerListener - -> with bind values      : select * from book join language as `a` on (book.language_id = a.id) where (book.author_id = 2 and (published_in = 1990))
@@ -300,7 +298,7 @@ jooq {
 ----
 
 执行结果:
-
+[source,console]
 ----
 12:06:40.515 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
 12:06:40.516 [main] DEBUG org.jooq.tools.LoggerListener - -> with bind values      : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = 1990
@@ -341,7 +339,7 @@ System.out.println(books.get(0));
 
 
 执行结果
-
+[source,bash]
 ----
 12:18:55.420 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = ?
 12:18:55.422 [main] DEBUG org.jooq.tools.LoggerListener - -> with bind values      : select `book`.`id`, `book`.`author_id`, `book`.`title`, `book`.`published_in`, `book`.`language_id`, `book`.`new_field` from `book` where `book`.`id` = 4
@@ -421,7 +419,7 @@ public void mapping() {
 ----
 
 执行结果
-
+[source,console]
 ----
 12:23:00.964 [main] DEBUG org.jooq.tools.LoggerListener - Executing query          : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = ?
 12:23:00.965 [main] DEBUG org.jooq.tools.LoggerListener - -> with bind values      : select `book`.`id`, `book`.`author_id`, `language`.`description` from `book` join `language` on `book`.`language_id` = `language`.`id` where `book`.`published_in` = 1990
@@ -481,4 +479,6 @@ jooq 是个商业软件, 售价不菲. 但我们可以使用开源版本.
 * DSL写法需要看文档. 但文档很全, 比如想知道 `group by` 怎么写直接文档中搜索就好.
 
 
-> 示例完整源码 https://github.com/yxc023/code-examples/blob/master/java/jooq/src/test/java/com/yangxiaochen/example/jooq/JOOQTest.java
+示例完整源码: 
+
+https://github.com/yxc023/code-examples/blob/master/java/jooq/src/test/java/com/yangxiaochen/example/jooq/JOOQTest.java[github: jooq code example]

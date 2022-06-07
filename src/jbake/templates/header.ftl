@@ -7,14 +7,14 @@
     <meta name="description" content="<#if (content.description)??><#escape x as x?xml>${content.description}</#escape><#elseif (content.title)??><#escape x as x?xml>${content.title}</#escape><#else>Michael的博客</#if>">
     <meta name="author" content="yxc023@qq.com">
     <meta name="keywords" content="<#if (content.tags)??><#list content.tags as tag>${tag},</#list></#if>yangxiaochen">
-    <meta name="robots" content="index, follow" />
-    <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-    <meta name="bingbot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
-    <#if (content.uri)??>
-      <link rel="canonical" href="http://blog.yangxiaochen.com/${content.uri}" />  
-    </#if>
-    
+    <meta name="robots" content="index,follow" />
+    <meta name="googlebot" content="index,follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="bingbot" content="index,follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
     <meta name="generator" content="JBake">
+    <#if (content.uri)??>
+    <link rel="canonical" href="https://blog.yangxiaochen.com/${content.uri}" />  
+    </#if>
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests"/>
     <!--  <script data-ad-client="ca-pub-5626174695342369" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>  -->
 
     <!-- Le styles -->
@@ -23,8 +23,8 @@
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/adoc-golo.css" rel="stylesheet">
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/base.css" rel="stylesheet">
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css">
-        <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/prettify/desert.css" rel="stylesheet">
+    <#--  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.min.css">  -->
+    <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/prettify/desert.css" rel="stylesheet">
 
 
 
