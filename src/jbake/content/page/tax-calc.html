@@ -1,0 +1,131 @@
+title=期权税率计算
+date=2022-06-20
+type=page
+tags=tax
+status=published
+~~~~~~
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.14/vue.min.js"></script>
+
+<div id="app">
+
+    <form>
+        <div class="mb-3">
+            <label for="sp" class="form-label">当前价</label>
+            <input type="input" class="form-control" id="sp" v-model="sp">
+        </div>
+        <div class="mb-3">
+            <label for="ep" class="form-label">目标价</label>
+            <input type="input" class="form-control" id="ep" v-model="ep">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="amount">股数</label>
+            <input type="input" class="form-control" id="amount" v-model="amount">
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="exchangeRate">美元汇率</label>
+            <input type="input" class="form-control" id="exchangeRate" placeholder="6.67" v-model="exchangeRate">
+        </div>
+        <div v-on:click="calc" class="btn btn-primary">计算</div>
+    </form>
+
+    <br>
+
+    <div class="row">
+        <table class="table">
+            <tr>
+                <th>行权价值</th>
+                <th>行权税</th>
+                <th>目标价值</th>
+                <th>目标价售出税</th>
+                <th>目标价行权税</th>
+                <th>现金行权省</th>
+            </tr>
+
+            <tr>
+                <td>{{ value1 }}</td>
+                <td>{{ tax1 }}</td>
+                <td>{{ value2 }}</td>
+                <td>{{ tax2 }}</td>
+                <td>{{ tax3 }}</td>
+                <td>{{ value3 }}</td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            sp: 0.00,
+            ep: 0.00,
+            amount: 0,
+            exchangeRate: 6.67,
+            tax1: 0.0,
+            tax2: 0.0,
+            tax3: 0.0,
+            value1: 0.0,
+            value2: 0.0,
+            value3: 0.0
+        },
+        methods: {
+            calc: function () {
+                var sp = this.sp
+                var ep = this.ep
+                var amount = this.amount
+                var exchangeRate = this.exchangeRate
+
+                this.value1 = sp * amount * exchangeRate
+                this.value2 = ep * amount * exchangeRate
+                this.tax1 = this.calcTax1(this.value1)
+                this.tax2 = (ep - sp) * amount * exchangeRate * 0.2
+                this.tax3 = this.calcTax1(this.value2)
+                this.value3 = this.tax3 - this.tax1 - this.tax2
+
+
+                console.log(this.tax1)
+                console.log(this.tax2)
+                console.log(this.tax3)
+                console.log(this.value1)
+                console.log(this.value2)
+
+                // println tax1
+                // println tax2
+                // println tax3
+                // println sp * amount * exchangeRate
+                // println ep * amount * exchangeRate
+                // println tax1 + tax2 - tax3
+
+                // def tax4 = taxCalc.calcTax1(sp * amount * exchangeRate)
+
+
+            },
+            calcTax1: function (income) {
+                var taxSteps = {
+                    36000: 0.03,
+                    144000: 0.1,
+                    300000: 0.2,
+                    420000: 0.25,
+                    660000: 0.3,
+                    960000: 0.35,
+                    10000000000: 0.45
+                }
+                var tax = 0.0
+                var lastStep = 0
+                for (var step in taxSteps) {
+                    if (income <= lastStep) {
+                        return tax
+                    }
+                    if (income >= step) {
+                        tax += (step - lastStep) * taxSteps[step]
+                    } else {
+                        tax += (income - lastStep) * taxSteps[step]
+                    }
+                    lastStep = step
+                }
+                return tax
+            }
+        },
+    })
+</script>
