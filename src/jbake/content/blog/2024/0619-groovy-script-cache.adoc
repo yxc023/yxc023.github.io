@@ -74,3 +74,8 @@ public static Object evalWithCache(Map instData, String conditionName) {
 在 script 文本有限的情况下，可以有效避免内存持续增长。
 
 执行效率也有提升：对于一个表达式 `a > 5000`，传入不同的参数 a 执行 10000 次，有缓存耗时 10ms，无缓存耗时 46000ms
+
+这是因为 GroovyShell.parse 方法会生成一个新的 Class，而且这个 Class 会一直存在于 Metaspace 中，导致 Metaspace 不断增长。
+
+我们的解法是将 GroovyShell.parse 生成的 Script 缓存起来，下次再用到相同的表达式时，直接从缓存中取出 Script 执行。
+
