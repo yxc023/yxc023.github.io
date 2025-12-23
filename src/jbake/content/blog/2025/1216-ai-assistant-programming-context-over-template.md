@@ -5,8 +5,6 @@ tags=ai, programming, vibe coding, bmad-method, spec-kit
 status=published
 ~~~~~~
 
-## 📌 核心观点
-
 最近深度体验了一些 Vibe Coding 文档上下文框架（比如 `bmad-method`、`spec-kit`），发现它们虽然有亮点，但在项目实战中，往往会遇到一个核心问题：**框架的"模板"和"内置指令"占了太大的比重，反而稀释了我们项目自身的"上下文"**。
 
 这导致 AI 产出的方案不够贴合我们项目**当前的代码现状**，编码过程更像是在**执行框架的指令**，而不是在**解决项目的实际问题**。
