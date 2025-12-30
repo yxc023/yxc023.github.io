@@ -58,9 +58,74 @@ YYYY-MM-DD
 #### Static Pages
 Use `:jbake-type: page` instead of `post` for static pages like About, Projects, etc.
 
-#### File Naming
-- Blog posts: Use descriptive filenames, e.g., `groovy-closure-explained.adoc`
-- Organize by topic or year under `src/jbake/content/blog/`
+#### Content Format Differences
+This project supports both AsciiDoc (.adoc) and Markdown (.md) formats, but their metadata formats are different:
+
+**AsciiDoc Format (.adoc)**:
+```asciidoc
+= Post Title
+Author Name
+YYYY-MM-DD
+:toc: left
+:toclevels: 4
+:icons: font
+:jbake-sid: unique-id
+:jbake-type: post
+:jbake-tags: tag1, tag2, tag3
+:jbake-status: published
+:description: Post description for meta tags
+```
+
+**Markdown Format (.md)**:
+```markdown
+title=Post Title
+date=YYYY-MM-DD
+type=post
+tags=tag1, tag2, tag3
+status=published
+~~~~~~
+
+Post content starts here...
+```
+
+**Key Differences**:
+- **Header Structure**: AsciiDoc uses traditional header syntax (= Title) while Markdown uses key-value pairs (title=...)
+- **Author Field**: AsciiDoc includes author on separate line; Markdown has no author field
+- **JBake Attributes**: AsciiDoc prefixes all JBake properties with `:jbake-`; Markdown uses plain keys
+- **Native AsciiDoc Features**: AsciiDoc supports `:toc:`, `:toclevels:`, `:icons:`, etc.; Markdown does not
+- **Metadata Separator**: Markdown requires `~~~~~~` delimiter; AsciiDoc does not
+- **Date Placement**: AsciiDoc places date on separate line after author; Markdown uses `date=` key
+
+**Usage Guidelines**:
+- Use AsciiDoc for full-featured posts with TOC, icons, and complex formatting
+- Use Markdown for simpler content or when AsciiDoc syntax is not needed
+- Keep the same format within a single post (don't mix .adoc and .md in one file)
+
+#### File Naming and Directory Structure
+
+**Blog posts can be organized in two ways:**
+
+1. **By Topic (Traditional approach)**:
+   - Organize in category folders under `src/jbake/content/blog/`
+   - Examples: `java/`, `groovy/`, `design-and-thinking/`, `git/`, etc.
+   - File naming: Use descriptive English names with hyphens, e.g., `groovy-closure-explained.adoc`
+
+2. **By Date (Current preferred approach)**:
+   - Create year-based directories: `src/jbake/content/blog/YYYY/`
+   - File naming format: `MMDD-article-title.extension`
+     - `MMDD` = Month and day in 2-digit format (e.g., `0504` for May 4th)
+     - `article-title` = Descriptive title in English or pinyin with hyphens
+     - `extension` = `.adoc` or `.md`
+   - Examples:
+     - `2025/1230-rbac-best-practices.adoc` (published on 2025-12-30)
+     - `2025/0509-spring-mvc-parameter-names.adoc` (published on 2025-05-09)
+     - `2024/0619-groovy-script-cache.adoc` (published on 2024-06-19)
+
+**Date Consistency**: Ensure the date in the file header matches the date in the filename:
+- AsciiDoc: Date on 3rd line (e.g., `2025-12-30`)
+- Markdown: Use `date=YYYY-MM-DD` in metadata
+
+**Recommendation**: Use the date-based approach for new posts to maintain chronological organization and easy archival.
 
 #### CSS Conventions
 - Custom theme in `src/jbake/assets/css/main.css`
