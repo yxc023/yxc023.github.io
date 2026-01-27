@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/gitalk/1.7.2/gitalk.min.css">
     <#--  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.min.css">  -->
     <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/prettify/desert.css" rel="stylesheet">
+    <link href="<#if (content.rootpath)??>${content.rootpath}<#else></#if>css/modernize.css" rel="stylesheet">
 
 
 
