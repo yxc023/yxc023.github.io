@@ -19,7 +19,7 @@
     "@astrojs/sitemap": "^3.2.1",
     "@asciidoctor/core": "^3.0.0",
     "ali-oss": "^6.21.0",
-    "astro": "^5.0.5",
+    "astro": "^7.2.1",
     "dotenv": "^16.4.5",
     "gray-matter": "^4.0.3",
     "reading-time": "^1.5.0"
