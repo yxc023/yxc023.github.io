@@ -5,7 +5,7 @@ export const SITE = {
   author: 'yxc023',
   authorEn: 'yxc023',
   email: 'yxc023@qq.com',
-  description: 'yxc023 的技术记事本 — Java 后端架构、设计模式、领域驱动设计、技术组织的思考与实践。',
+  description: 'yxc023 的记事本',
   locale: 'zh-CN',
   github: 'https://github.com/yxc023',
   beian: '京ICP备13041693号',
