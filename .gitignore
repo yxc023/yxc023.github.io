@@ -1,11 +1,27 @@
-build
-.gradle
+# Dependencies
+node_modules/
 
-.settings
-.project
-.vscode
+# Build output
+dist/
+.astro/
+
+# Environment
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+
+# IDE / Editor
+.vscode/
+.idea/
 .DS_Store
+*.swp
+
+# Misc
 .hprof
-.idea
 .codelink
 .claude/

@@ -1,0 +1,45 @@
+---
+import { SITE } from '~/consts';
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container-wide">
+    <div>
+      <h3>{SITE.author}</h3>
+      <p>
+        后端架构、领域驱动设计、技术组织。十多年在 Java / Groovy 平台上做系统设计与落地。
+        <br />
+        工作邮箱：<a href={`mailto:${SITE.email}`}>{SITE.email}</a> ·
+        备案：<a href="https://beian.miit.gov.cn/" rel="noopener noreferrer">{SITE.beian}</a>
+      </p>
+    </div>
+
+    <dl class="site-footer-links">
+      <div>
+        <dt>Site</dt>
+        <dd><a href="/">首页</a></dd>
+        <dd><a href="/archive/">归档</a></dd>
+        <dd><a href="/tags/">标签</a></dd>
+      </div>
+      <div>
+        <dt>Pages</dt>
+        <dd><a href="/about/">关于</a></dd>
+        <dd><a href="/principles/">原则</a></dd>
+        <dd><a href="/projects/">项目</a></dd>
+        <dd><a href="/design-practices/">设计实践</a></dd>
+      </div>
+      <div>
+        <dt>Elsewhere</dt>
+        <dd><a href="/rss.xml">RSS</a></dd>
+        <dd><a href="/sitemap-index.xml">Sitemap</a></dd>
+        <dd><a href={SITE.github} rel="noopener noreferrer">GitHub ↗</a></dd>
+      </div>
+    </dl>
+
+    <div class="site-footer-bottom">
+      <span>© {year} {SITE.author} · powered by Astro</span>
+      <span>last build · {new Date().toISOString().slice(0, 10)}</span>
+    </div>
+  </div>
+</footer>

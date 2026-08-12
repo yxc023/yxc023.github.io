@@ -1,0 +1,53 @@
+---
+interface Props {
+  slug: string;
+  title: string;
+  date: Date;
+  tags?: string[];
+  description?: string;
+  readingMinutes?: number;
+  wordCount?: number;
+  /** Show full meta column (tags + reading time). */
+  dense?: boolean;
+}
+const {
+  slug,
+  title,
+  date,
+  tags = [],
+  description = '',
+  readingMinutes = 0,
+  wordCount = 0,
+  dense = true,
+} = Astro.props;
+
+const dateStr = date.toISOString().slice(0, 10);
+const monthDay = `${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+---
+
+<li>
+  <a class="post-row" href={`/blog/${slug}/`}>
+    <time class="post-row-date" datetime={dateStr} title={dateStr}>{monthDay}</time>
+    <div class="post-row-body">
+      <span class="post-row-title">{title}</span>
+      {description && <p class="post-row-desc">{description}</p>}
+    </div>
+    {dense && (
+      <div class="post-row-meta">
+        {tags.length > 0 && (
+          <div class="post-row-tags">
+            {tags.slice(0, 3).map((t) => (
+              <span class="post-row-tag">{t}</span>
+            ))}
+            {tags.length > 3 && <span class="post-row-tag">+{tags.length - 3}</span>}
+          </div>
+        )}
+        {readingMinutes > 0 && (
+          <span class="post-row-time">
+            {readingMinutes < 1 ? '<1' : Math.round(readingMinutes)} min read
+          </span>
+        )}
+      </div>
+    )}
+  </a>
+</li>

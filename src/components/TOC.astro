@@ -1,0 +1,78 @@
+---
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+interface Props {
+  headings: Heading[];
+  minDepth?: number;
+}
+const { headings, minDepth = 2 } = Astro.props;
+
+const items = headings.filter((h) => h.depth >= minDepth && h.depth <= 4);
+
+interface TreeNode {
+  heading: Heading;
+  children: TreeNode[];
+}
+
+function buildTree(items: Heading[]): TreeNode[] {
+  const roots: TreeNode[] = [];
+  const stack: TreeNode[] = [];
+  for (const h of items) {
+    const node: TreeNode = { heading: h, children: [] };
+    while (stack.length > 0 && stack[stack.length - 1].heading.depth >= h.depth) {
+      stack.pop();
+    }
+    if (stack.length === 0) {
+      roots.push(node);
+    } else {
+      stack[stack.length - 1].children.push(node);
+    }
+    stack.push(node);
+  }
+  return roots;
+}
+
+const tree = buildTree(items);
+---
+
+{tree.length > 0 && (
+  <nav class="toc" aria-label="文章目录">
+    <div class="toc-sticky">
+      <p class="toc-title">目录</p>
+      <ul class="toc-root">
+        {tree.map((node) => (
+          <li class={`toc-depth-${node.heading.depth}`}>
+            <a href={`#${node.heading.slug}`} data-toc-link={node.heading.slug}>
+              {node.heading.text}
+            </a>
+            {node.children.length > 0 && (
+              <ul>
+                {node.children.map((child) => (
+                  <li class={`toc-depth-${child.heading.depth}`}>
+                    <a href={`#${child.heading.slug}`} data-toc-link={child.heading.slug}>
+                      {child.heading.text}
+                    </a>
+                    {child.children.length > 0 && (
+                      <ul>
+                        {child.children.map((grand) => (
+                          <li class={`toc-depth-${grand.heading.depth}`}>
+                            <a href={`#${grand.heading.slug}`} data-toc-link={grand.heading.slug}>
+                              {grand.heading.text}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </nav>
+)}

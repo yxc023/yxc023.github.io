@@ -1,0 +1,29 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getAllTags } from '~/lib/blog';
+
+const tags = await getAllTags();
+const sorted = [...tags.entries()].sort((a, b) => b[1] - a[1]);
+---
+
+<BaseLayout title="标签" description="所有文章标签">
+  <div class="container">
+    <header class="article-header">
+      <p class="article-eyebrow">
+        <span>tags</span>
+        <span class="article-eyebrow-dot"></span>
+        <span>{sorted.length} 个</span>
+      </p>
+      <h1 class="article-title">标签</h1>
+      <p class="article-lede">按文章数量倒序排列。</p>
+    </header>
+    <div class="tag-cloud">
+      {sorted.map(([name, count]) => (
+        <a class="tag-pill" href={`/tags/${encodeURIComponent(name)}/`}>
+          <span>{name}</span>
+          <span class="tag-pill-count">{count}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+</BaseLayout>

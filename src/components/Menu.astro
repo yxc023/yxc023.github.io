@@ -1,0 +1,54 @@
+---
+import { NAV_ITEMS, SITE } from '~/consts';
+
+const currentPath = Astro.url.pathname;
+const isActive = (href: string) => {
+  if (href === '/') return currentPath === '/' || currentPath === '';
+  if (href.endsWith('/')) {
+    return currentPath.startsWith(href);
+  }
+  return currentPath === href || currentPath === href + '/';
+};
+---
+
+<header class="site-header">
+  <div class="container-wide">
+    <nav class="nav" aria-label="主导航">
+      <a href="/" class="nav-brand">{SITE.title}</a>
+      <button
+        class="nav-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="primary-nav"
+        aria-label="打开菜单"
+        id="nav-toggle"
+      >
+        <span aria-hidden="true">☰</span>
+      </button>
+      <ul class="nav-links" id="primary-nav">
+        {NAV_ITEMS.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class={`nav-link ${isActive(item.href) ? 'is-active' : ''}`}
+              aria-current={isActive(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const nav = document.getElementById('primary-nav');
+  if (toggle && nav) {
+    toggle.addEventListener('click', () => {
+      const open = nav.classList.toggle('is-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+</script>

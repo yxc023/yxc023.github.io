@@ -1,0 +1,45 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PostCard from '~/components/PostCard.astro';
+import { getAllPosts } from '~/lib/blog';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+  const tagSet = new Set<string>();
+  for (const p of posts) for (const t of p.data.tags) tagSet.add(t);
+  return [...tagSet].map((tag) => ({ params: { tag } }));
+}
+
+const { tag } = Astro.params;
+const decodedTag = decodeURIComponent(tag ?? '');
+const posts = (await getAllPosts()).filter((p) =>
+  p.data.tags.includes(decodedTag),
+);
+---
+
+<BaseLayout title={`#${decodedTag}`} description={`标签「${decodedTag}」下的所有文章`}>
+  <div class="container">
+    <header class="article-header">
+      <p class="article-eyebrow">
+        <span>tag</span>
+        <span class="article-eyebrow-dot"></span>
+        <span>{posts.length} posts</span>
+      </p>
+      <h1 class="article-title">#{decodedTag}</h1>
+      <p class="article-lede"><a href="/tags/">← 所有标签</a></p>
+    </header>
+    <ul class="post-list">
+      {posts.map((p) => (
+        <PostCard
+          slug={p.slug}
+          title={p.data.title}
+          date={p.data.date}
+          tags={p.data.tags}
+          description={p.data.description}
+          readingMinutes={p.readingMinutes}
+          wordCount={p.wordCount}
+        />
+      ))}
+    </ul>
+  </div>
+</BaseLayout>

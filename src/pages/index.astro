@@ -1,0 +1,80 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import PostCard from '~/components/PostCard.astro';
+import { SITE } from '~/consts';
+import { getAllPosts, getAllTags } from '~/lib/blog';
+
+const posts = await getAllPosts();
+const totalPosts = posts.length;
+const tags = await getAllTags();
+const totalTags = tags.size;
+const firstPost = posts[posts.length - 1];
+const latestPost = posts[0];
+const recent = posts.slice(0, 8);
+const topTags = [...tags.entries()].slice(0, 12);
+const firstYear = firstPost?.data.date.getFullYear() ?? new Date().getFullYear();
+const latestDate = latestPost?.data.date.toISOString().slice(0, 10) ?? '';
+---
+
+<BaseLayout title={SITE.title} description={SITE.description} type="website">
+  <section class="container hero">
+    <p class="hero-eyebrow">
+      <span>writing since {firstYear}</span>
+    </p>
+    <h1 class="hero-title">{SITE.author}的博客</h1>
+    <p class="hero-tagline">
+      记录后端架构、设计模式、领域驱动设计与技术组织的思考与实践。
+      <br />
+      写有用的东西，宁缺毋滥。
+    </p>
+    <dl class="hero-stats">
+      <div><dt>articles</dt><dd>{totalPosts}</dd></div>
+      <div><dt>tags</dt><dd>{totalTags}</dd></div>
+      <div><dt>started</dt><dd>{firstYear}</dd></div>
+      <div><dt>latest</dt><dd>{latestDate}</dd></div>
+    </dl>
+  </section>
+
+  <div class="container">
+    <section class="section">
+      <header class="section-heading">
+        <div>
+          <span class="eyebrow">Latest</span>
+          <h2>最新文章</h2>
+        </div>
+        <a class="view-all" href="/archive/">archive →</a>
+      </header>
+      <ul class="post-list">
+        {recent.map((p) => (
+          <PostCard
+            slug={p.slug}
+            title={p.data.title}
+            date={p.data.date}
+            tags={p.data.tags}
+            description={p.data.description}
+            readingMinutes={p.readingMinutes}
+            wordCount={p.wordCount}
+          />
+        ))}
+      </ul>
+    </section>
+
+    <section class="section">
+      <header class="section-heading">
+        <div>
+          <span class="eyebrow">Topics</span>
+          <h2>热门标签</h2>
+        </div>
+        <a class="view-all" href="/tags/">all tags →</a>
+      </header>
+      <div class="tag-cloud">
+        {topTags.map(([name, count]) => (
+          <a class="tag-pill" href={`/tags/${encodeURIComponent(name)}/`}>
+            <span>{name}</span>
+            <span class="tag-pill-count">{count}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+  </div>
+</BaseLayout>

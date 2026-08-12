@@ -1,0 +1,199 @@
+---
+title: Gradle多模块项目中的配置实践
+date: 2022-05-04
+description: 使用 Gradle 在多模块项目中的配置实践。Gradle 脚本文件的原理，如何理解 gradle 构建脚本，build.gradle 文件中有什么内容
+tags:
+  - gradle
+  - build.gradle
+  - 多模块项目构建
+---
+## 前言
+
+Gradle 是一个第一眼看上去比较简单，但是有一定入门门槛的构建工具。
+
+配置仓库、引入依赖这种基本配置，是比较简单的，也有很多例子。
+
+但是想做一些其他的个性化配置，经常无处下手。官方文档，虽然很详实，但是对于没有进行系统学习的人，看起来还挺费劲。而且，文档中给出的例子，跟实际情况脱离较远，不是很好参照。
+
+Gradle 的配置文件，大多使用 groovy 来进行书写，弱类型的语言、dsl、closures 的表达方式，都会让很多 java 程序员摸不着头脑。说是用代码来做的配置，但是这种语法缺读不明白。
+
+Gradle 简单明了的配置语法、极度灵活的自定义构建配置，是我一直使用它的原因。过程中也遇到了不少问题，虽然我没有对 Gradle 进行特别系统的学习，但也翻过不少文档和源码。
+
+本篇文章，是对 Gradle 使用的一些实践记录。
+
+## 一个多模块项目的构建脚本例子
+
+这些文件来自项目： https://github.com/yxc023/gradle-practice
+
+```
+gradle-practice
+├── build.gradle
+├── gp-api
+│   ├── build.gradle
+├── gp-app
+│   ├── build.gradle
+├── gp-db
+│   ├── build.gradle
+├── gp-service
+│   ├── build.gradle
+├── gradle
+│   ├── jooq.gradle
+│   ├── publish.gradle
+│   └── wrapper
+├── gradlew
+├── gradlew.bat
+└── settings.gradle
+```
+
+.settings.gradle
+```groovy
+// config plugin repositories
+pluginManagement {
+    repositories {
+        // aliyun repository for gradle plugin
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        // default repository
+        gradlePluginPortal()
+    }
+}
+
+// set projects, root dir is root project. Each module is a sub project
+rootProject.name = 'gradle-practice'
+
+// include all sub projects. The name is location of the new project in the project hierarchy, for example 'a:b:c', not the file path
+// Sub project's default path is the '${rootDir}/${projectName}'.
+include 'gp-app'
+// use ':' as a separator of project.
+include 'gp-api'
+include 'gpService'
+include 'gp-db'
+
+// Set a custom path for a project
+project(':gpService').projectDir = new File(settingsDir, 'gp-service')
+```
+
+`settings.gradle` 中定义所有的项目
+
+.build.gradle
+```groovy
+/*
+为构建脚本引入依赖。
+在 「模块 gp-db」 中，我们使用了 jooq 生成代码的 plugin，所以，这里，会先把这个 plugin 的 library 引入进来
+ */
+buildscript {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'nu.studer:gradle-jooq-plugin:4.2'
+    }
+}
+
+/*
+在多模块的项目中，根目录下的 build.gradle 文件，尽量把通用的全局配置都配置到这里
+「project」是 gradle 里的核心概念。每个 module 都是一个 project，根目录下是 rootProject
+ */
+allprojects {
+    // 定义所有项目的 group 和 version
+    group = 'com.yangxiaochen.gradle.practice'
+    version = '1.0.0-SNAPSHOT'
+
+    // 为所有项目引入插件
+    apply plugin: 'java'
+    apply plugin: 'pmd'
+
+    // 为所有项目
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        mavenCentral()
+    }
+    // 定义一些变量
+    ext {
+        mysqlVersion = '8.0.18'
+        jooqVersion = '3.13.1'
+        ...
+    }
+    // 为所有的项目设置依赖
+    dependencies {
+        pmd 'com.alibaba.p3c:p3c-pmd:1.3.6'
+    }
+    // Java compiler compile java source file with utf-8 (default gbk in the Windows OS with Simplified Chinese). Java source file must be 'UTF-8'.
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+    // Set java compile version
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+}
+// Config for every subprojects
+subprojects {
+    // Project gp-api is a library, it will be published as a sdk lib. So it should define exact dependencies in project's build.gradle file
+    // Define spring framework's core dependencies for most projects.
+    if (!['gp-api'].contains(project.name)) {
+        dependencies {
+            // 'implementation platform' define Spring bom
+            implementation platform('org.springframework.boot:spring-boot-dependencies:2.1.11.RELEASE')
+            implementation platform('org.springframework.cloud:spring-cloud-dependencies:Greenwich.SR3')
+
+            // Spring framework core dependencies
+            implementation("org.springframework:spring-context")
+            implementation("org.springframework:spring-context-support")
+            ...
+            // Common utils dependencies
+            compileOnly 'org.projectlombok:lombok:1.18.22'
+            annotationProcessor 'org.projectlombok:lombok:1.18.22'
+            ...
+        }
+    }
+    // Dependency resolve
+    configurations {
+        all {
+            resolutionStrategy {
+                force 'com.google.guava:guava:28.2-jre'
+            }
+            exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+        }
+    }
+}
+```
+
+这是一个多模块的项目，通过根项目下的 `build.gradle` 文件，做好全局配置，让每个子模块中的 `build.gradle` 足够简单。只需要配置额外的依赖即可，如
+
+.gb-service/build.gradle
+```groovy
+// 只需额外定义该模块所需的依赖
+dependencies {
+    implementation 'org.greenrobot:eventbus:3.1.1'
+}
+```
+
+### 一些公共脚本
+
+对项目中，很多模块都会用到的功能，抽出到一个文件中，使用 include 引入
+
+#### 发布功能：gradle/publish.gradle
+
+.gp-api/build.gradle
+```groovy
+// 每一个需要发布的模块，可以配置这个
+apply from: "${rootProject.projectDir}/gradle/publish.gradle"
+```
+
+引入后可以使用 `./gradlew :gp-api:publishAllPublicationsToSnapshotRepository` 和 `./gradlew :gp-api:publishAllPublicationsToReleaseRepository` 来发布 gp-api 模块。
+
+#### 数据库访问代码生成功能：gradle/jooq.gradle
+
+.gp-db/build.gradle
+```groovy
+ext {
+    // 设置 jooq 要生成的表
+    jooqGenIncludeTables = 'table_a|table_b|table_c_*'
+    // 设置 jooq 生成代码的包
+    jooqGenPackageName = 'com.yangxiaochen.gradle.practice.db'
+}
+// 引入 jooq 通用配置，每个需要生成数据库访问代码的模块，都可以引用这个
+apply from: "${rootProject.projectDir}/gradle/jooq.gradle"
+```
+
+引入后可以使用 `./gradlew generateGp-dbJooqSchemaSource` 来生成 gp-db 模块的数据库访问代码

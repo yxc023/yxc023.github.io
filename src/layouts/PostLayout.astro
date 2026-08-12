@@ -1,0 +1,187 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import TOC from '~/components/TOC.astro';
+import Giscus from '~/components/Giscus.astro';
+import { SITE } from '~/consts';
+
+interface Props {
+  title: string;
+  description?: string;
+  date: Date;
+  updatedDate?: Date;
+  tags?: string[];
+  author?: string;
+  headings?: { depth: number; slug: string; text: string }[];
+  slug: string;
+  showToc?: boolean;
+  readingMinutes?: number;
+  wordCount?: number;
+  prev?: { slug: string; title: string } | null;
+  next?: { slug: string; title: string } | null;
+}
+
+const {
+  title,
+  description = '',
+  date,
+  updatedDate,
+  tags = [],
+  author,
+  headings = [],
+  slug,
+  showToc = true,
+  readingMinutes = 0,
+  wordCount = 0,
+  prev = null,
+  next = null,
+} = Astro.props;
+
+const displayAuthor = author || SITE.author;
+
+const dateStr = date.toISOString().slice(0, 10);
+const updatedStr = updatedDate?.toISOString().slice(0, 10);
+const formattedDate = new Intl.DateTimeFormat('zh-CN', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(date);
+const yearOnly = date.getFullYear();
+const wordFmt = wordCount >= 1000 ? `${(wordCount / 1000).toFixed(1)}k` : String(wordCount);
+const minFmt = readingMinutes < 1 ? '<1' : Math.round(readingMinutes);
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  type="article"
+  publishedTime={date.toISOString()}
+  modifiedTime={updatedDate?.toISOString()}
+  author={displayAuthor}
+  showProgress={true}
+>
+  <article class="article">
+    <div class={showToc && headings.length > 0 ? 'with-toc' : ''}>
+      <div class="container">
+        <header class="article-header">
+          <p class="article-eyebrow">
+            <span>{yearOnly}</span>
+            <span class="article-eyebrow-dot"></span>
+            <span>{formattedDate}</span>
+            {updatedStr && updatedStr !== dateStr && (
+              <>
+                <span class="article-eyebrow-dot"></span>
+                <span>updated {updatedStr}</span>
+              </>
+            )}
+            <span class="article-eyebrow-dot"></span>
+            <span>{minFmt} min · {wordFmt} {wordFmt.match(/k/) ? 'chars' : 'words'}</span>
+            {displayAuthor && (
+              <>
+                <span class="article-eyebrow-dot"></span>
+                <span>by {displayAuthor}</span>
+              </>
+            )}
+          </p>
+          <h1 class="article-title">{title}</h1>
+          {description && <p class="article-lede">{description}</p>}
+          {tags.length > 0 && (
+            <p style="margin-top: var(--sp-3); display: flex; flex-wrap: wrap; gap: var(--sp-1);">
+              {tags.map((t) => (
+                <a class="post-row-tag" href={`/tags/${encodeURIComponent(t)}/`}>{t}</a>
+              ))}
+            </p>
+          )}
+        </header>
+
+        <div class="prose">
+          <slot />
+        </div>
+
+        <footer class="article-footer">
+          <div>
+            {prev ? (
+              <a href={`/blog/${prev.slug}/`}>← {prev.title}</a>
+            ) : (
+              <a href="/archive/">← archive</a>
+            )}
+          </div>
+          <div class="article-footer-next">
+            {next ? (
+              <a href={`/blog/${next.slug}/`}>{next.title} →</a>
+            ) : (
+              <a href="/archive/">archive →</a>
+            )}
+          </div>
+        </footer>
+
+        <Giscus slug={slug} />
+      </div>
+
+      {showToc && <TOC headings={headings} />}
+    </div>
+  </article>
+</BaseLayout>
+
+{showToc && headings.length > 0 && (
+  <script>
+    // Active section indicator for the sticky TOC
+    const headings = document.querySelectorAll<HTMLHeadingElement>(
+      '.prose h2[id], .prose h3[id], .prose h4[id]',
+    );
+    const tocLinks = document.querySelectorAll<HTMLAnchorElement>(
+      '.toc a[data-toc-link]',
+    );
+
+    if (headings.length > 0 && tocLinks.length > 0) {
+      const linkBySlug = new Map<string, HTMLAnchorElement>();
+      tocLinks.forEach((link) => {
+        const slug = link.getAttribute('data-toc-link');
+        if (slug) linkBySlug.set(slug, link);
+      });
+
+      let activeSlug: string | null = null;
+      const setActive = (slug: string | null) => {
+        if (slug === activeSlug) return;
+        activeSlug = slug;
+        tocLinks.forEach((link) => {
+          link.classList.toggle(
+            'is-active',
+            link.getAttribute('data-toc-link') === slug,
+          );
+        });
+      };
+
+      // Track which heading is "currently being read":
+      // the one closest to the top trigger line at viewport y=120.
+      const computeActive = () => {
+        const triggerY = 120;
+        let best: { slug: string; top: number } | null = null;
+        for (const h of headings) {
+          const rect = h.getBoundingClientRect();
+          if (rect.top <= triggerY) {
+            if (!best || rect.top > best.top) best = { slug: h.id, top: rect.top };
+          }
+        }
+        // No heading has been scrolled past yet — highlight the first one.
+        if (!best && headings.length > 0) {
+          setActive(headings[0].id);
+          return;
+        }
+        setActive(best?.slug ?? null);
+      };
+
+      let raf = 0;
+      const onScroll = () => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          computeActive();
+          raf = 0;
+        });
+      };
+
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.addEventListener('resize', onScroll);
+      computeActive();
+    }
+  </script>
+)}

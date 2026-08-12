@@ -1,0 +1,73 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getAllPosts } from '~/lib/blog';
+
+const posts = await getAllPosts();
+const byYear = new Map<number, typeof posts>();
+for (const p of posts) {
+  const y = p.data.date.getFullYear();
+  if (!byYear.has(y)) byYear.set(y, []);
+  byYear.get(y)!.push(p);
+}
+const years = [...byYear.keys()].sort((a, b) => b - a);
+---
+
+<BaseLayout title="归档" description="所有文章按年份归档">
+  <div class="container">
+    <header class="article-header">
+      <p class="article-eyebrow">
+        <span>archive</span>
+        <span class="article-eyebrow-dot"></span>
+        <span>{posts.length} entries</span>
+        <span class="article-eyebrow-dot"></span>
+        <span>{years.length} years</span>
+      </p>
+      <h1 class="article-title">归档</h1>
+      <p class="article-lede">按年份倒序排列的全部文章。</p>
+    </header>
+
+    {years.map((year) => (
+      <section class="section">
+        <header class="section-heading">
+          <div>
+            <span class="eyebrow">{year}</span>
+            <h2>{byYear.get(year)!.length} 篇</h2>
+          </div>
+          <span class="muted mono" style="font-size: var(--fs-xs);">
+            {year} → {String(year + 1).slice(2)}
+          </span>
+        </header>
+        <ul class="post-list">
+          {byYear.get(year)!.map((p) => {
+            const monthDay = `${String(p.data.date.getMonth() + 1).padStart(2, '0')}-${String(p.data.date.getDate()).padStart(2, '0')}`;
+            const min = p.readingMinutes < 1 ? '<1' : Math.round(p.readingMinutes);
+            return (
+              <li>
+                <a class="post-row" href={`/blog/${p.slug}/`}>
+                  <time class="post-row-date">{monthDay}</time>
+                  <div class="post-row-body">
+                    <span class="post-row-title">{p.data.title}</span>
+                    {p.data.description && <p class="post-row-desc">{p.data.description}</p>}
+                  </div>
+                  <div class="post-row-meta">
+                    {p.data.tags.length > 0 && (
+                      <div class="post-row-tags">
+                        {p.data.tags.slice(0, 3).map((t) => (
+                          <span class="post-row-tag">{t}</span>
+                        ))}
+                        {p.data.tags.length > 3 && (
+                          <span class="post-row-tag">+{p.data.tags.length - 3}</span>
+                        )}
+                      </div>
+                    )}
+                    <span class="post-row-time">{min} min</span>
+                  </div>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))}
+  </div>
+</BaseLayout>

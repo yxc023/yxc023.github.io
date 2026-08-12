@@ -1,0 +1,45 @@
+---
+import { GISCUS_CONFIG } from '~/consts';
+interface Props {
+  slug: string;
+}
+const { slug } = Astro.props;
+
+// Don't render the comments iframe until giscus is fully configured.
+const ready = GISCUS_CONFIG.repoId && GISCUS_CONFIG.categoryId;
+---
+
+{ready && (
+  <section class="comments" id="comments" aria-label="评论">
+    <h2 class="comments-title">评论</h2>
+    <script
+      is:inline
+      src="https://giscus.app/client.js"
+      data-repo={GISCUS_CONFIG.repo}
+      data-repo-id={GISCUS_CONFIG.repoId}
+      data-category={GISCUS_CONFIG.category}
+      data-category-id={GISCUS_CONFIG.categoryId}
+      data-mapping={GISCUS_CONFIG.mapping}
+      data-strict={GISCUS_CONFIG.strict}
+      data-reactions-enabled={GISCUS_CONFIG.reactionsEnabled}
+      data-emit-metadata={GISCUS_CONFIG.emitMetadata}
+      data-input-position={GISCUS_CONFIG.inputPosition}
+      data-theme={GISCUS_CONFIG.theme}
+      data-lang={GISCUS_CONFIG.lang}
+      data-loading={GISCUS_CONFIG.loading}
+      data-term={slug}
+      async
+    />
+  </section>
+)}
+
+{!ready && (
+  <section class="comments" id="comments" aria-label="评论">
+    <h2 class="comments-title">评论</h2>
+    <p class="muted">
+      评论功能未启用。请在 <code>.env</code> 中配置 <code>PUBLIC_GISCUS_REPO_ID</code> 与
+      <code>PUBLIC_GISCUS_CATEGORY_ID</code>，详见
+      <a href="https://giscus.app/zh-CN" rel="noopener noreferrer">giscus 文档</a>。
+    </p>
+  </section>
+)}

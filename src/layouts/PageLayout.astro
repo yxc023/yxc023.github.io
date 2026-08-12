@@ -1,0 +1,51 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import { SITE } from '~/consts';
+
+interface Props {
+  title: string;
+  description?: string;
+  date?: Date;
+  updatedDate?: Date;
+  tags?: string[];
+  author?: string;
+}
+
+const { title, description = '', date, updatedDate, tags = [], author } = Astro.props;
+const displayAuthor = author || SITE.author;
+const dateStr = date?.toISOString().slice(0, 10);
+const formattedDate = date
+  ? new Intl.DateTimeFormat('zh-CN', { year: 'numeric', month: 'long', day: 'numeric' }).format(date)
+  : null;
+---
+
+<BaseLayout title={title} description={description} type="article" author={displayAuthor}>
+  <article class="article">
+    <div class="container">
+      <header class="article-header">
+        <h1 class="article-title">{title}</h1>
+        {formattedDate && (
+          <p class="article-meta">
+            <time datetime={dateStr}>{formattedDate}</time>
+            {displayAuthor && <span>· {displayAuthor}</span>}
+          </p>
+        )}
+        {!formattedDate && displayAuthor && (
+          <p class="article-meta">
+            <span>{displayAuthor}</span>
+          </p>
+        )}
+        {tags.length > 0 && (
+          <p class="article-tags" style="margin-top:.5rem">
+            {tags.map((t) => (
+              <a class="tag" href={`/tags/${encodeURIComponent(t)}/`}>#{t}</a>
+            ))}
+          </p>
+        )}
+      </header>
+      <div class="prose">
+        <slot />
+      </div>
+    </div>
+  </article>
+</BaseLayout>

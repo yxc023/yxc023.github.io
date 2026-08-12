@@ -1,0 +1,50 @@
+---
+import { render } from 'astro:content';
+import PostLayout from '~/layouts/PostLayout.astro';
+import { getAllPosts, getPost } from '~/lib/blog';
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+  return posts.map((p, i) => ({
+    params: { slug: p.slug },
+    props: {
+      slug: p.slug,
+      prev: i < posts.length - 1 ? { slug: posts[i + 1].slug, title: posts[i + 1].data.title } : null,
+      next: i > 0 ? { slug: posts[i - 1].slug, title: posts[i - 1].data.title } : null,
+    },
+  }));
+}
+
+const { slug, prev, next } = Astro.props;
+
+const post = await getPost(slug);
+if (!post) throw new Error(`Post not found: ${slug}`);
+
+const { getEntry } = await import('astro:content');
+const entry = await getEntry('blog', slug);
+if (!entry) throw new Error(`Entry not found: ${slug}`);
+
+const { Content, headings: mdHeadings } = await render(entry);
+const headings = mdHeadings.map((h) => ({
+  depth: h.depth,
+  slug: h.slug,
+  text: h.text,
+}));
+---
+
+<PostLayout
+  title={post.data.title}
+  description={post.data.description}
+  date={post.data.date}
+  tags={post.data.tags}
+  author={post.data.author}
+  headings={headings}
+  slug={slug}
+  showToc={headings.length > 0}
+  readingMinutes={post.readingMinutes}
+  wordCount={post.wordCount}
+  prev={prev}
+  next={next}
+>
+  <Content />
+</PostLayout>
