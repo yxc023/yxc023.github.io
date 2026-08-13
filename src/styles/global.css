@@ -725,14 +725,38 @@ button { font: inherit; cursor: pointer; }
 .prose pre {
   font-family: var(--font-mono);
   font-size: var(--fs-sm);
-  line-height: 1.55;
-  padding: var(--sp-4) var(--sp-4);
+  line-height: 1.65;
+  padding: var(--sp-7) var(--sp-4) var(--sp-4);
   background: var(--bg-code) !important;
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow-x: auto;
   margin: 0;
+  tab-size: 2;
+  position: relative;
 }
+/* Language label header */
+.prose pre[data-language]::before {
+  content: attr(data-language);
+  position: absolute;
+  top: var(--sp-2);
+  left: var(--sp-4);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--fg-muted);
+  padding: 2px var(--sp-2);
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--fg-muted) 12%, transparent);
+  pointer-events: none;
+}
+/* Hide language label when it would be plaintext/empty */
+.prose pre[data-language="plaintext"]::before,
+.prose pre[data-language="text"]::before,
+.prose pre[data-language=""]::before { display: none; }
+
 .prose pre code {
   background: transparent;
   border: 0;
@@ -740,6 +764,7 @@ button { font: inherit; cursor: pointer; }
   font-size: inherit;
   color: inherit;
   font-family: inherit;
+  display: block;
 }
 
 /* Copy-code button */
@@ -751,18 +776,20 @@ button { font: inherit; cursor: pointer; }
   background: var(--bg);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 2px var(--sp-2);
+  padding: 3px var(--sp-2);
   font-family: var(--font-mono);
-  font-size: var(--fs-2xs);
+  font-size: 0.6875rem;
+  font-weight: 500;
   color: var(--fg-muted);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   opacity: 0;
-  transition: opacity 0.12s ease, color 0.12s ease;
+  transition: opacity 0.12s ease, color 0.12s ease, border-color 0.12s ease;
 }
 .code-block-wrapper:hover .copy-code,
 .copy-code:focus-visible { opacity: 1; }
 .copy-code:hover { color: var(--accent); border-color: var(--accent); }
+.copy-code.is-copied { color: var(--accent); border-color: var(--accent); opacity: 1; }
 
 /* Tables — terminal aesthetic */
 .prose table {

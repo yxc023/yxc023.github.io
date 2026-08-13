@@ -97,8 +97,12 @@ const {
             const code = pre.querySelector('code')?.innerText ?? pre.innerText;
             try {
               await navigator.clipboard.writeText(code);
-              btn.textContent = '已复制';
-              setTimeout(() => (btn.textContent = '复制'), 1500);
+              btn.textContent = 'copied';
+              btn.classList.add('is-copied');
+              setTimeout(() => {
+                btn.textContent = '复制';
+                btn.classList.remove('is-copied');
+              }, 1500);
             } catch {
               btn.textContent = '失败';
             }
