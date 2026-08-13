@@ -2,12 +2,12 @@
    Design tokens — technical editorial (Linear / Stripe docs vibe)
    ========================================================================= */
 :root {
-  /* Surface */
-  --bg: #ffffff;
-  --bg-subtle: #fafafa;
-  --bg-muted: #f4f4f5;
-  --bg-code: #fafafa;
-  --bg-inline-code: rgba(0, 0, 0, 0.05);
+/* Surface — soft off-white, not stark */
+  --bg: #faf9f6;
+  --bg-subtle: #f4f2ed;
+  --bg-muted: #ebe8e1;
+  --bg-code: #f4f2ed;
+  --bg-inline-code: rgba(20, 18, 14, 0.06);
 
   /* Foreground */
   --fg: #18181b;
@@ -32,36 +32,36 @@
   --selection-bg: #fef08a;
   --selection-fg: #18181b;
 
-  /* Typography */
-  --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI",
-    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC",
-    sans-serif;
-  --font-mono: "JetBrains Mono", "SF Mono", "SFMono-Regular", Menlo, Consolas,
-    "Liberation Mono", monospace;
+  /* Typography — dev-friendly stack with clearer Chinese fallbacks */
+  --font-sans: "Inter", "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    "PingFang SC", "HarmonyOS Sans SC", "Hiragino Sans GB", "Microsoft YaHei",
+    "Noto Sans CJK SC", sans-serif;
+  --font-mono: "JetBrains Mono", "Geist Mono", "SF Mono", SFMono-Regular, Menlo,
+    Consolas, "Sarasa Mono SC", "Cascadia Code", "Liberation Mono", monospace;
   --font-serif: ui-serif, "Source Han Serif SC", "Noto Serif SC", Georgia,
     "Songti SC", serif;
 
-  /* Type scale (tight, slightly under 1.2 ratio) */
+  /* Type scale — body at 15px, denser metadata */
   --fs-2xs: 0.6875rem;  /* 11px */
   --fs-xs:  0.75rem;    /* 12px */
   --fs-sm:  0.8125rem;  /* 13px */
   --fs-base: 0.9375rem; /* 15px — body */
   --fs-md:  1rem;       /* 16px */
   --fs-lg:  1.125rem;   /* 18px */
-  --fs-xl:  1.375rem;   /* 22px */
-  --fs-2xl: 1.75rem;    /* 28px */
-  --fs-3xl: 2.25rem;    /* 36px */
+  --fs-xl:  1.25rem;    /* 20px */
+  --fs-2xl: 1.5rem;     /* 24px */
+  --fs-3xl: 1.875rem;   /* 30px */
 
-  /* Line heights */
+  /* Line heights — more breathing room */
   --lh-tight: 1.25;
-  --lh-snug: 1.4;
-  --lh-base: 1.6;
-  --lh-loose: 1.75;
+  --lh-snug: 1.45;
+  --lh-base: 1.7;
+  --lh-loose: 1.95;
 
-  /* Layout */
-  --content-max: 1080px;
-  --wide-max: 1080px;
-  --meta-w: 200px;
+  /* Layout — wider on big screens */
+  --content-max: 1280px;
+  --wide-max: 1320px;
+  --meta-w: 220px;
 
   /* Spacing scale (4px base) */
   --sp-1: 4px;
@@ -81,23 +81,23 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0a0a0a;
-    --bg-subtle: #111111;
-    --bg-muted: #18181b;
-    --bg-code: #0d0d0d;
-    --bg-inline-code: rgba(255, 255, 255, 0.07);
+    --bg: #13110d;
+    --bg-subtle: #1a1814;
+    --bg-muted: #221f19;
+    --bg-code: #1a1814;
+    --bg-inline-code: rgba(245, 240, 230, 0.07);
 
     --fg: #ededed;
     --fg-soft: #a1a1aa;
     --fg-muted: #71717a;
     --fg-faint: #52525b;
 
-    --border: #27272a;
-    --border-strong: #3f3f46;
+    --border: #2c2924;
+    --border-strong: #3d3933;
     --border-faint: #1c1c1f;
 
-    --accent: #f87171;
-    --accent-soft: #1f1010;
+    --accent: #fb7185;
+    --accent-soft: #2a0a12;
 
     --link: var(--fg);
     --link-hover: var(--accent);
@@ -129,6 +129,9 @@ body {
   color: var(--fg);
   background: var(--bg);
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 main { min-height: 60vh; }
@@ -284,7 +287,7 @@ button { font: inherit; cursor: pointer; }
    Hero (homepage)
    ========================================================================= */
 .hero {
-  padding-block: var(--sp-8) var(--sp-6);
+  padding-block: var(--sp-7) var(--sp-5);
 }
 
 .hero-eyebrow {
@@ -307,12 +310,13 @@ button { font: inherit; cursor: pointer; }
 }
 
 .hero-title {
-  font-size: var(--fs-3xl);
-  font-weight: 800;
+  font-size: clamp(var(--fs-2xl), 4.5vw, var(--fs-3xl));
+  font-weight: 700;
   letter-spacing: -0.025em;
-  line-height: 1.1;
+  line-height: 1.15;
   margin: 0 0 var(--sp-4);
   color: var(--fg);
+  text-wrap: balance;
 }
 
 .hero-tagline {
@@ -358,15 +362,17 @@ button { font: inherit; cursor: pointer; }
   display: flex;
   align-items: baseline;
   justify-content: space-between;
-  margin-bottom: var(--sp-5);
+  margin-bottom: var(--sp-4);
   gap: var(--sp-4);
 }
 
 .section-heading h2 {
   margin: 0;
-  font-size: var(--fs-lg);
-  font-weight: 700;
-  letter-spacing: -0.015em;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
   color: var(--fg);
 }
 
@@ -396,7 +402,7 @@ button { font: inherit; cursor: pointer; }
 .post-row {
   display: grid;
   grid-template-columns: 88px minmax(0, 1fr) auto;
-  gap: var(--sp-4);
+  gap: var(--sp-5);
   align-items: baseline;
   padding: var(--sp-4) 0;
   font-size: var(--fs-sm);
@@ -626,29 +632,33 @@ button { font: inherit; cursor: pointer; }
    Prose (article body)
    ========================================================================= */
 .prose {
-  font-size: var(--fs-md);
+  font-size: var(--fs-base);
   line-height: var(--lh-loose);
   color: var(--fg-soft);
-  max-width: 880px;
+  max-width: 720px;
+}
+
+/* On wide screens, let prose fill its column so it doesn't float in dead space */
+@media (min-width: 1280px) {
+  .with-toc .prose { max-width: 100%; }
 }
 .prose > * + * { margin-top: var(--sp-5); }
-.prose > h2 + *, .prose > h3 + *, .prose > h4 + * { margin-top: var(--sp-4); }
+.prose > h2 + *, .prose > h3 + *, .prose > h4 + * { margin-top: var(--sp-3); }
 
 .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
   font-weight: 700;
   letter-spacing: -0.015em;
-  line-height: var(--lh-snug);
+  line-height: 1.35;
   color: var(--fg);
   scroll-margin-top: 80px;
 }
 .prose h2 {
   font-size: var(--fs-xl);
-  margin-top: var(--sp-7);
-  padding-top: var(--sp-4);
+  margin-top: var(--sp-6);
 }
 .prose h3 {
   font-size: var(--fs-lg);
-  margin-top: var(--sp-6);
+  margin-top: var(--sp-5);
   color: var(--fg);
 }
 .prose h4 {
@@ -754,30 +764,45 @@ button { font: inherit; cursor: pointer; }
 .copy-code:focus-visible { opacity: 1; }
 .copy-code:hover { color: var(--accent); border-color: var(--accent); }
 
-/* Tables */
+/* Tables — terminal aesthetic */
 .prose table {
   width: 100%;
-  border-collapse: collapse;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-family: var(--font-mono);
   font-size: var(--fs-sm);
-  display: block;
-  overflow-x: auto;
+  line-height: 1.5;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
   margin: 0;
+  font-variant-numeric: tabular-nums;
 }
 .prose th, .prose td {
-  padding: var(--sp-2) var(--sp-4);
-  border-bottom: 1px solid var(--border);
+  padding: var(--sp-3) var(--sp-4);
+  border-bottom: 1px solid var(--border-faint);
   text-align: left;
   vertical-align: top;
 }
+.prose tr:last-child th,
+.prose tr:last-child td { border-bottom: 0; }
 .prose th {
   font-weight: 600;
   color: var(--fg);
-  border-bottom: 2px solid var(--border-strong);
-  font-size: var(--fs-xs);
+  background: var(--bg-subtle);
+  font-size: var(--fs-2xs);
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
 }
-.prose tr:hover td { background: var(--bg-subtle); }
+.prose tbody tr:hover td { background: color-mix(in srgb, var(--bg-subtle) 70%, transparent); }
+.prose tbody tr td:first-child { color: var(--fg); }
+.prose td > code {
+  background: var(--bg-muted);
+  border-color: transparent;
+  font-size: 0.875em;
+}
 
 /* AsciiDoc callout/sidebar */
 .prose .admonitionblock,
@@ -935,11 +960,11 @@ button { font: inherit; cursor: pointer; }
   .with-toc {
     flex-direction: row;
     align-items: start;
-    gap: var(--sp-7);
-    max-width: 1200px;
+    gap: var(--sp-8);
+    max-width: 1320px;
     margin-inline: auto;
   }
-  .with-toc > .container { flex: 0 1 880px; min-width: 0; }
+  .with-toc > .container { flex: 0 1 980px; min-width: 0; }
   .with-toc > .toc { flex: 0 0 220px; }
 }
 
