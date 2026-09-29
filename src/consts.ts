@@ -17,6 +17,7 @@ export const NAV_ITEMS = [
   { href: '/projects/', label: '项目' },
   { href: '/principles/', label: '原则' },
   { href: '/archive/', label: '归档' },
+  { href: '/reports/', label: '调研周报' },
   { href: '/tags/', label: '标签' },
   { href: '/about/', label: '关于' },
 ];

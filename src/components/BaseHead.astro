@@ -24,17 +24,23 @@ const {
 } = Astro.props;
 
 const fullTitle = title && title !== SITE.title ? `${title} — ${SITE.title}` : SITE.title;
-const canonicalUrl = canonical ?? new URL(Astro.url.pathname, SITE.url).toString();
-const ogImage = new URL(image, SITE.url).toString();
+
+// 用当前页面协议生成 canonical / og:url / og:image，
+// 避免 HTTP 页面下硬编码 https:// 在某些客户端代理里被启发式升级。
+const siteOrigin = Astro.site ?? new URL(SITE.url);
+const siteForPage = new URL(siteOrigin);
+siteForPage.protocol = Astro.url.protocol;
+const canonicalUrl = canonical ?? new URL(Astro.url.pathname, siteForPage).toString();
+const ogImage = new URL(image, siteForPage).toString();
 ---
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
 
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+<link rel="preconnect" href="//fonts.googleapis.com" />
+<link rel="preconnect" href="//fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="//fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
 
 <title>{fullTitle}</title>
 <meta name="description" content={description} />

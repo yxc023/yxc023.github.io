@@ -1,0 +1,87 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { getAllReports } from '~/lib/reports';
+
+const reports = await getAllReports();
+const byYear = new Map<number, typeof reports>();
+for (const r of reports) {
+  const y = r.data.date.getFullYear();
+  if (!byYear.has(y)) byYear.set(y, []);
+  byYear.get(y)!.push(r);
+}
+const years = [...byYear.keys()].sort((a, b) => b - a);
+---
+
+<BaseLayout
+  title="调研周报"
+  description="由 daily-research agent 自动生成的 GitHub 开源项目调研报告"
+>
+  <div class="container">
+    <header class="article-header">
+      <p class="article-eyebrow">
+        <span>reports</span>
+        <span class="article-eyebrow-dot"></span>
+        <span>{reports.length} entries</span>
+        {years.length > 0 && (
+          <>
+            <span class="article-eyebrow-dot"></span>
+            <span>{years.length} years</span>
+          </>
+        )}
+      </p>
+      <h1 class="article-title">调研周报</h1>
+      <p class="article-lede">
+        由 <code>daily-research</code> agent 自动扫描 GitHub 开源项目后生成的每周调研报告。
+        扫描窗口、仓库清单、分析方法见
+        <a href="//github.com/yxc023/daily-research" rel="noopener">daily-research 仓库</a>。
+      </p>
+    </header>
+
+    {reports.length === 0 ? (
+      <p class="muted">暂无报告。</p>
+    ) : (
+      years.map((year) => (
+        <section class="section">
+          <header class="section-heading">
+            <div>
+              <span class="eyebrow">{year}</span>
+              <h2>{byYear.get(year)!.length} 期</h2>
+            </div>
+          </header>
+          <ul class="post-list">
+            {byYear.get(year)!.map((r) => {
+              const monthDay = `${String(r.data.date.getMonth() + 1).padStart(2, '0')}-${String(r.data.date.getDate()).padStart(2, '0')}`;
+              const min = r.readingMinutes < 1 ? '<1' : Math.round(r.readingMinutes);
+              const summaryItems = r.summary.slice(0, 3);
+              return (
+                <li>
+                  <a class="post-row" href={`/reports/${r.slug}/`}>
+                    <time
+                      class="post-row-date"
+                      datetime={r.data.date.toISOString().slice(0, 10)}
+                      title={r.data.date.toISOString().slice(0, 10)}
+                    >{monthDay}</time>
+                    <div class="post-row-body">
+                      <span class="post-row-title">{r.data.title}</span>
+                      {r.data.description && (
+                        <p class="post-row-desc">{r.data.description}</p>
+                      )}
+                      {summaryItems.length > 0 && (
+                        <ul style="margin-top: 0.35rem; padding-left: 0; list-style: none; font-size: var(--fs-sm); color: var(--c-text-muted);">
+                          {summaryItems.map((s) => <li>· {s}</li>)}
+                        </ul>
+                      )}
+                    </div>
+                    <div class="post-row-meta">
+                      <span class="post-row-time">{min} min</span>
+                    </div>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))
+    )}
+  </div>
+</BaseLayout>

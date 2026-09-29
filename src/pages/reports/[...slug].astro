@@ -1,0 +1,52 @@
+---
+import PostLayout from '~/layouts/PostLayout.astro';
+import { getAllReports, getReport } from '~/lib/reports';
+
+export async function getStaticPaths() {
+  const reports = await getAllReports();
+  return reports.map((r, i) => ({
+    params: { slug: r.slug },
+    props: {
+      slug: r.slug,
+      prev: i < reports.length - 1
+        ? { slug: reports[i + 1].slug, title: reports[i + 1].data.title }
+        : null,
+      next: i > 0
+        ? { slug: reports[i - 1].slug, title: reports[i - 1].data.title }
+        : null,
+    },
+  }));
+}
+
+const { slug, prev, next } = Astro.props;
+
+const report = await getReport(slug);
+if (!report) throw new Error(`Report not found: ${slug}`);
+
+const { getEntry, render } = await import('astro:content');
+const entry = await getEntry('reports', slug);
+if (!entry) throw new Error(`Entry not found: ${slug}`);
+
+const { Content, headings: mdHeadings } = await render(entry);
+const headings = mdHeadings.map((h) => ({
+  depth: h.depth,
+  slug: h.slug,
+  text: h.text,
+}));
+---
+
+<PostLayout
+  title={report.data.title}
+  description={report.data.description}
+  date={report.data.date}
+  tags={report.data.tags}
+  headings={headings}
+  slug={slug}
+  showToc={headings.length > 0}
+  readingMinutes={report.readingMinutes}
+  wordCount={report.wordCount}
+  prev={prev}
+  next={next}
+>
+  <Content />
+</PostLayout>
